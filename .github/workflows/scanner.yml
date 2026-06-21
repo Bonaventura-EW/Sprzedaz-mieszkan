@@ -1,0 +1,115 @@
+name: SONAR SPRZEDAŻY Scanner
+
+on:
+  schedule:
+    # 2 skany dziennie: 8:17 i 18:17 CEST. Offset minutowy inny niż w
+    # siostrzanych sonarach (mniejsze ryzyko throttlingu GitHuba i kolizji).
+    - cron: '17 6,16 * * *'
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      # Deploy Pages wprost w skanerze przez OIDC (id-token) — push skanu idzie
+      # przez github.token, którym GitHub z założenia NIE budzi innych workflowów
+      # (ochrona antyrekurencyjna), więc pages.yml sam by się nie odpalił.
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PAT_TOKEN || github.token }}
+          fetch-depth: 0
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run SONAR SPRZEDAŻY scanner
+        continue-on-error: true
+        run: |
+          cd src
+          python main.py || echo "::warning::Scanner failed but continuing..."
+
+      - name: Generate map data
+        if: always()
+        continue-on-error: true
+        run: |
+          cd src
+          python map_generator.py || echo "::warning::Map generator failed but continuing..."
+
+      - name: Generate API
+        if: always()
+        continue-on-error: true
+        run: |
+          cd src
+          python api_generator.py || echo "::warning::API generator failed but continuing..."
+
+      - name: Generate monitoring data
+        if: always()
+        continue-on-error: true
+        run: |
+          cd src
+          python monitoring_generator.py || echo "::warning::Monitoring generator failed but continuing..."
+
+      - name: Commit and push changes
+        if: always()
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git add data/ docs/data.json docs/api/ docs/monitoring_data.json || true
+
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "🤖 Automatyczny scan: $(TZ='Europe/Warsaw' date +'%Y-%m-%d %H:%M')" || true
+
+          for attempt in 1 2 3; do
+            echo "📤 Push attempt #$attempt..."
+            if ! git pull --rebase origin main; then
+              echo "::warning::Rebase #$attempt nie powiódł się. Próbuję ponownie."
+              git rebase --abort 2>/dev/null || true
+              sleep 5
+              continue
+            fi
+            if git push origin HEAD:main; then
+              echo "✅ Push successful (attempt #$attempt)"
+              exit 0
+            else
+              echo "::warning::Push #$attempt odrzucony. Retry za 10s..."
+              sleep 10
+            fi
+          done
+
+          echo "::error::Push failed po 3 próbach"
+          exit 1
+
+      - name: Setup Pages
+        if: always()
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        if: always()
+        id: deployment
+        uses: actions/deploy-pages@v4

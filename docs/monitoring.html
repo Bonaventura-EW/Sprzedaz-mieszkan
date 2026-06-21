@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONAR SPRZEDAŻY — Monitoring skanów</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+    <link rel="stylesheet" href="assets/style.css?v=1">
+</head>
+<body class="page-body">
+    <header class="header">
+        <h1>
+            <span class="sonar-logo"></span>
+            <span>SONAR SPRZEDAŻY<span class="sub">monitoring skanów</span></span>
+        </h1>
+        <nav class="header-nav">
+            <a href="index.html">🗺️ Mapa</a>
+            <a href="analytics.html">📈 Analityka</a>
+            <a href="monitoring.html" class="active">📊 Monitoring</a>
+            <a href="oferty.html">📋 Oferty</a>
+            <a href="zmiany.html">🔄 Ruch</a>
+        </nav>
+        <div class="header-meta">🕐 Ostatni scan: <strong id="last-scan">—</strong></div>
+    </header>
+
+    <div class="page-content">
+        <div class="cards-row">
+            <div class="kpi-card"><h3>Skanów łącznie</h3><div class="kpi-value" id="kpi-total">—</div></div>
+            <div class="kpi-card"><h3>Średni czas skanu</h3><div class="kpi-value" id="kpi-avg">—</div><div class="kpi-sub" id="kpi-last-dur">ostatni: —</div></div>
+            <div class="kpi-card"><h3>Aktywne oferty</h3><div class="kpi-value" id="kpi-active">—</div><div class="kpi-sub" id="kpi-sources">OLX — / Otodom —</div></div>
+            <div class="kpi-card"><h3>Nowe w ostatnim skanie</h3><div class="kpi-value" id="kpi-new">—</div></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>⏱️ Czas wykonania skanu</h2>
+            <div class="chart-wrap"><canvas id="durationChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>📡 Oferty ze skanu — OLX vs Otodom</h2>
+            <div class="chart-wrap"><canvas id="offersChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>📦 Stan bazy (aktywne / łącznie)</h2>
+            <div class="chart-wrap"><canvas id="dbChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>🗒️ Ostatnie skany</h2>
+            <table class="scan-table">
+                <thead><tr>
+                    <th>Data</th><th>Czas</th><th>OLX</th><th>Otodom</th>
+                    <th>Nowe</th><th>Zaktualiz.</th><th>Aktywne</th><th>W bazie</th>
+                </tr></thead>
+                <tbody id="scan-rows"></tbody>
+            </table>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/logo.js?v=1"></script>
+<script>
+const LIME = '#a3e635', GREEN = '#16a34a', DARK = '#14532d', BLUE = '#0284c7', OLIVE = '#65a30d';
+
+function ts(label) {
+    return new Date(label).toLocaleString('pl-PL', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+}
+
+async function init() {
+    let data;
+    try {
+        const resp = await fetch('monitoring_data.json?t=' + Date.now());
+        data = await resp.json();
+    } catch (e) {
+        document.getElementById('kpi-total').textContent = 'brak danych';
+        return;
+    }
+
+    const s = data.statistics || {};
+    document.getElementById('kpi-total').textContent = s.total_scans ?? '—';
+    document.getElementById('kpi-avg').textContent = s.avg_duration_s != null ? s.avg_duration_s + ' s' : '—';
+    document.getElementById('kpi-last-dur').textContent = 'ostatni: ' + (s.last_duration_s != null ? s.last_duration_s + ' s' : '—');
+    document.getElementById('kpi-active').textContent = s.last_active ?? '—';
+    document.getElementById('kpi-sources').textContent = `OLX ${s.last_olx ?? '—'} / Otodom ${s.last_otodom ?? '—'}`;
+    document.getElementById('kpi-new').textContent = s.last_new ?? '—';
+    if (s.last_scan) {
+        document.getElementById('last-scan').textContent =
+            new Date(s.last_scan).toLocaleString('pl-PL', { dateStyle: 'short', timeStyle: 'short' });
+    }
+
+    const charts = data.charts || {};
+    const common = {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { labels: { boxWidth: 12 } } },
+        scales: { x: { ticks: { maxTicksLimit: 10 } } }
+    };
+
+    const dur = charts.duration_over_time || [];
+    new Chart(document.getElementById('durationChart'), {
+        type: 'line',
+        data: {
+            labels: dur.map(d => ts(d.timestamp)),
+            datasets: [{
+                label: 'czas skanu [s]', data: dur.map(d => d.duration),
+                borderColor: GREEN, backgroundColor: 'rgba(22,163,74,0.15)', fill: true, tension: 0.3,
+            }]
+        },
+        options: common
+    });
+
+    const off = charts.offers_over_time || [];
+    new Chart(document.getElementById('offersChart'), {
+        type: 'bar',
+        data: {
+            labels: off.map(d => ts(d.timestamp)),
+            datasets: [
+                { label: 'OLX', data: off.map(d => d.olx), backgroundColor: BLUE },
+                { label: 'Otodom', data: off.map(d => d.otodom), backgroundColor: OLIVE },
+                { label: 'nowe', data: off.map(d => d.new), type: 'line', borderColor: '#dc2626', backgroundColor: '#dc2626', tension: 0.3 },
+            ]
+        },
+        options: { ...common, scales: { x: { stacked: true, ticks: { maxTicksLimit: 10 } }, y: { stacked: true } } }
+    });
+
+    const db = charts.db_over_time || [];
+    new Chart(document.getElementById('dbChart'), {
+        type: 'line',
+        data: {
+            labels: db.map(d => ts(d.timestamp)),
+            datasets: [
+                { label: 'aktywne', data: db.map(d => d.active), borderColor: GREEN, backgroundColor: 'rgba(22,163,74,0.15)', fill: true, tension: 0.3 },
+                { label: 'łącznie w bazie', data: db.map(d => d.total), borderColor: DARK, borderDash: [6, 4], tension: 0.3 },
+            ]
+        },
+        options: common
+    });
+
+    const rows = (data.recent_scans || []).map(scan => `
+        <tr>
+            <td>${ts(scan.timestamp)}</td>
+            <td>${scan.duration_s != null ? scan.duration_s + ' s' : '—'}</td>
+            <td>${scan.scraped_olx ?? '—'}</td>
+            <td>${scan.scraped_otodom ?? '—'}</td>
+            <td>${scan.new ?? '—'}</td>
+            <td>${scan.updated ?? '—'}</td>
+            <td>${scan.active ?? '—'}</td>
+            <td>${scan.total_in_db ?? '—'}</td>
+        </tr>`).join('');
+    document.getElementById('scan-rows').innerHTML = rows || '<tr><td colspan="8">Brak skanów</td></tr>';
+}
+init();
+</script>
+</body>
+</html>

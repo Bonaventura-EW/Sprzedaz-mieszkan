@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONAR SPRZEDAŻY — Analityka rynku</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+    <link rel="stylesheet" href="assets/style.css?v=1">
+</head>
+<body class="page-body">
+    <header class="header">
+        <h1>
+            <span class="sonar-logo"></span>
+            <span>SONAR SPRZEDAŻY<span class="sub">analityka rynku mieszkań</span></span>
+        </h1>
+        <nav class="header-nav">
+            <a href="index.html">🗺️ Mapa</a>
+            <a href="analytics.html" class="active">📈 Analityka</a>
+            <a href="monitoring.html">📊 Monitoring</a>
+            <a href="oferty.html">📋 Oferty</a>
+            <a href="zmiany.html">🔄 Ruch</a>
+        </nav>
+        <div class="header-meta">🕐 Ostatni scan: <strong id="last-scan">—</strong></div>
+    </header>
+
+    <div class="page-content">
+        <div class="cards-row">
+            <div class="kpi-card"><h3>Aktywne oferty</h3><div class="kpi-value" id="kpi-active">—</div><div class="kpi-sub" id="kpi-new7">nowych w 7 dni: —</div></div>
+            <div class="kpi-card"><h3>Mediana ceny/m²</h3><div class="kpi-value" id="kpi-median">—</div><div class="kpi-sub" id="kpi-avg-m2">średnia: —</div></div>
+            <div class="kpi-card"><h3>Mediana ceny mieszkania</h3><div class="kpi-value" id="kpi-median-price">—</div><div class="kpi-sub" id="kpi-range">—</div></div>
+            <div class="kpi-card"><h3>Mediana powierzchni</h3><div class="kpi-value" id="kpi-median-area">—</div><div class="kpi-sub" id="kpi-private">od właściciela: —</div></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>🎯 Rozkład ceny za m² (histogram, aktywne)</h2>
+            <div class="chart-wrap"><canvas id="perM2Hist"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>📐 Cena vs powierzchnia (każdy punkt = mieszkanie)</h2>
+            <div class="chart-wrap" style="height: 320px;"><canvas id="scatterChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>🏷️ Oferty wg rynku (pierwotny / wtórny)</h2>
+            <div class="chart-wrap"><canvas id="marketChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>🚪 Oferty wg liczby pokoi</h2>
+            <div class="chart-wrap"><canvas id="roomsChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>📍 Mediana ceny/m² wg dzielnicy (min. 3 oferty)</h2>
+            <div class="chart-wrap"><canvas id="districtChart"></canvas></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>📈 Nowe oferty dziennie (ostatnie 30 dni)</h2>
+            <div class="chart-wrap"><canvas id="newChart"></canvas></div>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/logo.js?v=1"></script>
+<script>
+const MARKET_COLORS = { 'pierwotny': '#0284c7', 'wtorny': '#16a34a', 'nieokreslony': '#94a3b8' };
+const MARKET_LABELS = { 'pierwotny': 'rynek pierwotny', 'wtorny': 'rynek wtórny', 'nieokreslony': 'nieokreślony' };
+
+const fmtZl = v => Math.round(v).toLocaleString('pl-PL') + ' zł';
+const median = arr => {
+    if (!arr.length) return null;
+    const s = [...arr].sort((a, b) => a - b);
+    const m = Math.floor(s.length / 2);
+    return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+};
+
+async function init() {
+    let data;
+    try {
+        const resp = await fetch('data.json?t=' + Date.now());
+        data = await resp.json();
+    } catch (e) {
+        document.getElementById('kpi-active').textContent = 'brak danych';
+        return;
+    }
+    if (data.last_scan) {
+        document.getElementById('last-scan').textContent =
+            new Date(data.last_scan).toLocaleString('pl-PL', { dateStyle: 'short', timeStyle: 'short' });
+    }
+
+    const active = (data.offers || []).filter(o => o.active && o.price);
+    const perM2 = active.map(o => o.price_per_m2).filter(v => v != null);
+    const prices = active.map(o => o.price);
+    const areas = active.map(o => o.area_m2).filter(v => v != null);
+    const new7 = active.filter(o => o.first_seen && (Date.now() - new Date(o.first_seen)) < 7 * 86400000).length;
+
+    document.getElementById('kpi-active').textContent = active.length;
+    document.getElementById('kpi-new7').textContent = 'nowych w 7 dni: ' + new7;
+    document.getElementById('kpi-median').textContent = perM2.length ? fmtZl(median(perM2)) : '—';
+    document.getElementById('kpi-avg-m2').textContent = perM2.length
+        ? 'średnia: ' + fmtZl(perM2.reduce((a, b) => a + b, 0) / perM2.length) : '—';
+    document.getElementById('kpi-median-price').textContent = prices.length ? fmtZl(median(prices)) : '—';
+    document.getElementById('kpi-range').textContent = prices.length
+        ? `${fmtZl(Math.min(...prices))} – ${fmtZl(Math.max(...prices))}` : '—';
+    document.getElementById('kpi-median-area').textContent = areas.length
+        ? Math.round(median(areas)).toLocaleString('pl-PL') + ' m²' : '—';
+    document.getElementById('kpi-private').textContent = 'od właściciela: '
+        + active.filter(o => o.is_private_owner).length;
+
+    const common = { responsive: true, maintainAspectRatio: false };
+
+    // === Histogram ceny za m² (95. percentyl jako górna granica, 12 koszyków) ===
+    if (perM2.length) {
+        const sorted = [...perM2].sort((a, b) => a - b);
+        const cap = sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95))];
+        const bins = 12, step = Math.ceil(cap / bins / 100) * 100 || 1;
+        const counts = new Array(bins + 1).fill(0);
+        perM2.forEach(v => counts[Math.min(bins, Math.floor(v / step))]++);
+        const labels = counts.map((_, i) =>
+            i < bins ? `${(i * step / 1000).toFixed(0)}–${((i + 1) * step / 1000).toFixed(0)}k` : `${(bins * step / 1000).toFixed(0)}k+`);
+        new Chart(document.getElementById('perM2Hist'), {
+            type: 'bar',
+            data: { labels, datasets: [{ label: 'liczba ofert', data: counts, backgroundColor: '#16a34a' }] },
+            options: { ...common, scales: { x: { title: { display: true, text: 'zł/m²' } } }, plugins: { legend: { display: false } } }
+        });
+    }
+
+    // === Scatter: cena vs powierzchnia (log-log) ===
+    const points = active.filter(o => o.area_m2 && o.price);
+    new Chart(document.getElementById('scatterChart'), {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'mieszkanie',
+                data: points.map(o => ({ x: o.area_m2, y: o.price, title: o.title })),
+                backgroundColor: 'rgba(22,163,74,0.55)',
+            }]
+        },
+        options: {
+            ...common,
+            plugins: {
+                legend: { display: false },
+                tooltip: { callbacks: { label: ctx =>
+                    `${ctx.raw.title?.slice(0, 50) || ''} — ${ctx.raw.x} m², ${fmtZl(ctx.raw.y)}` } }
+            },
+            scales: {
+                x: { type: 'logarithmic', title: { display: true, text: 'powierzchnia [m²]' } },
+                y: { type: 'logarithmic', title: { display: true, text: 'cena [zł]' } },
+            }
+        }
+    });
+
+    // === Doughnut: rynek pierwotny / wtórny ===
+    const byMarket = {};
+    active.forEach(o => { const m = o.market || 'nieokreslony'; byMarket[m] = (byMarket[m] || 0) + 1; });
+    const marketKeys = Object.keys(byMarket).sort((a, b) => byMarket[b] - byMarket[a]);
+    new Chart(document.getElementById('marketChart'), {
+        type: 'doughnut',
+        data: {
+            labels: marketKeys.map(k => MARKET_LABELS[k] || k),
+            datasets: [{ data: marketKeys.map(k => byMarket[k]),
+                         backgroundColor: marketKeys.map(k => MARKET_COLORS[k] || '#94a3b8') }]
+        },
+        options: { ...common, plugins: { legend: { position: 'right' } } }
+    });
+
+    // === Bar: liczba pokoi ===
+    const byRooms = {};
+    active.forEach(o => {
+        const b = o.rooms == null ? 'b/d' : (o.rooms >= 5 ? '5+' : String(o.rooms));
+        byRooms[b] = (byRooms[b] || 0) + 1;
+    });
+    const roomOrder = ['1', '2', '3', '4', '5+', 'b/d'].filter(k => k in byRooms);
+    new Chart(document.getElementById('roomsChart'), {
+        type: 'bar',
+        data: {
+            labels: roomOrder.map(k => k === 'b/d' ? 'brak danych' : k + ' pok.'),
+            datasets: [{ label: 'liczba ofert', data: roomOrder.map(k => byRooms[k]), backgroundColor: '#0284c7' }]
+        },
+        options: { ...common, plugins: { legend: { display: false } } }
+    });
+
+    // === Bar: mediana ceny/m² wg dzielnicy ===
+    const byDistrict = {};
+    active.forEach(o => {
+        if (o.district && o.price_per_m2) (byDistrict[o.district] ??= []).push(o.price_per_m2);
+    });
+    const districts = Object.entries(byDistrict)
+        .filter(([, v]) => v.length >= 3)
+        .map(([k, v]) => ({ name: k, med: median(v), n: v.length }))
+        .sort((a, b) => b.med - a.med);
+    new Chart(document.getElementById('districtChart'), {
+        type: 'bar',
+        data: {
+            labels: districts.map(d => `${d.name} (${d.n})`),
+            datasets: [{ label: 'mediana zł/m²', data: districts.map(d => Math.round(d.med)), backgroundColor: '#65a30d' }]
+        },
+        options: { ...common, indexAxis: 'y', plugins: { legend: { display: false } } }
+    });
+
+    // === Line: nowe oferty dziennie (30 dni) ===
+    const days = {};
+    for (let i = 29; i >= 0; i--) {
+        const d = new Date(Date.now() - i * 86400000);
+        days[d.toISOString().slice(0, 10)] = 0;
+    }
+    (data.offers || []).forEach(o => {
+        const key = (o.first_seen || '').slice(0, 10);
+        if (key in days) days[key]++;
+    });
+    new Chart(document.getElementById('newChart'), {
+        type: 'bar',
+        data: {
+            labels: Object.keys(days).map(d => new Date(d).toLocaleDateString('pl-PL', { day: '2-digit', month: '2-digit' })),
+            datasets: [{ label: 'nowe oferty', data: Object.values(days), backgroundColor: '#16a34a' }]
+        },
+        options: { ...common, plugins: { legend: { display: false } } }
+    });
+}
+init();
+</script>
+</body>
+</html>

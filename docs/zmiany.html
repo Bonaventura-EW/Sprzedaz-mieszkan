@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONAR SPRZEDAŻY — Ruch na rynku (nowe / zniknięte)</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+<link rel="stylesheet" href="assets/style.css?v=1">
+<style>
+.zm-wrap{padding:14px 18px;max-width:1340px;margin:0 auto;width:100%;flex:1;overflow:auto}
+.zm-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.zm-toolbar select,.zm-toolbar input[type=search]{font:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)}
+.zm-chip{cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:12px;font-weight:600;user-select:none}
+.zm-chip.on{background:var(--green-700);color:#fff;border-color:var(--green-700)}
+.zm-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.zm-kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:0 1px 4px rgba(15,31,21,.06)}
+.zm-kpi h3{font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin-bottom:5px}
+.zm-kpi .v{font-size:23px;font-weight:800;line-height:1}
+.zm-kpi .s{font-size:11px;color:var(--muted);margin-top:3px}
+.v-gone{color:#dc2626}.v-new{color:#16a34a}
+.net-pos{color:#16a34a}.net-neg{color:#dc2626}.net-zero{color:var(--muted)}
+.zm-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.zm-col{background:var(--bg);border-radius:16px;display:flex;flex-direction:column;min-width:0}
+.zm-col-head{position:sticky;top:0;z-index:3;padding:11px 14px;border-radius:14px 14px 0 0;display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px;color:#fff}
+.zm-col.gone .zm-col-head{background:linear-gradient(120deg,#7f1d1d,#b91c1c)}
+.zm-col.new  .zm-col-head{background:linear-gradient(120deg,var(--green-900),var(--green-600))}
+.zm-col-head .cnt{margin-left:auto;font-size:12px;font-weight:700;background:rgba(255,255,255,.18);padding:2px 9px;border-radius:999px}
+.zm-col-sub{font-size:11px;color:var(--muted);padding:6px 14px}
+.zm-list{display:flex;flex-direction:column;gap:10px;padding:4px 6px 14px}
+.zm-card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 3px rgba(2,22,10,.06);display:flex;gap:10px;padding:10px;position:relative;overflow:hidden}
+.zm-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px}
+.zm-col.gone .zm-card:before{background:#dc2626}
+.zm-col.new  .zm-card:before{background:#16a34a}
+.zm-thumb{width:84px;height:84px;flex:0 0 auto;border-radius:9px;object-fit:cover;background:#eef3ee}
+.zm-thumb.ph{display:flex;align-items:center;justify-content:center;font-size:26px;color:#b9c7b9}
+.zm-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.zm-t{font-size:13px;font-weight:700;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.zm-t a{color:var(--ink);text-decoration:none}.zm-t a:hover{color:var(--green-700)}
+.zm-badges{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.badge{font-size:10px;padding:1px 8px;border-radius:999px;font-weight:700;white-space:nowrap;display:inline-block}
+.b-olx{background:#e0f2fe;color:#075985}.b-otodom{background:#ede9fe;color:#5b21b6}
+.b-pierwotny{background:#e0f2fe;color:#075985}.b-wtorny{background:var(--lime-soft);color:var(--green-700)}.b-nieokreslony{background:#f1f5f9;color:#475569}
+.b-type{background:#f1f5f9;color:#475569}
+.b-new{background:#dc2626;color:#fff}.b-priv{background:#0284c7;color:#fff}
+.zm-price{font-size:15px;font-weight:800;color:var(--green-800)}
+.zm-price .pm{font-size:11px;font-weight:600;color:var(--muted)}
+.zm-meta{font-size:11px;color:var(--muted);line-height:1.5}
+.trend-up{color:#dc2626;font-weight:700}.trend-down{color:#16a34a;font-weight:700}
+.zm-foot{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:2px}
+.zm-when{font-size:11px;color:var(--muted);margin-right:auto}
+.zm-when b{color:var(--ink)}
+.zm-btn{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;text-decoration:none;border-radius:999px;padding:4px 10px;border:1px solid var(--line);background:#fff;color:var(--green-700);cursor:pointer}
+.zm-btn:hover{border-color:var(--green-600)}
+.zm-btn.pin{background:var(--green-600);color:#fff;border-color:var(--green-600)}
+.zm-btn.pin.off{background:#f1f5f9;color:#94a3b8;border-color:var(--line);cursor:not-allowed}
+.zm-btn.go{background:#0284c7;color:#fff;border-color:#0284c7}
+.empty{padding:34px 14px;text-align:center;color:var(--muted);font-size:13px}
+#zm-loading{padding:60px;text-align:center;color:var(--muted)}
+@media(max-width:820px){.zm-cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="header">
+    <h1><span class="sonar-logo"></span><span>SONAR SPRZEDAŻY<span class="sub">ruch na rynku · nowe / zniknięte</span></span></h1>
+    <nav class="header-nav">
+      <a href="index.html">🗺️ Mapa</a>
+      <a href="analytics.html">📈 Analityka</a>
+      <a href="monitoring.html">📊 Monitoring</a>
+      <a href="oferty.html">📋 Oferty</a>
+      <a href="zmiany.html" class="active">🔄 Ruch</a>
+    </nav>
+    <div class="header-meta">🕐 Ostatni scan: <strong id="last-scan">—</strong></div>
+  </header>
+
+  <div class="zm-wrap">
+    <div class="zm-toolbar">
+      <select id="window" onchange="render()">
+        <option value="1">Okno: dzisiaj</option>
+        <option value="3">Okno: 3 dni</option>
+        <option value="7" selected>Okno: 7 dni</option>
+        <option value="14">Okno: 14 dni</option>
+        <option value="30">Okno: 30 dni</option>
+        <option value="90">Okno: 90 dni</option>
+        <option value="all">Okno: cały czas</option>
+      </select>
+      <select id="sort" onchange="render()">
+        <option value="date">Sortuj: data (najnowsze)</option>
+        <option value="price_desc">Sortuj: cena ↓</option>
+        <option value="price_asc">Sortuj: cena ↑</option>
+        <option value="ppm_asc">Sortuj: cena/m² ↑</option>
+        <option value="ppm_desc">Sortuj: cena/m² ↓</option>
+        <option value="area_desc">Sortuj: powierzchnia ↓</option>
+        <option value="life_desc">Sortuj: czas życia ↓ (zniknięte)</option>
+      </select>
+      <input type="search" id="search" placeholder="szukaj: tytuł / dzielnica…" oninput="render()">
+      <span id="src-chips"></span>
+      <span class="zm-chip" id="only-priv" onclick="this.classList.toggle('on');render()">👤 tylko od właściciela</span>
+    </div>
+
+    <div id="zm-loading">⏳ Ładowanie ofert…</div>
+
+    <div id="zm-content" style="display:none">
+      <div class="zm-kpis">
+        <div class="zm-kpi"><h3>Zniknęło z rynku</h3><div class="v v-gone" id="k-gone">—</div><div class="s">w wybranym oknie</div></div>
+        <div class="zm-kpi"><h3>Nowych ofert</h3><div class="v v-new" id="k-new">—</div><div class="s">w wybranym oknie</div></div>
+        <div class="zm-kpi"><h3>Bilans netto</h3><div class="v" id="k-net">—</div><div class="s">nowe − zniknięte</div></div>
+        <div class="zm-kpi"><h3>Mediana cena/m² — nowe</h3><div class="v" id="k-ppm-new" style="font-size:19px">—</div><div class="s">w nowych ofertach</div></div>
+        <div class="zm-kpi"><h3>Śr. czas życia</h3><div class="v" id="k-life" style="font-size:19px">—</div><div class="s">zniknięte oferty</div></div>
+      </div>
+
+      <div class="zm-cols">
+        <section class="zm-col gone">
+          <div class="zm-col-head">🔴 Zniknęły z rynku <span class="cnt" id="cnt-gone">0</span></div>
+          <div class="zm-col-sub" id="sub-gone">Oferty, które przestały być aktywne (sprzedane / wycofane / wygasłe).</div>
+          <div class="zm-list" id="list-gone"></div>
+        </section>
+        <section class="zm-col new">
+          <div class="zm-col-head">🟢 Nowe oferty <span class="cnt" id="cnt-new">0</span></div>
+          <div class="zm-col-sub" id="sub-new">Oferty, które pojawiły się w bazie po raz pierwszy.</div>
+          <div class="zm-list" id="list-new"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/logo.js"></script>
+<script>
+const SRC={olx:['OLX','b-olx'],otodom:['Otodom','b-otodom']};
+const MARKET_LABELS={pierwotny:'pierwotny',wtorny:'wtórny',nieokreslony:'nieokreśl.'};
+let OFFERS=[], SRCFILTER=new Set();
+
+const PLN=n=>n==null?'—':Math.round(n).toLocaleString('pl-PL')+' zł';
+const PERM2=n=>n==null?'—':Math.round(n).toLocaleString('pl-PL')+' zł/m²';
+const AREA=n=>n==null?'—':n.toLocaleString('pl-PL')+' m²';
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+function srcInfo(o){return SRC[o.source]||[o.source||'?','b-type'];}
+function srcBadge(o){const[l,c]=srcInfo(o);return `<span class="badge ${c}">${esc(l)}</span>`;}
+function marketBadge(o){const m=o.market||'nieokreslony';return `<span class="badge b-${m}">${MARKET_LABELS[m]||m}</span>`;}
+
+const DAY=86400000;
+function ageDays(iso){if(!iso)return null;return Math.floor((Date.now()-new Date(iso).getTime())/DAY);}
+function relDate(iso){const d=ageDays(iso);if(d==null)return '—';
+  if(d<=0)return 'dzisiaj';if(d===1)return 'wczoraj';return d+' dni temu';}
+function median(arr){if(!arr.length)return null;const s=[...arr].sort((a,b)=>a-b);const m=s.length>>1;
+  return s.length%2?s[m]:(s[m-1]+s[m])/2;}
+
+function trendTxt(o){
+  if(!o.previous_price||!o.price_trend||o.price_trend==='flat')return '';
+  const down=o.price_trend==='down';
+  return ` <span class="trend-${down?'down':'up'}">${down?'▼':'▲'} było ${PLN(o.previous_price)}</span>`;
+}
+
+function card(o,kind){
+  const img=o.image?`<img class="zm-thumb" src="${esc(o.image)}" loading="lazy" alt="">`
+                    :`<div class="zm-thumb ph">🏠</div>`;
+  const where=[o.street,o.district].filter(Boolean).join(', ');
+  const newBadge=kind==='new'?'<span class="badge b-new">NOWA</span>':'';
+  const privBadge=o.is_private_owner?'<span class="badge b-priv">właściciel</span>':'';
+  const rooms=o.rooms!=null?` · 🚪 ${o.rooms} pok.`:'';
+  const when=kind==='new'
+    ? `🆕 dodano <b>${relDate(o.first_seen)}</b>`
+    : `⏸ zniknęła <b>${relDate(o.last_seen)}</b>${o.days_active!=null?` · była <b>${o.days_active} dni</b>`:''}`;
+  const hasGps=!!o.coords;
+  const pin=hasGps
+    ? `<a class="zm-btn pin" href="index.html#offer=${encodeURIComponent(o.id)}" title="Pokaż na mapie">📍 Mapa</a>`
+    : `<span class="zm-btn pin off" title="Brak współrzędnych GPS">📍 bez GPS</span>`;
+  const also=o.also_at?`<a class="zm-btn go" href="${esc(o.also_at)}" target="_blank" rel="noopener">↗ druga oferta</a>`:'';
+  return `<article class="zm-card">
+    ${img}
+    <div class="zm-body">
+      <div class="zm-t"><a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.title||'(bez tytułu)')}</a></div>
+      <div class="zm-badges">${srcBadge(o)}${marketBadge(o)}${newBadge}${privBadge}</div>
+      <div class="zm-price">${PLN(o.price)} <span class="pm">· ${PERM2(o.price_per_m2)}</span>${trendTxt(o)}</div>
+      <div class="zm-meta">📐 ${AREA(o.area_m2)}${rooms}${where?` · 📍 ${esc(where)}`:''}</div>
+      <div class="zm-foot">
+        <span class="zm-when">${when}</span>
+        ${pin}
+        <a class="zm-btn" href="${esc(o.url)}" target="_blank" rel="noopener">Ogłoszenie ↗</a>
+        ${also}
+      </div>
+    </div>
+  </article>`;
+}
+
+function passesCommon(o){
+  if(SRCFILTER.size){if(!SRCFILTER.has(o.source))return false;}
+  if(document.getElementById('only-priv').classList.contains('on')&&!o.is_private_owner)return false;
+  const q=document.getElementById('search').value.trim().toLowerCase();
+  if(q){const hay=((o.title||'')+' '+(o.district||'')+' '+(o.street||'')).toLowerCase();
+    if(!hay.includes(q))return false;}
+  return true;
+}
+function inWindow(iso,win){if(win==='all')return true;if(!iso)return false;
+  return (Date.now()-new Date(iso).getTime())<=parseInt(win,10)*DAY;}
+
+function sortFn(key){
+  switch(key){
+    case 'price_desc':return (a,b)=>(b.price||0)-(a.price||0);
+    case 'price_asc': return (a,b)=>(a.price||0)-(b.price||0);
+    case 'ppm_asc':   return (a,b)=>(a.price_per_m2||1e12)-(b.price_per_m2||1e12);
+    case 'ppm_desc':  return (a,b)=>(b.price_per_m2||0)-(a.price_per_m2||0);
+    case 'area_desc': return (a,b)=>(b.area_m2||0)-(a.area_m2||0);
+    case 'life_desc': return (a,b)=>(b.days_active||0)-(a.days_active||0);
+    default:          return null;
+  }
+}
+
+function render(){
+  const win=document.getElementById('window').value;
+  const sortKey=document.getElementById('sort').value;
+  const base=OFFERS.filter(passesCommon);
+
+  let gone=base.filter(o=>!o.active&&inWindow(o.last_seen,win));
+  let neu =base.filter(o=> o.active&&inWindow(o.first_seen,win));
+
+  const sf=sortFn(sortKey);
+  if(sf){gone.sort(sf);neu.sort(sf);}
+  else{
+    gone.sort((a,b)=>new Date(b.last_seen||0)-new Date(a.last_seen||0));
+    neu.sort((a,b)=>new Date(b.first_seen||0)-new Date(a.first_seen||0));
+  }
+
+  document.getElementById('list-gone').innerHTML=gone.length
+    ? gone.map(o=>card(o,'gone')).join('')
+    : '<div class="empty">📭 Brak zniknięć w tym oknie.</div>';
+  document.getElementById('list-new').innerHTML=neu.length
+    ? neu.map(o=>card(o,'new')).join('')
+    : '<div class="empty">📭 Brak nowych ofert w tym oknie.</div>';
+
+  document.getElementById('cnt-gone').textContent=gone.length;
+  document.getElementById('cnt-new').textContent=neu.length;
+
+  document.getElementById('k-gone').textContent=gone.length;
+  document.getElementById('k-new').textContent=neu.length;
+  const net=neu.length-gone.length;
+  const ke=document.getElementById('k-net');
+  ke.textContent=(net>0?'+':'')+net;
+  ke.className='v '+(net>0?'net-pos':net<0?'net-neg':'net-zero');
+  const ppmNew=median(neu.map(o=>o.price_per_m2).filter(v=>v!=null));
+  document.getElementById('k-ppm-new').textContent=ppmNew?PERM2(ppmNew):'—';
+  const lifeArr=gone.map(o=>o.days_active).filter(v=>v!=null);
+  const lifeAvg=lifeArr.length?Math.round(lifeArr.reduce((a,b)=>a+b,0)/lifeArr.length):null;
+  document.getElementById('k-life').textContent=lifeAvg!=null?lifeAvg+' dni':'—';
+}
+
+function buildToolbar(){
+  const chips=[['olx','OLX'],['otodom','Otodom']];
+  document.getElementById('src-chips').innerHTML=chips.map(([k,l])=>
+    `<span class="zm-chip" data-src="${k}" onclick="toggleSrc('${k}',this)">${l}</span>`).join('');
+}
+function toggleSrc(k,el){SRCFILTER.has(k)?SRCFILTER.delete(k):SRCFILTER.add(k);el.classList.toggle('on');render();}
+
+async function load(){
+  buildToolbar();
+  try{
+    const res=await fetch('data.json?v='+Date.now());
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    const data=await res.json();
+    document.getElementById('last-scan').textContent=(data.last_scan||data.generated_at||'—').slice(0,16).replace('T',' ');
+    OFFERS=data.offers||[];
+    document.getElementById('zm-loading').style.display='none';
+    document.getElementById('zm-content').style.display='block';
+    render();
+  }catch(e){
+    document.getElementById('zm-loading').innerHTML='❌ Błąd ładowania data.json: '+e.message;
+  }
+}
+load();
+</script>
+</body>
+</html>

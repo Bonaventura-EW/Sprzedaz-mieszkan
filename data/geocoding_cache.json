@@ -1,0 +1,242 @@
+{
+ "żywnego": {
+  "result": {
+   "lat": 51.2688011,
+   "lon": 22.5475865,
+   "name": "Wojciecha Żywnego"
+  },
+  "ts": 1782070579.873216
+ },
+ "wallenroda": {
+  "result": {
+   "lat": 51.2416661,
+   "lon": 22.5256524,
+   "name": "Konrada Wallenroda"
+  },
+  "ts": 1782070581.2903416
+ },
+ "koralowej": {
+  "result": {
+   "lat": 51.2224391,
+   "lon": 22.4857366,
+   "name": "Koralowa"
+  },
+  "ts": 1782070584.2297266
+ },
+ "fulmana": {
+  "result": {
+   "lat": 51.2003095,
+   "lon": 22.5447234,
+   "name": "Biskupa Mariana Fulmana"
+  },
+  "ts": 1782070585.7415724
+ },
+ "lwowskiej": {
+  "result": {
+   "lat": 51.2573271,
+   "lon": 22.5838316,
+   "name": "Lwowska"
+  },
+  "ts": 1782070588.6509676
+ },
+ "sikorskiego": {
+  "result": {
+   "lat": 51.2559192,
+   "lon": 22.5309877,
+   "name": "Aleja Generała Władysława Sikorskiego"
+  },
+  "ts": 1782070589.9613578
+ },
+ "bohaterów monte cassino": {
+  "result": {
+   "lat": 51.2396096,
+   "lon": 22.513927,
+   "name": "Bohaterów Monte Cassino"
+  },
+  "ts": 1782070591.2971516
+ },
+ "ks. jerzego popiełuszki": {
+  "result": {
+   "lat": 51.2531167,
+   "lon": 22.5365555,
+   "name": "Księdza Jerzego Popiełuszki"
+  },
+  "ts": 1782070592.6494896
+ },
+ "magdaleny brzeskiej": {
+  "result": {
+   "lat": 51.2332228,
+   "lon": 22.5364355,
+   "name": "Magdaleny Brzeskiej"
+  },
+  "ts": 1782070594.0469868
+ },
+ "migdałowej": {
+  "result": {
+   "lat": 51.2726639,
+   "lon": 22.5925624,
+   "name": "Migdałowa"
+  },
+  "ts": 1782070596.8520558
+ },
+ "wolińskiego": {
+  "result": {
+   "lat": 51.2023768,
+   "lon": 22.5521686,
+   "name": "Henryka Wolińskiego"
+  },
+  "ts": 1782070598.253463
+ },
+ "nałęczowskiej": {
+  "result": {
+   "lat": 51.2552101,
+   "lon": 22.4837321,
+   "name": "Nałęczowska"
+  },
+  "ts": 1782070601.3234744
+ },
+ "różana": {
+  "result": {
+   "lat": 51.2322909,
+   "lon": 22.5177225,
+   "name": "Różana"
+  },
+  "ts": 1782070602.8928192
+ },
+ "lubartowskiej": {
+  "result": {
+   "lat": 51.250489,
+   "lon": 22.5672571,
+   "name": "Lubartowska"
+  },
+  "ts": 1782070605.8467312
+ },
+ "gospodarczej": {
+  "result": {
+   "lat": 51.2466915,
+   "lon": 22.6021858,
+   "name": "Gospodarcza"
+  },
+  "ts": 1782070608.750245
+ },
+ "kalinowszczyzna": {
+  "result": {
+   "lat": 51.2523966,
+   "lon": 22.5820604,
+   "name": "Kalinowszczyzna"
+  },
+  "ts": 1782070610.30121
+ },
+ "grabskiego": {
+  "result": {
+   "lat": 51.2370444,
+   "lon": 22.6036989,
+   "name": "Władysława Grabskiego"
+  },
+  "ts": 1782070611.6179557
+ },
+ "hutniczej": {
+  "result": {
+   "lat": 51.2427764,
+   "lon": 22.5934545,
+   "name": "Hutnicza"
+  },
+  "ts": 1782070614.4545712
+ },
+ "mełgiewska": {
+  "result": {
+   "lat": 51.243513,
+   "lon": 22.6488208,
+   "name": "Mełgiewska"
+  },
+  "ts": 1782070615.8727121
+ },
+ "kazmierza dulęby": {
+  "result": null,
+  "ts": 1782070618.8656747
+ },
+ "pana balcera": {
+  "result": {
+   "lat": 51.2367059,
+   "lon": 22.5265336,
+   "name": "Pana Balcera"
+  },
+  "ts": 1782070620.200635
+ },
+ "ułanów": {
+  "result": {
+   "lat": 51.2358737,
+   "lon": 22.5034848,
+   "name": "Ułanów"
+  },
+  "ts": 1782070621.7340913
+ },
+ "szczytowa": {
+  "result": {
+   "lat": 51.2234364,
+   "lon": 22.5339212,
+   "name": "Szczytowa"
+  },
+  "ts": 1782070623.2569182
+ },
+ "bociania": {
+  "result": {
+   "lat": 51.2276399,
+   "lon": 22.5110805,
+   "name": "Bociania"
+  },
+  "ts": 1782070624.7619848
+ },
+ "droga męczenników majdanka": {
+  "result": {
+   "lat": 51.2325253,
+   "lon": 22.5877826,
+   "name": "Droga Męczenników Majdanka"
+  },
+  "ts": 1782070626.090092
+ },
+ "żarnowieckiej. znajduje": {
+  "result": null,
+  "ts": 1782070627.56815
+ },
+ "staszica": {
+  "result": {
+   "lat": 51.2504851,
+   "lon": 22.5641406,
+   "name": "Stanisława Staszica"
+  },
+  "ts": 1782070629.107862
+ },
+ "daliowa": {
+  "result": {
+   "lat": 51.2776064,
+   "lon": 22.5895853,
+   "name": "Daliowa"
+  },
+  "ts": 1782070630.6210778
+ },
+ "kameliowej": {
+  "result": {
+   "lat": 51.2720242,
+   "lon": 22.5136834,
+   "name": "Kameliowa"
+  },
+  "ts": 1782070633.4099152
+ },
+ "jemiołuszki": {
+  "result": {
+   "lat": 51.2205016,
+   "lon": 22.4788125,
+   "name": "Jemiołuszki"
+  },
+  "ts": 1782070634.721536
+ },
+ "zana": {
+  "result": {
+   "lat": 51.2356675,
+   "lon": 22.5403104,
+   "name": "Tomasza Zana"
+  },
+  "ts": 1782070636.0879743
+ }
+}
