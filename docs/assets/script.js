@@ -18,8 +18,8 @@ const QUANTILE_COLORS = ['#15803d', '#4ca11e', '#84cc16', '#c4d62b', '#eab308',
                          '#f59e0b', '#f97316', '#ef4444', '#db2777', '#7c3aed'];
 // stałe kolory rynku — wspólne z wykresem w analytics.html
 const MARKET_COLORS = {
-    'pierwotny': '#0284c7',
-    'wtorny': '#16a34a',
+    'pierwotny': '#f59e0b',
+    'wtorny': '#7c3aed',
     'nieokreslony': '#94a3b8',
 };
 const MARKET_LABELS = {
@@ -241,7 +241,7 @@ function buildLegend() {
         const cb = document.createElement('input');
         cb.type = 'checkbox';
         cb.checked = quantileBucketState[i] !== false;
-        cb.style.cssText = 'width:15px;height:15px;margin:0;flex:0 0 auto;accent-color:#16a34a';
+        cb.style.cssText = 'width:15px;height:15px;margin:0;flex:0 0 auto;accent-color:#7c3aed';
         cb.addEventListener('change', () => { quantileBucketState[i] = cb.checked; render(); });
         const dot = document.createElement('span');
         dot.style.cssText = `width:14px;height:14px;border-radius:50%;flex:0 0 auto;border:1px solid rgba(0,0,0,0.25);background:${QUANTILE_COLORS[i]}`;

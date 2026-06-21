@@ -2,6 +2,15 @@
 
 ## [Niewydane]
 
+### Zmienione
+- **Nowy schemat kolorystyczny — śliwkowo-bursztynowy** (deep violet + amber),
+  celowo odróżniający SONAR SPRZEDAŻY od zielonego SONARA DZIAŁKOWEGO: paleta
+  CSS (`:root`), nagłówek/nawigacja/karty/przyciski, logo i favikona (blok
+  mieszkalny w nowych barwach), kolory rynku na mapie (pierwotny = bursztyn,
+  wtórny = fiolet) oraz serie wykresów w Analityce/Monitoringu/Statystykach.
+  Zielenie semantyczne (spadek ceny, nowe oferty, oszczędność) zostały. Wersje
+  cache assetów podbite (`?v=2`).
+
 ### Dodane
 - Podstrona **📐 Statystyki** (`docs/statystyki.html`) z dodatkowymi przekrojami
   rynku: porównanie **rynku pierwotnego vs wtórnego** (mediana ceny/m², ceny,

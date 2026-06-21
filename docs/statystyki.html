@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SONAR SPRZEDAŻY — Statystyki i porównania</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
-    <link rel="stylesheet" href="assets/style.css?v=1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+    <link rel="stylesheet" href="assets/style.css?v=2">
     <style>
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     @media(max-width:760px){.two-col{grid-template-columns:1fr}}
     .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .cmp .side{border-radius:14px;padding:14px 16px;color:#fff}
-    .cmp .side.prim{background:linear-gradient(135deg,#075985,#0284c7)}
-    .cmp .side.wtor{background:linear-gradient(135deg,var(--green-900),var(--green-600))}
+    .cmp .side.prim{background:linear-gradient(135deg,#92400e,#f59e0b)}
+    .cmp .side.wtor{background:linear-gradient(135deg,#3b0764,#7c3aed)}
     .cmp .side h4{font-size:12px;text-transform:uppercase;letter-spacing:.06em;opacity:.85;margin-bottom:8px}
     .cmp .row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;border-top:1px solid rgba(255,255,255,.15)}
     .cmp .row:first-of-type{border-top:none}
@@ -98,7 +98,7 @@
     </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="assets/logo.js?v=1"></script>
+<script src="assets/logo.js?v=2"></script>
 <script>
 const fmtZl = v => v==null?'—':Math.round(v).toLocaleString('pl-PL')+' zł';
 const fmtM2 = v => v==null?'—':Math.round(v).toLocaleString('pl-PL')+' zł/m²';
@@ -159,8 +159,8 @@ async function init(){
         type:'bar',
         data:{labels:['Mediana ceny/m²','Mediana ceny (×10⁴)','Mediana m²'],
           datasets:[
-            {label:'pierwotny',data:[P.m2,P.price/10000,P.area],backgroundColor:'#0284c7'},
-            {label:'wtórny',data:[W.m2,W.price/10000,W.area],backgroundColor:'#16a34a'},
+            {label:'pierwotny',data:[P.m2,P.price/10000,P.area],backgroundColor:'#f59e0b'},
+            {label:'wtórny',data:[W.m2,W.price/10000,W.area],backgroundColor:'#7c3aed'},
           ]},
         options:{...common,plugins:{legend:{display:true}}}
     });
@@ -172,7 +172,7 @@ async function init(){
     const rKeys=Object.keys(roomBuckets).filter(k=>roomBuckets[k].length);
     new Chart(document.getElementById('roomsChart'),{
         type:'bar',
-        data:{labels:rKeys.map(k=>k+' pok.'),datasets:[{data:rKeys.map(k=>Math.round(median(roomBuckets[k]))),backgroundColor:'#65a30d'}]},
+        data:{labels:rKeys.map(k=>k+' pok.'),datasets:[{data:rKeys.map(k=>Math.round(median(roomBuckets[k]))),backgroundColor:'#7c3aed'}]},
         options:{...common,scales:{y:{title:{display:true,text:'zł/m²'}}}}
     });
 

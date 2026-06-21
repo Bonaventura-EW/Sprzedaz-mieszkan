@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SONAR SPRZEDAŻY — Monitoring skanów</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
-    <link rel="stylesheet" href="assets/style.css?v=1">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+    <link rel="stylesheet" href="assets/style.css?v=2">
 </head>
 <body class="page-body">
     <header class="header">
@@ -60,9 +60,9 @@
     </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="assets/logo.js?v=1"></script>
+<script src="assets/logo.js?v=2"></script>
 <script>
-const LIME = '#a3e635', GREEN = '#16a34a', DARK = '#14532d', BLUE = '#0284c7', OLIVE = '#65a30d';
+const LIME = '#f59e0b', GREEN = '#7c3aed', DARK = '#4c1d95', BLUE = '#0284c7', OLIVE = '#f59e0b';
 
 function ts(label) {
     return new Date(label).toLocaleString('pl-PL', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
@@ -104,7 +104,7 @@ async function init() {
             labels: dur.map(d => ts(d.timestamp)),
             datasets: [{
                 label: 'czas skanu [s]', data: dur.map(d => d.duration),
-                borderColor: GREEN, backgroundColor: 'rgba(22,163,74,0.15)', fill: true, tension: 0.3,
+                borderColor: GREEN, backgroundColor: 'rgba(124,58,237,0.15)', fill: true, tension: 0.3,
             }]
         },
         options: common
@@ -130,7 +130,7 @@ async function init() {
         data: {
             labels: db.map(d => ts(d.timestamp)),
             datasets: [
-                { label: 'aktywne', data: db.map(d => d.active), borderColor: GREEN, backgroundColor: 'rgba(22,163,74,0.15)', fill: true, tension: 0.3 },
+                { label: 'aktywne', data: db.map(d => d.active), borderColor: GREEN, backgroundColor: 'rgba(124,58,237,0.15)', fill: true, tension: 0.3 },
                 { label: 'łącznie w bazie', data: db.map(d => d.total), borderColor: DARK, borderDash: [6, 4], tension: 0.3 },
             ]
         },

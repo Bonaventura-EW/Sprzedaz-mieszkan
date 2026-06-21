@@ -1,15 +1,18 @@
 :root {
-    --ink: #0f1f15;
-    --bg: #eef3ee;
+    /* Paleta SONARA SPRZEDAŻY — śliwkowo-bursztynowa (celowo inna niż zielona
+       w SONARZE DZIAŁKOWYM). Nazwy zmiennych pozostały historyczne dla zwięzłości,
+       ale --green-* to teraz odcienie fioletu, a --lime to bursztyn. */
+    --ink: #1f1533;
+    --bg: #f3eefb;
     --card: #ffffff;
-    --line: #dce5dc;
-    --green-900: #052e16;
-    --green-800: #0b3d20;
-    --green-700: #14532d;
-    --green-600: #16a34a;
-    --lime: #a3e635;
-    --lime-soft: #ecfccb;
-    --muted: #64748b;
+    --line: #e6def2;
+    --green-900: #2e1065;
+    --green-800: #4c1d95;
+    --green-700: #6d28d9;
+    --green-600: #7c3aed;
+    --lime: #f59e0b;
+    --lime-soft: #fef3c7;
+    --muted: #6b7280;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,7 +27,7 @@ body {
 
 /* ===== Header ===== */
 .header {
-    background: linear-gradient(120deg, var(--green-900) 0%, var(--green-800) 55%, #123a26 100%);
+    background: linear-gradient(120deg, var(--green-900) 0%, var(--green-800) 55%, #6d28d9 100%);
     color: white;
     padding: 10px 18px;
     display: flex;
@@ -34,7 +37,7 @@ body {
     gap: 10px;
     box-shadow: 0 2px 14px rgba(2, 22, 10, 0.45);
     z-index: 1001;
-    border-bottom: 1px solid rgba(163, 230, 53, 0.25);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.25);
 }
 .header h1 {
     font-size: 19px;
@@ -53,21 +56,21 @@ body {
     text-transform: uppercase;
     opacity: 0.9;
 }
-.sonar-logo { display: inline-flex; filter: drop-shadow(0 0 6px rgba(163,230,53,0.35)); }
+.sonar-logo { display: inline-flex; filter: drop-shadow(0 0 6px rgba(245,158,11,0.35)); }
 
 .header-nav { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
 .header-nav a {
-    color: #e7f6df;
+    color: #f3e8ff;
     text-decoration: none;
-    background: rgba(163, 230, 53, 0.12);
-    border: 1px solid rgba(163, 230, 53, 0.3);
+    background: rgba(245, 158, 11, 0.12);
+    border: 1px solid rgba(245, 158, 11, 0.3);
     padding: 7px 14px;
     border-radius: 999px;
     font-weight: 600;
     font-size: 13px;
     transition: background 0.2s, transform 0.15s;
 }
-.header-nav a:hover { background: rgba(163, 230, 53, 0.28); transform: translateY(-1px); }
+.header-nav a:hover { background: rgba(245, 158, 11, 0.28); transform: translateY(-1px); }
 .header-nav a.active { background: var(--lime); color: var(--green-900); }
 .header-meta { font-size: 12px; opacity: 0.85; }
 
@@ -88,7 +91,7 @@ body {
 
 .sidebar-stats {
     background: linear-gradient(135deg, var(--green-900), var(--green-700));
-    color: #e7f6df;
+    color: #f3e8ff;
     border-radius: 14px;
     padding: 12px 14px;
     box-shadow: 0 4px 12px rgba(2, 22, 10, 0.25);
@@ -159,8 +162,8 @@ body {
 .trend-up { color: #dc2626; font-weight: 700; }
 .badge-new { display: inline-block; background: #dc2626; color: white; border-radius: 999px; padding: 0 7px; font-size: 10px; font-weight: 700; vertical-align: middle; }
 .badge-market { display: inline-block; border-radius: 999px; padding: 0 8px; font-size: 10px; font-weight: 700; vertical-align: middle; }
-.market-pierwotny { background: #e0f2fe; color: #075985; }
-.market-wtorny { background: var(--lime-soft); color: var(--green-700); }
+.market-pierwotny { background: #fef3c7; color: #92400e; }
+.market-wtorny { background: #ede9fe; color: #5b21b6; }
 .market-nieokreslony { background: #f1f5f9; color: #475569; }
 
 /* markery divIcon nie mogą mieć tła Leafleta */
@@ -186,7 +189,7 @@ body {
 .cards-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin-bottom: 18px; }
 .kpi-card {
     background: linear-gradient(135deg, var(--green-900), var(--green-700));
-    color: #e7f6df; border-radius: 14px; padding: 14px 16px;
+    color: #f3e8ff; border-radius: 14px; padding: 14px 16px;
     box-shadow: 0 4px 12px rgba(2, 22, 10, 0.22);
 }
 .kpi-card h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.75; margin-bottom: 6px; }
