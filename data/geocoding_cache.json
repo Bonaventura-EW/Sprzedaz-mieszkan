@@ -906,5 +906,585 @@
    "name": "Willowa"
   },
   "ts": 1782072292.742505
+ },
+ "ks ludwika zalewskiego 9": {
+  "result": null,
+  "ts": 1782073236.2236998
+ },
+ "szafirowa": {
+  "result": {
+   "lat": 51.2227413,
+   "lon": 22.5082051,
+   "name": "Szafirowa"
+  },
+  "ts": 1782073237.7600772
+ },
+ "opalowa": {
+  "result": {
+   "lat": 51.2206579,
+   "lon": 22.5081794,
+   "name": "Opalowa"
+  },
+  "ts": 1782073239.302624
+ },
+ "lwowska": {
+  "result": {
+   "lat": 51.2555908,
+   "lon": 22.5805549,
+   "name": "Lwowska"
+  },
+  "ts": 1782073240.8388348
+ },
+ "poligonowa": {
+  "result": {
+   "lat": 51.2747372,
+   "lon": 22.5293355,
+   "name": "Poligonowa"
+  },
+  "ts": 1782073242.3785067
+ },
+ "chodźki": {
+  "result": {
+   "lat": 51.268252,
+   "lon": 22.5599005,
+   "name": "Doktora Witolda Chodźki"
+  },
+  "ts": 1782073243.8958597
+ },
+ "unicka": {
+  "result": {
+   "lat": 51.2569639,
+   "lon": 22.5746932,
+   "name": "Unicka"
+  },
+  "ts": 1782073245.3485918
+ },
+ "rogatka warszawska": {
+  "result": null,
+  "ts": 1782073246.7367997
+ },
+ "żołnierska": {
+  "result": {
+   "lat": 51.2523355,
+   "lon": 22.5251443,
+   "name": "Żołnierska"
+  },
+  "ts": 1782073248.071806
+ },
+ "wojciechowska 40": {
+  "result": null,
+  "ts": 1782073249.4062142
+ },
+ "wojciechowskiej": {
+  "result": {
+   "lat": 51.2470904,
+   "lon": 22.5047688,
+   "name": "Wojciechowska"
+  },
+  "ts": 1782073252.4236784
+ },
+ "długosza": {
+  "result": {
+   "lat": 51.2516977,
+   "lon": 22.5432428,
+   "name": "Aleja Jana Długosza"
+  },
+  "ts": 1782073253.942621
+ },
+ "narutowicza": {
+  "result": {
+   "lat": 51.2443337,
+   "lon": 22.5579623,
+   "name": "Prezydenta Gabriela Narutowicza"
+  },
+  "ts": 1782073255.233692
+ },
+ "sasankowa 5": {
+  "result": null,
+  "ts": 1782073256.6421177
+ },
+ "sasankowa": {
+  "result": {
+   "lat": 51.2314,
+   "lon": 22.5184591,
+   "name": "Sasankowa"
+  },
+  "ts": 1782073258.020368
+ },
+ "spokojna": {
+  "result": {
+   "lat": 51.2508622,
+   "lon": 22.5538065,
+   "name": "Spokojna"
+  },
+  "ts": 1782073259.546812
+ },
+ "lubomelska": {
+  "result": {
+   "lat": 51.2515405,
+   "lon": 22.5517924,
+   "name": "Lubomelska"
+  },
+  "ts": 1782073261.0522666
+ },
+ "puławska": {
+  "result": {
+   "lat": 51.255193,
+   "lon": 22.5322423,
+   "name": "Puławska"
+  },
+  "ts": 1782073262.588659
+ },
+ "stefana okrzei": {
+  "result": {
+   "lat": 51.2552714,
+   "lon": 22.5829892,
+   "name": "Stefana Okrzei"
+  },
+  "ts": 1782073264.092797
+ },
+ "zielone wzgórze": {
+  "result": {
+   "lat": 51.2696135,
+   "lon": 22.527146,
+   "name": "Zielone Wzgórze"
+  },
+  "ts": 1782073265.5438802
+ },
+ "przytulna": {
+  "result": {
+   "lat": 51.2259177,
+   "lon": 22.5326464,
+   "name": "Przytulna"
+  },
+  "ts": 1782073266.9780602
+ },
+ "kameralnej": {
+  "result": {
+   "lat": 51.2651818,
+   "lon": 22.5527872,
+   "name": "Kameralna"
+  },
+  "ts": 1782073269.8557131
+ },
+ "migdałowa": {
+  "result": {
+   "lat": 51.2726639,
+   "lon": 22.5925624,
+   "name": "Migdałowa"
+  },
+  "ts": 1782073271.383485
+ },
+ "leonarda. spółdzielcze": {
+  "result": null,
+  "ts": 1782073272.7484858
+ },
+ "leonarda": {
+  "result": {
+   "lat": 51.2404904,
+   "lon": 22.5171912,
+   "name": "Leonarda"
+  },
+  "ts": 1782073274.258603
+ },
+ "kaziemierza dulęby": {
+  "result": null,
+  "ts": 1782073277.0327382
+ },
+ "daliowej": {
+  "result": {
+   "lat": 51.2776064,
+   "lon": 22.5895853,
+   "name": "Daliowa"
+  },
+  "ts": 1782073280.043193
+ },
+ "sokola": {
+  "result": {
+   "lat": 51.2329273,
+   "lon": 22.5958366,
+   "name": "Sokola"
+  },
+  "ts": 1782073281.5573194
+ },
+ "piekarska": {
+  "result": {
+   "lat": 51.2254185,
+   "lon": 22.5487025,
+   "name": "Piekarska"
+  },
+  "ts": 1782073283.0802286
+ },
+ "okrzei": {
+  "result": {
+   "lat": 51.2552714,
+   "lon": 22.5829892,
+   "name": "Stefana Okrzei"
+  },
+  "ts": 1782073284.6011274
+ },
+ "wyżynna": {
+  "result": {
+   "lat": 51.2216968,
+   "lon": 22.5303157,
+   "name": "Wyżynna"
+  },
+  "ts": 1782073285.8739295
+ },
+ "długiej": {
+  "result": {
+   "lat": 51.2306465,
+   "lon": 22.5793983,
+   "name": "Długa"
+  },
+  "ts": 1782073288.846707
+ },
+ "klonowica": {
+  "result": {
+   "lat": 51.1981937,
+   "lon": 22.5874818,
+   "name": "Sebastiana Klonowica"
+  },
+  "ts": 1782073290.1042726
+ },
+ "bursztynowej": {
+  "result": {
+   "lat": 51.2227775,
+   "lon": 22.5175107,
+   "name": "Bursztynowa"
+  },
+  "ts": 1782073292.9265206
+ },
+ "kryniczna": {
+  "result": {
+   "lat": 51.2577551,
+   "lon": 22.5168836,
+   "name": "Kryniczna"
+  },
+  "ts": 1782073294.4262512
+ },
+ "dragonów": {
+  "result": {
+   "lat": 51.2356623,
+   "lon": 22.5044298,
+   "name": "Dragonów"
+  },
+  "ts": 1782073295.9386683
+ },
+ "relaksowej": {
+  "result": {
+   "lat": 51.2677414,
+   "lon": 22.5200827,
+   "name": "Relaksowa"
+  },
+  "ts": 1782073299.1377783
+ },
+ "kustronia": {
+  "result": {
+   "lat": 51.2535778,
+   "lon": 22.5900997,
+   "name": "Generała Józefa Kustronia"
+  },
+  "ts": 1782073300.6996534
+ },
+ "wapowskiego": {
+  "result": {
+   "lat": 51.2030106,
+   "lon": 22.5470253,
+   "name": "Bernarda Wapowskiego"
+  },
+  "ts": 1782073302.139589
+ },
+ "bazylianówka": {
+  "result": {
+   "lat": 51.2638534,
+   "lon": 22.5753073,
+   "name": "Bazylianówka"
+  },
+  "ts": 1782073303.581544
+ },
+ "strzeszewskiego": {
+  "result": {
+   "lat": 51.2743178,
+   "lon": 22.577246,
+   "name": "Czesława Strzeszewskiego"
+  },
+  "ts": 1782073305.2047834
+ },
+ "kąpielowej": {
+  "result": {
+   "lat": 51.2419429,
+   "lon": 22.5739373,
+   "name": "Kąpielowa"
+  },
+  "ts": 1782073308.3369422
+ },
+ "kurantowej": {
+  "result": {
+   "lat": 51.2608723,
+   "lon": 22.5426058,
+   "name": "Kurantowa"
+  },
+  "ts": 1782073311.311581
+ },
+ "dereckiegonumer": {
+  "result": null,
+  "ts": 1782073312.6836684
+ },
+ "jantarowa": {
+  "result": {
+   "lat": 51.2211101,
+   "lon": 22.4933385,
+   "name": "Jantarowa"
+  },
+  "ts": 1782073314.2851975
+ },
+ "operowej. ekspozycja": {
+  "result": null,
+  "ts": 1782073315.6096735
+ },
+ "paderewskiego": {
+  "result": {
+   "lat": 51.2732021,
+   "lon": 22.5562661,
+   "name": "Ignacego Jana Paderewskiego"
+  },
+  "ts": 1782073317.21877
+ },
+ "środkowej": {
+  "result": {
+   "lat": 51.2425202,
+   "lon": 22.5573536,
+   "name": "Środkowa"
+  },
+  "ts": 1782073320.4334195
+ },
+ "przyjaźni": {
+  "result": {
+   "lat": 51.2433553,
+   "lon": 22.5878244,
+   "name": "Przyjaźni"
+  },
+  "ts": 1782073322.011236
+ },
+ "tarasowej": {
+  "result": {
+   "lat": 51.2661168,
+   "lon": 22.5200604,
+   "name": "Tarasowa"
+  },
+  "ts": 1782073324.941236
+ },
+ "plażowej": {
+  "result": {
+   "lat": 51.2380852,
+   "lon": 22.5525341,
+   "name": "Plażowa"
+  },
+  "ts": 1782073327.8712106
+ },
+ "obrońców": {
+  "result": {
+   "lat": 51.209546,
+   "lon": 22.5982588,
+   "name": "Obrońców Lublina"
+  },
+  "ts": 1782073329.4699144
+ },
+ "kleeberga": {
+  "result": {
+   "lat": 51.254246,
+   "lon": 22.5924443,
+   "name": "Franciszka Kleeberga"
+  },
+  "ts": 1782073331.10576
+ },
+ "wyścigowa": {
+  "result": {
+   "lat": 51.2233809,
+   "lon": 22.5664028,
+   "name": "Wyścigowa"
+  },
+  "ts": 1782073332.6996427
+ },
+ "puławskiej. zielona": {
+  "result": null,
+  "ts": 1782073334.0830672
+ },
+ "kwiatowa": {
+  "result": {
+   "lat": 51.2248814,
+   "lon": 22.5732656,
+   "name": "Kwiatowa"
+  },
+  "ts": 1782073335.7097664
+ },
+ "łęczyńska": {
+  "result": {
+   "lat": 51.240492,
+   "lon": 22.585333,
+   "name": "Łęczyńska"
+  },
+  "ts": 1782073337.074787
+ },
+ "kiwerskiego": {
+  "result": {
+   "lat": 51.2549426,
+   "lon": 22.5876501,
+   "name": "Wojciecha Kiwerskiego"
+  },
+  "ts": 1782073338.6953022
+ },
+ "mickiewicza": {
+  "result": {
+   "lat": 51.2170234,
+   "lon": 22.578492,
+   "name": "Adama Mickiewicza"
+  },
+  "ts": 1782073340.173001
+ },
+ "gościnnej": {
+  "result": {
+   "lat": 51.2310536,
+   "lon": 22.5332614,
+   "name": "Gościnna"
+  },
+  "ts": 1782073343.173384
+ },
+ "bluszczowej": {
+  "result": {
+   "lat": 51.2734464,
+   "lon": 22.5849867,
+   "name": "Bluszczowa"
+  },
+  "ts": 1782073346.1660273
+ },
+ "chrobrego": {
+  "result": {
+   "lat": 51.2400895,
+   "lon": 22.5332966,
+   "name": "Bolesława Chrobrego"
+  },
+  "ts": 1782073347.865445
+ },
+ "tarasowa": {
+  "result": {
+   "lat": 51.2661168,
+   "lon": 22.5200604,
+   "name": "Tarasowa"
+  },
+  "ts": 1782073349.0286064
+ },
+ "cyprysowa": {
+  "result": {
+   "lat": 51.2716009,
+   "lon": 22.5813344,
+   "name": "Cyprysowa"
+  },
+  "ts": 1782073350.6509345
+ },
+ "gazowej": {
+  "result": {
+   "lat": 51.2304968,
+   "lon": 22.5654872,
+   "name": "Gazowa"
+  },
+  "ts": 1782073353.4272914
+ },
+ "romantycznej": {
+  "result": {
+   "lat": 51.2285449,
+   "lon": 22.5354952,
+   "name": "Romantyczna"
+  },
+  "ts": 1782073356.1737797
+ },
+ "królowej jadwigi": {
+  "result": {
+   "lat": 51.2214012,
+   "lon": 22.6358082,
+   "name": "Królowej Jadwigi"
+  },
+  "ts": 1782073357.7463217
+ },
+ "skautów": {
+  "result": {
+   "lat": 51.2551797,
+   "lon": 22.5360209,
+   "name": "Skautów"
+  },
+  "ts": 1782073359.1186047
+ },
+ "narcyzowej": {
+  "result": {
+   "lat": 51.2760144,
+   "lon": 22.5935248,
+   "name": "Narcyzowa"
+  },
+  "ts": 1782073361.8427277
+ },
+ "opalowej": {
+  "result": {
+   "lat": 51.2206579,
+   "lon": 22.5081794,
+   "name": "Opalowa"
+  },
+  "ts": 1782073364.2502394
+ },
+ "fantastyczna": {
+  "result": {
+   "lat": 51.226673,
+   "lon": 22.5278701,
+   "name": "Fantastyczna"
+  },
+  "ts": 1782073365.7291818
+ },
+ "krzemieniecka": {
+  "result": {
+   "lat": 51.2558189,
+   "lon": 22.5779017,
+   "name": "Krzemieniecka"
+  },
+  "ts": 1782073367.0317538
+ },
+ "jaspisowej": {
+  "result": {
+   "lat": 51.2252811,
+   "lon": 22.4893603,
+   "name": "Jaspisowa"
+  },
+  "ts": 1782073370.0329537
+ },
+ "jana samsonowicza. dodatkowo": {
+  "result": null,
+  "ts": 1782073371.4004767
+ },
+ "głębokiej": {
+  "result": {
+   "lat": 51.246501,
+   "lon": 22.5230157,
+   "name": "Głęboka"
+  },
+  "ts": 1782073374.2276
+ },
+ "berylowej": {
+  "result": {
+   "lat": 51.2232559,
+   "lon": 22.4904264,
+   "name": "Berylowa"
+  },
+  "ts": 1782073377.015233
+ },
+ "królowej jadwigii. powierzchnia": {
+  "result": null,
+  "ts": 1782073378.5278203
+ },
+ "józefa franczaka": {
+  "result": {
+   "lat": 51.2195413,
+   "lon": 22.6236777,
+   "name": "Józefa Franczaka \"Lalka\""
+  },
+  "ts": 1782073380.0498607
  }
 }
