@@ -1,4 +1,4 @@
-# API — SONAR SPRZEDAŻY
+# API — SONAR SPRZEDAŻY MIESZKAŃ
 
 Statyczne API serwowane przez GitHub Pages, regenerowane przy każdym skanie
 (2×/dzień) przez `src/api_generator.py`.

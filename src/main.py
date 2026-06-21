@@ -1,4 +1,4 @@
-"""SONAR SPRZEDAŻY — główny agent.
+"""SONAR SPRZEDAŻY MIESZKAŃ — główny agent.
 
 Koordynuje: scraping (OLX + Otodom) → normalizacja → aktualizacja bazy →
 doprecyzowanie lokalizacji (ulica z tytułu/opisu) → dezaktywacja zniknietych
@@ -375,7 +375,7 @@ class SonarSprzedazy:
 
     def _run_scan(self, max_pages: int, start: float, now):
         print("\n" + "=" * 60)
-        print("🏠 SONAR SPRZEDAŻY — Scan Started")
+        print("🏠 SONAR SPRZEDAŻY MIESZKAŃ — Scan Started")
         print("=" * 60 + "\n")
 
         # 1. Scraping obu źródeł RÓWNOLEGLE (różne domeny, własne rate limity).
@@ -422,17 +422,22 @@ class SonarSprzedazy:
         # 3b. Doprecyzowanie lokalizacji: ulica z tytułu/opisu → coords (Nominatim).
         # Cache sprawia, że kolejne skany robią live zapytania tylko dla nowych ulic.
         print("📍 Doprecyzowanie lokalizacji (ulice z tytułów/opisów)...")
-        geocoder = StreetGeocoder()
+        # WAŻNE: limit dotyczy TYLKO nowych zapytań do Nominatim. Wyniki z cache
+        # są stosowane do WSZYSTKICH aktywnych ofert (nie przerywamy pętli), więc
+        # oferta z ulicą znaną już z cache dostaje pinezkę nawet po wyczerpaniu
+        # budżetu live — naprawia przypadek, gdy oferta z ulicą w tytule (np.
+        # „ul. Mełgiewska") wypadała za limitem i nigdy nie była zaznaczana.
+        geocoder = StreetGeocoder(max_live=MAX_LIVE_GEOCODES)
         refined_count = 0
         for offer in self.database['offers']:
             if not offer.get('active'):
                 continue
-            if geocoder.live_requests >= MAX_LIVE_GEOCODES:
-                print(f"   ⚠️ Limit {MAX_LIVE_GEOCODES} geokodowań osiągnięty — reszta w kolejnym skanie")
-                break
             if refine_offer_location(offer, geocoder):
                 refined_count += 1
         geocoder.save_cache()
+        if geocoder.live_requests >= MAX_LIVE_GEOCODES:
+            print(f"   ⚠️ Wyczerpano budżet {MAX_LIVE_GEOCODES} nowych geokodowań — "
+                  f"nieznane jeszcze ulice dobiorą się w kolejnych skanach")
         if refined_count:
             print(f"   ✅ Doprecyzowano {refined_count} ofert (ulica → pinezka)")
 

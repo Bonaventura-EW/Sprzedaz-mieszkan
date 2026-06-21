@@ -82,12 +82,16 @@ def nominative_variants(street: str) -> List[str]:
 
 
 class StreetGeocoder:
-    def __init__(self, cache_file: str = str(CACHE_FILE), delay_s: float = 1.1):
+    def __init__(self, cache_file: str = str(CACHE_FILE), delay_s: float = 1.1,
+                 max_live: Optional[int] = None):
         self.cache_file = Path(cache_file)
         self.delay_s = delay_s
         self._last_request = 0.0
         self.cache = self._load_cache()
         self.live_requests = 0
+        # budżet zapytań NA ŻYWO do Nominatim (None = bez limitu); wyniki z cache
+        # są stosowane zawsze, niezależnie od budżetu — patrz geocode_street
+        self.max_live = max_live
 
     def _load_cache(self) -> Dict:
         if self.cache_file.exists():
@@ -145,12 +149,19 @@ class StreetGeocoder:
             if time.time() - entry.get('ts', 0) < NEGATIVE_TTL_S:
                 return None  # świeży negatywny wpis
 
+        # miss w cache → potrzebne zapytanie na żywo; respektuj budżet, ale gdy
+        # jest wyczerpany NIE zapisuj negatywu (ponów w kolejnym skanie)
         result = None
+        budget_exhausted = False
         for variant in nominative_variants(street):
+            if self.max_live is not None and self.live_requests >= self.max_live:
+                budget_exhausted = True
+                break
             result = self._query(variant)
             if result:
                 break
-        self.cache[key] = {'result': result, 'ts': time.time()}
+        if result is not None or not budget_exhausted:
+            self.cache[key] = {'result': result, 'ts': time.time()}
         return result
 
 

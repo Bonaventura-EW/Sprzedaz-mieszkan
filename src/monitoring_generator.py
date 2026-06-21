@@ -2,7 +2,7 @@
 
 Dashboard (docs/monitoring.html) pokazuje przebieg skanów: czasy, liczbę ofert
 z OLX/Otodom, nowe/zaktualizowane oferty i stan bazy. Format dopasowany do
-scan_history SONARA SPRZEDAŻY (płaskie wpisy z main.py::_log_scan).
+scan_history SONARA SPRZEDAŻY MIESZKAŃ (płaskie wpisy z main.py::_log_scan).
 """
 
 import json

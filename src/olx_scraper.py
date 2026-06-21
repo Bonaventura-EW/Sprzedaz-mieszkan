@@ -114,7 +114,7 @@ def _parse_floor(raw: Optional[str]) -> Optional[str]:
 
 
 def normalize_ad(ad: dict) -> Optional[Dict]:
-    """Normalizuje ogłoszenie OLX do wspólnego schematu SONARA SPRZEDAŻY."""
+    """Normalizuje ogłoszenie OLX do wspólnego schematu SONARA SPRZEDAŻY MIESZKAŃ."""
     url = ad.get('url') or ''
     if not url:
         return None

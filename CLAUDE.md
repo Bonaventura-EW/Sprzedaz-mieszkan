@@ -5,7 +5,7 @@ Czytaj na starcie każdej sesji.
 
 ## Czym jest projekt
 
-**SONAR SPRZEDAŻY** — agent monitorujący oferty **sprzedaży mieszkań w Lublinie**
+**SONAR SPRZEDAŻY MIESZKAŃ** — agent monitorujący oferty **sprzedaży mieszkań w Lublinie**
 (OLX + Otodom), z mapą na GitHub Pages i podziałem na **rynek pierwotny / wtórny**.
 Kolejny z rodziny sonarów; architektura wzorowana na `SONAR-DZIAŁKOWY`
 i `SONAR-MIESZKANIOWY`.

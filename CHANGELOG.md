@@ -2,9 +2,20 @@
 
 ## [Niewydane]
 
+### Naprawione
+- **Oferty z ulicą w tytule nie zawsze dostawały pinezkę** (np. „ul. Mełgiewska").
+  Pętla doprecyzowania lokalizacji w `main.py` przerywała się po wyczerpaniu
+  limitu 100 zapytań do Nominatim i pomijała WSZYSTKIE kolejne oferty — także te,
+  których ulica była już w cache (czyli za darmo). Teraz limit ogranicza tylko
+  NOWE zapytania na żywo (`StreetGeocoder(max_live=…)`), a wyniki z cache są
+  stosowane do wszystkich aktywnych ofert. Efekt na bieżących danych: pinezki
+  ze ~246 do ~860 bez ani jednego dodatkowego zapytania do Nominatim.
+
 ### Zmienione
+- **Zmiana nazwy: „SONAR SPRZEDAŻY" → „SONAR SPRZEDAŻY MIESZKAŃ"** w całym
+  projekcie (strony, tytuły, nagłówki, workflow, dokumentacja, docstringi).
 - **Nowy schemat kolorystyczny — śliwkowo-bursztynowy** (deep violet + amber),
-  celowo odróżniający SONAR SPRZEDAŻY od zielonego SONARA DZIAŁKOWEGO: paleta
+  celowo odróżniający SONAR SPRZEDAŻY MIESZKAŃ od zielonego SONARA DZIAŁKOWEGO: paleta
   CSS (`:root`), nagłówek/nawigacja/karty/przyciski, logo i favikona (blok
   mieszkalny w nowych barwach), kolory rynku na mapie (pierwotny = bursztyn,
   wtórny = fiolet) oraz serie wykresów w Analityce/Monitoringu/Statystykach.
@@ -23,7 +34,7 @@
 
 ## [0.1.0] — 2026-06-21
 
-Pierwsza wersja **SONARA SPRZEDAŻY** — monitoring ofert sprzedaży mieszkań
+Pierwsza wersja **SONARA SPRZEDAŻY MIESZKAŃ** — monitoring ofert sprzedaży mieszkań
 w Lublinie (OLX + Otodom) z mapą na GitHub Pages. Architektura wzorowana na
 `SONAR-DZIAŁKOWY`, dostosowana do mieszkań i podziału na rynek pierwotny/wtórny.
 

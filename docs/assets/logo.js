@@ -1,4 +1,4 @@
-/* Animowane logo SONARA SPRZEDAŻY — "skan bloku mieszkalnego".
+/* Animowane logo SONARA SPRZEDAŻY MIESZKAŃ — "skan bloku mieszkalnego".
  * Paleta śliwkowo-bursztynowa (celowo inna niż zielony SONAR-DZIAŁKOWY).
  * Wstrzykiwane do elementów .sonar-logo, żeby nie duplikować SVG w każdej stronie. */
 

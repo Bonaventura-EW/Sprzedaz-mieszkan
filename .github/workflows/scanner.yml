@@ -1,4 +1,4 @@
-name: SONAR SPRZEDAŻY Scanner
+name: SONAR SPRZEDAŻY MIESZKAŃ Scanner
 
 on:
   schedule:
@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run SONAR SPRZEDAŻY scanner
+      - name: Run SONAR SPRZEDAŻY MIESZKAŃ scanner
         continue-on-error: true
         run: |
           cd src

@@ -1,4 +1,4 @@
-# SONAR SPRZEDAŻY 🛰️🏠
+# SONAR SPRZEDAŻY MIESZKAŃ 🛰️🏠
 
 Automatyczny agent monitorujący oferty **sprzedaży mieszkań w Lublinie**
 (źródła: **OLX** + **Otodom**) i zaznaczający je na mapie, z podziałem na

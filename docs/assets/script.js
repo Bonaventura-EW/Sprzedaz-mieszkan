@@ -1,4 +1,4 @@
-/* SONAR SPRZEDAŻY — frontend mapy (Leaflet).
+/* SONAR SPRZEDAŻY MIESZKAŃ — frontend mapy (Leaflet).
  * Czyta data.json wygenerowany przez src/map_generator.py.
  *
  * Kształty pinezek:
