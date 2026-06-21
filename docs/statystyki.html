@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SONAR SPRZEDAŻY — Statystyki i porównania</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=1">
+    <link rel="stylesheet" href="assets/style.css?v=1">
+    <style>
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:760px){.two-col{grid-template-columns:1fr}}
+    .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .cmp .side{border-radius:14px;padding:14px 16px;color:#fff}
+    .cmp .side.prim{background:linear-gradient(135deg,#075985,#0284c7)}
+    .cmp .side.wtor{background:linear-gradient(135deg,var(--green-900),var(--green-600))}
+    .cmp .side h4{font-size:12px;text-transform:uppercase;letter-spacing:.06em;opacity:.85;margin-bottom:8px}
+    .cmp .row{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;border-top:1px solid rgba(255,255,255,.15)}
+    .cmp .row:first-of-type{border-top:none}
+    .cmp .row b{font-weight:800}
+    table.st-tbl{width:100%;border-collapse:collapse;font-size:13px}
+    table.st-tbl th{background:var(--lime-soft);color:var(--green-800);text-align:right;padding:8px 10px;font-size:11px;text-transform:uppercase;letter-spacing:.03em;cursor:pointer;white-space:nowrap;position:sticky;top:0}
+    table.st-tbl th:first-child,table.st-tbl td:first-child{text-align:left}
+    table.st-tbl td{padding:7px 10px;border-top:1px solid var(--line);text-align:right}
+    table.st-tbl tr:hover td{background:#f6faf3}
+    .tbl-wrap{max-height:440px;overflow:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+    .deals{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+    .deal{background:#fff;border:1px solid var(--line);border-left:4px solid #16a34a;border-radius:12px;padding:12px;font-size:12px;box-shadow:0 1px 3px rgba(2,22,10,.06)}
+    .deal .t{font-weight:700;font-size:13px;line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .deal .t a{color:var(--ink);text-decoration:none}.deal .t a:hover{color:var(--green-700)}
+    .deal .disc{display:inline-block;background:#16a34a;color:#fff;font-weight:800;border-radius:999px;padding:1px 9px;font-size:11px}
+    .deal .meta{color:var(--muted);margin-top:5px;line-height:1.5}
+    .deal .links{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap}
+    .deal .links a{font-size:11px;font-weight:700;text-decoration:none;border-radius:999px;padding:3px 10px}
+    .deal .links a.go{background:var(--green-600);color:#fff}
+    .deal .links a.map{background:#0284c7;color:#fff}
+    .muted{color:var(--muted);font-size:13px}
+    </style>
+</head>
+<body class="page-body">
+    <header class="header">
+        <h1>
+            <span class="sonar-logo"></span>
+            <span>SONAR SPRZEDAŻY<span class="sub">statystyki i porównania</span></span>
+        </h1>
+        <nav class="header-nav">
+            <a href="index.html">🗺️ Mapa</a>
+            <a href="analytics.html">📈 Analityka</a>
+            <a href="statystyki.html" class="active">📐 Statystyki</a>
+            <a href="monitoring.html">📊 Monitoring</a>
+            <a href="oferty.html">📋 Oferty</a>
+            <a href="zmiany.html">🔄 Ruch</a>
+        </nav>
+        <div class="header-meta">🕐 Ostatni scan: <strong id="last-scan">—</strong></div>
+    </header>
+
+    <div class="page-content">
+        <div class="cards-row">
+            <div class="kpi-card"><h3>Aktywne oferty</h3><div class="kpi-value" id="kpi-active">—</div><div class="kpi-sub" id="kpi-withaddr">z dokładnym adresem: —</div></div>
+            <div class="kpi-card"><h3>Mediana ceny/m² — pierwotny</h3><div class="kpi-value" id="kpi-prim">—</div><div class="kpi-sub" id="kpi-prim-n">— ofert</div></div>
+            <div class="kpi-card"><h3>Mediana ceny/m² — wtórny</h3><div class="kpi-value" id="kpi-wtor">—</div><div class="kpi-sub" id="kpi-wtor-n">— ofert</div></div>
+            <div class="kpi-card"><h3>Różnica pierwotny vs wtórny</h3><div class="kpi-value" id="kpi-diff">—</div><div class="kpi-sub">droższy rynek pierwotny</div></div>
+        </div>
+
+        <div class="chart-card">
+            <h2>🏗️ Rynek pierwotny vs wtórny</h2>
+            <div class="two-col">
+                <div class="cmp" id="cmp-cards"></div>
+                <div class="chart-wrap"><canvas id="marketBars"></canvas></div>
+            </div>
+        </div>
+
+        <div class="two-col">
+            <div class="chart-card">
+                <h2>🚪 Mediana ceny/m² wg liczby pokoi</h2>
+                <div class="chart-wrap"><canvas id="roomsChart"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <h2>🏢 Mediana ceny/m² wg piętra</h2>
+                <div class="chart-wrap"><canvas id="floorChart"></canvas></div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h2>📍 Ranking dzielnic <span class="muted" style="font-weight:400">(min. 3 oferty z ceną/m² — kliknij nagłówek, by sortować)</span></h2>
+            <div class="tbl-wrap">
+                <table class="st-tbl">
+                    <thead><tr id="dist-head"></tr></thead>
+                    <tbody id="dist-rows"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h2>💡 Okazje cenowe <span class="muted" style="font-weight:400">(cena/m² wyraźnie poniżej mediany swojej dzielnicy, dzielnice z min. 4 ofertami)</span></h2>
+            <div class="deals" id="deals"></div>
+            <p class="muted" id="deals-empty" style="display:none">Brak ofert spełniających kryteria okazji w bieżących danych.</p>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="assets/logo.js?v=1"></script>
+<script>
+const fmtZl = v => v==null?'—':Math.round(v).toLocaleString('pl-PL')+' zł';
+const fmtM2 = v => v==null?'—':Math.round(v).toLocaleString('pl-PL')+' zł/m²';
+const fmtArea = v => v==null?'—':Math.round(v).toLocaleString('pl-PL')+' m²';
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+function median(arr){if(!arr.length)return null;const s=[...arr].sort((a,b)=>a-b);const m=s.length>>1;
+  return s.length%2?s[m]:(s[m-1]+s[m])/2;}
+
+let DIST=[], distSort={key:'med_m2',dir:-1};
+
+async function init(){
+    let data;
+    try{ data=await (await fetch('data.json?t='+Date.now())).json(); }
+    catch(e){ document.getElementById('kpi-active').textContent='brak danych'; return; }
+    if(data.last_scan) document.getElementById('last-scan').textContent=
+        new Date(data.last_scan).toLocaleString('pl-PL',{dateStyle:'short',timeStyle:'short'});
+
+    const active=(data.offers||[]).filter(o=>o.active&&o.price);
+    const withM2=o=>o.price_per_m2!=null;
+
+    document.getElementById('kpi-active').textContent=active.length;
+    document.getElementById('kpi-withaddr').textContent='z dokładnym adresem: '+active.filter(o=>o.coords).length;
+
+    // === Pierwotny vs wtórny ===
+    const groups={pierwotny:[],wtorny:[]};
+    active.forEach(o=>{ if(o.market==='pierwotny')groups.pierwotny.push(o); else if(o.market==='wtorny')groups.wtorny.push(o); });
+    const stat=g=>({
+        n:g.length,
+        m2:median(g.filter(withM2).map(o=>o.price_per_m2)),
+        price:median(g.map(o=>o.price)),
+        area:median(g.filter(o=>o.area_m2).map(o=>o.area_m2)),
+        priv:g.length?Math.round(100*g.filter(o=>o.is_private_owner).length/g.length):0,
+    });
+    const P=stat(groups.pierwotny), W=stat(groups.wtorny);
+    document.getElementById('kpi-prim').textContent=fmtM2(P.m2);
+    document.getElementById('kpi-prim-n').textContent=P.n+' ofert';
+    document.getElementById('kpi-wtor').textContent=fmtM2(W.m2);
+    document.getElementById('kpi-wtor-n').textContent=W.n+' ofert';
+    const diff=(P.m2&&W.m2)?Math.round(100*(P.m2-W.m2)/W.m2):null;
+    document.getElementById('kpi-diff').textContent=diff==null?'—':(diff>0?'+':'')+diff+'%';
+
+    document.getElementById('cmp-cards').innerHTML=`
+      <div class="side prim"><h4>🏗️ Rynek pierwotny</h4>
+        <div class="row"><span>Ofert</span><b>${P.n}</b></div>
+        <div class="row"><span>Mediana ceny/m²</span><b>${fmtM2(P.m2)}</b></div>
+        <div class="row"><span>Mediana ceny</span><b>${fmtZl(P.price)}</b></div>
+        <div class="row"><span>Mediana powierzchni</span><b>${fmtArea(P.area)}</b></div>
+        <div class="row"><span>Od właściciela</span><b>${P.priv}%</b></div></div>
+      <div class="side wtor"><h4>🏠 Rynek wtórny</h4>
+        <div class="row"><span>Ofert</span><b>${W.n}</b></div>
+        <div class="row"><span>Mediana ceny/m²</span><b>${fmtM2(W.m2)}</b></div>
+        <div class="row"><span>Mediana ceny</span><b>${fmtZl(W.price)}</b></div>
+        <div class="row"><span>Mediana powierzchni</span><b>${fmtArea(W.area)}</b></div>
+        <div class="row"><span>Od właściciela</span><b>${W.priv}%</b></div></div>`;
+
+    const common={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
+    new Chart(document.getElementById('marketBars'),{
+        type:'bar',
+        data:{labels:['Mediana ceny/m²','Mediana ceny (×10⁴)','Mediana m²'],
+          datasets:[
+            {label:'pierwotny',data:[P.m2,P.price/10000,P.area],backgroundColor:'#0284c7'},
+            {label:'wtórny',data:[W.m2,W.price/10000,W.area],backgroundColor:'#16a34a'},
+          ]},
+        options:{...common,plugins:{legend:{display:true}}}
+    });
+
+    // === Cena/m² wg liczby pokoi ===
+    const roomBuckets={'1':[],'2':[],'3':[],'4':[],'5+':[]};
+    active.filter(withM2).forEach(o=>{ if(o.rooms==null)return;
+        const b=o.rooms>=5?'5+':String(o.rooms); if(roomBuckets[b])roomBuckets[b].push(o.price_per_m2); });
+    const rKeys=Object.keys(roomBuckets).filter(k=>roomBuckets[k].length);
+    new Chart(document.getElementById('roomsChart'),{
+        type:'bar',
+        data:{labels:rKeys.map(k=>k+' pok.'),datasets:[{data:rKeys.map(k=>Math.round(median(roomBuckets[k]))),backgroundColor:'#65a30d'}]},
+        options:{...common,scales:{y:{title:{display:true,text:'zł/m²'}}}}
+    });
+
+    // === Cena/m² wg piętra ===
+    function floorBucket(f){ if(f==null)return null; if(f==='parter'||f==='suterena')return 'parter';
+        if(f==='poddasze')return '4–10'; const n=parseInt(f,10);
+        if(isNaN(n))return null; if(n===0)return 'parter'; if(n<=3)return '1–3'; if(n<=10)return '4–10'; return '>10'; }
+    const floorBuckets={'parter':[],'1–3':[],'4–10':[],'>10':[]};
+    active.filter(withM2).forEach(o=>{ const b=floorBucket(o.floor); if(b)floorBuckets[b].push(o.price_per_m2); });
+    const fKeys=Object.keys(floorBuckets).filter(k=>floorBuckets[k].length);
+    new Chart(document.getElementById('floorChart'),{
+        type:'bar',
+        data:{labels:fKeys,datasets:[{data:fKeys.map(k=>Math.round(median(floorBuckets[k]))),backgroundColor:'#0284c7'}]},
+        options:{...common,scales:{y:{title:{display:true,text:'zł/m²'}}}}
+    });
+
+    // === Ranking dzielnic ===
+    const byDist={};
+    active.forEach(o=>{ if(!o.district)return; (byDist[o.district] ??= []).push(o); });
+    DIST=Object.entries(byDist).map(([name,offs])=>{
+        const m2=offs.filter(withM2).map(o=>o.price_per_m2);
+        return {name,n:offs.length,med_m2:median(m2),med_price:median(offs.map(o=>o.price)),
+                med_area:median(offs.filter(o=>o.area_m2).map(o=>o.area_m2)),
+                prim:Math.round(100*offs.filter(o=>o.market==='pierwotny').length/offs.length)};
+    }).filter(d=>d.n>=3&&d.med_m2!=null);
+    renderDistHead();
+    renderDist();
+
+    // === Okazje cenowe (cena/m² < 85% mediany dzielnicy, dzielnica >=4 ofert) ===
+    const distMed={};
+    Object.entries(byDist).forEach(([name,offs])=>{ const m2=offs.filter(withM2).map(o=>o.price_per_m2);
+        if(m2.length>=4) distMed[name]=median(m2); });
+    const deals=active.filter(o=>withM2(o)&&o.district&&distMed[o.district])
+        .map(o=>({o,ratio:o.price_per_m2/distMed[o.district],med:distMed[o.district]}))
+        .filter(d=>d.ratio<=0.85)
+        .sort((a,b)=>a.ratio-b.ratio).slice(0,24);
+    const dealsEl=document.getElementById('deals');
+    if(!deals.length){ document.getElementById('deals-empty').style.display='block'; }
+    dealsEl.innerHTML=deals.map(({o,ratio,med})=>{
+        const disc=Math.round((1-ratio)*100);
+        const mapBtn=o.coords?`<a class="map" href="index.html#offer=${encodeURIComponent(o.id)}">📍 Mapa</a>`:'';
+        return `<div class="deal">
+          <div class="t"><a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.title||'(bez tytułu)')}</a></div>
+          <div style="margin-top:5px"><span class="disc">−${disc}% vs dzielnica</span></div>
+          <div class="meta">${fmtZl(o.price)} · <b>${fmtM2(o.price_per_m2)}</b> (mediana ${esc(o.district)}: ${fmtM2(med)})<br>
+            📐 ${fmtArea(o.area_m2)}${o.rooms!=null?' · 🚪 '+o.rooms+' pok.':''} · ${o.market==='pierwotny'?'pierwotny':o.market==='wtorny'?'wtórny':'—'} · ${(o.source||'').toUpperCase()}</div>
+          <div class="links"><a class="go" href="${esc(o.url)}" target="_blank" rel="noopener">Ogłoszenie ↗</a>${mapBtn}</div>
+        </div>`;
+    }).join('');
+}
+
+const DIST_COLS=[
+  {k:'name',l:'Dzielnica',t:'str'},{k:'n',l:'Ofert',t:'num'},
+  {k:'med_m2',l:'Mediana zł/m²',t:'num',f:fmtM2},
+  {k:'med_price',l:'Mediana ceny',t:'num',f:fmtZl},
+  {k:'med_area',l:'Mediana m²',t:'num',f:fmtArea},
+  {k:'prim',l:'% pierwotny',t:'num',f:v=>v+'%'},
+];
+function renderDistHead(){
+  document.getElementById('dist-head').innerHTML=DIST_COLS.map(c=>
+    `<th onclick="sortDist('${c.k}')">${c.l} ${distSort.key===c.k?(distSort.dir<0?'▼':'▲'):''}</th>`).join('');
+}
+function renderDist(){
+  const col=DIST_COLS.find(c=>c.k===distSort.key);
+  const sorted=[...DIST].sort((a,b)=>{
+    let va=a[distSort.key],vb=b[distSort.key];
+    if(col.t==='num'){return ((va??-Infinity)-(vb??-Infinity))*distSort.dir;}
+    return (''+va).localeCompare(''+vb)* -distSort.dir;
+  });
+  document.getElementById('dist-rows').innerHTML=sorted.map(d=>
+    `<tr><td>${esc(d.name)}</td><td>${d.n}</td><td>${fmtM2(d.med_m2)}</td><td>${fmtZl(d.med_price)}</td><td>${fmtArea(d.med_area)}</td><td>${d.prim}%</td></tr>`).join('');
+}
+function sortDist(k){ if(distSort.key===k)distSort.dir*=-1; else{distSort.key=k;distSort.dir=(DIST_COLS.find(c=>c.k===k).t==='num')?-1:1;}
+  renderDistHead(); renderDist(); }
+
+init();
+</script>
+</body>
+</html>

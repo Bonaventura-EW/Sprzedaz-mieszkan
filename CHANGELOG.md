@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [Niewydane]
+
+### Dodane
+- Podstrona **📐 Statystyki** (`docs/statystyki.html`) z dodatkowymi przekrojami
+  rynku: porównanie **rynku pierwotnego vs wtórnego** (mediana ceny/m², ceny,
+  powierzchni, % od właściciela + wykres słupkowy), mediana ceny/m² **wg liczby
+  pokoi** i **wg piętra**, **sortowalny ranking dzielnic** (oferty / mediana
+  ceny/m² / ceny / powierzchni / % pierwotny) oraz **„Okazje cenowe"** —
+  oferty z ceną/m² ≥15% poniżej mediany swojej dzielnicy (dzielnice z min.
+  4 ofertami), z linkiem do ogłoszenia i do pinezki na mapie. Wpięta w
+  nawigację wszystkich podstron. Czyta `docs/data.json` (bez zmian w backendzie).
+
 ## [0.1.0] — 2026-06-21
 
 Pierwsza wersja **SONARA SPRZEDAŻY** — monitoring ofert sprzedaży mieszkań

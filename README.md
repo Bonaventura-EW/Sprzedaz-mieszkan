@@ -46,7 +46,7 @@ Rynek pierwotny/wtórny: OLX podaje go w listingu, Otodom na stronie szczegół�
 - filtry: źródło, rynek, liczba pokoi, cena, powierzchnia, czas, tylko nowe, tylko od właściciela
 - historia cen (📉/📈) i reaktywacje ofert
 - wykrywanie tego samego mieszkania na obu portalach (link „Druga oferta")
-- podstrony: 📈 Analityka, 📊 Monitoring, 📋 Oferty (cena w czasie), 🔄 Ruch (nowe/zniknięte)
+- podstrony: 📈 Analityka, 📐 Statystyki (pierwotny vs wtórny, ranking dzielnic, okazje cenowe), 📊 Monitoring, 📋 Oferty (cena w czasie), 🔄 Ruch (nowe/zniknięte)
 
 ## API (statyczne, GitHub Pages)
 
