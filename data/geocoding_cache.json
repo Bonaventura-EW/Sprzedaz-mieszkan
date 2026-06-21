@@ -238,5 +238,673 @@
    "name": "Tomasza Zana"
   },
   "ts": 1782070636.0879743
+ },
+ "kryształowej": {
+  "result": {
+   "lat": 51.2244689,
+   "lon": 22.4939501,
+   "name": "Kryształowa"
+  },
+  "ts": 1782072152.4239182
+ },
+ "wajdeloty": {
+  "result": {
+   "lat": 51.2416711,
+   "lon": 22.522807,
+   "name": "Wajdeloty"
+  },
+  "ts": 1782072153.8584197
+ },
+ "lubomelskiej": {
+  "result": {
+   "lat": 51.2509981,
+   "lon": 22.550942,
+   "name": "Boczna Lubomelskiej"
+  },
+  "ts": 1782072155.1528013
+ },
+ "koncertowa": {
+  "result": {
+   "lat": 51.2802793,
+   "lon": 22.5446692,
+   "name": "Koncertowa"
+  },
+  "ts": 1782072156.646928
+ },
+ "nadbystrzyckiej": {
+  "result": {
+   "lat": 51.2270242,
+   "lon": 22.5380726,
+   "name": "Nadbystrzycka"
+  },
+  "ts": 1782072159.5098321
+ },
+ "nałęczowska": {
+  "result": {
+   "lat": 51.2490324,
+   "lon": 22.519447,
+   "name": "Nałęczowska"
+  },
+  "ts": 1782072160.922996
+ },
+ "jasna": {
+  "result": {
+   "lat": 51.2483324,
+   "lon": 22.5536634,
+   "name": "Jasna"
+  },
+  "ts": 1782072162.376669
+ },
+ "franciszka kleeberga": {
+  "result": {
+   "lat": 51.257193,
+   "lon": 22.5896665,
+   "name": "Franciszka Kleeberga"
+  },
+  "ts": 1782072163.7904167
+ },
+ "świętokrzyskiej": {
+  "result": {
+   "lat": 51.2800389,
+   "lon": 22.5475811,
+   "name": "Świętokrzyska"
+  },
+  "ts": 1782072166.6748044
+ },
+ "marii koryznowej": {
+  "result": {
+   "lat": 51.2633782,
+   "lon": 22.5897944,
+   "name": "Marii Koryznowej"
+  },
+  "ts": 1782072167.9512923
+ },
+ "dulęby": {
+  "result": {
+   "lat": 51.2285367,
+   "lon": 22.5959871,
+   "name": "Kazimierza Dulęby"
+  },
+  "ts": 1782072169.3839061
+ },
+ "kunickiego": {
+  "result": {
+   "lat": 51.2252527,
+   "lon": 22.5737533,
+   "name": "Władysława Kunickiego"
+  },
+  "ts": 1782072170.681391
+ },
+ "polna": {
+  "result": {
+   "lat": 51.2389823,
+   "lon": 22.5833845,
+   "name": "Polna"
+  },
+  "ts": 1782072172.259927
+ },
+ "turkusowej": {
+  "result": {
+   "lat": 51.2236392,
+   "lon": 22.5125741,
+   "name": "Turkusowa"
+  },
+  "ts": 1782072175.1511564
+ },
+ "odlewnicza": {
+  "result": {
+   "lat": 51.2473133,
+   "lon": 22.5956093,
+   "name": "Odlewnicza"
+  },
+  "ts": 1782072176.6557705
+ },
+ "skołuby": {
+  "result": {
+   "lat": 51.2606026,
+   "lon": 22.5459301,
+   "name": "Skołuby"
+  },
+  "ts": 1782072178.0929952
+ },
+ "dożynkowa": {
+  "result": {
+   "lat": 51.2788398,
+   "lon": 22.5912024,
+   "name": "Dożynkowa"
+  },
+  "ts": 1782072179.548161
+ },
+ "śliwińskiego": {
+  "result": {
+   "lat": 51.2732027,
+   "lon": 22.5544282,
+   "name": "Józefa Śliwińskiego"
+  },
+  "ts": 1782072180.9415963
+ },
+ "pogodna": {
+  "result": {
+   "lat": 51.2320016,
+   "lon": 22.5996288,
+   "name": "Pogodna"
+  },
+  "ts": 1782072182.3484416
+ },
+ "bursztynowa": {
+  "result": {
+   "lat": 51.2227775,
+   "lon": 22.5175107,
+   "name": "Bursztynowa"
+  },
+  "ts": 1782072183.832055
+ },
+ "wyżynnej": {
+  "result": {
+   "lat": 51.2216968,
+   "lon": 22.5303157,
+   "name": "Wyżynna"
+  },
+  "ts": 1782072186.5555968
+ },
+ "balladyny": {
+  "result": {
+   "lat": 51.2462025,
+   "lon": 22.5212337,
+   "name": "Balladyny"
+  },
+  "ts": 1782072188.0089962
+ },
+ "czesława strzeszewskiego": {
+  "result": {
+   "lat": 51.2743178,
+   "lon": 22.577246,
+   "name": "Czesława Strzeszewskiego"
+  },
+  "ts": 1782072189.4260535
+ },
+ "niepodległości": {
+  "result": {
+   "lat": 51.2616173,
+   "lon": 22.589835,
+   "name": "Niepodległości"
+  },
+  "ts": 1782072190.9044971
+ },
+ "rogowskiego": {
+  "result": {
+   "lat": 51.2577134,
+   "lon": 22.5408091,
+   "name": "Ludomira Michała Rogowskiego"
+  },
+  "ts": 1782072192.1941612
+ },
+ "śmiałego": {
+  "result": {
+   "lat": 51.239378,
+   "lon": 22.5380093,
+   "name": "Bolesława Śmiałego"
+  },
+  "ts": 1782072193.457693
+ },
+ "nowy świat": {
+  "result": {
+   "lat": 51.2253184,
+   "lon": 22.5616509,
+   "name": "Nowy Świat"
+  },
+  "ts": 1782072194.940547
+ },
+ "harnasie": {
+  "result": {
+   "lat": 51.2768893,
+   "lon": 22.5465434,
+   "name": "Harnasie"
+  },
+  "ts": 1782072196.4004314
+ },
+ "kryształowa": {
+  "result": {
+   "lat": 51.2244689,
+   "lon": 22.4939501,
+   "name": "Kryształowa"
+  },
+  "ts": 1782072197.5264494
+ },
+ "cicha": {
+  "result": {
+   "lat": 51.2497297,
+   "lon": 22.5571574,
+   "name": "Cicha"
+  },
+  "ts": 1782072198.9967988
+ },
+ "cyrkoniowa": {
+  "result": {
+   "lat": 51.2245288,
+   "lon": 22.4880422,
+   "name": "Cyrkoniowa"
+  },
+  "ts": 1782072200.445909
+ },
+ "leszetyckiego": {
+  "result": {
+   "lat": 51.2754968,
+   "lon": 22.5526149,
+   "name": "Teodora Leszetyckiego"
+  },
+  "ts": 1782072201.9062576
+ },
+ "chopina": {
+  "result": {
+   "lat": 51.2466987,
+   "lon": 22.5542453,
+   "name": "Fryderyka Chopina"
+  },
+  "ts": 1782072203.3629065
+ },
+ "ignacego czumy": {
+  "result": {
+   "lat": 51.2726703,
+   "lon": 22.5786535,
+   "name": "Ignacego Czumy"
+  },
+  "ts": 1782072204.8166745
+ },
+ "bolesława chrobrego": {
+  "result": {
+   "lat": 51.2400895,
+   "lon": 22.5332966,
+   "name": "Bolesława Chrobrego"
+  },
+  "ts": 1782072206.2842376
+ },
+ "młodzieżowej. lokal": {
+  "result": null,
+  "ts": 1782072207.6767166
+ },
+ "lotnicza": {
+  "result": {
+   "lat": 51.2313497,
+   "lon": 22.5846616,
+   "name": "Lotnicza"
+  },
+  "ts": 1782072209.1319969
+ },
+ "wschodnia": {
+  "result": {
+   "lat": 51.2422029,
+   "lon": 22.5561211,
+   "name": "Wschodnia"
+  },
+  "ts": 1782072210.733799
+ },
+ "do dysa": {
+  "result": {
+   "lat": 51.2757441,
+   "lon": 22.5684489,
+   "name": "Do Dysa"
+  },
+  "ts": 1782072212.1973705
+ },
+ "niecałej": {
+  "result": {
+   "lat": 51.2506394,
+   "lon": 22.5607307,
+   "name": "Niecała"
+  },
+  "ts": 1782072214.9582639
+ },
+ "bukszpanowa": {
+  "result": {
+   "lat": 51.2765874,
+   "lon": 22.5083831,
+   "name": "Bukszpanowa"
+  },
+  "ts": 1782072216.3867536
+ },
+ "sympatycznej": {
+  "result": {
+   "lat": 51.2296215,
+   "lon": 22.5276369,
+   "name": "Sympatyczna"
+  },
+  "ts": 1782072219.1363559
+ },
+ "żelazowej woli": {
+  "result": {
+   "lat": 51.2677646,
+   "lon": 22.5491115,
+   "name": "Żelazowej Woli"
+  },
+  "ts": 1782072220.5888064
+ },
+ "bukszpanowej. ogromnym": {
+  "result": null,
+  "ts": 1782072222.030263
+ },
+ "startowa": {
+  "result": {
+   "lat": 51.2322703,
+   "lon": 22.5830964,
+   "name": "Startowa"
+  },
+  "ts": 1782072223.4585247
+ },
+ "szarych szeregów": {
+  "result": {
+   "lat": 51.2515615,
+   "lon": 22.5306683,
+   "name": "Szarych Szeregów"
+  },
+  "ts": 1782072224.9227684
+ },
+ "paganiniego": {
+  "result": {
+   "lat": 51.2572216,
+   "lon": 22.5517626,
+   "name": "Niccolo Paganiniego"
+  },
+  "ts": 1782072226.2067254
+ },
+ "hutnicza": {
+  "result": {
+   "lat": 51.2426357,
+   "lon": 22.5945836,
+   "name": "Hutnicza"
+  },
+  "ts": 1782072227.652801
+ },
+ "nadbystrzycka 87": {
+  "result": null,
+  "ts": 1782072229.0264494
+ },
+ "gabriela narutowicza": {
+  "result": null,
+  "ts": 1782072230.5011768
+ },
+ "granata": {
+  "result": {
+   "lat": 51.1988984,
+   "lon": 22.5503874,
+   "name": "Księdza Wincentego Granata"
+  },
+  "ts": 1782072231.9772537
+ },
+ "księdza jerzego popiełuszki": {
+  "result": {
+   "lat": 51.2531167,
+   "lon": 22.5365555,
+   "name": "Księdza Jerzego Popiełuszki"
+  },
+  "ts": 1782072233.4483082
+ },
+ "nałęczowska 18a": {
+  "result": null,
+  "ts": 1782072234.9475071
+ },
+ "grażyny": {
+  "result": {
+   "lat": 51.2410486,
+   "lon": 22.5308713,
+   "name": "Grażyny"
+  },
+  "ts": 1782072236.394533
+ },
+ "henryka wolińskiego": {
+  "result": {
+   "lat": 51.2023768,
+   "lon": 22.5521686,
+   "name": "Henryka Wolińskiego"
+  },
+  "ts": 1782072237.848259
+ },
+ "al.racławickie": {
+  "result": {
+   "lat": 51.2505735,
+   "lon": 22.5313799,
+   "name": "Aleje Racławickie"
+  },
+  "ts": 1782072239.2918837
+ },
+ "wieniawska": {
+  "result": {
+   "lat": 51.2487951,
+   "lon": 22.5521312,
+   "name": "Wieniawska"
+  },
+  "ts": 1782072240.6210978
+ },
+ "generała witolda urbanowicza": {
+  "result": {
+   "lat": 51.2170988,
+   "lon": 22.6273332,
+   "name": "Generała Witolda Urbanowicza"
+  },
+  "ts": 1782072242.0669906
+ },
+ "wolińskiego 1": {
+  "result": null,
+  "ts": 1782072243.505
+ },
+ "boczna lubomelskiej": {
+  "result": {
+   "lat": 51.2509981,
+   "lon": 22.550942,
+   "name": "Boczna Lubomelskiej"
+  },
+  "ts": 1782072244.942355
+ },
+ "racławickie": {
+  "result": {
+   "lat": 51.2496662,
+   "lon": 22.5369743,
+   "name": "Aleje Racławickie"
+  },
+  "ts": 1782072246.4025822
+ },
+ "antoniego pączka": {
+  "result": {
+   "lat": 51.2557,
+   "lon": 22.5593137,
+   "name": "Antoniego Pączka"
+  },
+  "ts": 1782072247.897538
+ },
+ "mieczysława dereckiego": {
+  "result": null,
+  "ts": 1782072249.3268516
+ },
+ "koncertowej": {
+  "result": {
+   "lat": 51.2652532,
+   "lon": 22.5419833,
+   "name": "Koncertowa"
+  },
+  "ts": 1782072252.226052
+ },
+ "rumiankowa 3": {
+  "result": null,
+  "ts": 1782072253.7465186
+ },
+ "rumiankowa": {
+  "result": {
+   "lat": 51.2682714,
+   "lon": 22.5869729,
+   "name": "Rumiankowa"
+  },
+  "ts": 1782072255.0495718
+ },
+ "graniczna": {
+  "result": {
+   "lat": 51.2429415,
+   "lon": 22.5587678,
+   "name": "Graniczna"
+  },
+  "ts": 1782072256.544641
+ },
+ "dereckiego 11": {
+  "result": null,
+  "ts": 1782072257.9997182
+ },
+ "dereckiego": {
+  "result": {
+   "lat": 51.2795368,
+   "lon": 22.5406936,
+   "name": "Mirosława Dereckiego"
+  },
+  "ts": 1782072259.4437182
+ },
+ "ks. jerzego popiełuszki 28": {
+  "result": null,
+  "ts": 1782072261.0149965
+ },
+ "narcyzowa": {
+  "result": {
+   "lat": 51.2760144,
+   "lon": 22.5935248,
+   "name": "Narcyzowa"
+  },
+  "ts": 1782072262.462971
+ },
+ "chabrowa": {
+  "result": {
+   "lat": 51.2773391,
+   "lon": 22.5034583,
+   "name": "Chabrowa"
+  },
+  "ts": 1782072263.9686477
+ },
+ "północna": {
+  "result": {
+   "lat": 51.2583579,
+   "lon": 22.5352581,
+   "name": "Północna"
+  },
+  "ts": 1782072265.545213
+ },
+ "fantastyczna. zielone": {
+  "result": null,
+  "ts": 1782072266.97506
+ },
+ "aleje racławickie": {
+  "result": {
+   "lat": 51.2496662,
+   "lon": 22.5369743,
+   "name": "Aleje Racławickie"
+  },
+  "ts": 1782072268.2588575
+ },
+ "jana długosza": {
+  "result": null,
+  "ts": 1782072269.7056694
+ },
+ "lawinowa 3": {
+  "result": null,
+  "ts": 1782072271.16204
+ },
+ "lawinowej": {
+  "result": {
+   "lat": 51.2651978,
+   "lon": 22.5510979,
+   "name": "Lawinowa"
+  },
+  "ts": 1782072273.90107
+ },
+ "nałkowskich": {
+  "result": {
+   "lat": 51.2120016,
+   "lon": 22.5442769,
+   "name": "Wacława i Zofii Nałkowskich"
+  },
+  "ts": 1782072275.3003197
+ },
+ "szczerbowskiego": {
+  "result": {
+   "lat": 51.2399596,
+   "lon": 22.5556716,
+   "name": "Antoniego Szczerbowskiego"
+  },
+  "ts": 1782072276.7795663
+ },
+ "gliniana": {
+  "result": {
+   "lat": 51.239184,
+   "lon": 22.5434561,
+   "name": "Gliniana"
+  },
+  "ts": 1782072278.2449296
+ },
+ "konrada wallenroda": {
+  "result": {
+   "lat": 51.2416661,
+   "lon": 22.5256524,
+   "name": "Konrada Wallenroda"
+  },
+  "ts": 1782072279.6793365
+ },
+ "wolińskiego budynek c": {
+  "result": null,
+  "ts": 1782072280.946006
+ },
+ "1 maja": {
+  "result": {
+   "lat": 51.2332165,
+   "lon": 22.5694415,
+   "name": "1 Maja"
+  },
+  "ts": 1782072282.313916
+ },
+ "lipowa": {
+  "result": {
+   "lat": 51.244095,
+   "lon": 22.5526021,
+   "name": "Lipowa"
+  },
+  "ts": 1782072283.8874457
+ },
+ "wędrowna": {
+  "result": {
+   "lat": 51.2710079,
+   "lon": 22.5250677,
+   "name": "Wędrowna"
+  },
+  "ts": 1782072285.3186202
+ },
+ "warszawska 2": {
+  "result": null,
+  "ts": 1782072287.0907815
+ },
+ "warszawska": {
+  "result": {
+   "lat": 51.2604009,
+   "lon": 22.5048135,
+   "name": "Warszawska"
+  },
+  "ts": 1782072288.554948
+ },
+ "środkowa": {
+  "result": {
+   "lat": 51.2425202,
+   "lon": 22.5573536,
+   "name": "Środkowa"
+  },
+  "ts": 1782072290.0322537
+ },
+ "romantyczna": {
+  "result": {
+   "lat": 51.2265991,
+   "lon": 22.5298646,
+   "name": "Romantyczna"
+  },
+  "ts": 1782072291.4786718
+ },
+ "willowa": {
+  "result": {
+   "lat": 51.2656325,
+   "lon": 22.5175603,
+   "name": "Willowa"
+  },
+  "ts": 1782072292.742505
  }
 }
