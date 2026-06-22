@@ -2,6 +2,24 @@
 
 ## [Niewydane]
 
+### Naprawione (dezaktywacja)
+- **Aktywne oferty Otodom znikały z mapy jako „nieaktywne"**. Dwie przyczyny:
+  (1) scrape listingu Otodom urywał się na pierwszej pustej/nieudanej stronie
+  (~1800 z 3200 ofert), więc oferty z dalszych stron wypadały ze skanu; teraz
+  pobieramy CAŁY listing (przerwa dopiero po 3 pustych stronach z rzędu, z
+  ponowieniem). (2) Brak oferty w POJEDYNCZYM skanie powodował natychmiastową
+  dezaktywację — dodana **karencja**: dezaktywujemy dopiero, gdy oferty nie widać
+  od `DEACTIVATE_GRACE_DAYS` (2 dni). Próg ochrony przed masową dezaktywacją
+  podniesiony 0.3 → 0.5.
+
+### Wykorzystanie geolokalizacji Otodom
+- **Walidacja współrzędnych Otodom względem dzielnicy** (`otodom_coords_plausible`,
+  krok 3c). Otodom podaje geolokalizację — teraz JEJ UŻYWAMY na mapie (zamiast
+  wyrzucać przybliżone coords), ale reverse geocodingiem sprawdzamy, czy pinezka
+  jest w granicach Lublina i w dzielnicy zgodnej z ogłoszeniem. Zgodne pinezki
+  `approx` zostają (kwadrat na mapie), niezgodne / poza miastem → „bez GPS".
+  Etykiety warstw/legendy i popup zaktualizowane.
+
 ### Naprawione (lokalizacja)
 - **Ulica „ul" bez kropki nie była wykrywana** (np. „ul Lipińskiego" w tytule).
   Regex wymagał kropki po „ul"/„al"; teraz kropka jest opcjonalna

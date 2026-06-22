@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SONAR SPRZEDAŻY MIESZKAŃ — Mapa mieszkań na sprzedaż · Lublin</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=5">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=6">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="assets/style.css?v=5">
+    <link rel="stylesheet" href="assets/style.css?v=6">
 </head>
 <body>
 <div id="app">
@@ -41,9 +41,9 @@
                 <div class="filter-group">
                     <h3>Warstwy</h3>
                     <label><input type="checkbox" id="layer-active" checked> <span class="shape-pin"></span> Aktywne — dokładny adres <span class="count" id="count-active">(0)</span></label>
-                    <label><input type="checkbox" id="layer-active-approx" checked> <span class="shape-square"></span> Aktywne — ulica z ogłoszenia <span class="count" id="count-active-approx">(0)</span></label>
+                    <label><input type="checkbox" id="layer-active-approx" checked> <span class="shape-square"></span> Aktywne — przybliżona (ulica / Otodom) <span class="count" id="count-active-approx">(0)</span></label>
                     <label><input type="checkbox" id="layer-inactive"> <span class="shape-pin shape-inactive"></span> Nieaktywne — dokładny adres <span class="count" id="count-inactive">(0)</span></label>
-                    <label><input type="checkbox" id="layer-inactive-approx"> <span class="shape-square shape-inactive"></span> Nieaktywne — ulica <span class="count" id="count-inactive-approx">(0)</span></label>
+                    <label><input type="checkbox" id="layer-inactive-approx"> <span class="shape-square shape-inactive"></span> Nieaktywne — przybliżona <span class="count" id="count-inactive-approx">(0)</span></label>
                 </div>
 
                 <div class="filter-group">
@@ -105,9 +105,10 @@
                     <div id="legend"></div>
                     <p class="legend-note">
                         📍 pinezka = dokładny adres (Otodom)<br>
-                        ▢ kwadrat (przerywana ramka) = ulica z tytułu/treści ogłoszenia<br>
+                        ▢ kwadrat (przerywana ramka) = lokalizacja przybliżona<br>
+                        &nbsp;&nbsp;&nbsp;(ulica z ogłoszenia albo okolica z geolokalizacji Otodom)<br>
                         <span class="badge-new">N</span> nowa oferta · 💲↓/↑ zmiana ceny · × nieaktywna<br>
-                        Oferty bez adresu w ogłoszeniu → lista „bez GPS" pod mapą.
+                        Oferty bez wiarygodnej lokalizacji → lista „bez GPS" pod mapą.
                     </p>
                 </div>
             </div>
@@ -123,7 +124,7 @@
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="assets/logo.js?v=5"></script>
-<script src="assets/script.js?v=5"></script>
+<script src="assets/logo.js?v=6"></script>
+<script src="assets/script.js?v=6"></script>
 </body>
 </html>

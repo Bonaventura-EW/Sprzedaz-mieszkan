@@ -402,9 +402,10 @@ function popupHtml(o) {
             ? ` <span class="trend-up">↑ było ${fmtPrice(o.previous_price)}</span>` : '';
     const img = o.image ? `<img class="popup-img" src="${o.image}" loading="lazy" alt="">` : '';
     const where = [o.street, o.district].filter(Boolean).join(', ');
-    const precision = o.coords_precision === 'street'
-        ? ' (lokalizacja: ulica)'
-        : o.coords_precision === 'exact' ? ' (dokładny adres)' : '';
+    const precision = o.coords_precision === 'exact'
+        ? ' (dokładny adres)'
+        : o.coords_precision === 'street' ? ' (lokalizacja: ulica)'
+        : o.coords_precision === 'approx' ? ' (przybliżona — Otodom)' : '';
     const floor = fmtFloor(o.floor);
     const roomsFloor = [o.rooms ? fmtRooms(o.rooms) : null, floor].filter(Boolean).join(' • ');
     const alsoAt = o.also_at

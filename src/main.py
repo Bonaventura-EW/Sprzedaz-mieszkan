@@ -24,16 +24,21 @@ import paths
 from olx_scraper import OLXMieszkaniaScraper
 from otodom_scraper import OtodomMieszkaniaScraper
 from location_refiner import (
-    StreetGeocoder, refine_offer_location, verify_otodom_coords)
+    StreetGeocoder, refine_offer_location, verify_otodom_coords,
+    otodom_coords_plausible)
 
 # Ranking precyzji coords — przy deduplikacji zostaje oferta z najlepszą lokalizacją
 PRECISION_RANK = {'exact': 3, 'street': 2, 'approx': 1, None: 0}
 
 # Maksymalna wiarygodna zmiana ceny między skanami (ochrona przed błędami parsowania)
 MAX_PRICE_CHANGE_PERCENT = 70
-# Ochrona przed masową dezaktywacją: scraper źródła musi zwrócić >= 30%
+# Ochrona przed masową dezaktywacją: scraper źródła musi zwrócić >= 50%
 # wcześniejszej liczby aktywnych ofert tego źródła, inaczej pomijamy dezaktywację
-MIN_SCRAPE_RATIO = 0.3
+# (niekompletny/zablokowany skan ≠ zniknięcie ofert)
+MIN_SCRAPE_RATIO = 0.5
+# Karencja dezaktywacji: ofertę dezaktywujemy dopiero, gdy nie widać jej od tylu
+# dni (Otodom listing bywa niekompletny/rotacyjny — brak w jednym skanie ≠ koniec)
+DEACTIVATE_GRACE_DAYS = 2
 # Limit live geokodowań na skan (Nominatim, 1 req/s) — reszta w kolejnych skanach
 MAX_LIVE_GEOCODES = 100
 # Limit reverse geocodingu na skan (weryfikacja pinezek Otodom) — patrz niżej
@@ -180,7 +185,9 @@ class SonarSprzedazy:
 
         Returns: łączna liczba dezaktywowanych ofert (do statystyk API).
         """
-        now = datetime.now(self.tz).isoformat()
+        now_dt = datetime.now(self.tz)
+        now = now_dt.isoformat()
+        grace_cutoff = now_dt - timedelta(days=DEACTIVATE_GRACE_DAYS)
         total_deactivated = 0
         for source, scraped in scraped_by_source.items():
             scraped_ids = {o['id'] for o in scraped}
@@ -198,15 +205,27 @@ class SonarSprzedazy:
                       f"vs {len(active_in_db)} aktywnych — pomijam dezaktywację")
                 continue
 
-            deactivated = 0
+            # KARENCJA: Otodom zwraca listing rotacyjnie/niekompletnie, więc brak
+            # oferty w POJEDYNCZYM skanie nie znaczy, że zniknęła. Dezaktywujemy
+            # dopiero gdy oferty nie widać od DEACTIVATE_GRACE_DAYS (kilka skanów).
+            deactivated = skipped_grace = 0
             for offer in active_in_db:
-                if offer['id'] not in scraped_ids:
-                    offer['active'] = False
-                    offer['deactivated_at'] = now
-                    deactivated += 1
+                if offer['id'] in scraped_ids:
+                    continue
+                try:
+                    last_seen = datetime.fromisoformat(offer['last_seen'])
+                except (KeyError, ValueError):
+                    last_seen = None
+                if last_seen and last_seen > grace_cutoff:
+                    skipped_grace += 1
+                    continue  # widziana niedawno w innym skanie — daj jej czas
+                offer['active'] = False
+                offer['deactivated_at'] = now
+                deactivated += 1
             total_deactivated += deactivated
-            if deactivated:
-                print(f"   ⏸️ [{source}] dezaktywowano: {deactivated}")
+            if deactivated or skipped_grace:
+                print(f"   ⏸️ [{source}] dezaktywowano: {deactivated} "
+                      f"(w karencji, pominięto: {skipped_grace})")
         return total_deactivated
 
     def _update_days_active(self):
@@ -254,7 +273,7 @@ class SonarSprzedazy:
             if neighbours >= min_cluster:
                 loc['coords_precision'] = 'approx'
                 loc['generic_centroid'] = True
-                loc['district'] = None
+                # dzielnicę ZOSTAWIAMY — służy do walidacji coords (3c)
                 flagged += 1
         if flagged:
             print(f"   🎯 Oznaczono {flagged} pinezek Otodom jako przybliżone "
@@ -451,6 +470,26 @@ class SonarSprzedazy:
             if verify_otodom_coords(offer, geocoder):
                 corrected_count += 1
 
+        # 3c. Walidacja przybliżonych współrzędnych Otodom względem DZIELNICY.
+        # Otodom podaje geolokalizację — UŻYWAMY jej na mapie (zamiast wyrzucać),
+        # ale reverse geocodingiem sprawdzamy, czy pinezka jest w granicach Lublina
+        # i w dzielnicy zgodnej z ogłoszeniem. Pinezki w złej dzielnicy/poza miastem
+        # odrzucamy → sekcja „bez GPS". Dotyczy coords 'approx' (exact/street są już
+        # zweryfikowane wyżej). OLX nie ma coords, więc go to nie dotyczy.
+        kept_otodom = stripped_coords = 0
+        for offer in self.database['offers']:
+            loc = offer.get('location') or {}
+            if not (offer.get('active') and loc.get('coords')):
+                continue
+            if loc.get('coords_precision') != 'approx':
+                continue
+            if offer.get('source') == 'otodom' and otodom_coords_plausible(offer, geocoder):
+                kept_otodom += 1
+            else:
+                loc['coords'] = None
+                loc['coords_precision'] = None
+                stripped_coords += 1
+
         geocoder.save_cache()
         if geocoder.live_requests >= MAX_LIVE_GEOCODES:
             print(f"   ⚠️ Wyczerpano budżet {MAX_LIVE_GEOCODES} nowych geokodowań — "
@@ -460,9 +499,10 @@ class SonarSprzedazy:
         if corrected_count:
             print(f"   🛠️ Skorygowano {corrected_count} błędnych pinezek Otodom "
                   f"(przeniesione na ulicę z ogłoszenia)")
-
-        # 3c. Usuń przybliżone coords (centroidy) — pinezka tylko dla znanego adresu
-        self._strip_approx_coords()
+        if kept_otodom:
+            print(f"   📍 Użyto {kept_otodom} przybliżonych pinezek Otodom (zgodna dzielnica)")
+        if stripped_coords:
+            print(f"   📭 {stripped_coords} ofert bez wiarygodnej lokalizacji → sekcja 'bez GPS'")
 
         # 4. Dezaktywacja + porządki
         deactivated_count = self._mark_inactive(scraped_by_source)

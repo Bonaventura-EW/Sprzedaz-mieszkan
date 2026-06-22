@@ -93,10 +93,14 @@ Testy: `pytest` z roota repo (konfiguracja w `pytest.ini`, `pythonpath = src`).
    poprawnej dezaktywacji), detale dobierają się przez kilka skanów. Nie psuj
    tej optymalizacji.
 6. **Hierarchia precyzji coords**: `exact` (Otodom, punkt wskazany) > `street`
-   (zgeokodowana ulica z tekstu) > `approx` (centroid). `_flag_generic_otodom_coords`
-   degraduje fałszywie dokładne klastry (≥3 oferty w 250 m) do `approx`, a
-   `_strip_approx_coords` USUWA wszystkie pozostałe `approx` → te oferty lądują
-   w sekcji „bez GPS". Na mapie są więc tylko `exact` i `street`.
+   (zgeokodowana ulica z tekstu) > `approx` (przybliżona geolokalizacja Otodom).
+   `_flag_generic_otodom_coords` degraduje fałszywie dokładne klastry (≥3 oferty
+   w 250 m) do `approx`. Współrzędne `approx` z Otodom NIE są ślepo usuwane —
+   walidujemy je względem dzielnicy (`otodom_coords_plausible`, krok 3c w
+   `main.py`): pinezka musi być w granicach Lublina i w dzielnicy zgodnej z
+   ogłoszeniem (reverse geocoding). Zgodne zostają na mapie (kwadrat), niezgodne
+   / poza Lublinem → usuwane (sekcja „bez GPS"). OLX nadal bez coords (centroid
+   miasta). `_strip_approx_coords` (metoda) pozostaje pomocniczo/testowo.
 6a. **Weryfikacja pinezek Otodom** (`verify_otodom_coords`): Otodom bywa
    nieprecyzyjny. Dla `exact` robimy reverse geocoding i jeśli pinezka stoi na
    innej ulicy niż podana w tytule/treści (i > 0,7 km od niej), przenosimy ją na

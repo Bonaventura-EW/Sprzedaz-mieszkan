@@ -170,18 +170,18 @@ class StreetGeocoder:
             self.cache[key] = {'result': result, 'ts': time.time()}
         return result
 
-    def reverse_road(self, lat: float, lon: float) -> Optional[str]:
-        """Reverse geocoding: zwraca nazwę ulicy/drogi w danym punkcie (lub None).
+    def reverse_address(self, lat: float, lon: float) -> Optional[Dict]:
+        """Reverse geocoding: zwraca {'road','district','city'} w danym punkcie.
 
-        Używane do weryfikacji „dokładnych" pinezek Otodom — sprawdzamy, na jakiej
-        ulicy NAPRAWDĘ stoi pinezka, i porównujemy z ulicą z tytułu/treści.
-        Wynik cache'owany po zaokrąglonych współrzędnych; respektuje osobny budżet.
+        Używane do weryfikacji pinezek Otodom — sprawdzamy, na jakiej ulicy i w
+        jakiej dzielnicy NAPRAWDĘ stoi pinezka. Wynik (cały adres) cache'owany po
+        zaokrąglonych współrzędnych; respektuje osobny budżet `max_reverse`.
         """
-        key = f"rev:{lat:.4f},{lon:.4f}"
+        key = f"rva:{lat:.4f},{lon:.4f}"
         if key in self.cache:
             entry = self.cache[key]
-            if entry.get('result'):
-                return entry['result']
+            if entry.get('result') is not None:
+                return entry['result'] or None
             if time.time() - entry.get('ts', 0) < NEGATIVE_TTL_S:
                 return None
         if self.max_reverse is not None and self.reverse_requests >= self.max_reverse:
@@ -190,7 +190,7 @@ class StreetGeocoder:
         wait = self.delay_s - (time.time() - self._last_request)
         if wait > 0:
             time.sleep(wait)
-        road = None
+        result = None
         try:
             r = requests.get(NOMINATIM_REVERSE_URL, params={
                 'lat': lat, 'lon': lon, 'format': 'json', 'zoom': 16,
@@ -200,13 +200,24 @@ class StreetGeocoder:
             self.reverse_requests += 1
             r.raise_for_status()
             addr = (r.json() or {}).get('address') or {}
-            road = (addr.get('road') or addr.get('pedestrian')
-                    or addr.get('residential') or addr.get('footway'))
+            result = {
+                'road': (addr.get('road') or addr.get('pedestrian')
+                         or addr.get('residential') or addr.get('footway')),
+                'district': (addr.get('suburb') or addr.get('city_district')
+                             or addr.get('quarter') or addr.get('neighbourhood')
+                             or addr.get('borough')),
+                'city': addr.get('city') or addr.get('town') or addr.get('municipality'),
+            }
         except (requests.RequestException, ValueError) as e:
             print(f"      ⚠️ Nominatim reverse błąd ({lat:.4f},{lon:.4f}): {e}")
             return None
-        self.cache[key] = {'result': road, 'ts': time.time()}
-        return road
+        self.cache[key] = {'result': result, 'ts': time.time()}
+        return result
+
+    def reverse_road(self, lat: float, lon: float) -> Optional[str]:
+        """Sama nazwa ulicy w punkcie (z reverse_address) — do weryfikacji ulicy."""
+        addr = self.reverse_address(lat, lon)
+        return (addr or {}).get('road')
 
 
 # ── pomocnicze: porównywanie nazw ulic i dystans ─────────────────────────────
@@ -260,6 +271,51 @@ def street_candidates(offer: Dict) -> List[str]:
     text = (offer.get('title') or '') + '\n' + (offer.get('description') or '')
     cands.extend(c for c in extract_street_candidates(text) if c not in cands)
     return cands
+
+
+def _in_lublin(coords: Dict) -> bool:
+    return (LUBLIN_BBOX['lat_min'] <= coords['lat'] <= LUBLIN_BBOX['lat_max']
+            and LUBLIN_BBOX['lon_min'] <= coords['lon'] <= LUBLIN_BBOX['lon_max'])
+
+
+def district_matches(stated: str, found: str) -> bool:
+    """Czy dzielnica podana w ogłoszeniu i wykryta z reverse geocodingu to ta sama.
+    Leniwie (gdy brak którejś danej — nie blokujemy)."""
+    a = (stated or '').strip().lower().replace('-', ' ')
+    b = (found or '').strip().lower().replace('-', ' ')
+    if not a or not b:
+        return True
+    if a in b or b in a:
+        return True
+    return bool(set(a.split()) & set(b.split()))
+
+
+def otodom_coords_plausible(offer: Dict, geocoder: StreetGeocoder) -> bool:
+    """Czy współrzędne Otodom są na tyle wiarygodne, by użyć ich na mapie.
+
+    Mechanizm: pinezka musi być w granicach Lublina, a dzielnica wykryta z reverse
+    geocodingu pinezki musi zgadzać się z dzielnicą podaną w ogłoszeniu. Dzięki
+    temu używamy lokalizacji z Otodom (zamiast ją wyrzucać), ale odrzucamy pinezki
+    stojące w złym miejscu. Leniwie: gdy reverse niedostępny (budżet), zostawiamy
+    coords (korzystamy z lokalizacji Otodom; weryfikacja dobierze się w kolejnym skanie).
+    """
+    loc = offer.get('location') or {}
+    coords = loc.get('coords')
+    if not coords:
+        return False
+    if not _in_lublin(coords):
+        return False  # poza Lublinem — pinezka na pewno błędna
+    addr = geocoder.reverse_address(coords['lat'], coords['lon'])
+    if addr is None:
+        return True  # nie zweryfikowano (budżet/błąd) — używamy lokalizacji Otodom
+    city = addr.get('city')
+    if city and 'lublin' not in city.lower():
+        return False
+    if not district_matches(loc.get('district'), addr.get('district')):
+        loc['district_mismatch'] = True
+        return False  # pinezka w innej dzielnicy niż podana → nie używamy
+    loc.pop('district_mismatch', None)
+    return True
 
 
 def verify_otodom_coords(offer: Dict, geocoder: StreetGeocoder,

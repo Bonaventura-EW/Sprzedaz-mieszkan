@@ -172,40 +172,60 @@ class OtodomMieszkaniaScraper:
             print(f"❌ Otodom: błąd pobierania {url}: {e}")
             return None
 
+    def _fetch_search_ads(self, page: int) -> Optional[dict]:
+        """Pobiera jedną stronę listingu z 1 ponowieniem; zwraca searchAds lub None."""
+        for attempt in range(2):
+            html = self._fetch(f"{LISTING_URL}&page={page}")
+            if html:
+                data = extract_next_data(html)
+                if data:
+                    return (((data.get('props') or {}).get('pageProps') or {})
+                            .get('data') or {}).get('searchAds') or {}
+            time.sleep(random.uniform(self.delay_min, self.delay_max))
+        return None
+
     def _scrape_listing(self, max_pages: int) -> List[Dict]:
+        """Pobiera CAŁY listing (wszystkie strony do totalPages).
+
+        WAŻNE: nie przerywamy na pojedynczej pustej/nieudanej stronie — Otodom
+        bywa kapryśny (transient pusta strona / chwilowy throttling), a wcześniejsze
+        `break` urywało scrape ~połowy ofert (np. ~1800 z 3200). Niekompletny
+        listing powodował FAŁSZYWĄ dezaktywację ofert z dalszych stron. Przerywamy
+        dopiero po kilku NIEUDANYCH stronach z rzędu.
+        """
         offers: List[Dict] = []
         seen_ids = set()
         total_pages = 1
+        consecutive_misses = 0
 
         for page in range(1, max_pages + 1):
             if page > total_pages:
                 break
-            html = self._fetch(f"{LISTING_URL}&page={page}")
-            if not html:
-                break
-            data = extract_next_data(html)
-            if not data:
-                print(f"⚠️ Otodom: brak __NEXT_DATA__ na stronie {page}")
-                break
+            search_ads = self._fetch_search_ads(page)
+            items = (search_ads or {}).get('items') or []
+            pagination = (search_ads or {}).get('pagination') or {}
+            if pagination.get('totalPages'):
+                total_pages = pagination['totalPages']
 
-            search_ads = (((data.get('props') or {}).get('pageProps') or {})
-                          .get('data') or {}).get('searchAds') or {}
-            items = search_ads.get('items') or []
-            pagination = search_ads.get('pagination') or {}
-            total_pages = pagination.get('totalPages') or total_pages
+            if not items:
+                consecutive_misses += 1
+                print(f"⚠️ Otodom: strona {page}/{total_pages} bez ofert "
+                      f"({consecutive_misses} z rzędu)")
+                if consecutive_misses >= 3:
+                    print("⚠️ Otodom: 3 puste strony z rzędu — przerywam listing")
+                    break
+                time.sleep(random.uniform(self.delay_min, self.delay_max))
+                continue
+            consecutive_misses = 0
 
             print(f"📄 Otodom strona {page}/{total_pages}: {len(items)} ogłoszeń "
                   f"(łącznie w serwisie: {pagination.get('totalItems')})")
-
             for item in items:
                 offer = normalize_item(item)
                 if not offer or offer['id'] in seen_ids:
                     continue
                 seen_ids.add(offer['id'])
                 offers.append(offer)
-
-            if not items:
-                break
             time.sleep(random.uniform(self.delay_min, self.delay_max))
 
         return offers
