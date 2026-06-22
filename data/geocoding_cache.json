@@ -7506,5 +7506,101 @@
    "city": "gmina Niemce"
   },
   "ts": 1782144615.0729046
+ },
+ "kościuszki": {
+  "result": {
+   "lat": 51.2470484,
+   "lon": 22.559938,
+   "name": "Tadeusza Kościuszki"
+  },
+  "ts": 1782144893.0260208
+ },
+ "orla": {
+  "result": {
+   "lat": 51.2445789,
+   "lon": 22.5556244,
+   "name": "Orla"
+  },
+  "ts": 1782144894.5214128
+ },
+ "stanisława staszica": {
+  "result": {
+   "lat": 51.2504851,
+   "lon": 22.5641406,
+   "name": "Stanisława Staszica"
+  },
+  "ts": 1782144896.017266
+ },
+ "rva:51.2526,22.5115": {
+  "result": {
+   "road": "Grabowa",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1782144897.5092134
+ },
+ "rva:51.2837,22.5416": {
+  "result": {
+   "road": "Cedrowa",
+   "district": null,
+   "city": "gmina Niemce"
+  },
+  "ts": 1782144899.003623
+ },
+ "rva:51.2438,22.5558": {
+  "result": {
+   "road": "Konopnicka",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144900.2981138
+ },
+ "rva:51.2830,22.5432": {
+  "result": {
+   "road": "Cedrowa",
+   "district": null,
+   "city": "gmina Niemce"
+  },
+  "ts": 1782144901.7599506
+ },
+ "rva:51.2825,22.5449": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782144903.2743855
+ },
+ "rva:51.2166,22.4788": {
+  "result": {
+   "road": "Węglinek",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782144904.732304
+ },
+ "rva:51.2644,22.5554": {
+  "result": {
+   "road": "Młodej Polski",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782144906.1806602
+ },
+ "rva:51.2761,22.5585": {
+  "result": {
+   "road": "Edwarda Wojtasa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782144907.6857576
+ },
+ "rva:51.2335,22.5956": {
+  "result": {
+   "road": "Pogodna",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1782144909.120164
  }
 }
