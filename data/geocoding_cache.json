@@ -1486,5 +1486,777 @@
    "name": "Józefa Franczaka \"Lalka\""
   },
   "ts": 1782073380.0498607
+ },
+ "wyścigowa 43": {
+  "result": null,
+  "ts": 1782106475.9281604
+ },
+ "wyścigowej": {
+  "result": {
+   "lat": 51.2233809,
+   "lon": 22.5664028,
+   "name": "Wyścigowa"
+  },
+  "ts": 1782106478.946978
+ },
+ "fryderyka chopina": {
+  "result": {
+   "lat": 51.2466987,
+   "lon": 22.5542453,
+   "name": "Fryderyka Chopina"
+  },
+  "ts": 1782106480.7036207
+ },
+ "łabędzia": {
+  "result": {
+   "lat": 51.2315687,
+   "lon": 22.5943484,
+   "name": "Łabędzia"
+  },
+  "ts": 1782106482.3618217
+ },
+ "kupiecka": {
+  "result": {
+   "lat": 51.2809963,
+   "lon": 22.5685311,
+   "name": "Kupiecka"
+  },
+  "ts": 1782106483.7019107
+ },
+ "władysława orkana": {
+  "result": {
+   "lat": 51.2330002,
+   "lon": 22.5022889,
+   "name": "Władysława Orkana"
+  },
+  "ts": 1782106485.0629842
+ },
+ "pogodna 50a": {
+  "result": null,
+  "ts": 1782106486.9895368
+ },
+ "niecała": {
+  "result": {
+   "lat": 51.2506394,
+   "lon": 22.5607307,
+   "name": "Niecała"
+  },
+  "ts": 1782106488.326607
+ },
+ "bluszczowa": {
+  "result": {
+   "lat": 51.2734464,
+   "lon": 22.5849867,
+   "name": "Bluszczowa"
+  },
+  "ts": 1782106489.6233213
+ },
+ "motorowa": {
+  "result": {
+   "lat": 51.246658,
+   "lon": 22.6018425,
+   "name": "Motorowa"
+  },
+  "ts": 1782106491.2774878
+ },
+ "gospodarcza": {
+  "result": {
+   "lat": 51.2466915,
+   "lon": 22.6021858,
+   "name": "Gospodarcza"
+  },
+  "ts": 1782106492.9858925
+ },
+ "jutrzenki": {
+  "result": {
+   "lat": 51.229526,
+   "lon": 22.5206196,
+   "name": "Jutrzenki"
+  },
+  "ts": 1782106494.2383766
+ },
+ "paganineigo": {
+  "result": null,
+  "ts": 1782106495.935222
+ },
+ "wolska": {
+  "result": {
+   "lat": 51.2351723,
+   "lon": 22.5745413,
+   "name": "Wolska"
+  },
+  "ts": 1782106497.6293912
+ },
+ "dembowskiego": {
+  "result": {
+   "lat": 51.2531017,
+   "lon": 22.5839098,
+   "name": "Edwarda Dembowskiego"
+  },
+  "ts": 1782106499.4432528
+ },
+ "władysława kunickiego": {
+  "result": {
+   "lat": 51.2252527,
+   "lon": 22.5737533,
+   "name": "Władysława Kunickiego"
+  },
+  "ts": 1782106501.2641156
+ },
+ "kwarcowej": {
+  "result": {
+   "lat": 51.2204065,
+   "lon": 22.4881504,
+   "name": "Kwarcowa"
+  },
+  "ts": 1782106504.588213
+ },
+ "urbanowicza": {
+  "result": {
+   "lat": 51.2170988,
+   "lon": 22.6273332,
+   "name": "Generała Witolda Urbanowicza"
+  },
+  "ts": 1782106506.2388299
+ },
+ "jana samsonowicza": {
+  "result": {
+   "lat": 51.2115201,
+   "lon": 22.5478152,
+   "name": "Jana Samsonowicza"
+  },
+  "ts": 1782106508.050556
+ },
+ "narcyzową": {
+  "result": {
+   "lat": 51.2760144,
+   "lon": 22.5935248,
+   "name": "Narcyzowa"
+  },
+  "ts": 1782106509.3392792
+ },
+ "kosynierów": {
+  "result": {
+   "lat": 51.2792674,
+   "lon": 22.5793239,
+   "name": "Kosynierów"
+  },
+  "ts": 1782106510.6358712
+ },
+ "agatowa": {
+  "result": {
+   "lat": 51.2208345,
+   "lon": 22.5037364,
+   "name": "Agatowa"
+  },
+  "ts": 1782106511.934974
+ },
+ "wincentego granata": {
+  "result": {
+   "lat": 51.1988984,
+   "lon": 22.5503874,
+   "name": "Księdza Wincentego Granata"
+  },
+  "ts": 1782106513.603915
+ },
+ "tumidajskiego": {
+  "result": {
+   "lat": 51.2567627,
+   "lon": 22.5920253,
+   "name": "Kazimierza Tumidajskiego"
+  },
+  "ts": 1782106515.4046211
+ },
+ "domeyki": {
+  "result": {
+   "lat": 51.204773,
+   "lon": 22.5492552,
+   "name": "Ignacego Domeyki"
+  },
+  "ts": 1782106516.8069286
+ },
+ "melomanów": {
+  "result": {
+   "lat": 51.2699879,
+   "lon": 22.5420083,
+   "name": "Melomanów"
+  },
+  "ts": 1782106518.1967592
+ },
+ "przytulnej": {
+  "result": {
+   "lat": 51.2259177,
+   "lon": 22.5326464,
+   "name": "Przytulna"
+  },
+  "ts": 1782106520.7241104
+ },
+ "króla rogera": {
+  "result": {
+   "lat": 51.2748187,
+   "lon": 22.5461864,
+   "name": "Króla Rogera"
+  },
+  "ts": 1782106521.985808
+ },
+ "wołodyjowskiego": {
+  "result": {
+   "lat": 51.2381157,
+   "lon": 22.5151876,
+   "name": "Pana Wołodyjowskiego"
+  },
+  "ts": 1782106523.261384
+ },
+ "rowerowej": {
+  "result": {
+   "lat": 51.2413635,
+   "lon": 22.5530162,
+   "name": "Rowerowa"
+  },
+  "ts": 1782106526.6152384
+ },
+ "wąwozowa": {
+  "result": {
+   "lat": 51.2228156,
+   "lon": 22.5366605,
+   "name": "Wąwozowa"
+  },
+  "ts": 1782106528.296066
+ },
+ "zimowa": {
+  "result": {
+   "lat": 51.2346782,
+   "lon": 22.5985315,
+   "name": "Zimowa"
+  },
+  "ts": 1782106529.9815347
+ },
+ "jantarowej": {
+  "result": {
+   "lat": 51.2211101,
+   "lon": 22.4933385,
+   "name": "Jantarowa"
+  },
+  "ts": 1782106533.3472276
+ },
+ "dożynkowej": {
+  "result": {
+   "lat": 51.2788398,
+   "lon": 22.5912024,
+   "name": "Dożynkowa"
+  },
+  "ts": 1782106536.6680517
+ },
+ "kawaleryjska": {
+  "result": {
+   "lat": 51.2328845,
+   "lon": 22.511159,
+   "name": "Kawaleryjska"
+  },
+  "ts": 1782106538.3340187
+ },
+ "konopnickiej. lokal": {
+  "result": null,
+  "ts": 1782106539.5881612
+ },
+ "grażyny. nieruchomość": {
+  "result": null,
+  "ts": 1782106541.2339017
+ },
+ "młodzieżowej": {
+  "result": {
+   "lat": 51.2114128,
+   "lon": 22.5720813,
+   "name": "Młodzieżowa"
+  },
+  "ts": 1782106544.3289034
+ },
+ "krańcowej": {
+  "result": {
+   "lat": 51.233944,
+   "lon": 22.5916481,
+   "name": "Krańcowa"
+  },
+  "ts": 1782106547.779494
+ },
+ "daszyńskiego": {
+  "result": {
+   "lat": 51.261306,
+   "lon": 22.5957693,
+   "name": "Ignacego Daszyńskiego"
+  },
+  "ts": 1782106549.0969143
+ },
+ "jana śnieżyńskiego": {
+  "result": {
+   "lat": 51.2454485,
+   "lon": 22.5112804,
+   "name": "Jana Śnieżyńskiego"
+  },
+  "ts": 1782106550.76458
+ },
+ "wileńska": {
+  "result": {
+   "lat": 51.2441807,
+   "lon": 22.5233809,
+   "name": "Wileńska"
+  },
+  "ts": 1782106552.4166088
+ },
+ "ochotnicza": {
+  "result": {
+   "lat": 51.2394112,
+   "lon": 22.5538893,
+   "name": "Ochotnicza"
+  },
+  "ts": 1782106554.2363017
+ },
+ "pawiej": {
+  "result": null,
+  "ts": 1782106557.2023256
+ },
+ "trześniowska": {
+  "result": {
+   "lat": 51.2693003,
+   "lon": 22.6018611,
+   "name": "Trześniowska"
+  },
+  "ts": 1782106558.8777487
+ },
+ "krańcowej. to": {
+  "result": null,
+  "ts": 1782106560.5573533
+ },
+ "onyksowej": {
+  "result": {
+   "lat": 51.2213247,
+   "lon": 22.4996172,
+   "name": "Onyksowa"
+  },
+  "ts": 1782106563.9210024
+ },
+ "poligonowej": {
+  "result": {
+   "lat": 51.2718802,
+   "lon": 22.5290371,
+   "name": "Poligonowa"
+  },
+  "ts": 1782106566.5710893
+ },
+ "popiełuszki": {
+  "result": {
+   "lat": 51.2531167,
+   "lon": 22.5365555,
+   "name": "Księdza Jerzego Popiełuszki"
+  },
+  "ts": 1782106568.337472
+ },
+ "godebskiego": {
+  "result": {
+   "lat": 51.2474375,
+   "lon": 22.5353942,
+   "name": "Cypriana Godebskiego"
+  },
+  "ts": 1782106570.0000303
+ },
+ "glinianej": {
+  "result": {
+   "lat": 51.239184,
+   "lon": 22.5434561,
+   "name": "Gliniana"
+  },
+  "ts": 1782106573.4543707
+ },
+ "dunikowskiego": {
+  "result": {
+   "lat": 51.2190148,
+   "lon": 22.5715586,
+   "name": "Ksawerego Dunikowskiego"
+  },
+  "ts": 1782106575.1130896
+ },
+ "hetmańska": {
+  "result": {
+   "lat": 51.2343244,
+   "lon": 22.5030433,
+   "name": "Hetmańska"
+  },
+  "ts": 1782106576.7695339
+ },
+ "przy stawie": {
+  "result": {
+   "lat": 51.2526575,
+   "lon": 22.5443275,
+   "name": "Przy Stawie"
+  },
+  "ts": 1782106578.0273378
+ },
+ "nadbystrzyckiej. spokojna": {
+  "result": null,
+  "ts": 1782106579.6664946
+ },
+ "relaksowa": {
+  "result": {
+   "lat": 51.2677414,
+   "lon": 22.5200827,
+   "name": "Relaksowa"
+  },
+  "ts": 1782106581.31519
+ },
+ "junoszy": {
+  "result": {
+   "lat": 51.2541999,
+   "lon": 22.5401906,
+   "name": "Klemensa Junoszy"
+  },
+  "ts": 1782106583.1008897
+ },
+ "kompozytorów pols": {
+  "result": null,
+  "ts": 1782106584.386539
+ },
+ "kompozytorów polskich": {
+  "result": {
+   "lat": 51.2623376,
+   "lon": 22.5524155,
+   "name": "Kompozytorów Polskich"
+  },
+  "ts": 1782106586.0312903
+ },
+ "południowej. to": {
+  "result": null,
+  "ts": 1782106588.4203486
+ },
+ "wieniawskiej": {
+  "result": {
+   "lat": 51.2487951,
+   "lon": 22.5521312,
+   "name": "Wieniawska"
+  },
+  "ts": 1782106591.3446028
+ },
+ "gęsia": {
+  "result": {
+   "lat": 51.2254086,
+   "lon": 22.4805724,
+   "name": "Gęsia"
+  },
+  "ts": 1782106592.6555889
+ },
+ "gminnej": {
+  "result": {
+   "lat": 51.242562,
+   "lon": 22.5580401,
+   "name": "Gminna"
+  },
+  "ts": 1782106595.6678905
+ },
+ "skowronkowa": {
+  "result": {
+   "lat": 51.2745524,
+   "lon": 22.5002368,
+   "name": "Skowronkowa"
+  },
+  "ts": 1782106596.919618
+ },
+ "filaretów": {
+  "result": {
+   "lat": 51.2399712,
+   "lon": 22.5312531,
+   "name": "Filaretów"
+  },
+  "ts": 1782106598.5963712
+ },
+ "szeligowskiego": {
+  "result": {
+   "lat": 51.2619776,
+   "lon": 22.558447,
+   "name": "Tadeusza Szeligowskiego"
+  },
+  "ts": 1782106599.8839796
+ },
+ "herberta": {
+  "result": {
+   "lat": 51.2128556,
+   "lon": 22.5740806,
+   "name": "Zbigniewa Herberta"
+  },
+  "ts": 1782106601.186753
+ },
+ "woronieckiego": {
+  "result": {
+   "lat": 51.1990553,
+   "lon": 22.5425205,
+   "name": "Jacka Woronieckiego"
+  },
+  "ts": 1782106602.5140688
+ },
+ "nadbystrzycka": {
+  "result": {
+   "lat": 51.2331386,
+   "lon": 22.5397656,
+   "name": "Nadbystrzycka"
+  },
+  "ts": 1782106603.7937124
+ },
+ "puławskiej": {
+  "result": {
+   "lat": 51.255193,
+   "lon": 22.5322423,
+   "name": "Puławska"
+  },
+  "ts": 1782106607.0820556
+ },
+ "rymwida": {
+  "result": {
+   "lat": 51.2411508,
+   "lon": 22.5292245,
+   "name": "Rymwida"
+  },
+  "ts": 1782106608.7282043
+ },
+ "konopnicka": {
+  "result": {
+   "lat": 51.2438259,
+   "lon": 22.5554532,
+   "name": "Konopnicka"
+  },
+  "ts": 1782106610.3707232
+ },
+ "bielskiego": {
+  "result": {
+   "lat": 51.2746402,
+   "lon": 22.5771,
+   "name": "Konrada Bielskiego"
+  },
+  "ts": 1782106612.0434723
+ },
+ "kredowej": {
+  "result": {
+   "lat": 51.2328958,
+   "lon": 22.5416872,
+   "name": "Kredowa"
+  },
+  "ts": 1782106614.949831
+ },
+ "emancypantek": {
+  "result": {
+   "lat": 51.2365098,
+   "lon": 22.533241,
+   "name": "Emancypantek"
+  },
+  "ts": 1782106616.2337306
+ },
+ "wojtasa": {
+  "result": {
+   "lat": 51.2767709,
+   "lon": 22.5568884,
+   "name": "Edwarda Wojtasa"
+  },
+  "ts": 1782106617.9007938
+ },
+ "jaczewskiego": {
+  "result": {
+   "lat": 51.2575648,
+   "lon": 22.5656974,
+   "name": "Doktora Kazimierza Jaczewskiego"
+  },
+  "ts": 1782106619.5366611
+ },
+ "rubinowej": {
+  "result": {
+   "lat": 51.2231227,
+   "lon": 22.5141969,
+   "name": "Rubinowa"
+  },
+  "ts": 1782106622.4567144
+ },
+ "wąwozowej": {
+  "result": {
+   "lat": 51.2228156,
+   "lon": 22.5366605,
+   "name": "Wąwozowa"
+  },
+  "ts": 1782106625.3187447
+ },
+ "piłsudskiego": {
+  "result": {
+   "lat": 51.2369256,
+   "lon": 22.5649043,
+   "name": "Aleja Józefa Piłsudskiego"
+  },
+  "ts": 1782106627.003107
+ },
+ "pielgrzymiej": {
+  "result": null,
+  "ts": 1782106629.9097116
+ },
+ "rev:51.2365,22.5333": {
+  "result": "Emancypantek",
+  "ts": 1782106631.2572284
+ },
+ "rev:51.2433,22.5172": {
+  "result": "Skierki",
+  "ts": 1782106632.584706
+ },
+ "rev:51.2464,22.6072": {
+  "result": "Mełgiewska",
+  "ts": 1782106634.27721
+ },
+ "rev:51.2205,22.6158": {
+  "result": "Józefa Franczaka \"Lalka\"",
+  "ts": 1782106635.9618084
+ },
+ "rev:51.2304,22.4923": {
+  "result": "Roztocze",
+  "ts": 1782106637.7538085
+ },
+ "rev:51.2340,22.5435": {
+  "result": "Nadbystrzycka",
+  "ts": 1782106639.533866
+ },
+ "rev:51.2313,22.5033": {
+  "result": "Kaczeńcowa",
+  "ts": 1782106640.8959103
+ },
+ "rev:51.2546,22.4951": {
+  "result": "Nałęczowska",
+  "ts": 1782106642.555529
+ },
+ "rev:51.2212,22.5775": {
+  "result": "Władysława Kunickiego",
+  "ts": 1782106644.444448
+ },
+ "rev:51.2282,22.5722": {
+  "result": "Piaskowa",
+  "ts": 1782106646.2304847
+ },
+ "rev:51.2584,22.5693": {
+  "result": "Sieroca",
+  "ts": 1782106647.5316737
+ },
+ "rev:51.2809,22.5489": {
+  "result": "Świętokrzyska",
+  "ts": 1782106649.2159564
+ },
+ "rev:51.2539,22.5688": {
+  "result": "Mieczysława Biernackiego",
+  "ts": 1782106650.8754766
+ },
+ "rev:51.2416,22.5742": {
+  "result": "Kąpielowa",
+  "ts": 1782106652.6736686
+ },
+ "rev:51.2326,22.5140": {
+  "result": "Stokrotki",
+  "ts": 1782106654.4550116
+ },
+ "rev:51.2768,22.5836": {
+  "result": "Laurowa",
+  "ts": 1782106655.8258529
+ },
+ "rev:51.2310,22.5341": {
+  "result": "Gościnna",
+  "ts": 1782106657.3437476
+ },
+ "rev:51.2376,22.5169": {
+  "result": "Pana Wołodyjowskiego",
+  "ts": 1782106658.7309196
+ },
+ "rev:51.2365,22.5332": {
+  "result": "Emancypantek",
+  "ts": 1782106660.1178033
+ },
+ "rev:51.2284,22.5694": {
+  "result": "Pochyła",
+  "ts": 1782106661.4641283
+ },
+ "rev:51.2349,22.5914": {
+  "result": "Pogodna",
+  "ts": 1782106663.163914
+ },
+ "rev:51.2646,22.5229": {
+  "result": "Willowa",
+  "ts": 1782106664.830872
+ },
+ "rev:51.2609,22.5428": {
+  "result": "Kurantowa",
+  "ts": 1782106666.482923
+ },
+ "rev:51.2465,22.5684": {
+  "result": "Podwale",
+  "ts": 1782106667.8298895
+ },
+ "rev:51.2299,22.5279": {
+  "result": "Sympatyczna",
+  "ts": 1782106669.6197422
+ },
+ "rev:51.2369,22.5866": {
+  "result": "Wrońska",
+  "ts": 1782106671.291592
+ },
+ "rev:51.2333,22.5414": {
+  "result": null,
+  "ts": 1782106672.6685424
+ },
+ "rev:51.2138,22.5682": {
+  "result": "Błękitna",
+  "ts": 1782106673.975724
+ },
+ "rev:51.2739,22.5426": {
+  "result": "Koncertowa",
+  "ts": 1782106675.4359415
+ },
+ "rev:51.2562,22.4875": {
+  "result": "Lędzian",
+  "ts": 1782106677.0800688
+ },
+ "rev:51.2411,22.5465": {
+  "result": "Głęboka",
+  "ts": 1782106678.8688645
+ },
+ "rev:51.2401,22.5679": {
+  "result": "Rusałka",
+  "ts": 1782106680.2556782
+ },
+ "rev:51.1968,22.5426": {
+  "result": "Antoniego Słomkowskiego",
+  "ts": 1782106681.5652757
+ },
+ "rev:51.2688,22.5407": {
+  "result": "Operowa",
+  "ts": 1782106683.2508867
+ },
+ "rev:51.2649,22.5592": {
+  "result": "Tadeusza Szeligowskiego",
+  "ts": 1782106684.5616434
+ },
+ "rev:51.2254,22.5487": {
+  "result": "Piekarska",
+  "ts": 1782106685.865555
+ },
+ "rev:51.2722,22.5293": {
+  "result": "Poligonowa",
+  "ts": 1782106687.5357955
+ },
+ "rev:51.2234,22.5584": {
+  "result": "Wyścigowa",
+  "ts": 1782106689.1813238
+ },
+ "rev:51.2647,22.5595": {
+  "result": "Tadeusza Szeligowskiego",
+  "ts": 1782106690.483724
+ },
+ "rev:51.2256,22.5229": {
+  "result": "Szmaragdowa",
+  "ts": 1782106691.7887166
+ },
+ "rev:51.2377,22.5085": {
+  "result": null,
+  "ts": 1782106693.0927086
+ },
+ "rev:51.2023,22.5564": {
+  "result": "Zemborzycka",
+  "ts": 1782106694.3952107
  }
 }
