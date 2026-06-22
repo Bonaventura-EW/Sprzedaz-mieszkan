@@ -5886,5 +5886,213 @@
    "city": "Lublin"
   },
   "ts": 1782141385.5989985
+ },
+ "balladyny 18": {
+  "result": null,
+  "ts": 1782141968.8342226
+ },
+ "gazowa": {
+  "result": {
+   "lat": 51.2304968,
+   "lon": 22.5654872,
+   "name": "Gazowa"
+  },
+  "ts": 1782141970.1379392
+ },
+ "karłowicza": {
+  "result": {
+   "lat": 51.246722,
+   "lon": 22.5549947,
+   "name": "Mieczysława Karłowicza"
+  },
+  "ts": 1782141971.4151695
+ },
+ "żelazowej woli 5": {
+  "result": null,
+  "ts": 1782141972.8706172
+ },
+ "lasockiego": {
+  "result": {
+   "lat": 51.2376421,
+   "lon": 22.5407584,
+   "name": "Doktora Wacława Lasockiego"
+  },
+  "ts": 1782141974.3568933
+ },
+ "targowej": {
+  "result": {
+   "lat": 51.252901,
+   "lon": 22.569742,
+   "name": "Targowa"
+  },
+  "ts": 1782141977.2462249
+ },
+ "bukietowej": {
+  "result": {
+   "lat": 51.2525752,
+   "lon": 22.5237301,
+   "name": "Bukietowa"
+  },
+  "ts": 1782141980.143483
+ },
+ "brzeskiej": {
+  "result": {
+   "lat": 51.2332228,
+   "lon": 22.5364355,
+   "name": "Magdaleny Brzeskiej"
+  },
+  "ts": 1782141981.5901992
+ },
+ "biernackiego": {
+  "result": {
+   "lat": 51.2548296,
+   "lon": 22.566873,
+   "name": "Mieczysława Biernackiego"
+  },
+  "ts": 1782141982.888774
+ },
+ "lotniczej": {
+  "result": {
+   "lat": 51.2313497,
+   "lon": 22.5846616,
+   "name": "Lotnicza"
+  },
+  "ts": 1782141985.8396702
+ },
+ "wrońskiej": {
+  "result": {
+   "lat": 51.2363055,
+   "lon": 22.5836571,
+   "name": "Wrońska"
+  },
+  "ts": 1782141988.7175872
+ },
+ "rva:51.2257,22.5663": {
+  "result": {
+   "road": "Nowy Świat",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782141990.0330064
+ },
+ "rva:51.2491,22.5158": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782141991.3588085
+ },
+ "rva:51.2237,22.4986": {
+  "result": {
+   "road": "Kryształowa",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782141992.9329436
+ },
+ "rva:51.2722,22.5293": {
+  "result": {
+   "road": "Poligonowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782141994.242784
+ },
+ "rva:51.2404,22.5047": {
+  "result": {
+   "road": "Pielęgniarek",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782141995.8042314
+ },
+ "rva:51.2763,22.5590": {
+  "result": {
+   "road": "Edwarda Wojtasa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782141997.3182077
+ },
+ "rva:51.2379,22.5233": {
+  "result": {
+   "road": "Jana Sawy",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782141998.6463425
+ },
+ "rva:51.2367,22.5253": {
+  "result": {
+   "road": "Pana Balcera",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782142000.1964743
+ },
+ "rva:51.1985,22.5484": {
+  "result": {
+   "road": "Jacka Woronieckiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782142001.6649728
+ },
+ "rva:51.2653,22.5256": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782142003.144034
+ },
+ "rva:51.2782,22.5788": {
+  "result": {
+   "road": "Kosynierów",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782142004.4928606
+ },
+ "rva:51.2411,22.5555": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782142005.866809
+ },
+ "rva:51.2413,22.5554": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782142007.3695352
+ },
+ "rva:51.2750,22.5499": {
+  "result": {
+   "road": "Stanisława Szpinalskiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782142008.8507543
+ },
+ "rva:51.2411,22.5558": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782142010.318075
+ },
+ "rva:51.2347,22.5984": {
+  "result": {
+   "road": "Zimowa",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1782142011.817442
  }
 }
