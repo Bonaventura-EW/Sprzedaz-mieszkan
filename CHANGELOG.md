@@ -2,6 +2,15 @@
 
 ## [Niewydane]
 
+### Wydajność
+- **Płynność mapy przy tysiącach pinezek**: dodane **klastrowanie markerów**
+  (Leaflet.markercluster) — bliskie pinezki łączą się w „bąble" z licznikiem,
+  a pojedyncze pokazują się po przybliżeniu (rozsuwanie/spiderfy dla ofert na tej
+  samej ulicy). Markery dodawane **hurtowo** (`addLayers`) z `chunkedLoading`
+  zamiast po jednym. Lista „bez lokalizacji GPS" (potrafi mieć >1000 kart) jest
+  teraz **malowana leniwie** — tylko po rozwinięciu sekcji i z limitem 200 kart
+  — zamiast przy każdej zmianie filtra. Bąble klastrów w palecie projektu.
+
 ### Naprawione
 - **Oferty z ulicą w tytule nie zawsze dostawały pinezkę** (np. „ul. Mełgiewska").
   Pętla doprecyzowania lokalizacji w `main.py` przerywała się po wyczerpaniu

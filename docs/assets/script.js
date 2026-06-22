@@ -36,6 +36,8 @@ let quantiles = [];
 let marketFilterState = {};   // market -> bool
 let roomsFilterState = {};     // bucket pokoi -> bool
 let quantileBucketState = {};  // index kubełka ceny/m² -> bool (legenda z checkboxami)
+let _unlocalised = [];         // bufor ofert bez GPS (malowane leniwie po rozwinięciu)
+const UNLOC_LIMIT = 200;       // ile kart bez GPS renderować naraz (reszta po zawężeniu filtrów)
 
 init();
 
@@ -45,7 +47,18 @@ async function init() {
         attribution: '&copy; OpenStreetMap', maxZoom: 19,
         updateWhenZooming: false, keepBuffer: 2,
     }).addTo(map);
-    markersLayer = L.layerGroup().addTo(map);
+    // Klastrowanie markerów — kluczowe dla płynności przy tysiącach pinezek:
+    // bliskie markery łączą się w „bąble" z licznikiem, a pojedyncze pokazują się
+    // dopiero po przybliżeniu. chunkedLoading dokłada markery porcjami, żeby nie
+    // zamrażać interfejsu; spiderfy rozsuwa wiele ofert stojących w tym samym
+    // punkcie (np. kilkanaście ofert zgeokodowanych na tę samą ulicę).
+    markersLayer = L.markerClusterGroup({
+        chunkedLoading: true,
+        showCoverageOnHover: false,
+        maxClusterRadius: 55,
+        spiderfyOnMaxZoom: true,
+        disableClusteringAtZoom: 17,
+    }).addTo(map);
 
     let data;
     try {
@@ -107,11 +120,17 @@ function focusOfferFromHash() {
     render();
 
     if (o.coords) {
-        map.setView([o.coords.lat, o.coords.lon], 16, { animate: true });
         const mk = markerById[o.id];
-        if (mk) setTimeout(() => mk.openPopup(), 250);
+        // zoomToShowLayer rozklastrowuje i dopiero otwiera popup wskazanej oferty
+        if (mk && markersLayer.zoomToShowLayer) {
+            markersLayer.zoomToShowLayer(mk, () => mk.openPopup());
+        } else {
+            map.setView([o.coords.lat, o.coords.lon], 16, { animate: true });
+            if (mk) setTimeout(() => mk.openPopup(), 250);
+        }
     } else {
         document.getElementById('unlocalised-section').style.display = 'block';
+        paintUnlocalised();
     }
 }
 
@@ -435,16 +454,17 @@ function render() {
     const visible = allOffers.filter(passesFilters);
     const located = visible.filter(o => o.coords);
 
-    located.forEach(o => {
+    const markers = located.map(o => {
         const marker = L.marker([o.coords.lat, o.coords.lon], {
             icon: makeIcon(o),
             title: `${o.title || ''} — ${fmtPrice(o.price)}`,
             zIndexOffset: (isApprox(o) ? 0 : 200) + (o.active ? 100 : 0),
         });
         marker.bindPopup(() => popupHtml(o), { maxWidth: 330 });
-        markersLayer.addLayer(marker);
         markerById[o.id] = marker;
+        return marker;
     });
+    markersLayer.addLayers(markers);  // hurtowo — znacznie szybciej niż addLayer w pętli
 
     renderStats(visible);
     renderUnlocalised(visible.filter(o => !o.coords));
@@ -471,21 +491,36 @@ function renderCounts() {
 }
 
 function renderUnlocalised(offers) {
+    _unlocalised = offers;
     const bar = document.getElementById('unlocalised-bar');
-    const grid = document.getElementById('unlocalised-grid');
+    const sec = document.getElementById('unlocalised-section');
     document.getElementById('unlocalised-count').textContent = offers.length;
     bar.style.display = offers.length ? 'block' : 'none';
-    if (!offers.length) document.getElementById('unlocalised-section').style.display = 'none';
+    if (!offers.length) { sec.style.display = 'none'; return; }
+    // listę (potrafi mieć >1000 kart) malujemy TYLKO gdy sekcja jest rozwinięta —
+    // inaczej budowanie HTML przy każdej zmianie filtra mocno spowalniało stronę
+    if (sec.style.display && sec.style.display !== 'none') paintUnlocalised();
+}
 
-    grid.innerHTML = offers.map(o => `
+function paintUnlocalised() {
+    const grid = document.getElementById('unlocalised-grid');
+    const shown = _unlocalised.slice(0, UNLOC_LIMIT);
+    let html = shown.map(o => `
         <div class="unloc-card">
             <a href="${o.url}" target="_blank" rel="noopener">${escapeHtml(o.title)}</a><br>
             ${fmtPrice(o.price)} • ${fmtArea(o.area_m2)} • ${o.rooms ? fmtRooms(o.rooms) : '—'} • ${o.source.toUpperCase()}
             ${o.district ? '<br>📍 ' + escapeHtml(o.district) : ''}
         </div>`).join('');
+    if (_unlocalised.length > UNLOC_LIMIT) {
+        html += `<div class="unloc-card" style="display:flex;align-items:center;justify-content:center;text-align:center;color:#6b7280;font-weight:700;">
+            + ${_unlocalised.length - UNLOC_LIMIT} kolejnych ofert bez GPS<br>(zawęź filtry, by zobaczyć więcej)</div>`;
+    }
+    grid.innerHTML = html;
 }
 
 function toggleUnlocalised() {
     const sec = document.getElementById('unlocalised-section');
-    sec.style.display = sec.style.display === 'none' ? 'block' : 'none';
+    const opening = !sec.style.display || sec.style.display === 'none';
+    sec.style.display = opening ? 'block' : 'none';
+    if (opening) paintUnlocalised();
 }
