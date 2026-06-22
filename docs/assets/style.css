@@ -169,16 +169,6 @@ body {
 /* markery divIcon nie mogą mieć tła Leafleta */
 .pin-marker, .square-marker { background: transparent; border: none; }
 
-/* ===== Klastry markerów (markercluster) — paleta śliwkowo-bursztynowa ===== */
-.marker-cluster { background: transparent; }
-.marker-cluster div { color: #fff; font-weight: 800; font-family: 'Segoe UI', -apple-system, sans-serif; }
-.marker-cluster-small { background: rgba(124, 58, 237, 0.30); }
-.marker-cluster-small div { background: rgba(124, 58, 237, 0.88); }
-.marker-cluster-medium { background: rgba(109, 40, 217, 0.32); }
-.marker-cluster-medium div { background: rgba(109, 40, 217, 0.90); }
-.marker-cluster-large { background: rgba(245, 158, 11, 0.35); }
-.marker-cluster-large div { background: rgba(245, 158, 11, 0.92); }
-
 /* ===== Oferty bez GPS ===== */
 #unlocalised-bar { text-align: center; padding: 8px; background: #fef9c3; border-top: 1px solid #fde047; cursor: pointer; font-size: 13px; color: #854d0e; }
 #unlocalised-section { padding: 12px 20px; background: #fefce8; border-top: 2px solid #eab308; max-height: 320px; overflow-y: auto; }

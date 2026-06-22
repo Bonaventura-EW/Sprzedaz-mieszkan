@@ -47,18 +47,7 @@ async function init() {
         attribution: '&copy; OpenStreetMap', maxZoom: 19,
         updateWhenZooming: false, keepBuffer: 2,
     }).addTo(map);
-    // Klastrowanie markerów — kluczowe dla płynności przy tysiącach pinezek:
-    // bliskie markery łączą się w „bąble" z licznikiem, a pojedyncze pokazują się
-    // dopiero po przybliżeniu. chunkedLoading dokłada markery porcjami, żeby nie
-    // zamrażać interfejsu; spiderfy rozsuwa wiele ofert stojących w tym samym
-    // punkcie (np. kilkanaście ofert zgeokodowanych na tę samą ulicę).
-    markersLayer = L.markerClusterGroup({
-        chunkedLoading: true,
-        showCoverageOnHover: false,
-        maxClusterRadius: 55,
-        spiderfyOnMaxZoom: true,
-        disableClusteringAtZoom: 17,
-    }).addTo(map);
+    markersLayer = L.layerGroup().addTo(map);
 
     let data;
     try {
@@ -120,14 +109,9 @@ function focusOfferFromHash() {
     render();
 
     if (o.coords) {
+        map.setView([o.coords.lat, o.coords.lon], 16, { animate: true });
         const mk = markerById[o.id];
-        // zoomToShowLayer rozklastrowuje i dopiero otwiera popup wskazanej oferty
-        if (mk && markersLayer.zoomToShowLayer) {
-            markersLayer.zoomToShowLayer(mk, () => mk.openPopup());
-        } else {
-            map.setView([o.coords.lat, o.coords.lon], 16, { animate: true });
-            if (mk) setTimeout(() => mk.openPopup(), 250);
-        }
+        if (mk) setTimeout(() => mk.openPopup(), 250);
     } else {
         document.getElementById('unlocalised-section').style.display = 'block';
         paintUnlocalised();
@@ -454,17 +438,16 @@ function render() {
     const visible = allOffers.filter(passesFilters);
     const located = visible.filter(o => o.coords);
 
-    const markers = located.map(o => {
+    located.forEach(o => {
         const marker = L.marker([o.coords.lat, o.coords.lon], {
             icon: makeIcon(o),
             title: `${o.title || ''} — ${fmtPrice(o.price)}`,
             zIndexOffset: (isApprox(o) ? 0 : 200) + (o.active ? 100 : 0),
         });
         marker.bindPopup(() => popupHtml(o), { maxWidth: 330 });
+        markersLayer.addLayer(marker);
         markerById[o.id] = marker;
-        return marker;
     });
-    markersLayer.addLayers(markers);  // hurtowo — znacznie szybciej niż addLayer w pętli
 
     renderStats(visible);
     renderUnlocalised(visible.filter(o => !o.coords));
