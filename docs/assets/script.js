@@ -36,8 +36,6 @@ let quantiles = [];
 let marketFilterState = {};   // market -> bool
 let roomsFilterState = {};     // bucket pokoi -> bool
 let quantileBucketState = {};  // index kubełka ceny/m² -> bool (legenda z checkboxami)
-let _unlocalised = [];         // bufor ofert bez GPS (malowane leniwie po rozwinięciu)
-const UNLOC_LIMIT = 200;       // ile kart bez GPS renderować naraz (reszta po zawężeniu filtrów)
 
 init();
 
@@ -112,10 +110,8 @@ function focusOfferFromHash() {
         map.setView([o.coords.lat, o.coords.lon], 16, { animate: true });
         const mk = markerById[o.id];
         if (mk) setTimeout(() => mk.openPopup(), 250);
-    } else {
-        document.getElementById('unlocalised-section').style.display = 'block';
-        paintUnlocalised();
     }
+    // oferty bez GPS nie są na mapie — znajdziesz je w zakładce 🐛 Debug
 }
 
 function fmtPrice(v) {
@@ -451,7 +447,6 @@ function render() {
     });
 
     renderStats(visible);
-    renderUnlocalised(visible.filter(o => !o.coords));
     renderCounts();
 }
 
@@ -472,39 +467,4 @@ function renderCounts() {
     document.getElementById('count-inactive-approx').textContent = `(${c(o => !o.active && isApprox(o))})`;
     document.getElementById('count-new').textContent = `(${c(o => o.active && isNew(o))})`;
     document.getElementById('count-private').textContent = `(${c(o => o.active && o.is_private_owner)})`;
-}
-
-function renderUnlocalised(offers) {
-    _unlocalised = offers;
-    const bar = document.getElementById('unlocalised-bar');
-    const sec = document.getElementById('unlocalised-section');
-    document.getElementById('unlocalised-count').textContent = offers.length;
-    bar.style.display = offers.length ? 'block' : 'none';
-    if (!offers.length) { sec.style.display = 'none'; return; }
-    // listę (potrafi mieć >1000 kart) malujemy TYLKO gdy sekcja jest rozwinięta —
-    // inaczej budowanie HTML przy każdej zmianie filtra mocno spowalniało stronę
-    if (sec.style.display && sec.style.display !== 'none') paintUnlocalised();
-}
-
-function paintUnlocalised() {
-    const grid = document.getElementById('unlocalised-grid');
-    const shown = _unlocalised.slice(0, UNLOC_LIMIT);
-    let html = shown.map(o => `
-        <div class="unloc-card">
-            <a href="${o.url}" target="_blank" rel="noopener">${escapeHtml(o.title)}</a><br>
-            ${fmtPrice(o.price)} • ${fmtArea(o.area_m2)} • ${o.rooms ? fmtRooms(o.rooms) : '—'} • ${o.source.toUpperCase()}
-            ${o.district ? '<br>📍 ' + escapeHtml(o.district) : ''}
-        </div>`).join('');
-    if (_unlocalised.length > UNLOC_LIMIT) {
-        html += `<div class="unloc-card" style="display:flex;align-items:center;justify-content:center;text-align:center;color:#6b7280;font-weight:700;">
-            + ${_unlocalised.length - UNLOC_LIMIT} kolejnych ofert bez GPS<br>(zawęź filtry, by zobaczyć więcej)</div>`;
-    }
-    grid.innerHTML = html;
-}
-
-function toggleUnlocalised() {
-    const sec = document.getElementById('unlocalised-section');
-    const opening = !sec.style.display || sec.style.display === 'none';
-    sec.style.display = opening ? 'block' : 'none';
-    if (opening) paintUnlocalised();
 }

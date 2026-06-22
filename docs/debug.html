@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SONAR SPRZEDAŻY MIESZKAŃ — Debug (oferty bez pinezki)</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=7">
+<link rel="stylesheet" href="assets/style.css?v=7">
+<style>
+.dbg-wrap{padding:14px 18px;max-width:1320px;margin:0 auto;width:100%;flex:1;overflow:auto}
+.banner{background:#fef3c7;border-left:4px solid var(--lime);padding:10px 16px;border-radius:10px;color:#78350f;font-size:13px;margin-bottom:14px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:16px}
+.stat-card{background:var(--card);border:1px solid var(--line);border-left:4px solid #94a3b8;border-radius:14px;padding:12px 14px;box-shadow:0 1px 4px rgba(15,31,21,.06)}
+.stat-card.brak_adresu{border-left-color:#ef4444}
+.stat-card.geokoder_pusty{border-left-color:#8b5cf6}
+.stat-card.zla_dzielnica{border-left-color:#f59e0b}
+.stat-card.otodom_bez_detali{border-left-color:#0284c7}
+.stat-card.duplikat{border-left-color:#06b6d4}
+.stat-card .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.stat-card .value{font-size:26px;font-weight:800;color:var(--ink);line-height:1.1;margin-top:3px}
+.stat-card .sub{font-size:11px;color:#94a3b8;margin-top:3px}
+.filter-bar{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.filter-bar select,.filter-bar input{font:inherit;font-size:13px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+.filter-bar input{flex:1;min-width:200px}
+.filter-bar .ts{margin-left:auto;font-size:12px;color:var(--muted)}
+.offer-list{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.offer{padding:13px 16px;border-bottom:1px solid var(--line)}
+.offer:last-child{border-bottom:none}
+.offer.hidden{display:none}
+.offer-header{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
+.badge.brak_adresu{background:#fee2e2;color:#991b1b}
+.badge.geokoder_pusty{background:#ede9fe;color:#5b21b6}
+.badge.zla_dzielnica{background:#fef3c7;color:#92400e}
+.badge.otodom_bez_detali{background:#e0f2fe;color:#075985}
+.badge.duplikat{background:#cffafe;color:#155e75}
+.b-src{background:#f1f5f9;color:#475569}
+.offer-title{font-weight:700;font-size:14px;flex:1;min-width:0}
+.offer-link{color:var(--green-600);text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap}
+.offer-link:hover{text-decoration:underline}
+.offer-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:6px}
+.offer-meta .parsed{color:#5b21b6;font-family:monospace}
+.offer-meta b{color:var(--ink)}
+.offer-desc{font-size:12px;color:#4b5563;margin-top:6px;max-height:54px;overflow:hidden;cursor:pointer;border-top:1px solid #eef2f7;padding-top:5px;white-space:pre-line}
+.offer-desc.expanded{max-height:1000px}
+.empty,#dbg-loading{text-align:center;padding:50px 20px;color:var(--muted)}
+</style>
+</head>
+<body class="page-body">
+<div id="app">
+  <header class="header">
+    <h1><span class="sonar-logo"></span><span>SONAR SPRZEDAŻY MIESZKAŃ<span class="sub">debug · oferty bez pinezki</span></span></h1>
+    <nav class="header-nav">
+      <a href="index.html">🗺️ Mapa</a>
+      <a href="analytics.html">📈 Analityka</a>
+      <a href="statystyki.html">📐 Statystyki</a>
+      <a href="monitoring.html">📊 Monitoring</a>
+      <a href="oferty.html">📋 Oferty</a>
+      <a href="zmiany.html">🔄 Ruch</a>
+      <a href="debug.html" class="active">🐛 Debug</a>
+    </nav>
+    <div class="header-meta">🕐 Ostatni scan: <strong id="last-scan">—</strong></div>
+  </header>
+
+  <div class="dbg-wrap">
+    <div class="banner">🐛 Oferty, które scraper pobrał, ale <strong>nie trafiły na mapę</strong> — z podziałem na powód. Pomaga widzieć, czego parser/geokoder nie ogarnął.</div>
+
+    <div class="stats-grid" id="stats"></div>
+
+    <div class="filter-bar">
+      <label for="cat">Kategoria:</label>
+      <select id="cat" onchange="render()"></select>
+      <input type="search" id="q" placeholder="szukaj: tytuł / opis / ulica…" oninput="render()">
+      <span class="ts" id="ts"></span>
+    </div>
+
+    <div id="dbg-loading">⏳ Ładowanie…</div>
+    <div class="offer-list" id="list" style="display:none"></div>
+    <div class="empty" id="empty" style="display:none">Brak ofert w tej kategorii.</div>
+  </div>
+</div>
+
+<script src="assets/logo.js?v=7"></script>
+<script>
+const META={
+  brak_adresu:{label:'Brak adresu',sub:'brak ulicy w tytule/treści — nie da się umiejscowić'},
+  geokoder_pusty:{label:'Geokoder pusty',sub:'ulica wykryta, ale bez współrzędnych'},
+  zla_dzielnica:{label:'Zła dzielnica (Otodom)',sub:'pinezka w innej dzielnicy / poza Lublinem'},
+  otodom_bez_detali:{label:'Otodom — bez detali',sub:'czeka na stronę szczegółów (coords/rynek)'},
+  duplikat:{label:'Duplikat',sub:'to samo mieszkanie na drugim portalu'},
+};
+const ORDER=['brak_adresu','geokoder_pusty','zla_dzielnica','otodom_bez_detali','duplikat'];
+const SRC={olx:'OLX',otodom:'Otodom'};
+let ALL=[];
+
+const PLN=n=>n==null?'—':Math.round(n).toLocaleString('pl-PL')+' zł';
+const AREA=n=>n==null?'—':n.toLocaleString('pl-PL')+' m²';
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+
+async function load(){
+  let data;
+  try{ data=await (await fetch('debug_data.json?t='+Date.now())).json(); }
+  catch(e){ document.getElementById('dbg-loading').textContent='❌ Brak debug_data.json (uruchom skan).'; return; }
+
+  const counts=data.counts||{};
+  document.getElementById('ts').textContent='aktualizacja: '+String(data.scan_timestamp||'').slice(0,16).replace('T',' ');
+  document.getElementById('last-scan').textContent=String(data.scan_timestamp||'—').slice(0,16).replace('T',' ');
+
+  // karty statystyk
+  document.getElementById('stats').innerHTML=ORDER.map(c=>`
+    <div class="stat-card ${c}">
+      <div class="label">${esc(META[c].label)}</div>
+      <div class="value">${counts[c]??0}</div>
+      <div class="sub">${esc(META[c].sub)}</div>
+    </div>`).join('');
+
+  // dropdown
+  const total=data.total??Object.values(counts).reduce((a,b)=>a+b,0);
+  const samples=data.samples||{};
+  document.getElementById('cat').innerHTML=
+    `<option value="all">Wszystkie (${total})</option>`+
+    ORDER.map(c=>`<option value="${c}">${esc(META[c].label)} (${counts[c]??0})</option>`).join('');
+
+  // spłaszcz próbki w kolejności kategorii
+  ALL=[];
+  ORDER.forEach(c=>(samples[c]||[]).forEach(s=>ALL.push(s)));
+
+  document.getElementById('dbg-loading').style.display='none';
+  document.getElementById('list').style.display='block';
+  render();
+}
+
+function card(o){
+  const cat=o.category;
+  const src=SRC[o.source]||o.source||'?';
+  const meta=[];
+  if(o.address_parsed) meta.push(`<span class="parsed">parser: "${esc(o.address_parsed)}"</span>`);
+  if(o.district) meta.push(`📍 ${esc(o.district)}`);
+  meta.push(`💰 <b>${PLN(o.price)}</b>`);
+  meta.push(`📐 ${AREA(o.area_m2)}`);
+  if(o.rooms!=null) meta.push(`🚪 ${o.rooms} pok.`);
+  if(cat==='duplikat'&&o.also_at) meta.push(`🔗 kanoniczna: <a class="offer-link" href="${esc(o.also_at)}" target="_blank" rel="noopener">↗</a>`);
+  const desc=o.description_preview?`<div class="offer-desc" onclick="this.classList.toggle('expanded')">${esc(o.description_preview)}</div>`:'';
+  return `<div class="offer" data-cat="${cat}" data-s="${esc(((o.title||'')+' '+(o.description_preview||'')+' '+(o.street||'')+' '+(o.district||'')).toLowerCase())}">
+    <div class="offer-header">
+      <span class="badge ${cat}">${esc(META[cat]?META[cat].label:cat)}</span>
+      <span class="badge b-src">${esc(src)}</span>
+      <div class="offer-title">${esc(o.title||'(bez tytułu)')}</div>
+      ${o.url?`<a class="offer-link" href="${esc(o.url)}" target="_blank" rel="noopener">→ ogłoszenie ↗</a>`:''}
+    </div>
+    <div class="offer-meta">${meta.join('')}</div>
+    ${desc}
+  </div>`;
+}
+
+function render(){
+  const cat=document.getElementById('cat').value;
+  const q=document.getElementById('q').value.toLowerCase().trim();
+  const rows=ALL.filter(o=>(cat==='all'||o.category===cat) &&
+    (!q || ((o.title||'')+' '+(o.description_preview||'')+' '+(o.street||'')+' '+(o.district||'')).toLowerCase().includes(q)));
+  const list=document.getElementById('list'), empty=document.getElementById('empty');
+  if(!rows.length){ list.style.display='none'; empty.style.display='block'; return; }
+  empty.style.display='none'; list.style.display='block';
+  list.innerHTML=rows.map(card).join('');
+}
+
+load();
+</script>
+</body>
+</html>

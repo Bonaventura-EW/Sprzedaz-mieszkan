@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SONAR SPRZEDAŻY MIESZKAŃ — Mapa mieszkań na sprzedaż · Lublin</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=6">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=7">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="assets/style.css?v=6">
+    <link rel="stylesheet" href="assets/style.css?v=7">
 </head>
 <body>
 <div id="app">
@@ -22,6 +22,7 @@
             <a href="monitoring.html">📊 Monitoring</a>
             <a href="oferty.html">📋 Oferty</a>
             <a href="zmiany.html">🔄 Ruch</a>
+            <a href="debug.html">🐛 Debug</a>
         </nav>
         <div class="header-meta">🕐 Ostatni scan: <strong id="last-scan">—</strong></div>
     </header>
@@ -108,23 +109,16 @@
                         ▢ kwadrat (przerywana ramka) = lokalizacja przybliżona<br>
                         &nbsp;&nbsp;&nbsp;(ulica z ogłoszenia albo okolica z geolokalizacji Otodom)<br>
                         <span class="badge-new">N</span> nowa oferta · 💲↓/↑ zmiana ceny · × nieaktywna<br>
-                        Oferty bez wiarygodnej lokalizacji → lista „bez GPS" pod mapą.
+                        Oferty bez wiarygodnej lokalizacji → zakładka <a href="debug.html">🐛 Debug</a>.
                     </p>
                 </div>
             </div>
         </aside>
     </div>
-
-    <div id="unlocalised-bar" style="display:none;" onclick="toggleUnlocalised()">
-        <span>📍 Oferty bez lokalizacji GPS (<span id="unlocalised-count">0</span>) ▼</span>
-    </div>
-    <div id="unlocalised-section" style="display:none;">
-        <div id="unlocalised-grid"></div>
-    </div>
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="assets/logo.js?v=6"></script>
-<script src="assets/script.js?v=6"></script>
+<script src="assets/logo.js?v=7"></script>
+<script src="assets/script.js?v=7"></script>
 </body>
 </html>

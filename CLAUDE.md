@@ -34,6 +34,7 @@ location_refiner.py→ ulica z tytułu/opisu → Nominatim → precyzja street
 map_generator.py   → docs/data.json       (mapa: oferty po dedup + kwantyle ceny/m²)
 api_generator.py   → docs/api/*.json      (status / offers / history / health)
 monitoring_generator.py → docs/monitoring_data.json (dashboard skanów)
+debug_generator.py → docs/debug_data.json (oferty bez pinezki wg powodu → docs/debug.html)
   ↓
 docs/index.html + assets/script.js → mapa Leaflet (GitHub Pages)
 ```

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SONAR SPRZEDAŻY MIESZKAŃ — Statystyki i porównania</title>
-    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=6">
-    <link rel="stylesheet" href="assets/style.css?v=6">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg?v=7">
+    <link rel="stylesheet" href="assets/style.css?v=7">
     <style>
     .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     @media(max-width:760px){.two-col{grid-template-columns:1fr}}
@@ -49,6 +49,7 @@
             <a href="monitoring.html">📊 Monitoring</a>
             <a href="oferty.html">📋 Oferty</a>
             <a href="zmiany.html">🔄 Ruch</a>
+            <a href="debug.html">🐛 Debug</a>
         </nav>
         <div class="header-meta">🕐 Ostatni scan: <strong id="last-scan">—</strong></div>
     </header>
@@ -98,7 +99,7 @@
     </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="assets/logo.js?v=6"></script>
+<script src="assets/logo.js?v=7"></script>
 <script>
 const fmtZl = v => v==null?'—':Math.round(v).toLocaleString('pl-PL')+' zł';
 const fmtM2 = v => v==null?'—':Math.round(v).toLocaleString('pl-PL')+' zł/m²';

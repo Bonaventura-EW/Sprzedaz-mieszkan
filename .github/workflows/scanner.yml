@@ -65,12 +65,19 @@ jobs:
           cd src
           python monitoring_generator.py || echo "::warning::Monitoring generator failed but continuing..."
 
+      - name: Generate debug data
+        if: always()
+        continue-on-error: true
+        run: |
+          cd src
+          python debug_generator.py || echo "::warning::Debug generator failed but continuing..."
+
       - name: Commit and push changes
         if: always()
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
-          git add data/ docs/data.json docs/api/ docs/monitoring_data.json || true
+          git add data/ docs/data.json docs/api/ docs/monitoring_data.json docs/debug_data.json || true
 
           if git diff --staged --quiet; then
             echo "No changes to commit"

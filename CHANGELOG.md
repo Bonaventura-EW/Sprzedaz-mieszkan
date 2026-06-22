@@ -2,6 +2,16 @@
 
 ## [Niewydane]
 
+### Dodane
+- **Zakładka 🐛 Debug** (`docs/debug.html` + `src/debug_generator.py` →
+  `docs/debug_data.json`) zamiast sekcji „oferty bez lokalizacji GPS" na mapie.
+  Pokazuje oferty, które scraper pobrał, ale nie trafiły na mapę, z podziałem na
+  powód (wzór: skipped_debug.html z SONAR-POKOJOWY): **brak adresu**,
+  **geokoder pusty** (ulica wykryta, brak coords), **zła dzielnica** (coords
+  Otodom odrzucone), **Otodom bez detali** (czeka na stronę szczegółów),
+  **duplikat**. Karty liczników, filtr kategorii i wyszukiwarka. Sekcja „bez GPS"
+  usunięta z mapy (`index.html`/`script.js`) — odciąża też mapę.
+
 ### Naprawione (dezaktywacja)
 - **Aktywne oferty Otodom znikały z mapy jako „nieaktywne"**. Dwie przyczyny:
   (1) scrape listingu Otodom urywał się na pierwszej pustej/nieudanej stronie
