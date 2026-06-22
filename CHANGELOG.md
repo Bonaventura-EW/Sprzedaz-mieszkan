@@ -2,6 +2,18 @@
 
 ## [Niewydane]
 
+### Naprawione (lokalizacja)
+- **Weryfikacja „dokładnych" pinezek Otodom** (`location_refiner.verify_otodom_coords`,
+  wpięte w `main.py`). Otodom bywa nieprecyzyjny — pinezka potrafi stać kilka km
+  od ulicy podanej w tytule/treści. Teraz dla pinezek `exact` z Otodom robimy
+  **reverse geocoding** (na jakiej ulicy NAPRAWDĘ stoi punkt) i porównujemy z
+  ulicą z ogłoszenia; jeśli to inna ulica i pinezka jest > 0,7 km od podanej —
+  przenosimy ją na ulicę z ogłoszenia (precyzja `street`, znacznik
+  `otodom_coord_corrected`). Poprawne pinezki, także na długich ulicach (np.
+  Mełgiewska), zostają nietknięte — reverse zwraca tę samą ulicę. Reverse jest
+  cache'owany (osobny budżet `MAX_REVERSE_GEOCODES`/skan). Na bieżących danych
+  skorygowano 6 z 102 pinezek exact (Narcyzowa 3,7 km, Czwartek 1,7 km i in.).
+
 ### Wydajność
 - **Lżejsza lista „bez lokalizacji GPS"**: potrafi mieć >1000 kart, więc jest
   teraz **malowana leniwie** — tylko po rozwinięciu sekcji i z limitem 200 kart

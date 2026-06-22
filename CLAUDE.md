@@ -97,6 +97,11 @@ Testy: `pytest` z roota repo (konfiguracja w `pytest.ini`, `pythonpath = src`).
    degraduje fałszywie dokładne klastry (≥3 oferty w 250 m) do `approx`, a
    `_strip_approx_coords` USUWA wszystkie pozostałe `approx` → te oferty lądują
    w sekcji „bez GPS". Na mapie są więc tylko `exact` i `street`.
+6a. **Weryfikacja pinezek Otodom** (`verify_otodom_coords`): Otodom bywa
+   nieprecyzyjny. Dla `exact` robimy reverse geocoding i jeśli pinezka stoi na
+   innej ulicy niż podana w tytule/treści (i > 0,7 km od niej), przenosimy ją na
+   ulicę z ogłoszenia (`street`, znacznik `otodom_coord_corrected`). Reverse
+   poprawnie zostawia pinezki na długich ulicach. Osobny budżet `MAX_REVERSE_GEOCODES`.
 7. **OLX dokleja wyniki „z okolicy"** na końcu listingu — filtrujemy po
    `cityNormalizedName == 'lublin'`.
 8. **Ochrona przed masową dezaktywacją** (`main.py::_mark_inactive`): działa

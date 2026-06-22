@@ -23,7 +23,8 @@ import pytz
 import paths
 from olx_scraper import OLXMieszkaniaScraper
 from otodom_scraper import OtodomMieszkaniaScraper
-from location_refiner import StreetGeocoder, refine_offer_location
+from location_refiner import (
+    StreetGeocoder, refine_offer_location, verify_otodom_coords)
 
 # Ranking precyzji coords — przy deduplikacji zostaje oferta z najlepszą lokalizacją
 PRECISION_RANK = {'exact': 3, 'street': 2, 'approx': 1, None: 0}
@@ -35,6 +36,8 @@ MAX_PRICE_CHANGE_PERCENT = 70
 MIN_SCRAPE_RATIO = 0.3
 # Limit live geokodowań na skan (Nominatim, 1 req/s) — reszta w kolejnych skanach
 MAX_LIVE_GEOCODES = 100
+# Limit reverse geocodingu na skan (weryfikacja pinezek Otodom) — patrz niżej
+MAX_REVERSE_GEOCODES = 100
 
 
 class SonarSprzedazy:
@@ -427,19 +430,36 @@ class SonarSprzedazy:
         # oferta z ulicą znaną już z cache dostaje pinezkę nawet po wyczerpaniu
         # budżetu live — naprawia przypadek, gdy oferta z ulicą w tytule (np.
         # „ul. Mełgiewska") wypadała za limitem i nigdy nie była zaznaczana.
-        geocoder = StreetGeocoder(max_live=MAX_LIVE_GEOCODES)
+        geocoder = StreetGeocoder(max_live=MAX_LIVE_GEOCODES,
+                                  max_reverse=MAX_REVERSE_GEOCODES)
         refined_count = 0
         for offer in self.database['offers']:
             if not offer.get('active'):
                 continue
             if refine_offer_location(offer, geocoder):
                 refined_count += 1
+
+        # 3b2. Weryfikacja „dokładnych" pinezek Otodom względem ulicy z ogłoszenia.
+        # Otodom bywa nieprecyzyjny — gdy reverse geocoding pokaże, że pinezka stoi
+        # na INNEJ ulicy niż podana w tytule/treści (i daleko od niej), przenosimy
+        # ją na ulicę z ogłoszenia. Poprawne pinezki (także na długich ulicach)
+        # zostają nietknięte. Reverse cache'owany, dobiera się przez kilka skanów.
+        corrected_count = 0
+        for offer in self.database['offers']:
+            if not offer.get('active'):
+                continue
+            if verify_otodom_coords(offer, geocoder):
+                corrected_count += 1
+
         geocoder.save_cache()
         if geocoder.live_requests >= MAX_LIVE_GEOCODES:
             print(f"   ⚠️ Wyczerpano budżet {MAX_LIVE_GEOCODES} nowych geokodowań — "
                   f"nieznane jeszcze ulice dobiorą się w kolejnych skanach")
         if refined_count:
             print(f"   ✅ Doprecyzowano {refined_count} ofert (ulica → pinezka)")
+        if corrected_count:
+            print(f"   🛠️ Skorygowano {corrected_count} błędnych pinezek Otodom "
+                  f"(przeniesione na ulicę z ogłoszenia)")
 
         # 3c. Usuń przybliżone coords (centroidy) — pinezka tylko dla znanego adresu
         self._strip_approx_coords()

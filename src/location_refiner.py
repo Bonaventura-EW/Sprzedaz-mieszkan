@@ -28,6 +28,7 @@ import requests
 import paths
 
 NOMINATIM_URL = "https://nominatim.openstreetmap.org/search"
+NOMINATIM_REVERSE_URL = "https://nominatim.openstreetmap.org/reverse"
 HEADERS = {'User-Agent': 'SONAR-SPRZEDAZY/1.0 (github.com/Bonaventura-EW/Sprzedaz-mieszkan)'}
 CACHE_FILE = Path(paths.DATA_DIR) / "geocoding_cache.json"
 NEGATIVE_TTL_S = 7 * 24 * 3600  # nieudane zapytania ponawiamy po tygodniu
@@ -83,15 +84,18 @@ def nominative_variants(street: str) -> List[str]:
 
 class StreetGeocoder:
     def __init__(self, cache_file: str = str(CACHE_FILE), delay_s: float = 1.1,
-                 max_live: Optional[int] = None):
+                 max_live: Optional[int] = None, max_reverse: Optional[int] = None):
         self.cache_file = Path(cache_file)
         self.delay_s = delay_s
         self._last_request = 0.0
         self.cache = self._load_cache()
         self.live_requests = 0
+        self.reverse_requests = 0
         # budżet zapytań NA ŻYWO do Nominatim (None = bez limitu); wyniki z cache
         # są stosowane zawsze, niezależnie od budżetu — patrz geocode_street
         self.max_live = max_live
+        # osobny budżet na reverse geocoding (weryfikacja pinezek Otodom)
+        self.max_reverse = max_reverse
 
     def _load_cache(self) -> Dict:
         if self.cache_file.exists():
@@ -163,6 +167,134 @@ class StreetGeocoder:
         if result is not None or not budget_exhausted:
             self.cache[key] = {'result': result, 'ts': time.time()}
         return result
+
+    def reverse_road(self, lat: float, lon: float) -> Optional[str]:
+        """Reverse geocoding: zwraca nazwę ulicy/drogi w danym punkcie (lub None).
+
+        Używane do weryfikacji „dokładnych" pinezek Otodom — sprawdzamy, na jakiej
+        ulicy NAPRAWDĘ stoi pinezka, i porównujemy z ulicą z tytułu/treści.
+        Wynik cache'owany po zaokrąglonych współrzędnych; respektuje osobny budżet.
+        """
+        key = f"rev:{lat:.4f},{lon:.4f}"
+        if key in self.cache:
+            entry = self.cache[key]
+            if entry.get('result'):
+                return entry['result']
+            if time.time() - entry.get('ts', 0) < NEGATIVE_TTL_S:
+                return None
+        if self.max_reverse is not None and self.reverse_requests >= self.max_reverse:
+            return None  # budżet wyczerpany — bez zapisu (ponów w kolejnym skanie)
+
+        wait = self.delay_s - (time.time() - self._last_request)
+        if wait > 0:
+            time.sleep(wait)
+        road = None
+        try:
+            r = requests.get(NOMINATIM_REVERSE_URL, params={
+                'lat': lat, 'lon': lon, 'format': 'json', 'zoom': 16,
+                'addressdetails': 1,
+            }, headers=HEADERS, timeout=15)
+            self._last_request = time.time()
+            self.reverse_requests += 1
+            r.raise_for_status()
+            addr = (r.json() or {}).get('address') or {}
+            road = (addr.get('road') or addr.get('pedestrian')
+                    or addr.get('residential') or addr.get('footway'))
+        except (requests.RequestException, ValueError) as e:
+            print(f"      ⚠️ Nominatim reverse błąd ({lat:.4f},{lon:.4f}): {e}")
+            return None
+        self.cache[key] = {'result': road, 'ts': time.time()}
+        return road
+
+
+# ── pomocnicze: porównywanie nazw ulic i dystans ─────────────────────────────
+
+_PREFIX_RE = re.compile(r'^(ul|al|aleja|ulica|os|osiedle|pl|plac)\.?\s+', re.I)
+
+
+def _norm_street(name: str) -> str:
+    """Normalizuje nazwę ulicy do rdzenia: bez prefiksu, bez numerów, małe litery."""
+    if not name:
+        return ''
+    s = _PREFIX_RE.sub('', name.strip().lower())
+    s = re.split(r'[\d,/]', s)[0].strip()           # utnij numer budynku itp.
+    return s
+
+
+def street_name_matches(stated: str, road: str) -> bool:
+    """Czy nazwa ulicy z ogłoszenia (`stated`) i z reverse geocodingu (`road`)
+    oznaczają tę samą ulicę (z tolerancją na polską odmianę i wieloczłonowość)."""
+    a, b = _norm_street(stated), _norm_street(road)
+    if not a or not b:
+        return False
+    if a == b:
+        return True
+    va = {v.lower() for v in nominative_variants(a)}
+    vb = {v.lower() for v in nominative_variants(b)}
+    if va & vb:
+        return True
+    # porównaj rdzenie ostatnich słów (np. „Kunickiego" vs „Kunicki")
+    def stem(w: str) -> str:
+        return re.sub(r'(iego|ego|iej|ej|ą|a|ie|y)$', '', w)
+    la, lb = stem(a.split()[-1]), stem(b.split()[-1])
+    return len(la) >= 4 and la == lb
+
+
+def haversine_km(a: Dict, b: Dict) -> float:
+    """Odległość w km między dwoma punktami {'lat','lon'}."""
+    import math
+    lat1, lon1 = math.radians(a['lat']), math.radians(a['lon'])
+    lat2, lon2 = math.radians(b['lat']), math.radians(b['lon'])
+    x = (lon2 - lon1) * math.cos((lat1 + lat2) / 2)
+    return math.hypot(x, lat2 - lat1) * 6371
+
+
+def street_candidates(offer: Dict) -> List[str]:
+    """Kandydaci na ulicę oferty: jawne pole `street` + ekstrakcja z tytułu/opisu."""
+    loc = offer.get('location') or {}
+    cands = []
+    if loc.get('street'):
+        cands.append(re.sub(r'^(ul|al)\.\s*', '', loc['street']))
+    text = (offer.get('title') or '') + '\n' + (offer.get('description') or '')
+    cands.extend(c for c in extract_street_candidates(text) if c not in cands)
+    return cands
+
+
+def verify_otodom_coords(offer: Dict, geocoder: StreetGeocoder,
+                         min_dist_km: float = 0.7) -> bool:
+    """Weryfikuje „dokładną" pinezkę Otodom względem ulicy z tytułu/treści.
+
+    Jeśli pinezka leży na INNEJ ulicy niż podana w ogłoszeniu (reverse geocoding)
+    i jednocześnie jest oddalona o > min_dist_km od zgeokodowanej podanej ulicy,
+    przenosimy ją na ulicę z ogłoszenia (precyzja 'street'). Poprawne pinezki na
+    długich ulicach zostają nietknięte (reverse zwraca tę samą ulicę).
+
+    Returns: True jeśli współrzędne zostały skorygowane.
+    """
+    loc = offer.get('location') or {}
+    coords = loc.get('coords')
+    if not coords or loc.get('coords_precision') != 'exact':
+        return False
+    cands = street_candidates(offer)
+    if not cands:
+        return False  # brak adresu w tekście — nie ma czym weryfikować
+
+    road = geocoder.reverse_road(coords['lat'], coords['lon'])
+    if road is None:
+        return False  # nie udało się ustalić ulicy pinezki — zostaw bez zmian
+    if any(street_name_matches(c, road) for c in cands):
+        return False  # pinezka stoi na podanej ulicy — OK, nie ruszamy
+
+    # pinezka jest na innej ulicy niż podana → przenieś na podaną (jeśli geokodowalna)
+    for c in cands:
+        geo = geocoder.geocode_street(c)
+        if geo and haversine_km(coords, geo) > min_dist_km:
+            loc['coords'] = {'lat': geo['lat'], 'lon': geo['lon']}
+            loc['coords_precision'] = 'street'
+            loc['street'] = f"ul. {geo['name']}"
+            loc['otodom_coord_corrected'] = True
+            return True
+    return False
 
 
 def refine_offer_location(offer: Dict, geocoder: StreetGeocoder) -> bool:
