@@ -1,0 +1,138 @@
+===============================================================================
+ SONAR SPRZEDAŻY MIESZKAŃ — OPTYMALIZACJA WYDAJNOŚCI MAPY ("Mapa 2", canvas)
+===============================================================================
+ Data: 2026-06-22
+ Pliki: docs/mapa2.html, docs/assets/script2.js
+ Zasada: zero klastrowania, kształty (krople/kwadraty) zachowane 1:1.
+-------------------------------------------------------------------------------
+
+
+1. PROBLEM
+-------------------------------------------------------------------------------
+Mapa główna (docs/index.html + assets/script.js) przy ~2300 ofertach lagowała:
+- przeciąganie (pan) i zoom „ścinały",
+- każda zmiana filtra na chwilę zawieszała stronę.
+
+
+2. DIAGNOZA — DLACZEGO LAGOWAŁO
+-------------------------------------------------------------------------------
+Mapa główna rysuje KAŻDĄ ofertę jako osobny marker DOM:
+    L.marker([lat,lon], { icon: L.divIcon({ html: "<svg>…</svg>" }) })
+
+Czyli ~2300 elementów <div> w drzewie DOM, każdy z własnym SVG i stylami.
+Konsekwencje:
+
+  a) preferCanvas:true NIC tu nie daje. Ta opcja Leaflet przyspiesza tylko
+     warstwy WEKTOROWE (L.circleMarker, L.polygon…). Markery z divIcon to DOM,
+     więc flaga była praktycznie no-op.
+
+  b) PAN / ZOOM: przeglądarka musi przeliczyć i przesunąć (transform) ~2300
+     węzłów DOM przy każdej klatce ruchu → zacinanie.
+
+  c) ZMIANA FILTRA: funkcja render() robiła clearLayers() (usunięcie wszystkich
+     węzłów DOM) i od nowa tworzyła + wstawiała wszystkie markery → pełny
+     teardown i przebudowa DOM.
+
+  d) passesFilters() wykonywała ~15 odczytów document.getElementById() na KAŻDĄ
+     ofertę → ~34 000 odczytów DOM przy jednym renderze.
+
+
+3. ROZWIĄZANIE
+-------------------------------------------------------------------------------
+Osobna zakładka „🗺️ Mapa 2" renderująca pinezki na JEDNYM elemencie <canvas>
+przez warstwę wektorową Leaflet (L.canvas). Zamiast 2300 węzłów DOM mamy jeden
+canvas i jeden „paint". To standardowy, sprawdzony sposób na tysiące punktów
+w Leaflet BEZ klastrowania.
+
+Mapa główna pozostaje nietknięta jako fallback — Mapa 2 to wariant równoległy.
+
+3.1. Renderer canvas
+    canvasRenderer = L.canvas({ padding: 0.5 });
+    // wszystkie kształty dostają renderer: canvasRenderer
+
+3.2. Zachowanie kształtów (krople/kwadraty) na canvasie
+    Canvas natywnie rysuje tylko kółka (L.circleMarker). Żeby zachować krople
+    i kwadraty, dodane są DWIE własne klasy rozszerzające L.CircleMarker:
+
+        PinMarker     → kropla 40×50 (dokładny adres, coords_precision=exact)
+        SquareMarker  → kwadrat 34×34 z przerywaną ramką (lokalizacja przybliżona)
+
+    Każda nadpisuje trzy metody Leaflet:
+        _updatePath()    – własny rysunek kształtu na ctx (ścieżka kropli /
+                           prostokąt), wraz z badge N, ↓/↑ (zmiana ceny) i ×
+                           dla ofert nieaktywnych;
+        _updateBounds()  – prostokąt otaczający kształt (do cullingu poza
+                           widokiem i do trafiania kliknięciem);
+        _containsPoint() – obszar klikalny dopasowany do kształtu (dla kropli
+                           liczony względem bąbla nad ostrzem pinezki).
+
+    Ważny szczegół zgodny z wewnętrznym kontacktem Leaflet: _updatePath bywa
+    wołane też poza pętlą rysowania (przy dodaniu markera). Dlatego — jak we
+    wbudowanych kształtach — rysujemy tylko gdy renderer faktycznie rysuje:
+        if (!renderer._drawing || this._empty()) return;
+
+3.3. Mniej pracy przy filtrowaniu
+    Stan filtrów czytany jest RAZ na render (buildFilterContext) i przekazywany
+    do szybkiej funkcji passes(o, ctx). Znika ~34 000 odczytów DOM na render.
+
+3.4. Kolejność rysowania (zamiast zIndex DOM)
+    Na canvasie „na wierzchu" jest to, co narysowane później. Oferty są więc
+    sortowane przed dodaniem: kwadraty pod pinezkami, nieaktywne pod aktywnymi.
+
+
+4. CO JEST ZACHOWANE 1:1 (względem mapy głównej)
+-------------------------------------------------------------------------------
+- kształty: kropla = dokładny adres, kwadrat (przerywana ramka) = przybliżona;
+- kolorowanie: cena/m² (kwantyle) ALBO rynek (pierwotny/wtórny);
+- oznaczenia: N (nowa), ↓/↑ (zmiana ceny), × (nieaktywna);
+- wszystkie filtry (źródło, warstwy, rynek, pokoje, cena, powierzchnia, czas,
+  od właściciela, zakresy ceny/m² z legendy);
+- popupy ze zdjęciem i pełnymi danymi, fokus oferty z linku #offer=<id>;
+- ta sama legenda i te same liczniki w panelu bocznym.
+- DANE: obie mapy czytają ten sam docs/data.json — backend bez zmian.
+
+
+5. KOMPROMISY / RÓŻNICE
+-------------------------------------------------------------------------------
+- Brak natywnego „dymka" tytułu po najechaniu (title) — na canvasie go nie ma;
+  pełne dane są w popupie po kliknięciu.
+- Badge zmiany ceny rysowany jako ↓/↑ w kółku (zamiast „💲↓") — czytelniejszy
+  na canvasie; znaczenie to samo (opis w legendzie).
+- Obszar klikalny kropli to bąbel pinezki (ostry „ogon" na dole nieklikalny) —
+  w praktyce bez znaczenia.
+
+
+6. DLACZEGO NIE KLASTROWANIE
+-------------------------------------------------------------------------------
+Klastrowanie (grupowanie pinezek w „bąble") było wcześniej wycofane na życzenie.
+Canvas daje płynność BEZ łączenia pinezek — każda oferta to nadal osobny punkt
+na mapie, widoczny od razu.
+
+
+7. ZMIENIONE / DODANE PLIKI
+-------------------------------------------------------------------------------
++ docs/mapa2.html            – nowa strona (kopia układu mapy, ładuje script2.js)
++ docs/assets/script2.js     – logika mapy w wariancie canvas
+~ docs/index.html i podstrony – link „🗺️ Mapa 2" w nawigacji
+~ CHANGELOG.md, CLAUDE.md     – opis zmiany
+
+Mapa główna (index.html + assets/script.js) — BEZ ZMIAN (fallback).
+
+
+8. JAK SPRAWDZIĆ
+-------------------------------------------------------------------------------
+Online:   https://bonaventura-ew.github.io/Sprzedaz-mieszkan/mapa2.html
+Lokalnie: cd docs && python -m http.server 8000  →  http://localhost:8000/mapa2.html
+
+Porównaj płynność pan/zoom i zmiany filtrów względem zakładki „🗺️ Mapa".
+
+
+9. MOŻLIWE DALSZE KROKI (gdyby było trzeba)
+-------------------------------------------------------------------------------
+- jeśli Mapa 2 sprawdzi się w praktyce — uczynić ją domyślną (index.html),
+  a starą wersję DOM zostawić pod innym adresem;
+- ewentualny „dymek" tytułu na hover można dorobić jednym wspólnym tooltipem
+  obsługiwanym przez zdarzenia myszy renderera (bez markerów DOM);
+- przy jeszcze większej skali (>10 tys.) rozważyć rysowanie uproszczone przy
+  oddaleniu (mniejsze kółka zamiast pełnych kształtów).
+===============================================================================

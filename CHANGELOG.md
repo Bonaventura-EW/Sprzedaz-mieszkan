@@ -2,6 +2,11 @@
 
 ## [Niewydane]
 
+### Dokumentacja — opis optymalizacji
+- **`OPTYMALIZACJA-MAPA2.txt`** — dokument opisujący optymalizację mapy
+  (problem, diagnoza, rozwiązanie canvas, co zachowane 1:1, kompromisy,
+  jak sprawdzić, dalsze kroki).
+
 ### Dodane — 🗺️ Mapa 2 (wariant canvas, wysoka wydajność)
 Nowa zakładka **Mapa 2** (`docs/mapa2.html` + `docs/assets/script2.js`) obok
 mapy głównej — ten sam zestaw ofert i filtrów, ale pinezki rysowane na JEDNYM
