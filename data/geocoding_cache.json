@@ -6834,5 +6834,237 @@
    "city": "Lublin"
   },
   "ts": 1782143344.4295557
+ },
+ "księdza jerzego popiełuszki 35": {
+  "result": null,
+  "ts": 1782143821.8264518
+ },
+ "kraśnickich": {
+  "result": null,
+  "ts": 1782143823.1050832
+ },
+ "kredowa": {
+  "result": {
+   "lat": 51.2328958,
+   "lon": 22.5416872,
+   "name": "Kredowa"
+  },
+  "ts": 1782143824.5508008
+ },
+ "rva:51.2149,22.5916": {
+  "result": {
+   "road": "Wyzwolenia",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782143826.3382409
+ },
+ "rva:51.2603,22.5851": {
+  "result": {
+   "road": "Józefa Pankiewicza",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782143827.8740156
+ },
+ "rva:51.2591,22.5397": {
+  "result": {
+   "road": "Jana Kiepury",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782143829.4106572
+ },
+ "kosmowskiej": {
+  "result": {
+   "lat": 51.2601048,
+   "lon": 22.5387053,
+   "name": "Ireny Kosmowskiej"
+  },
+  "ts": 1782143830.8194847
+ },
+ "rva:51.2302,22.5884": {
+  "result": {
+   "road": "Elektryczna",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782143832.353232
+ },
+ "rva:51.2456,22.6243": {
+  "result": {
+   "road": "Mełgiewska",
+   "district": "Hajdów-Zadębie",
+   "city": "Lublin"
+  },
+  "ts": 1782143834.0494087
+ },
+ "rva:51.2171,22.5743": {
+  "result": {
+   "road": "Adama Mickiewicza",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782143835.9525263
+ },
+ "rva:51.2353,22.5295": {
+  "result": {
+   "road": "Pozytywistów",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782143837.2812262
+ },
+ "rva:51.2345,22.5794": {
+  "result": {
+   "road": "Droga Męczenników Majdanka",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1782143838.9584649
+ },
+ "rva:51.2392,22.5475": {
+  "result": {
+   "road": "Gliniana",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782143840.58121
+ },
+ "rva:51.2321,22.5043": {
+  "result": {
+   "road": "Kaczeńcowa",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1782143842.161413
+ },
+ "rva:51.2504,22.5607": {
+  "result": {
+   "road": "Niecała",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782143843.6694732
+ },
+ "rva:51.2205,22.4788": {
+  "result": {
+   "road": "Jemiołuszki",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782143845.2606494
+ },
+ "rva:51.2412,22.5563": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782143846.907191
+ },
+ "rva:51.2234,22.5664": {
+  "result": {
+   "road": "Wyścigowa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782143848.5157824
+ },
+ "rva:51.2765,22.5070": {
+  "result": {
+   "road": "Sławinkowska",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782143850.019217
+ },
+ "rva:51.2760,22.5072": {
+  "result": {
+   "road": "Zbożowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782143851.3296256
+ },
+ "rva:51.2754,22.5788": {
+  "result": {
+   "road": "Zdzisława Jamrożka",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782143852.828599
+ },
+ "rva:51.2207,22.6301": {
+  "result": {
+   "road": "Władysława Jagiełły",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1782143854.3354185
+ },
+ "rva:51.2175,22.5459": {
+  "result": {
+   "road": "Medalionów",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782143855.8546903
+ },
+ "rva:51.2416,22.5294": {
+  "result": {
+   "road": "Grażyny",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782143857.398241
+ },
+ "rva:51.2604,22.5307": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782143858.7277536
+ },
+ "rva:51.2510,22.5747": {
+  "result": {
+   "road": "Rondo Romana Dmowskiego",
+   "district": "Stare Miasto",
+   "city": "Lublin"
+  },
+  "ts": 1782143860.5344698
+ },
+ "rva:51.2427,22.5584": {
+  "result": {
+   "road": "Gminna",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782143862.1020136
+ },
+ "rva:51.2244,22.5145": {
+  "result": {
+   "road": "Turkusowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1782143863.7243538
+ },
+ "rva:51.2510,22.5234": {
+  "result": {
+   "road": "Aleja Kraśnicka",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1782143865.4456358
+ },
+ "rva:51.2595,22.5951": {
+  "result": {
+   "road": null,
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782143867.310051
  }
 }
