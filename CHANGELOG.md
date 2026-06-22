@@ -3,6 +3,10 @@
 ## [Niewydane]
 
 ### Naprawione (lokalizacja)
+- **Ulica „ul" bez kropki nie była wykrywana** (np. „ul Lipińskiego" w tytule).
+  Regex wymagał kropki po „ul"/„al"; teraz kropka jest opcjonalna
+  (`\bul\b\.?\s*`), a `\bul\b` chroni przed łapaniem „ul" wewnątrz słów typu
+  „ulica". Łapie też „ul.Lwowska" bez spacji. Odblokowuje sporo ofert OLX/Otodom.
 - **Weryfikacja „dokładnych" pinezek Otodom** (`location_refiner.verify_otodom_coords`,
   wpięte w `main.py`). Otodom bywa nieprecyzyjny — pinezka potrafi stać kilka km
   od ulicy podanej w tytule/treści. Teraz dla pinezek `exact` z Otodom robimy

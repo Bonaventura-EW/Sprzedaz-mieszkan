@@ -15,6 +15,15 @@ def test_extract_street_basic():
         "Mieszkanie przy alei Kraśnickiej, blisko centrum") == ['Kraśnickiej']
 
 
+def test_extract_street_no_dot_abbrev():
+    # sprzedający często piszą "ul"/"al" bez kropki
+    assert extract_street_candidates(
+        "Sprzedam mieszkanie 3 pok. na Czechowie, ul Lipińskiego Lublin") == ['Lipińskiego']
+    assert extract_street_candidates("Mieszkanie al Kraśnicka, blisko centrum") == ['Kraśnicka']
+    # "ul" wewnątrz słowa nie może być złapane
+    assert extract_street_candidates("Komfortowa ulica Makowa w okolicy") == ['Makowa']
+
+
 def test_extract_street_cuts_garbage():
     assert extract_street_candidates(
         "Mieszkanie 50m2 ul. Kosynierów. Dzielnica:Ponikwoda") == ['Kosynierów']

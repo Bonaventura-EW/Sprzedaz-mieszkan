@@ -36,9 +36,11 @@ NEGATIVE_TTL_S = 7 * 24 * 3600  # nieudane zapytania ponawiamy po tygodniu
 # Granice Lublina z marginesem — wynik spoza nich odrzucamy
 LUBLIN_BBOX = {'lat_min': 51.10, 'lat_max': 51.36, 'lon_min': 22.40, 'lon_max': 22.78}
 
-# ulica musi zaczynać się wielką literą; łapiemy do 3 słów (np. "Gen. Urbanowicza")
+# ulica musi zaczynać się wielką literą; łapiemy do 3 słów (np. "Gen. Urbanowicza").
+# Kropka po „ul"/„al" jest OPCJONALNA — sprzedający często piszą „ul Lipińskiego"
+# bez kropki (\bul\b zapobiega łapaniu „ul" wewnątrz słów typu „ulica").
 _STREET_RE = re.compile(
-    r'(?:\b(?:ul|al)\.\s*|\b(?:ulic[ayę]|ulicą|alei|alej[aę])\s+|\bprzy\s+ul\.?\s*)'
+    r'(?:\b(?:ul|al)\b\.?\s*|\b(?:ulic[ayę]|ulicą|alei|alej[aę])\s+|\bprzy\s+ul\b\.?\s*)'
     r'([A-ZŚĆŁŻŹÓĄĘŃ][\wąęółśżźćń]+\.?(?:[ \-][A-ZŚĆŁŻŹÓĄĘŃ][\wąęółśżźćń\.]*){0,2})',
     re.UNICODE)
 
