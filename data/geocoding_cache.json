@@ -6094,5 +6094,105 @@
    "city": "Lublin"
   },
   "ts": 1782142011.817442
+ },
+ "gminna 6": {
+  "result": null,
+  "ts": 1782142252.7866473
+ },
+ "pana balcera 11": {
+  "result": null,
+  "ts": 1782142254.1364822
+ },
+ "gościnna": {
+  "result": {
+   "lat": 51.2310536,
+   "lon": 22.5332614,
+   "name": "Gościnna"
+  },
+  "ts": 1782142255.6079154
+ },
+ "młodziezowa 12": {
+  "result": null,
+  "ts": 1782142256.9544902
+ },
+ "rva:51.2398,22.5824": {
+  "result": {
+   "road": "Firlejowska",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1782142258.2568805
+ },
+ "rva:51.2322,22.5652": {
+  "result": {
+   "road": "Młyńska",
+   "district": "Za Cukrownią",
+   "city": "Lublin"
+  },
+  "ts": 1782142259.8633482
+ },
+ "rva:51.2793,22.5511": {
+  "result": {
+   "road": "Gorczańska",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782142261.3712626
+ },
+ "rva:51.2695,22.5170": {
+  "result": {
+   "road": "Kasztelańska",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782142262.7736382
+ },
+ "rva:51.2082,22.5472": {
+  "result": {
+   "road": "Jana Samsonowicza",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782142264.1792326
+ },
+ "rva:51.2693,22.5786": {
+  "result": {
+   "road": null,
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782142265.7159514
+ },
+ "rva:51.2415,22.5136": {
+  "result": {
+   "road": "Zygmunta Krasińskiego",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782142267.3289073
+ },
+ "rva:51.2166,22.6277": {
+  "result": {
+   "road": "Generała Witolda Urbanowicza",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782142268.7687578
+ },
+ "rva:51.2089,22.5827": {
+  "result": {
+   "road": "Leopolda Staffa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782142270.1120694
+ },
+ "rva:51.2726,22.5911": {
+  "result": {
+   "road": "Narcyzowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782142271.6214437
  }
 }
