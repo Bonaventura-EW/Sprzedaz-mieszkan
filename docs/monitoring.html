@@ -52,7 +52,7 @@
             <table class="scan-table">
                 <thead><tr>
                     <th>Data</th><th>Czas</th><th>OLX</th><th>Otodom</th>
-                    <th>Nowe</th><th>Zaktualiz.</th><th>Aktywne</th><th>W bazie</th>
+                    <th>Nowe</th><th>Znikło</th><th>Zaktualiz.</th><th>Aktywne</th><th>W bazie</th>
                 </tr></thead>
                 <tbody id="scan-rows"></tbody>
             </table>
@@ -144,11 +144,12 @@ async function init() {
             <td>${scan.scraped_olx ?? '—'}</td>
             <td>${scan.scraped_otodom ?? '—'}</td>
             <td>${scan.new ?? '—'}</td>
+            <td>${scan.deactivated ?? '—'}</td>
             <td>${scan.updated ?? '—'}</td>
             <td>${scan.active ?? '—'}</td>
             <td>${scan.total_in_db ?? '—'}</td>
         </tr>`).join('');
-    document.getElementById('scan-rows').innerHTML = rows || '<tr><td colspan="8">Brak skanów</td></tr>';
+    document.getElementById('scan-rows').innerHTML = rows || '<tr><td colspan="9">Brak skanów</td></tr>';
 }
 init();
 </script>
