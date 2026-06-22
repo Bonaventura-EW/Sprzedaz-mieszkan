@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SONAR SPRZEDAŻY MIESZKAŃ — Mapa mieszkań na sprzedaż · Lublin</title>
+    <title>SONAR SPRZEDAŻY MIESZKAŃ — Mapa 2 (płynna · canvas) · Lublin</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg?v=7">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="assets/style.css?v=7">
@@ -16,8 +16,8 @@
             <span>SONAR SPRZEDAŻY MIESZKAŃ<span class="sub">rynek pierwotny i wtórny · Lublin</span></span>
         </h1>
         <nav class="header-nav">
-            <a href="index.html" class="active">🗺️ Mapa</a>
-            <a href="mapa2.html">🗺️ Mapa 2</a>
+            <a href="index.html">🗺️ Mapa</a>
+            <a href="mapa2.html" class="active">🗺️ Mapa 2</a>
             <a href="analytics.html">📈 Analityka</a>
             <a href="statystyki.html">📐 Statystyki</a>
             <a href="monitoring.html">📊 Monitoring</a>
@@ -40,6 +40,14 @@
             </div>
 
             <div class="filters-container">
+                <div class="filter-group">
+                    <p class="legend-note" style="margin-top:0">
+                        ⚡ <strong>Mapa 2</strong> — ten sam zestaw ofert co na mapie głównej,
+                        ale pinezki rysowane na canvasie (płynny pan/zoom przy tysiącach
+                        ofert, bez klastrowania). Kształty i filtry bez zmian.
+                    </p>
+                </div>
+
                 <div class="filter-group">
                     <h3>Warstwy</h3>
                     <label><input type="checkbox" id="layer-active" checked> <span class="shape-pin"></span> Aktywne — dokładny adres <span class="count" id="count-active">(0)</span></label>
@@ -109,7 +117,7 @@
                         📍 pinezka = dokładny adres (Otodom)<br>
                         ▢ kwadrat (przerywana ramka) = lokalizacja przybliżona<br>
                         &nbsp;&nbsp;&nbsp;(ulica z ogłoszenia albo okolica z geolokalizacji Otodom)<br>
-                        <span class="badge-new">N</span> nowa oferta · 💲↓/↑ zmiana ceny · × nieaktywna<br>
+                        <span class="badge-new">N</span> nowa oferta · ↓/↑ zmiana ceny · × nieaktywna<br>
                         Oferty bez wiarygodnej lokalizacji → zakładka <a href="debug.html">🐛 Debug</a>.
                     </p>
                 </div>
@@ -120,6 +128,6 @@
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="assets/logo.js?v=7"></script>
-<script src="assets/script.js?v=7"></script>
+<script src="assets/script2.js?v=8"></script>
 </body>
 </html>

@@ -2,6 +2,25 @@
 
 ## [Niewydane]
 
+### Dodane — 🗺️ Mapa 2 (wariant canvas, wysoka wydajność)
+Nowa zakładka **Mapa 2** (`docs/mapa2.html` + `docs/assets/script2.js`) obok
+mapy głównej — ten sam zestaw ofert i filtrów, ale pinezki rysowane na JEDNYM
+`<canvas>` zamiast jako ~2300 markerów DOM (`L.divIcon`). Efekt: płynny pan/zoom
+przy tysiącach ofert, **bez klastrowania**.
+- **Kształty zachowane 1:1** — krople (dokładny adres) i kwadraty z przerywaną
+  ramką (lokalizacja przybliżona) rysowane własnymi klasami `PinMarker`/
+  `SquareMarker` (rozszerzają `L.CircleMarker`, nadpisują `_updatePath`,
+  `_updateBounds`, `_containsPoint`). Badge nowości (N), zmiany ceny (↓/↑) i ×
+  dla nieaktywnych rysowane na canvasie.
+- **Dlaczego laguje stara mapa**: `L.marker`+`L.divIcon` tworzy węzeł DOM na
+  pinezkę; `preferCanvas` ich nie przyspiesza (działa tylko na warstwy
+  wektorowe). Przy pan/zoom przeglądarka przesuwa ~2300 węzłów, a każda zmiana
+  filtra przebudowuje cały DOM.
+- **Dodatkowa optymalizacja**: stan filtrów czytany RAZ na render
+  (`buildFilterContext`) zamiast ~15 `getElementById` na każdą z ~2300 ofert.
+- Mapa główna (`index.html` + `script.js`) **bez zmian** — zostaje jako
+  fallback. Link „Mapa 2" dodany do nawigacji wszystkich podstron.
+
 ### Dokumentacja
 - **`CLAUDE.md` pkt 11: KAŻDĄ zmianę zapisujemy w CHANGELOG** (sekcja
   `[Niewydane]`) — bez wyjątków, jako twardy wymóg zakończenia zadania.

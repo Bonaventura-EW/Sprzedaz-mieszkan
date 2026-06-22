@@ -37,6 +37,10 @@ monitoring_generator.py → docs/monitoring_data.json (dashboard skanów)
 debug_generator.py → docs/debug_data.json (oferty bez pinezki wg powodu → docs/debug.html)
   ↓
 docs/index.html + assets/script.js → mapa Leaflet (GitHub Pages)
+docs/mapa2.html + assets/script2.js → ta sama mapa, wariant CANVAS (pinezki
+                     rysowane na <canvas> = płynniej przy tysiącach ofert, bez
+                     klastrowania; krople/kwadraty zachowane). index.html zostaje
+                     jako fallback. Obie czytają ten sam docs/data.json.
 ```
 
 ## Workflowy GitHub Actions
