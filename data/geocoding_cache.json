@@ -7306,5 +7306,205 @@
    "city": "Lublin"
   },
   "ts": 1782144244.32439
+ },
+ "prymasa stefana wyszyńskiego": {
+  "result": {
+   "lat": 51.2452402,
+   "lon": 22.5685662,
+   "name": "Prymasa Stefana Wyszyńskiego"
+  },
+  "ts": 1782144576.2599504
+ },
+ "rva:51.2176,22.6330": {
+  "result": {
+   "road": "Zygmunta Augusta",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1782144577.7348287
+ },
+ "rva:51.2280,22.5238": {
+  "result": {
+   "road": "Aleja Marzeń",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1782144579.2051344
+ },
+ "rva:51.2460,22.5290": {
+  "result": {
+   "road": "Lesława Pagi",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1782144580.6807818
+ },
+ "rva:51.2459,22.5742": {
+  "result": {
+   "road": "Aleja Unii Lubelskiej",
+   "district": "Stare Miasto",
+   "city": "Lublin"
+  },
+  "ts": 1782144582.0449672
+ },
+ "misjonarskiej": {
+  "result": {
+   "lat": 51.2442411,
+   "lon": 22.5705703,
+   "name": "Misjonarska"
+  },
+  "ts": 1782144584.6467187
+ },
+ "rva:51.2346,22.5798": {
+  "result": {
+   "road": "Droga Męczenników Majdanka",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1782144586.1664486
+ },
+ "rva:51.2056,22.5527": {
+  "result": {
+   "road": "Henryka Wolińskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782144587.6616488
+ },
+ "rva:51.2364,22.5837": {
+  "result": {
+   "road": "Wrońska",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1782144589.2223396
+ },
+ "rva:51.2743,22.5923": {
+  "result": {
+   "road": "Narcyzowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782144590.704529
+ },
+ "rva:51.2633,22.5486": {
+  "result": {
+   "road": "Braci Wieniawskich",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782144592.3265607
+ },
+ "rva:51.2171,22.6273": {
+  "result": {
+   "road": "Generała Witolda Urbanowicza",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782144593.9013941
+ },
+ "rva:51.2242,22.5653": {
+  "result": {
+   "road": "Osiedle Nowe Sokolniki",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782144595.2596025
+ },
+ "rva:51.2243,22.5643": {
+  "result": {
+   "road": "Osiedle Nowe Sokolniki",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782144597.0681925
+ },
+ "rva:51.2735,22.5753": {
+  "result": {
+   "road": "Czesława Strzeszewskiego",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782144598.9239583
+ },
+ "rva:51.2392,22.5300": {
+  "result": {
+   "road": "Filaretów",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782144600.5119417
+ },
+ "rva:51.2830,22.5429": {
+  "result": {
+   "road": "Cedrowa",
+   "district": null,
+   "city": "gmina Niemce"
+  },
+  "ts": 1782144602.0652936
+ },
+ "rva:51.2472,22.5554": {
+  "result": {
+   "road": "Mieczysława Karłowicza",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144603.7645984
+ },
+ "rva:51.2420,22.5547": {
+  "result": {
+   "road": "Fryderyka Chopina",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144605.6185877
+ },
+ "rva:51.2476,22.5582": {
+  "result": {
+   "road": "Hugona Kołłątaja",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144607.3949761
+ },
+ "rva:51.2473,22.5579": {
+  "result": {
+   "road": "Hugona Kołłątaja",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144608.8608644
+ },
+ "rva:51.2718,22.5527": {
+  "result": {
+   "road": "Józefa Śliwińskiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782144610.3522677
+ },
+ "rva:51.2774,22.5045": {
+  "result": {
+   "road": "Chabrowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782144611.8805146
+ },
+ "rva:51.2773,22.5035": {
+  "result": {
+   "road": "Chabrowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782144613.5181634
+ },
+ "rva:51.2828,22.5433": {
+  "result": {
+   "road": "Cedrowa",
+   "district": null,
+   "city": "gmina Niemce"
+  },
+  "ts": 1782144615.0729046
  }
 }
