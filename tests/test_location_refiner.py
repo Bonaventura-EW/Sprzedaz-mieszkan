@@ -24,6 +24,33 @@ def test_extract_street_no_dot_abbrev():
     assert extract_street_candidates("Komfortowa ulica Makowa w okolicy") == ['Makowa']
 
 
+def test_extract_street_capital_prefix():
+    # wielkie „Al."/„Ul." (częste na OLX) też muszą być łapane
+    assert extract_street_candidates("BEZPOŚREDNIO: 2 pokoje, Al. Racławickie 22 | Centrum") == ['Racławickie']
+    assert extract_street_candidates("Mieszkanie, Ul. Krakowska, parter") == ['Krakowska']
+
+
+def test_extract_street_strips_building_number():
+    assert extract_street_candidates("Mieszkanie ul. Wrońska1B, Bronowice") == ['Wrońska']
+    assert extract_street_candidates("apartament ul. Nałęczowska 18a") == ['Nałęczowska']
+    assert extract_street_candidates("ul. Zalewskiego 9, nowe") == ['Zalewskiego']
+
+
+def test_extract_street_cuts_at_sentence_period():
+    # kropka po pełnym słowie kończy nazwę (nie zabiera słowa z następnego zdania)
+    assert extract_street_candidates("Czuby, ul. Fantastyczna. Zielone okolice") == ['Fantastyczna']
+    assert extract_street_candidates("ul. Szafirowa. Bez prowizji") == ['Szafirowa']
+    # skrót/inicjał z kropką NIE kończy nazwy
+    assert extract_street_candidates("przy ul. Gen. Urbanowicza, park") == ['Gen. Urbanowicza']
+
+
+def test_nominative_variants_multiple():
+    # generujemy wiele wariantów — geokoder weźmie trafiony
+    assert 'Pawia' in nominative_variants('Pawiej')
+    assert 'Wschodnia' in nominative_variants('Wschodniej')
+    assert 'Nadbystrzycka' in nominative_variants('Nadbystrzyckiej')
+
+
 def test_extract_street_cuts_garbage():
     assert extract_street_candidates(
         "Mieszkanie 50m2 ul. Kosynierów. Dzielnica:Ponikwoda") == ['Kosynierów']

@@ -2,6 +2,20 @@
 
 ## [Niewydane]
 
+### Ulepszony silnik pinezek (na podstawie zakładki Debug)
+Analiza kategorii `geokoder_pusty` / `brak_adresu` ujawniła konkretne wzorce —
+naprawione w `location_refiner.py`:
+- **Prefiks „ul"/„al" case-insensitive** — łapiemy też „Al. Racławickie", „Ul. …"
+  (wcześniej tylko małe litery).
+- **Obcinanie numeru budynku** z nazwy ulicy: „Wrońska1B"→„Wrońska",
+  „Nałęczowska 18a"→„Nałęczowska" (też dla pola `street` z Otodom) — wcześniej
+  Nominatim nie znajdował ulicy z numerem.
+- **Cięcie na granicy zdania** — kropka po pełnym słowie kończy nazwę:
+  „Fantastyczna. Zielone"→„Fantastyczna" (skróty/inicjały typu „Gen."/„K." zostają).
+- **Wiele wariantów odmiany** — próbujemy wszystkich form mianownika:
+  „Pawiej"→„Pawia", „Wschodniej"→„Wschodnia", „Nadbystrzyckiej"→„Nadbystrzycka".
+- Pomiar na próbce Debug: ~16/21 ofert z `geokoder_pusty` zyskuje pinezkę.
+
 ### Dodane
 - **Zakładka 🐛 Debug** (`docs/debug.html` + `src/debug_generator.py` →
   `docs/debug_data.json`) zamiast sekcji „oferty bez lokalizacji GPS" na mapie.

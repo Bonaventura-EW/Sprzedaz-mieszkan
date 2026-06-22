@@ -37,12 +37,19 @@ NEGATIVE_TTL_S = 7 * 24 * 3600  # nieudane zapytania ponawiamy po tygodniu
 LUBLIN_BBOX = {'lat_min': 51.10, 'lat_max': 51.36, 'lon_min': 22.40, 'lon_max': 22.78}
 
 # ulica musi zaczynać się wielką literą; łapiemy do 3 słów (np. "Gen. Urbanowicza").
-# Kropka po „ul"/„al" jest OPCJONALNA — sprzedający często piszą „ul Lipińskiego"
-# bez kropki (\bul\b zapobiega łapaniu „ul" wewnątrz słów typu „ulica").
+# Prefiks „ul"/„al" jest case-insensitive (sprzedający piszą „Al. Racławickie",
+# „Ul.") i z OPCJONALNĄ kropką („ul Lipińskiego"); \b zapobiega łapaniu wewnątrz
+# słów typu „ulica".
 _STREET_RE = re.compile(
-    r'(?:\b(?:ul|al)\b\.?\s*|\b(?:ulic[ayę]|ulicą|alei|alej[aę])\s+|\bprzy\s+ul\b\.?\s*)'
+    r'(?:\b(?:[Uu][Ll]|[Aa][Ll])\b\.?\s*'
+    r'|\b(?:[Uu]lic[ayę]|[Uu]licą|[Aa]lei|[Aa]lej[aę])\s+'
+    r'|\bprzy\s+(?:[Uu][Ll])\b\.?\s*)'
     r'([A-ZŚĆŁŻŹÓĄĘŃ][\wąęółśżźćń]+\.?(?:[ \-][A-ZŚĆŁŻŹÓĄĘŃ][\wąęółśżźćń\.]*){0,2})',
     re.UNICODE)
+
+# skróty, po których kropka NIE kończy zdania (zostają w nazwie ulicy)
+_ABBR = {'ul', 'al', 'gen', 'św', 'sw', 'płk', 'plk', 'ks', 'pl', 'bp', 'dr',
+         'im', 'st', 'mjr', 'kpt', 'o', 'por', 'mjra'}
 
 # słowa, które NIE są nazwą ulicy (ucinamy je z końca dopasowania)
 _STOP_WORDS = {
@@ -53,34 +60,59 @@ _STOP_WORDS = {
 }
 
 
+def _strip_building_no(name: str) -> str:
+    """Usuwa numer budynku z nazwy ulicy: 'Nałęczowska 18a'→'Nałęczowska',
+    'Wrońska1B'→'Wrońska', 'Zalewskiego 9'→'Zalewskiego', '12/3'→''."""
+    if not name:
+        return ''
+    name = re.sub(r'[\s,]+\d+[a-zA-Z]?(?:\s*/\s*\d+[a-zA-Z]?)?\s*$', '', name)   # " 18a", " 18/3"
+    name = re.sub(r'(?<=[A-Za-ząęółśżźćńŚĆŁŻŹÓĄĘŃ])\d+[a-zA-Z]?$', '', name)      # "Wrońska1B"
+    return name.strip()
+
+
 def extract_street_candidates(text: str) -> List[str]:
     """Zwraca kandydatów na nazwę ulicy z tekstu (bez duplikatów, w kolejności)."""
     candidates = []
     for m in _STREET_RE.finditer(text or ''):
-        name = m.group(1)
-        # utnij na granicy zdania/linii i odetnij stop-słowa z końca
-        name = re.split(r'[\n,;:|!?()"]', name)[0].strip().rstrip('.')
-        words = name.split()
+        name = re.split(r'[\n,;:|!?()"/]', m.group(1))[0].strip()
+        # utnij na granicy zdania: kropka po PEŁNYM słowie (nie po skrócie/inicjale)
+        words = []
+        for w in name.split():
+            core = w.rstrip('.').lower()
+            sentence_end = w.endswith('.') and len(core) >= 3 and core not in _ABBR
+            words.append(w[:-1] if sentence_end else w)
+            if sentence_end:
+                break
+        # usuń numery budynków (też doklejone) i puste tokeny
+        words = [w2 for w in words if (w2 := _strip_building_no(w))]
+        # odetnij stop-słowa z końca
         while words and words[-1].lower().strip('.') in _STOP_WORDS:
             words.pop()
-        name = ' '.join(words).rstrip('.')
+        name = ' '.join(words).rstrip('.').strip()
         if len(name) >= 4 and name not in candidates:
             candidates.append(name)
     return candidates
 
 
 def nominative_variants(street: str) -> List[str]:
-    """Warianty mianownika dla nazwy w dopełniaczu: Wyżynnej→Wyżynna,
-    Krężnickiej→Krężnicka, Zorzy→Zorza."""
+    """Warianty mianownika dla nazwy w dopełniaczu — próbujemy WSZYSTKICH (geokoder
+    weźmie pierwszy trafiony): Wyżynnej→Wyżynna, Krężnickiej→Krężnicka,
+    Pawiej→Pawia, Wschodniej→Wschodnia, Zorzy→Zorza. Ulice „od nazwisk" zostają
+    w dopełniaczu (oficjalna nazwa, np. Lipińskiego) — to wariant pierwszy."""
     variants = [street]
     last = street.split()[-1]
     prefix = street[: len(street) - len(last)]
+
+    def add(form):
+        if form not in variants:
+            variants.append(form)
+
     if last.endswith('iej') and len(last) > 4:
-        variants.append(prefix + last[:-3] + 'a')
-    elif last.endswith('ej') and len(last) > 3:
-        variants.append(prefix + last[:-2] + 'a')
-    elif last.endswith('y') and len(last) > 3:
-        variants.append(prefix + last[:-1] + 'a')
+        add(prefix + last[:-3] + 'a')   # Krężnickiej→Krężnicka, Nadbystrzyckiej→…cka
+    if last.endswith('ej') and len(last) > 3:
+        add(prefix + last[:-2] + 'a')   # Wyżynnej→Wyżynna, Pawiej→Pawia, Wschodniej→…nia
+    if last.endswith('y') and len(last) > 3:
+        add(prefix + last[:-1] + 'a')   # Zorzy→Zorza
     return variants
 
 
@@ -267,7 +299,10 @@ def street_candidates(offer: Dict) -> List[str]:
     loc = offer.get('location') or {}
     cands = []
     if loc.get('street'):
-        cands.append(re.sub(r'^(ul|al)\.\s*', '', loc['street']))
+        # pole Otodom bywa „ul. Nałęczowska 18a" — zdejmij prefiks i numer budynku
+        s = _strip_building_no(re.sub(r'^(ul|al)\.?\s*', '', loc['street'], flags=re.I))
+        if len(s) >= 4:
+            cands.append(s)
     text = (offer.get('title') or '') + '\n' + (offer.get('description') or '')
     cands.extend(c for c in extract_street_candidates(text) if c not in cands)
     return cands
