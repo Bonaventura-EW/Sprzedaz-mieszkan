@@ -4046,5 +4046,829 @@
    "city": "Lublin"
   },
   "ts": 1782112109.5600622
+ },
+ "kompozytorów": {
+  "result": {
+   "lat": 51.2670803,
+   "lon": 22.5450437,
+   "name": "Aleja Kompozytorów Polskich"
+  },
+  "ts": 1782126028.3289893
+ },
+ "witosa": {
+  "result": {
+   "lat": 51.219822,
+   "lon": 22.6405801,
+   "name": "Aleja Wincentego Witosa"
+  },
+  "ts": 1782126029.8158288
+ },
+ "zalewskiego": {
+  "result": {
+   "lat": 51.1968407,
+   "lon": 22.5428684,
+   "name": "Księdza Ludwika Zalewskiego"
+  },
+  "ts": 1782126031.1727338
+ },
+ "bukszpanowej": {
+  "result": {
+   "lat": 51.2765874,
+   "lon": 22.5083831,
+   "name": "Bukszpanowa"
+  },
+  "ts": 1782126033.888177
+ },
+ "królowej jadwigii": {
+  "result": null,
+  "ts": 1782126035.0148787
+ },
+ "konopnickiej": {
+  "result": {
+   "lat": 51.2438259,
+   "lon": 22.5554532,
+   "name": "Konopnicka"
+  },
+  "ts": 1782126037.9575512
+ },
+ "południowej": {
+  "result": {
+   "lat": 51.2057064,
+   "lon": 22.5687881,
+   "name": "Południowa"
+  },
+  "ts": 1782126040.9423318
+ },
+ "sasankowej": {
+  "result": {
+   "lat": 51.2314,
+   "lon": 22.5184591,
+   "name": "Sasankowa"
+  },
+  "ts": 1782126043.5068278
+ },
+ "spółdzielczości pracy": {
+  "result": {
+   "lat": 51.2669703,
+   "lon": 22.5730077,
+   "name": "Aleja Spółdzielczości Pracy"
+  },
+  "ts": 1782126044.9903817
+ },
+ "elektryczna": {
+  "result": {
+   "lat": 51.231168,
+   "lon": 22.5811308,
+   "name": "Elektryczna"
+  },
+  "ts": 1782126046.4136958
+ },
+ "biskupa mariana fulmana": {
+  "result": {
+   "lat": 51.2003095,
+   "lon": 22.5447234,
+   "name": "Biskupa Mariana Fulmana"
+  },
+  "ts": 1782126047.7046878
+ },
+ "tomasza strzembosza": {
+  "result": {
+   "lat": 51.2747614,
+   "lon": 22.5800147,
+   "name": "Tomasza Strzembosza"
+  },
+  "ts": 1782126048.939433
+ },
+ "jana skrzetuskiego 8": {
+  "result": null,
+  "ts": 1782126050.4677534
+ },
+ "ignacego domeyki": {
+  "result": {
+   "lat": 51.204773,
+   "lon": 22.5492552,
+   "name": "Ignacego Domeyki"
+  },
+  "ts": 1782126051.9457278
+ },
+ "wróbla": {
+  "result": {
+   "lat": 51.2248225,
+   "lon": 22.4742786,
+   "name": "Wróbla"
+  },
+  "ts": 1782126053.4314058
+ },
+ "dunikowskiego 23": {
+  "result": null,
+  "ts": 1782126054.7330024
+ },
+ "niepodległości 4": {
+  "result": null,
+  "ts": 1782126056.306278
+ },
+ "edwarda wojtasa": {
+  "result": {
+   "lat": 51.2770884,
+   "lon": 22.5545452,
+   "name": "Edwarda Wojtasa"
+  },
+  "ts": 1782126057.6810853
+ },
+ "klemensa junoszy": {
+  "result": {
+   "lat": 51.2541999,
+   "lon": 22.5401906,
+   "name": "Klemensa Junoszy"
+  },
+  "ts": 1782126059.169004
+ },
+ "przemysłowa": {
+  "result": {
+   "lat": 51.2414651,
+   "lon": 22.5710163,
+   "name": "Przemysłowa"
+  },
+  "ts": 1782126060.676498
+ },
+ "farbiarska": {
+  "result": {
+   "lat": 51.2426452,
+   "lon": 22.5698908,
+   "name": "Farbiarska"
+  },
+  "ts": 1782126062.1558998
+ },
+ "irysowa": {
+  "result": {
+   "lat": 51.2780383,
+   "lon": 22.5002921,
+   "name": "Irysowa"
+  },
+  "ts": 1782126063.4949648
+ },
+ "szafirowej": {
+  "result": {
+   "lat": 51.2227413,
+   "lon": 22.5082051,
+   "name": "Szafirowa"
+  },
+  "ts": 1782126066.07003
+ },
+ "fabryczna": {
+  "result": {
+   "lat": 51.2370745,
+   "lon": 22.5751256,
+   "name": "Fabryczna"
+  },
+  "ts": 1782126067.5817633
+ },
+ "firlejowska": {
+  "result": {
+   "lat": 51.2423105,
+   "lon": 22.5829358,
+   "name": "Firlejowska"
+  },
+  "ts": 1782126068.8252907
+ },
+ "młyńska": {
+  "result": {
+   "lat": 51.2335296,
+   "lon": 22.5678503,
+   "name": "Młyńska"
+  },
+  "ts": 1782126070.126199
+ },
+ "tomasza zana": {
+  "result": {
+   "lat": 51.2458429,
+   "lon": 22.5153163,
+   "name": "Tomasza Zana"
+  },
+  "ts": 1782126071.4260592
+ },
+ "krzemienieckiej": {
+  "result": {
+   "lat": 51.2558189,
+   "lon": 22.5779017,
+   "name": "Krzemieniecka"
+  },
+  "ts": 1782126074.1770322
+ },
+ "gen. władysława sikorskiego": {
+  "result": null,
+  "ts": 1782126075.6882946
+ },
+ "cyruliczej": {
+  "result": {
+   "lat": 51.2507754,
+   "lon": 22.568107,
+   "name": "Cyrulicza"
+  },
+  "ts": 1782126078.4202483
+ },
+ "migdałowa 4": {
+  "result": null,
+  "ts": 1782126079.760743
+ },
+ "bukowa": {
+  "result": {
+   "lat": 51.2296078,
+   "lon": 22.5820716,
+   "name": "Bukowa"
+  },
+  "ts": 1782126081.2257087
+ },
+ "limbowa": {
+  "result": {
+   "lat": 51.2683529,
+   "lon": 22.5177493,
+   "name": "Limbowa"
+  },
+  "ts": 1782126082.6940467
+ },
+ "topazowa": {
+  "result": {
+   "lat": 51.2226186,
+   "lon": 22.5195483,
+   "name": "Topazowa"
+  },
+  "ts": 1782126083.963068
+ },
+ "bukietowa": {
+  "result": {
+   "lat": 51.2525752,
+   "lon": 22.5237301,
+   "name": "Bukietowa"
+  },
+  "ts": 1782126085.2022586
+ },
+ "laurowa 20": {
+  "result": null,
+  "ts": 1782126086.4908633
+ },
+ "laurowej": {
+  "result": {
+   "lat": 51.2770954,
+   "lon": 22.5827707,
+   "name": "Laurowa"
+  },
+  "ts": 1782126088.7501907
+ },
+ "generała witolda urbanowicza 5": {
+  "result": null,
+  "ts": 1782126090.0507739
+ },
+ "lubelskiego lipca '80": {
+  "result": {
+   "lat": 51.231685,
+   "lon": 22.5601791,
+   "name": "Lubelskiego Lipca '80"
+  },
+  "ts": 1782126091.556258
+ },
+ "feliksa araszkiewicza": {
+  "result": {
+   "lat": 51.2734718,
+   "lon": 22.5066002,
+   "name": "Feliksa Araszkiewicza"
+  },
+  "ts": 1782126093.0226855
+ },
+ "józefa sowińskiego": {
+  "result": {
+   "lat": 51.2377842,
+   "lon": 22.542419,
+   "name": "Józefa Sowińskiego"
+  },
+  "ts": 1782126094.486897
+ },
+ "jacka woronieckiego": {
+  "result": {
+   "lat": 51.1990553,
+   "lon": 22.5425205,
+   "name": "Jacka Woronieckiego"
+  },
+  "ts": 1782126095.7493522
+ },
+ "olchowa": {
+  "result": {
+   "lat": 51.2289926,
+   "lon": 22.5850161,
+   "name": "Olchowa"
+  },
+  "ts": 1782126097.2137072
+ },
+ "bazylian": {
+  "result": null,
+  "ts": 1782126098.5314033
+ },
+ "bolesława chrobrego.przedmiotem": {
+  "result": null,
+  "ts": 1782126099.9993148
+ },
+ "ogródkowa": {
+  "result": {
+   "lat": 51.2534338,
+   "lon": 22.5435583,
+   "name": "Ogródkowa"
+  },
+  "ts": 1782126101.2748625
+ },
+ "pl. zamkowy": {
+  "result": {
+   "lat": 51.2505873,
+   "lon": 22.5698573,
+   "name": "Plac Zamkowy"
+  },
+  "ts": 1782126102.7393677
+ },
+ "krakowskie przedmieście": {
+  "result": {
+   "lat": 51.247792,
+   "lon": 22.5630134,
+   "name": "Krakowskie Przedmieście"
+  },
+  "ts": 1782126104.2439826
+ },
+ "stanisława szpinalskiego": {
+  "result": {
+   "lat": 51.2738878,
+   "lon": 22.5509009,
+   "name": "Stanisława Szpinalskiego"
+  },
+  "ts": 1782126105.8016808
+ },
+ "krzemieniecka 7": {
+  "result": null,
+  "ts": 1782126107.1061752
+ },
+ "szmaragdowa": {
+  "result": {
+   "lat": 51.226658,
+   "lon": 22.5208324,
+   "name": "Szmaragdowa"
+  },
+  "ts": 1782126108.5745947
+ },
+ "mazowiecka": {
+  "result": {
+   "lat": 51.2323599,
+   "lon": 22.4904794,
+   "name": "Mazowiecka"
+  },
+  "ts": 1782126110.0661798
+ },
+ "kasztelańska": {
+  "result": {
+   "lat": 51.269797,
+   "lon": 22.5179953,
+   "name": "Kasztelańska"
+  },
+  "ts": 1782126111.566192
+ },
+ "racławickich": {
+  "result": null,
+  "ts": 1782126112.8216958
+ },
+ "noskowskiego": {
+  "result": {
+   "lat": 51.2724847,
+   "lon": 22.5454381,
+   "name": "Zygmunta Noskowskiego"
+  },
+  "ts": 1782126114.0963757
+ },
+ "ochotniczej": {
+  "result": {
+   "lat": 51.2394112,
+   "lon": 22.5538893,
+   "name": "Ochotnicza"
+  },
+  "ts": 1782126116.9218183
+ },
+ "radości": {
+  "result": {
+   "lat": 51.2312247,
+   "lon": 22.5288241,
+   "name": "Radości"
+  },
+  "ts": 1782126118.3878567
+ },
+ "aleksandra czekanowskiego": {
+  "result": null,
+  "ts": 1782126119.6672177
+ },
+ "krasińskiego": {
+  "result": {
+   "lat": 51.242389,
+   "lon": 22.5099012,
+   "name": "Zygmunta Krasińskiego"
+  },
+  "ts": 1782126121.1764748
+ },
+ "kaliska": {
+  "result": {
+   "lat": 51.2353525,
+   "lon": 22.5239046,
+   "name": "Kaliska"
+  },
+  "ts": 1782126122.4733741
+ },
+ "koncerytowa": {
+  "result": null,
+  "ts": 1782126123.9179223
+ },
+ "skibińska": {
+  "result": {
+   "lat": 51.2392917,
+   "lon": 22.5779315,
+   "name": "Skibińska"
+  },
+  "ts": 1782126125.3857062
+ },
+ "księdza wincentego granata 7": {
+  "result": null,
+  "ts": 1782126126.6652157
+ },
+ "nowowiejskiego": {
+  "result": {
+   "lat": 51.2611139,
+   "lon": 22.5533319,
+   "name": "Feliksa Nowowiejskiego"
+  },
+  "ts": 1782126129.0216951
+ },
+ "wołynian": {
+  "result": {
+   "lat": 51.2560603,
+   "lon": 22.4992887,
+   "name": "Wołynian"
+  },
+  "ts": 1782126130.5080013
+ },
+ "pawia 28": {
+  "result": null,
+  "ts": 1782126132.000083
+ },
+ "perłowa": {
+  "result": {
+   "lat": 51.2252894,
+   "lon": 22.5071232,
+   "name": "Perłowa"
+  },
+  "ts": 1782126133.3192794
+ },
+ "zamojska 29": {
+  "result": null,
+  "ts": 1782126134.7855237
+ },
+ "czeremchowa": {
+  "result": {
+   "lat": 51.2532642,
+   "lon": 22.5175063,
+   "name": "Czeremchowa"
+  },
+  "ts": 1782126136.146361
+ },
+ "organowa": {
+  "result": {
+   "lat": 51.2585753,
+   "lon": 22.5559033,
+   "name": "Organowa"
+  },
+  "ts": 1782126137.5281315
+ },
+ "mieszka i.to": {
+  "result": {
+   "lat": 51.2407527,
+   "lon": 22.5350551,
+   "name": "Mieszka I"
+  },
+  "ts": 1782126138.9544659
+ },
+ "szewska": {
+  "result": {
+   "lat": 51.2507718,
+   "lon": 22.5651014,
+   "name": "Szewska"
+  },
+  "ts": 1782126140.441538
+ },
+ "muzyczna": {
+  "result": {
+   "lat": 51.2387655,
+   "lon": 22.5531851,
+   "name": "Muzyczna"
+  },
+  "ts": 1782126141.7391841
+ },
+ "przedwiośnie": {
+  "result": {
+   "lat": 51.2285595,
+   "lon": 22.5362593,
+   "name": "Przedwiośnie"
+  },
+  "ts": 1782126143.1994016
+ },
+ "mełgiewska 7-9": {
+  "result": null,
+  "ts": 1782126144.7309442
+ },
+ "mełgiewskiej": {
+  "result": {
+   "lat": 51.243513,
+   "lon": 22.6488208,
+   "name": "Mełgiewska"
+  },
+  "ts": 1782126147.5539138
+ },
+ "nasturcjowa": {
+  "result": {
+   "lat": 51.2687318,
+   "lon": 22.5912172,
+   "name": "Nasturcjowa"
+  },
+  "ts": 1782126149.015877
+ },
+ "jerzego rudlickiego": {
+  "result": {
+   "lat": 51.2371192,
+   "lon": 22.5926686,
+   "name": "Jerzego Rudlickiego"
+  },
+  "ts": 1782126150.3943772
+ },
+ "mariańska": {
+  "result": {
+   "lat": 51.2689399,
+   "lon": 22.5755855,
+   "name": "Mariańska"
+  },
+  "ts": 1782126151.878076
+ },
+ "szkolna": {
+  "result": {
+   "lat": 51.2541141,
+   "lon": 22.5721961,
+   "name": "Szkolna"
+  },
+  "ts": 1782126153.4693813
+ },
+ "szewskiej": {
+  "result": {
+   "lat": 51.2507718,
+   "lon": 22.5651014,
+   "name": "Szewska"
+  },
+  "ts": 1782126156.0632453
+ },
+ "władysława broniewskiego": {
+  "result": {
+   "lat": 51.2079158,
+   "lon": 22.5816722,
+   "name": "Władysława Broniewskiego"
+  },
+  "ts": 1782126157.4347818
+ },
+ "witolda chodźki": {
+  "result": {
+   "lat": 51.268252,
+   "lon": 22.5599005,
+   "name": "Doktora Witolda Chodźki"
+  },
+  "ts": 1782126158.816004
+ },
+ "doświadczalna": {
+  "result": {
+   "lat": 51.2275021,
+   "lon": 22.6338247,
+   "name": "Doświadczalna"
+  },
+  "ts": 1782126160.303162
+ },
+ "wojciecha żywnego": {
+  "result": {
+   "lat": 51.2688011,
+   "lon": 22.5475865,
+   "name": "Wojciecha Żywnego"
+  },
+  "ts": 1782126161.789623
+ },
+ "stanisława leszczyńskiego": {
+  "result": {
+   "lat": 51.2502869,
+   "lon": 22.5500381,
+   "name": "Stanisława Leszczyńskiego"
+  },
+  "ts": 1782126163.2603316
+ },
+ "czeska": {
+  "result": {
+   "lat": 51.2251915,
+   "lon": 22.5720364,
+   "name": "Czeska"
+  },
+  "ts": 1782126164.6241796
+ },
+ "tadeusza dymowskiego": {
+  "result": {
+   "lat": 51.2580007,
+   "lon": 22.5761025,
+   "name": "Tadeusza Dymowskiego"
+  },
+  "ts": 1782126166.0918581
+ },
+ "nałeczowska": {
+  "result": {
+   "lat": 51.2490324,
+   "lon": 22.519447,
+   "name": "Nałęczowska"
+  },
+  "ts": 1782126167.475952
+ },
+ "rva:51.2477,22.5687": {
+  "result": {
+   "road": "Złota",
+   "district": "Stare Miasto",
+   "city": "Lublin"
+  },
+  "ts": 1782126168.8918164
+ },
+ "rva:51.2447,22.5054": {
+  "result": {
+   "road": "Powstania Styczniowego",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782126170.1664233
+ },
+ "rva:51.2831,22.5429": {
+  "result": {
+   "road": "Cedrowa",
+   "district": null,
+   "city": "gmina Niemce"
+  },
+  "ts": 1782126171.6845908
+ },
+ "rva:51.2456,22.5114": {
+  "result": {
+   "road": "Jana Śnieżyńskiego",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782126173.2029026
+ },
+ "rva:51.2172,22.5745": {
+  "result": {
+   "road": "Aleksandra Świętochowskiego",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782126174.605111
+ },
+ "rva:51.2580,22.5700": {
+  "result": {
+   "road": "Obywatelska",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782126176.151733
+ },
+ "rva:51.2044,22.5645": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782126177.654614
+ },
+ "rva:51.2549,22.5507": {
+  "result": {
+   "road": "Niccolo Paganiniego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782126179.2596962
+ },
+ "rva:51.2614,22.5223": {
+  "result": {
+   "road": "Sławinek",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782126180.654259
+ },
+ "rva:51.2617,22.5841": {
+  "result": {
+   "road": "Józefa Pankiewicza",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782126182.1544616
+ },
+ "rva:51.2650,22.5962": {
+  "result": {
+   "road": "Trześniowska",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782126183.4266498
+ },
+ "rva:51.2291,22.5115": {
+  "result": {
+   "road": null,
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1782126184.951956
+ },
+ "rva:51.2659,22.5931": {
+  "result": {
+   "road": "Kminkowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782126186.4821868
+ },
+ "rva:51.2658,22.5219": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782126187.9825852
+ },
+ "rva:51.2748,22.5530": {
+  "result": {
+   "road": "Teodora Leszetyckiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782126189.4742165
+ },
+ "rva:51.2650,22.5203": {
+  "result": {
+   "road": "Willowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782126190.8373234
+ },
+ "rva:51.2521,22.5211": {
+  "result": {
+   "road": "Bajkowa",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1782126192.4081452
+ },
+ "rva:51.2335,22.5089": {
+  "result": {
+   "road": "Rycerska",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1782126193.729232
+ },
+ "rva:51.2656,22.5472": {
+  "result": {
+   "road": "Smyczkowa",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782126195.1752772
+ },
+ "rva:51.2492,22.5529": {
+  "result": {
+   "road": "Jana Karskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782126196.7656872
+ },
+ "rva:51.2546,22.5860": {
+  "result": {
+   "road": "Wołyńska",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782126198.1417162
+ },
+ "rva:51.2548,22.5856": {
+  "result": {
+   "road": "Wołyńska",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782126199.4986372
+ },
+ "rva:51.2384,22.5142": {
+  "result": {
+   "road": "Pana Wołodyjowskiego",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782126201.0077004
  }
 }
