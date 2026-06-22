@@ -7602,5 +7602,33 @@
    "city": "Lublin"
   },
   "ts": 1782144909.120164
+ },
+ "kwitnąca": {
+  "result": null,
+  "ts": 1782157892.5959206
+ },
+ "altanowa": {
+  "result": {
+   "lat": 51.2657007,
+   "lon": 22.5227481,
+   "name": "Altanowa"
+  },
+  "ts": 1782157894.0293777
+ },
+ "kiepury": {
+  "result": {
+   "lat": 51.2574166,
+   "lon": 22.5419486,
+   "name": "Jana Kiepury"
+  },
+  "ts": 1782157895.3334312
+ },
+ "rva:51.2178,22.6323": {
+  "result": {
+   "road": "Zygmunta Augusta",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1782157897.0059788
  }
 }
