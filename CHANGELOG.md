@@ -2,6 +2,27 @@
 
 ## [Niewydane]
 
+### Nasycanie mapy — seria skanów (2026-06-22)
+Po wpięciu silnika pinezek puszczona seria ~11 skanów `workflow_dispatch`
+(`scanner.yml`), aż liczba pinezek przestała rosnąć. Efekt na żywych danych:
+- **pinezki na mapie (po dedup): 1715 → 2299** (+584, +34%), rozkład
+  `street` 1996 · `exact` 64 · `approx` 239,
+- **`otodom_bez_detali` (Debug): 401 → 43** (−90%) — backfill detali Otodom
+  (120/skan) prawie wyczerpany,
+- największy przyrost w końcówce dał `approx` (37 → 239), czyli geolokalizacja
+  Otodom walidowana dzielnicą — mechanizm z `otodom_coords_plausible` działa.
+
+Obserwacje strukturalne (udokumentowane też w `CLAUDE.md` pkt 5a) — to floor,
+nie błąd, kolejne skany go nie ruszą:
+- **Okno paginacji Otodom**: listing oddaje ~1837 ofert mimo `totalItems` ~3100,
+  więc `otodom_bez_detali` ma strukturalny floor (~40–60) i `scraped_otodom`
+  jest mniejsze niż liczba aktywnych (resztę trzyma karencja dezaktywacji).
+- **OLX bywa chwilowo blokowany** (jeden skan oddał 0 ofert) — ochrona przed
+  masową dezaktywacją per źródło zadziałała (`deactivated: 0`), pinezki nie
+  zniknęły. Pozostałe kategorie Debug to trwały floor: `brak_adresu` ~70–77
+  (brak ulicy w treści), `geokoder_pusty` 17 (Nominatim nie zna ulicy),
+  `duplikat` ~700 (ukryte celowo).
+
 ### Ulepszony silnik pinezek (na podstawie zakładki Debug)
 Analiza kategorii `geokoder_pusty` / `brak_adresu` ujawniła konkretne wzorce —
 naprawione w `location_refiner.py`:

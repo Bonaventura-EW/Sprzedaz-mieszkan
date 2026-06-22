@@ -93,6 +93,15 @@ Testy: `pytest` z roota repo (konfiguracja w `pytest.ini`, `pythonpath = src`).
    detali na raz ściągnęłoby blokadę. Listing pobieramy w całości (potrzebny do
    poprawnej dezaktywacji), detale dobierają się przez kilka skanów. Nie psuj
    tej optymalizacji.
+5a. **Okno paginacji Otodom (~1800–1850 z ~3100) — to NIE jest błąd scrapera.**
+   Otodom przez listing oddaje tylko ograniczone okno wyników (obserwowane
+   ~1837 ofert, mimo `totalItems` ~3100). Dlatego `scraped_otodom` w monitoringu
+   jest sporo mniejsze niż liczba aktywnych ofert — resztę utrzymuje na mapie
+   karencja dezaktywacji (`DEACTIVATE_GRACE_DAYS`) i ochrona z pkt 8.
+   KONSEKWENCJA: oferty spoza okna nie dobiorą szczegółów, dopóki nie wrócą do
+   listingu, więc `otodom_bez_detali` w Debugu ma strukturalny floor (~40–60) —
+   kolejne skany go nie wyzerują. Nie „naprawiaj" tego wymuszaniem pełnej
+   paginacji ani agresywną dezaktywacją ofert spoza okna (to psuje ochronę z pkt 8).
 6. **Hierarchia precyzji coords**: `exact` (Otodom, punkt wskazany) > `street`
    (zgeokodowana ulica z tekstu) > `approx` (przybliżona geolokalizacja Otodom).
    `_flag_generic_otodom_coords` degraduje fałszywie dokładne klastry (≥3 oferty
