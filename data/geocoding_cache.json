@@ -4870,5 +4870,809 @@
    "city": "Lublin"
   },
   "ts": 1782126201.0077004
+ },
+ "ks. ludwika zalewskiego": {
+  "result": {
+   "lat": 51.1968407,
+   "lon": 22.5428684,
+   "name": "Księdza Ludwika Zalewskiego"
+  },
+  "ts": 1782131481.0736775
+ },
+ "ksiedza ludwika zalewskiego 7": {
+  "result": null,
+  "ts": 1782131482.3696325
+ },
+ "bolesława śmiałego": {
+  "result": {
+   "lat": 51.239378,
+   "lon": 22.5380093,
+   "name": "Bolesława Śmiałego"
+  },
+  "ts": 1782131483.8541458
+ },
+ "roztocze": {
+  "result": {
+   "lat": 51.2272987,
+   "lon": 22.492082,
+   "name": "Roztocze"
+  },
+  "ts": 1782131485.1530128
+ },
+ "wacława i zofii nałkowskich": {
+  "result": {
+   "lat": 51.2066782,
+   "lon": 22.5438287,
+   "name": "Wacława i Zofii Nałkowskich"
+  },
+  "ts": 1782131486.4482288
+ },
+ "turkusowa": {
+  "result": {
+   "lat": 51.2236392,
+   "lon": 22.5125741,
+   "name": "Turkusowa"
+  },
+  "ts": 1782131487.7257323
+ },
+ "księdza jerzego popiełuszki 28j": {
+  "result": null,
+  "ts": 1782131489.0424595
+ },
+ "wigilijna": {
+  "result": {
+   "lat": 51.2326246,
+   "lon": 22.5393125,
+   "name": "Wigilijna"
+  },
+  "ts": 1782131490.517718
+ },
+ "diamentowa": {
+  "result": {
+   "lat": 51.2030375,
+   "lon": 22.5599976,
+   "name": "Diamentowa"
+  },
+  "ts": 1782131492.051194
+ },
+ "majdan tatarski": {
+  "result": {
+   "lat": 51.2370085,
+   "lon": 22.5882062,
+   "name": "Majdan Tatarski"
+  },
+  "ts": 1782131493.5219955
+ },
+ "chęcińskiego": {
+  "result": {
+   "lat": 51.2583402,
+   "lon": 22.5434091,
+   "name": "Jana Chęcińskiego"
+  },
+  "ts": 1782131494.7978415
+ },
+ "powstańców śląskich": {
+  "result": {
+   "lat": 51.2567602,
+   "lon": 22.5247054,
+   "name": "Powstańców Śląskich"
+  },
+  "ts": 1782131496.3250535
+ },
+ "generała stanisława skalskiego": {
+  "result": {
+   "lat": 51.2160289,
+   "lon": 22.6286119,
+   "name": "Generała Stanisława Skalskiego"
+  },
+  "ts": 1782131497.601574
+ },
+ "gminna": {
+  "result": {
+   "lat": 51.242562,
+   "lon": 22.5580401,
+   "name": "Gminna"
+  },
+  "ts": 1782131499.0875394
+ },
+ "nowy plac targowy": {
+  "result": {
+   "lat": 51.25236,
+   "lon": 22.5702329,
+   "name": "Nowy Plac Targowy"
+  },
+  "ts": 1782131500.5968914
+ },
+ "mieczysława karłowicza": {
+  "result": {
+   "lat": 51.246722,
+   "lon": 22.5549947,
+   "name": "Mieczysława Karłowicza"
+  },
+  "ts": 1782131501.9361613
+ },
+ "błękitna": {
+  "result": {
+   "lat": 51.2137077,
+   "lon": 22.5679706,
+   "name": "Błękitna"
+  },
+  "ts": 1782131503.4216816
+ },
+ "skierki": {
+  "result": {
+   "lat": 51.2436962,
+   "lon": 22.517454,
+   "name": "Skierki"
+  },
+  "ts": 1782131504.6907551
+ },
+ "jana samsonowicza.to": {
+  "result": {
+   "lat": 51.2115201,
+   "lon": 22.5478152,
+   "name": "Jana Samsonowicza"
+  },
+  "ts": 1782131506.8460968
+ },
+ "kieleckiej": {
+  "result": {
+   "lat": 51.2322787,
+   "lon": 22.4895614,
+   "name": "Kielecka"
+  },
+  "ts": 1782131509.579288
+ },
+ "zemborzyckiej": {
+  "result": {
+   "lat": 51.2155127,
+   "lon": 22.5811922,
+   "name": "Zemborzycka"
+  },
+  "ts": 1782131512.4286673
+ },
+ "bolesława prus": {
+  "result": null,
+  "ts": 1782131513.8912
+ },
+ "wrotkowskiej": {
+  "result": {
+   "lat": 51.221491,
+   "lon": 22.5545898,
+   "name": "Wrotkowska"
+  },
+  "ts": 1782131516.6635644
+ },
+ "wyzwolenia": {
+  "result": {
+   "lat": 51.2077241,
+   "lon": 22.5981844,
+   "name": "Wyzwolenia"
+  },
+  "ts": 1782131518.169981
+ },
+ "skowronkowej": {
+  "result": {
+   "lat": 51.2745524,
+   "lon": 22.5002368,
+   "name": "Skowronkowa"
+  },
+  "ts": 1782131520.87373
+ },
+ "zamojskiejopis": {
+  "result": null,
+  "ts": 1782131522.3514228
+ },
+ "ireny kosmowskiej": {
+  "result": {
+   "lat": 51.2601048,
+   "lon": 22.5387053,
+   "name": "Ireny Kosmowskiej"
+  },
+  "ts": 1782131523.826412
+ },
+ "szpinalskiego": {
+  "result": {
+   "lat": 51.2738878,
+   "lon": 22.5509009,
+   "name": "Stanisława Szpinalskiego"
+  },
+  "ts": 1782131525.297633
+ },
+ "chabrowej": {
+  "result": {
+   "lat": 51.2773391,
+   "lon": 22.5034583,
+   "name": "Chabrowa"
+  },
+  "ts": 1782131528.3044562
+ },
+ "piłudskiego": {
+  "result": null,
+  "ts": 1782131529.7998192
+ },
+ "pozytywistów": {
+  "result": {
+   "lat": 51.2350701,
+   "lon": 22.5301163,
+   "name": "Pozytywistów"
+  },
+  "ts": 1782131531.0829353
+ },
+ "garbarska 18a": {
+  "result": null,
+  "ts": 1782131532.5838583
+ },
+ "lędzian": {
+  "result": {
+   "lat": 51.2561761,
+   "lon": 22.4952237,
+   "name": "Lędzian"
+  },
+  "ts": 1782131533.921389
+ },
+ "kapucyńska": {
+  "result": {
+   "lat": 51.2467008,
+   "lon": 22.5618699,
+   "name": "Kapucyńska"
+  },
+  "ts": 1782131535.386132
+ },
+ "tatarakowa": {
+  "result": {
+   "lat": 51.2311998,
+   "lon": 22.5102586,
+   "name": "Tatarakowa"
+  },
+  "ts": 1782131536.7289226
+ },
+ "żmigród": {
+  "result": {
+   "lat": 51.2453291,
+   "lon": 22.5674531,
+   "name": "Żmigród"
+  },
+  "ts": 1782131538.2087455
+ },
+ "mariana langiewicza": {
+  "result": {
+   "lat": 51.2462551,
+   "lon": 22.5370893,
+   "name": "Mariana Langiewicza"
+  },
+  "ts": 1782131539.6733296
+ },
+ "rycerska": {
+  "result": {
+   "lat": 51.2329818,
+   "lon": 22.5084696,
+   "name": "Rycerska"
+  },
+  "ts": 1782131541.0411139
+ },
+ "karola lipińskiego": {
+  "result": {
+   "lat": 51.2577867,
+   "lon": 22.5460299,
+   "name": "Karola Lipińskiego"
+  },
+  "ts": 1782131542.5081313
+ },
+ "nataszy": {
+  "result": {
+   "lat": 51.2405783,
+   "lon": 22.4891843,
+   "name": "Nataszy"
+  },
+  "ts": 1782131543.7851849
+ },
+ "ogródkowej": {
+  "result": {
+   "lat": 51.2534338,
+   "lon": 22.5435583,
+   "name": "Ogródkowa"
+  },
+  "ts": 1782131546.4946744
+ },
+ "inżynierska": {
+  "result": {
+   "lat": 51.2207562,
+   "lon": 22.5528394,
+   "name": "Inżynierska"
+  },
+  "ts": 1782131547.7704177
+ },
+ "spokojnej": {
+  "result": {
+   "lat": 51.2508622,
+   "lon": 22.5538065,
+   "name": "Spokojna"
+  },
+  "ts": 1782131550.830275
+ },
+ "żołnierzy niepodległejoferuję": {
+  "result": null,
+  "ts": 1782131552.0944
+ },
+ "kazimierza tumidajskiego": {
+  "result": {
+   "lat": 51.2567627,
+   "lon": 22.5920253,
+   "name": "Kazimierza Tumidajskiego"
+  },
+  "ts": 1782131553.37396
+ },
+ "józefa piłsudskiegow": {
+  "result": null,
+  "ts": 1782131554.8400354
+ },
+ "ksawerego dunikowskiego": {
+  "result": {
+   "lat": 51.2190148,
+   "lon": 22.5715586,
+   "name": "Ksawerego Dunikowskiego"
+  },
+  "ts": 1782131556.3462315
+ },
+ "leśna": {
+  "result": {
+   "lat": 51.2265681,
+   "lon": 22.5706506,
+   "name": "Leśna"
+  },
+  "ts": 1782131557.9533358
+ },
+ "bartosza głowackiego": {
+  "result": {
+   "lat": 51.2514996,
+   "lon": 22.5368643,
+   "name": "Bartosza Głowackiego"
+  },
+  "ts": 1782131559.2694185
+ },
+ "zakopiańska": {
+  "result": {
+   "lat": 51.2762236,
+   "lon": 22.5485666,
+   "name": "Zakopiańska"
+  },
+  "ts": 1782131560.5455787
+ },
+ "wspólna": {
+  "result": {
+   "lat": 51.2302559,
+   "lon": 22.5754893,
+   "name": "Wspólna"
+  },
+  "ts": 1782131561.9233778
+ },
+ "leona frankowskiego": {
+  "result": {
+   "lat": 51.240703,
+   "lon": 22.5009503,
+   "name": "Leona Frankowskiego"
+  },
+  "ts": 1782131563.4096751
+ },
+ "żołnierzy niepodległej": {
+  "result": {
+   "lat": 51.2489119,
+   "lon": 22.5562659,
+   "name": "Żołnierzy Niepodległej"
+  },
+  "ts": 1782131565.003735
+ },
+ "józefa poniatowskiego": {
+  "result": {
+   "lat": 51.2506106,
+   "lon": 22.5393632,
+   "name": "Józefa Poniatowskiego"
+  },
+  "ts": 1782131566.5110304
+ },
+ "al. generała władysława sikorskiego": {
+  "result": {
+   "lat": 51.255707,
+   "lon": 22.5302969,
+   "name": "Aleja Generała Władysława Sikorskiego"
+  },
+  "ts": 1782131568.0177844
+ },
+ "watykańska": {
+  "result": {
+   "lat": 51.228356,
+   "lon": 22.5216905,
+   "name": "Watykańska"
+  },
+  "ts": 1782131569.5009294
+ },
+ "lesława pagi": {
+  "result": {
+   "lat": 51.2456791,
+   "lon": 22.5295306,
+   "name": "Lesława Pagi"
+  },
+  "ts": 1782131571.0150428
+ },
+ "misjonarska": {
+  "result": {
+   "lat": 51.2442411,
+   "lon": 22.5705703,
+   "name": "Misjonarska"
+  },
+  "ts": 1782131572.4999137
+ },
+ "mirosława dereckiego": {
+  "result": {
+   "lat": 51.2795368,
+   "lon": 22.5406936,
+   "name": "Mirosława Dereckiego"
+  },
+  "ts": 1782131573.9343934
+ },
+ "wyszyńskiego": {
+  "result": {
+   "lat": 51.2452402,
+   "lon": 22.5685662,
+   "name": "Prymasa Stefana Wyszyńskiego"
+  },
+  "ts": 1782131575.252965
+ },
+ "garbraska": {
+  "result": null,
+  "ts": 1782131576.705952
+ },
+ "organowej": {
+  "result": {
+   "lat": 51.2585753,
+   "lon": 22.5559033,
+   "name": "Organowa"
+  },
+  "ts": 1782131579.2238448
+ },
+ "górna": {
+  "result": {
+   "lat": 51.244238,
+   "lon": 22.560056,
+   "name": "Górna"
+  },
+  "ts": 1782131580.7530427
+ },
+ "paryska": {
+  "result": {
+   "lat": 51.2693888,
+   "lon": 22.5508346,
+   "name": "Paryska"
+  },
+  "ts": 1782131582.2359712
+ },
+ "władysława jagiełły": {
+  "result": {
+   "lat": 51.2204666,
+   "lon": 22.6339201,
+   "name": "Władysława Jagiełły"
+  },
+  "ts": 1782131583.5328135
+ },
+ "ziemiańska": {
+  "result": {
+   "lat": 51.2784445,
+   "lon": 22.5807574,
+   "name": "Ziemiańska"
+  },
+  "ts": 1782131584.8870754
+ },
+ "czwartaków": {
+  "result": {
+   "lat": 51.2477786,
+   "lon": 22.5332464,
+   "name": "Czwartaków"
+  },
+  "ts": 1782131586.1255076
+ },
+ "kościuszk": {
+  "result": null,
+  "ts": 1782131587.6008792
+ },
+ "węglinek": {
+  "result": {
+   "lat": 51.2184048,
+   "lon": 22.4843234,
+   "name": "Węglinek"
+  },
+  "ts": 1782131589.0784903
+ },
+ "gen. witolda urbanowicza": {
+  "result": {
+   "lat": 51.2170988,
+   "lon": 22.6273332,
+   "name": "Generała Witolda Urbanowicza"
+  },
+  "ts": 1782131590.5905712
+ },
+ "zamojskiej": {
+  "result": {
+   "lat": 51.2415992,
+   "lon": 22.5692815,
+   "name": "Zamojska"
+  },
+  "ts": 1782131593.2427151
+ },
+ "kasztelańskiej": {
+  "result": {
+   "lat": 51.269797,
+   "lon": 22.5179953,
+   "name": "Kasztelańska"
+  },
+  "ts": 1782131596.1649723
+ },
+ "dolnej panny marii": {
+  "result": null,
+  "ts": 1782131597.6284122
+ },
+ "dolna marii panny": {
+  "result": {
+   "lat": 51.2442223,
+   "lon": 22.5627022,
+   "name": "Dolna Panny Marii"
+  },
+  "ts": 1782131599.136341
+ },
+ "al. spółdzielczości pracy": {
+  "result": {
+   "lat": 51.2707103,
+   "lon": 22.5733799,
+   "name": "Aleja Spółdzielczości Pracy"
+  },
+  "ts": 1782131600.5413966
+ },
+ "targowa": {
+  "result": {
+   "lat": 51.252901,
+   "lon": 22.569742,
+   "name": "Targowa"
+  },
+  "ts": 1782131602.0403929
+ },
+ "chabrowa 2": {
+  "result": null,
+  "ts": 1782131603.424004
+ },
+ "ignacego daszyńskiego": {
+  "result": {
+   "lat": 51.261306,
+   "lon": 22.5957693,
+   "name": "Ignacego Daszyńskiego"
+  },
+  "ts": 1782131604.9376929
+ },
+ "skautów 5": {
+  "result": null,
+  "ts": 1782131606.423687
+ },
+ "kameralna3": {
+  "result": null,
+  "ts": 1782131607.680142
+ },
+ "rubinowa": {
+  "result": {
+   "lat": 51.2231227,
+   "lon": 22.5141969,
+   "name": "Rubinowa"
+  },
+  "ts": 1782131609.192798
+ },
+ "obywatelska": {
+  "result": {
+   "lat": 51.2587634,
+   "lon": 22.5718183,
+   "name": "Obywatelska"
+  },
+  "ts": 1782131610.6943572
+ },
+ "fabrycznej": {
+  "result": {
+   "lat": 51.2370745,
+   "lon": 22.5751256,
+   "name": "Fabryczna"
+  },
+  "ts": 1782131613.479547
+ },
+ "tanowa": {
+  "result": null,
+  "ts": 1782131614.8316836
+ },
+ "rva:51.2231,22.5588": {
+  "result": {
+   "road": "Wyścigowa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782131616.3384018
+ },
+ "rva:51.2386,22.5621": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Za Cukrownią",
+   "city": "Lublin"
+  },
+  "ts": 1782131617.8406484
+ },
+ "rva:51.1982,22.5877": {
+  "result": {
+   "road": "Sebastiana Klonowica",
+   "district": "Abramowice",
+   "city": "Lublin"
+  },
+  "ts": 1782131619.2415612
+ },
+ "rva:51.2603,22.5834": {
+  "result": {
+   "road": null,
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782131620.5816116
+ },
+ "rva:51.2708,22.5554": {
+  "result": {
+   "road": "Szwajcarska",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782131622.1060586
+ },
+ "rva:51.2440,22.5229": {
+  "result": {
+   "road": "Wileńska",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782131623.4131727
+ },
+ "rva:51.2776,22.5156": {
+  "result": {
+   "road": "Dzbenin",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782131624.910436
+ },
+ "zelwerowicza": {
+  "result": {
+   "lat": 51.2775269,
+   "lon": 22.5305147,
+   "name": "Aleksandra Zelwerowicza"
+  },
+  "ts": 1782131626.305907
+ },
+ "rva:51.2460,22.5434": {
+  "result": {
+   "road": "Marii Skłodowskiej-Curie",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782131627.8477552
+ },
+ "rva:51.2698,22.5180": {
+  "result": {
+   "road": "Kasztelańska",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782131629.2067661
+ },
+ "rva:51.2086,22.5465": {
+  "result": {
+   "road": "Jana Samsonowicza",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782131630.7327158
+ },
+ "rva:51.2659,22.5195": {
+  "result": {
+   "road": "Tarasowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782131632.2813418
+ },
+ "rva:51.2721,22.5105": {
+  "result": {
+   "road": "Sławinkowska",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782131633.7740448
+ },
+ "rva:51.2529,22.5897": {
+  "result": {
+   "road": "Franciszka Kleeberga",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782131635.2285857
+ },
+ "rva:51.2393,22.5138": {
+  "result": {
+   "road": "Pana Wołodyjowskiego",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782131636.7594264
+ },
+ "rva:51.2423,22.5102": {
+  "result": {
+   "road": "Zygmunta Krasińskiego",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782131638.0418053
+ },
+ "rva:51.2028,22.5513": {
+  "result": {
+   "road": "Bernarda Wapowskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782131639.4219222
+ },
+ "rva:51.1985,22.5477": {
+  "result": {
+   "road": "Jacka Woronieckiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782131640.949939
+ },
+ "rva:51.2485,22.5531": {
+  "result": {
+   "road": "Jasna",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782131642.3941488
+ },
+ "rva:51.2687,22.5070": {
+  "result": {
+   "road": "Tulipanowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782131643.900366
+ },
+ "rva:51.2337,22.5752": {
+  "result": {
+   "road": "Garbarska",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782131645.4275074
+ },
+ "rva:51.2337,22.5751": {
+  "result": {
+   "road": "Garbarska",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782131647.0221918
+ },
+ "rva:51.2661,22.5201": {
+  "result": {
+   "road": "Tarasowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782131648.507966
+ },
+ "rva:51.2525,22.5204": {
+  "result": {
+   "road": "Skrajna",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1782131649.8286202
  }
 }
