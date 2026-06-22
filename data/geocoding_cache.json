@@ -6194,5 +6194,181 @@
    "city": "Lublin"
   },
   "ts": 1782142271.6214437
+ },
+ "husarska": {
+  "result": {
+   "lat": 51.2351174,
+   "lon": 22.4983105,
+   "name": "Husarska"
+  },
+  "ts": 1782142745.304634
+ },
+ "konrada bielskiego": {
+  "result": {
+   "lat": 51.2746402,
+   "lon": 22.5771,
+   "name": "Konrada Bielskiego"
+  },
+  "ts": 1782142746.7949302
+ },
+ "kręta": {
+  "result": {
+   "lat": 51.2321734,
+   "lon": 22.5757467,
+   "name": "Kręta"
+  },
+  "ts": 1782142748.0318675
+ },
+ "zygmunta noskowskiego": {
+  "result": {
+   "lat": 51.2724847,
+   "lon": 22.5454381,
+   "name": "Zygmunta Noskowskiego"
+  },
+  "ts": 1782142749.533146
+ },
+ "zygmunta krasińskiego": {
+  "result": {
+   "lat": 51.242389,
+   "lon": 22.5099012,
+   "name": "Zygmunta Krasińskiego"
+  },
+  "ts": 1782142751.040336
+ },
+ "rva:51.2648,22.5757": {
+  "result": {
+   "road": "Bazylianówka",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782142752.5501595
+ },
+ "rva:51.2411,22.5107": {
+  "result": {
+   "road": "Irydiona",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782142754.1517758
+ },
+ "rva:51.2371,22.4977": {
+  "result": {
+   "road": "Szwoleżerów",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782142755.623009
+ },
+ "rva:51.2121,22.5752": {
+  "result": {
+   "road": "Zbigniewa Herberta",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782142757.1319506
+ },
+ "rva:51.2241,22.4919": {
+  "result": {
+   "road": "Jantarowa",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782142758.679904
+ },
+ "rva:51.2244,22.4786": {
+  "result": {
+   "road": null,
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782142760.2203848
+ },
+ "rva:51.2542,22.5805": {
+  "result": {
+   "road": "Krzemieniecka",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782142761.6200566
+ },
+ "rva:51.2027,22.5485": {
+  "result": {
+   "road": "Bernarda Wapowskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782142763.127743
+ },
+ "rva:51.2043,22.5504": {
+  "result": {
+   "road": "Władysława Olechnowicza",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782142764.682239
+ },
+ "rva:51.2011,22.5530": {
+  "result": {
+   "road": "Henryka Wolińskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782142766.2078862
+ },
+ "rva:51.2415,22.5262": {
+  "result": {
+   "road": "Konrada Wallenroda",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782142767.7369316
+ },
+ "rva:51.2461,22.5431": {
+  "result": {
+   "road": "Akademicka",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782142769.2623966
+ },
+ "rva:51.2476,22.5467": {
+  "result": {
+   "road": "Idziego Radziszewskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782142770.8891387
+ },
+ "rva:51.2720,22.5907": {
+  "result": {
+   "road": null,
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782142772.1640723
+ },
+ "rva:51.2661,22.5894": {
+  "result": {
+   "road": "Oliwkowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782142773.525589
+ },
+ "rva:51.2001,22.5547": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782142775.0121644
+ },
+ "rva:51.2801,22.5392": {
+  "result": {
+   "road": null,
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782142776.3303952
  }
 }
