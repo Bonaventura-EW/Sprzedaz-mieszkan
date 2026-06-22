@@ -5674,5 +5674,217 @@
    "city": "Lublin"
   },
   "ts": 1782131649.8286202
+ },
+ "księdza wincentego granata": {
+  "result": {
+   "lat": 51.1988984,
+   "lon": 22.5503874,
+   "name": "Księdza Wincentego Granata"
+  },
+  "ts": 1782141346.4412763
+ },
+ "grabskiego 23a": {
+  "result": null,
+  "ts": 1782141348.2474892
+ },
+ "stefana kisielewskiego": {
+  "result": {
+   "lat": 51.2690527,
+   "lon": 22.5613666,
+   "name": "Stefana Kisielewskiego"
+  },
+  "ts": 1782141349.6570325
+ },
+ "obrońców lublina": {
+  "result": {
+   "lat": 51.209546,
+   "lon": 22.5982588,
+   "name": "Obrońców Lublina"
+  },
+  "ts": 1782141351.0734563
+ },
+ "ignacego jana paderewskiego": {
+  "result": {
+   "lat": 51.2732021,
+   "lon": 22.5562661,
+   "name": "Ignacego Jana Paderewskiego"
+  },
+  "ts": 1782141352.711968
+ },
+ "rva:51.2546,22.5510": {
+  "result": {
+   "road": null,
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782141354.1616411
+ },
+ "rva:51.2225,22.6122": {
+  "result": {
+   "road": "Droga Męczenników Majdanka",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782141355.46477
+ },
+ "rva:51.2634,22.5084": {
+  "result": {
+   "road": "Poli Gojawiczyńskiej",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782141357.0984805
+ },
+ "rva:51.2432,22.5287": {
+  "result": {
+   "road": "Grażyny",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782141358.4577608
+ },
+ "rva:51.2795,22.5832": {
+  "result": {
+   "road": "Goździkowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782141359.882408
+ },
+ "rva:51.2491,22.5723": {
+  "result": {
+   "road": null,
+   "district": "Stare Miasto",
+   "city": "Lublin"
+  },
+  "ts": 1782141361.5255082
+ },
+ "rva:51.2670,22.5262": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782141362.9520688
+ },
+ "rva:51.2751,22.5827": {
+  "result": {
+   "road": "Czesława Strzeszewskiego",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782141364.3856506
+ },
+ "rva:51.2741,22.5821": {
+  "result": {
+   "road": "Czesława Strzeszewskiego",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782141365.7646248
+ },
+ "rva:51.1993,22.5441": {
+  "result": {
+   "road": "Jacka Woronieckiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782141367.385098
+ },
+ "rva:51.2720,22.5137": {
+  "result": {
+   "road": "Kameliowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782141369.00469
+ },
+ "rva:51.2571,22.5517": {
+  "result": {
+   "road": "Niccolo Paganiniego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782141370.4341414
+ },
+ "rva:51.2393,22.5299": {
+  "result": {
+   "road": "Filaretów",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782141371.8628616
+ },
+ "rva:51.2411,22.5564": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782141373.5179918
+ },
+ "rva:51.2412,22.5565": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782141374.9743931
+ },
+ "rva:51.2516,22.5092": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782141376.496767
+ },
+ "rva:51.2821,22.5443": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782141378.0863616
+ },
+ "rva:51.2506,22.5701": {
+  "result": {
+   "road": "Plac Zamkowy",
+   "district": "Stare Miasto",
+   "city": "Lublin"
+  },
+  "ts": 1782141379.5181265
+ },
+ "rva:51.2358,22.5850": {
+  "result": {
+   "road": null,
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1782141381.089745
+ },
+ "rva:51.2507,22.5107": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782141382.6528597
+ },
+ "rva:51.2235,22.4788": {
+  "result": {
+   "road": null,
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782141383.9973793
+ },
+ "rva:51.2429,22.5588": {
+  "result": {
+   "road": "Graniczna",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782141385.5989985
  }
 }
