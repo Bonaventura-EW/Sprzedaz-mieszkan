@@ -128,8 +128,11 @@ Testy: `pytest` z roota repo (konfiguracja w `pytest.ini`, `pythonpath = src`).
    precyzją coords; przy remisie Otodom. `map_generator`/`api_generator` **chowają**
    oferty z aktywnym `duplicate_of`.
 10. **Nie modyfikuj ręcznie `data/offers.json`** — plik generowany przez skan.
-11. Zmiany oznaczaj datowanym komentarzem `# FIX YYYY-MM-DD: opis`, a istotne
-    wpisuj do `CHANGELOG.md`.
+11. **KAŻDĄ zmianę zapisuj w `CHANGELOG.md`** (sekcja `## [Niewydane]`) — bez
+    wyjątków, nawet drobne poprawki, dokumentację czy operacje (np. seria skanów).
+    W kodzie dodatkowo oznaczaj zmianę datowanym komentarzem
+    `# FIX YYYY-MM-DD: opis`. To twardy wymóg: nie kończ zadania bez wpisu w
+    CHANGELOG.
 
 ## Konwencja commitów
 

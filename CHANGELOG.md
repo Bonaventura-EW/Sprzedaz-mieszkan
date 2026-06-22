@@ -2,6 +2,10 @@
 
 ## [Niewydane]
 
+### Dokumentacja
+- **`CLAUDE.md` pkt 11: KAŻDĄ zmianę zapisujemy w CHANGELOG** (sekcja
+  `[Niewydane]`) — bez wyjątków, jako twardy wymóg zakończenia zadania.
+
 ### Nasycanie mapy — seria skanów (2026-06-22)
 Po wpięciu silnika pinezek puszczona seria ~11 skanów `workflow_dispatch`
 (`scanner.yml`), aż liczba pinezek przestała rosnąć. Efekt na żywych danych:
