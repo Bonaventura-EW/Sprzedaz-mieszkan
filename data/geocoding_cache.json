@@ -7066,5 +7066,245 @@
    "city": "Lublin"
   },
   "ts": 1782143867.310051
+ },
+ "brylantowa": {
+  "result": {
+   "lat": 51.2215504,
+   "lon": 22.5088062,
+   "name": "Brylantowa"
+  },
+  "ts": 1782144199.7718692
+ },
+ "wiślan": {
+  "result": {
+   "lat": 51.2510746,
+   "lon": 22.4939935,
+   "name": "Wiślan"
+  },
+  "ts": 1782144201.1296363
+ },
+ "rva:51.2495,22.6037": {
+  "result": {
+   "road": "Gospodarcza",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1782144202.5315819
+ },
+ "rva:51.2556,22.5475": {
+  "result": {
+   "road": "Karola Lipińskiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782144203.8691618
+ },
+ "rva:51.2515,22.5106": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782144205.6339326
+ },
+ "rva:51.2407,22.4894": {
+  "result": {
+   "road": "Nataszy",
+   "district": "Węglin Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782144206.9284663
+ },
+ "rva:51.2193,22.5525": {
+  "result": {
+   "road": "Inżynierska",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782144208.7037807
+ },
+ "rva:51.2290,22.5765": {
+  "result": {
+   "road": "Wspólna",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782144210.1863134
+ },
+ "rva:51.2405,22.5005": {
+  "result": {
+   "road": "Leona Frankowskiego",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782144211.861152
+ },
+ "rva:51.2739,22.5426": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782144213.4574254
+ },
+ "rva:51.2511,22.5097": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782144214.753983
+ },
+ "rva:51.2610,22.5677": {
+  "result": {
+   "road": "Ludwika Hirszfelda",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144216.0475445
+ },
+ "rva:51.2609,22.5678": {
+  "result": {
+   "road": "Ludwika Hirszfelda",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144217.9235573
+ },
+ "rva:51.2060,22.5817": {
+  "result": {
+   "road": "Anny Langfus",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782144219.5908809
+ },
+ "rva:51.2497,22.5348": {
+  "result": {
+   "road": "Aleje Racławickie",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1782144220.9226305
+ },
+ "rva:51.2563,22.5799": {
+  "result": {
+   "road": "Jacka Kuronia",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782144222.2215424
+ },
+ "rva:51.2365,22.5266": {
+  "result": {
+   "road": "Pana Balcera",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782144223.9905014
+ },
+ "rva:51.2488,22.5521": {
+  "result": {
+   "road": "Wieniawska",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144225.2432387
+ },
+ "rva:51.2299,22.6057": {
+  "result": {
+   "road": "Hanki Ordonówny",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1782144226.5564723
+ },
+ "rva:51.2416,22.5293": {
+  "result": {
+   "road": "Grażyny",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1782144228.327478
+ },
+ "rva:51.2471,22.5554": {
+  "result": {
+   "road": "Mieczysława Karłowicza",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144229.7060273
+ },
+ "rva:51.2770,22.5098": {
+  "result": {
+   "road": "Kameralny Sławin",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782144231.4762323
+ },
+ "rva:51.2179,22.6409": {
+  "result": {
+   "road": "Zygmunta Starego",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1782144232.7929022
+ },
+ "rva:51.2174,22.6274": {
+  "result": {
+   "road": "Generała Witolda Urbanowicza",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782144234.5656285
+ },
+ "rva:51.2037,22.5459": {
+  "result": {
+   "road": "Bernarda Wapowskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782144235.860777
+ },
+ "rva:51.2408,22.5562": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144237.747333
+ },
+ "rva:51.2403,22.5578": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144239.5184767
+ },
+ "rva:51.2483,22.5456": {
+  "result": {
+   "road": "Aleje Racławickie",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782144241.283267
+ },
+ "rva:51.2118,22.5550": {
+  "result": {
+   "road": null,
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782144242.9516072
+ },
+ "rva:51.2371,22.4976": {
+  "result": {
+   "road": "Szwoleżerów",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1782144244.32439
  }
 }
