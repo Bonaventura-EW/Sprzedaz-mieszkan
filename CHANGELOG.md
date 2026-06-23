@@ -2,6 +2,26 @@
 
 ## [Niewydane]
 
+### Naprawione — 👻 rekordy-widma z kart „podbicia" Otodom (pushed-up)
+Otodom w listingu zwracał DODATKOWĄ kartę „podbicia" (pushed-up) dla tej samej
+oferty: syntetyczne id `"9"+<realne_id>+"00067"`, placeholderowa data
+`1999-02-29 00:00:01` i puste `images`. `normalize_item` brał ją za osobne
+ogłoszenie → powstawały rekordy-widma (duplikaty realnych ofert), które
+podwajały pinezki na mapie i zawyżały statystyki (deduplikacja w `main.py` jest
+tylko cross-portal OLX↔Otodom, więc otodom↔otodom ich nie łapie).
+- **`otodom_scraper.py`** — `normalize_item` odrzuca item, gdy
+  `createdAtFirst`/`dateCreated` == `PLACEHOLDER_CREATED` (`1999-02-29 00:00:01`).
+  Druga linia obrony: `_scrape_listing` deduplikuje teraz także po `slug`
+  (slug zawiera `-IDxxxx`, jednoznacznie identyfikuje ofertę) — odporne na
+  ew. zmianę schematu syntetycznego id.
+- **`tests/test_normalizers.py`** — test regresyjny
+  `test_otodom_skips_pushed_up_phantom_card`.
+- **`data/offers.json`** — jednorazowy cleanup: usunięto 304 rekordy-widma
+  (3239 → 2935). Naprawiono 2 osierocone `duplicate_of` (OLX wskazujące na
+  usunięte widmo) — przepięte na realnego bliźniaka Otodom (ten sam URL).
+- **`docs/*`** — przegenerowane `data.json`, `api/*`, `debug_data.json`,
+  `monitoring_data.json` ze sprzątniętych danych.
+
 ### Dokumentacja — opis optymalizacji
 - **`OPTYMALIZACJA-MAPA2.txt`** — dokument opisujący optymalizację mapy
   (problem, diagnoza, rozwiązanie canvas, co zachowane 1:1, kompromisy,
