@@ -53,6 +53,10 @@ _NEXT_DATA_RE = re.compile(
 MARKET_MAP = {'primary': 'pierwotny', 'secondary': 'wtorny',
               'PRIMARY': 'pierwotny', 'SECONDARY': 'wtorny'}
 
+# FIX 2026-06-23: data-wartownik, którą Otodom wstawia w `createdAtFirst`/
+# `dateCreated` syntetycznych kart "podbicia" (pushed-up) — patrz normalize_item.
+PLACEHOLDER_CREATED = '1999-02-29 00:00:01'
+
 ROOMS_MAP = {
     'ONE': 1, 'TWO': 2, 'THREE': 3, 'FOUR': 4, 'FIVE': 5,
     'SIX': 6, 'SEVEN': 7, 'EIGHT': 8, 'NINE': 9, 'TEN': 10,
@@ -104,6 +108,17 @@ def normalize_item(item: dict) -> Optional[Dict]:
     numeric_id = item.get('id')
     slug = item.get('slug')
     if not numeric_id or not slug:
+        return None
+
+    # FIX 2026-06-23: Otodom zwraca w listingu DODATKOWĄ kartę "podbicia"
+    # (pushed-up) dla tej samej oferty — to NIE osobne ogłoszenie. Taka karta
+    # ma syntetyczne id ("9"+<realne_id>+"00067"), placeholderową datę
+    # PLACEHOLDER_CREATED i puste `images`. Bez tego filtra powstawały
+    # rekordy-widma — duplikaty realnych ofert podwajające pinezki na mapie
+    # i zawyżające statystyki (deduplikacja w main.py jest tylko cross-portal,
+    # więc otodom↔otodom ich nie łapie). Pomijamy je już na wejściu.
+    created = item.get('createdAtFirst') or item.get('dateCreated')
+    if created == PLACEHOLDER_CREATED:
         return None
 
     total_price = (item.get('totalPrice') or {}).get('value')
@@ -195,6 +210,7 @@ class OtodomMieszkaniaScraper:
         """
         offers: List[Dict] = []
         seen_ids = set()
+        seen_slugs = set()  # FIX 2026-06-23: druga linia obrony przed kartami-widmami
         total_pages = 1
         consecutive_misses = 0
 
@@ -224,7 +240,12 @@ class OtodomMieszkaniaScraper:
                 offer = normalize_item(item)
                 if not offer or offer['id'] in seen_ids:
                     continue
+                # ten sam slug = ta sama oferta (slug zawiera -IDxxxx). Gdyby
+                # Otodom zmienił schemat kart "podbicia", slug i tak je odsieje.
+                if item.get('slug') in seen_slugs:
+                    continue
                 seen_ids.add(offer['id'])
+                seen_slugs.add(item.get('slug'))
                 offers.append(offer)
             time.sleep(random.uniform(self.delay_min, self.delay_max))
 

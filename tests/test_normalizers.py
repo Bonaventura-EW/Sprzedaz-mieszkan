@@ -142,6 +142,20 @@ def test_otodom_normalize_hidden_price():
     assert normalize_item(item) is None
 
 
+def test_otodom_skips_pushed_up_phantom_card():
+    # FIX 2026-06-23: karta "podbicia" (pushed-up) tej samej oferty — syntetyczne
+    # id, placeholderowa data 1999-02-29, puste images. To NIE osobne ogłoszenie.
+    phantom = dict(
+        OTODOM_ITEM, id=96750000100067,
+        createdAtFirst='1999-02-29 00:00:01',
+        dateCreated='1999-02-29 00:00:01', images=[],
+    )
+    assert normalize_item(phantom) is None
+    # gdy createdAtFirst pusty, a placeholder siedzi w dateCreated — też odrzucamy
+    phantom2 = dict(phantom, createdAtFirst=None)
+    assert normalize_item(phantom2) is None
+
+
 def test_strip_html():
     assert strip_html('<p>a</p><p>b</p>') == 'a\nb'
     assert strip_html('') == ''
