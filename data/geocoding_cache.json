@@ -7630,5 +7630,57 @@
    "city": "Lublin"
   },
   "ts": 1782157897.0059788
+ },
+ "pielęgniarek": {
+  "result": {
+   "lat": 51.2406572,
+   "lon": 22.5052457,
+   "name": "Pielęgniarek"
+  },
+  "ts": 1782209259.1685655
+ },
+ "towarowa": {
+  "result": {
+   "lat": 51.25131,
+   "lon": 22.5904842,
+   "name": "Towarowa"
+  },
+  "ts": 1782209260.5803077
+ },
+ "skibińska 26": {
+  "result": null,
+  "ts": 1782209262.024464
+ },
+ "skibińskiej": {
+  "result": {
+   "lat": 51.2392917,
+   "lon": 22.5779315,
+   "name": "Skibińska"
+  },
+  "ts": 1782209264.8559237
+ },
+ "ludwika zalewskiego": {
+  "result": {
+   "lat": 51.1968407,
+   "lon": 22.5428684,
+   "name": "Księdza Ludwika Zalewskiego"
+  },
+  "ts": 1782209266.283474
+ },
+ "rva:51.2512,22.5914": {
+  "result": {
+   "road": "Towarowa",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782209267.7386978
+ },
+ "rva:51.2181,22.6403": {
+  "result": {
+   "road": "Królowej Jadwigi",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1782209269.1611543
  }
 }
