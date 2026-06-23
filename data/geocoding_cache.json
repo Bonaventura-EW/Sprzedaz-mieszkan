@@ -7682,5 +7682,77 @@
    "city": "Lublin"
   },
   "ts": 1782209269.1611543
+ },
+ "pogodnej": {
+  "result": {
+   "lat": 51.2320016,
+   "lon": 22.5996288,
+   "name": "Pogodna"
+  },
+  "ts": 1782238723.5994217
+ },
+ "słoneczna": {
+  "result": {
+   "lat": 51.2383387,
+   "lon": 22.5478011,
+   "name": "Słoneczna"
+  },
+  "ts": 1782238724.92626
+ },
+ "ludwika hirszfelda": {
+  "result": {
+   "lat": 51.2605127,
+   "lon": 22.5689762,
+   "name": "Ludwika Hirszfelda"
+  },
+  "ts": 1782238726.206781
+ },
+ "pawia": {
+  "result": {
+   "lat": 51.2272337,
+   "lon": 22.571002,
+   "name": "Pawia"
+  },
+  "ts": 1782238727.5202825
+ },
+ "rva:51.2304,22.4923": {
+  "result": {
+   "road": "Roztocze",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782238729.0694504
+ },
+ "rva:51.2131,22.5731": {
+  "result": {
+   "road": "Zbigniewa Herberta",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782238730.6821282
+ },
+ "rva:51.2568,22.5920": {
+  "result": {
+   "road": "Kazimierza Tumidajskiego",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782238732.0112135
+ },
+ "rva:51.2294,22.5835": {
+  "result": {
+   "road": "Pawia",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1782238733.543632
+ },
+ "rva:51.2316,22.5730": {
+  "result": {
+   "road": "Garbarska",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782238735.0969448
  }
 }
