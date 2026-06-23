@@ -2,6 +2,12 @@
 
 ## [Niewydane]
 
+### Dokumentacja — opis działania API
+- **`docs/api/README.txt`** — opis statycznego API (4 endpointy:
+  `status.json`, `offers.json`, `history.json`, `health.json`): przepływ
+  generowania z `data/offers.json`, schemat pól każdego pliku, uwagi
+  (read-only, świeżość 26 h, regeneracja).
+
 ### Naprawione — 👻 rekordy-widma z kart „podbicia" Otodom (pushed-up)
 Otodom w listingu zwracał DODATKOWĄ kartę „podbicia" (pushed-up) dla tej samej
 oferty: syntetyczne id `"9"+<realne_id>+"00067"`, placeholderowa data
