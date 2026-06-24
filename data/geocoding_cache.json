@@ -7774,5 +7774,29 @@
  "puławska 27": {
   "result": null,
   "ts": 1782294889.471684
+ },
+ "wiercieńskiego": {
+  "result": {
+   "lat": 51.2411142,
+   "lon": 22.5495014,
+   "name": "Henryka Wiercieńskiego"
+  },
+  "ts": 1782324912.7994256
+ },
+ "henryka wiercieńskiego": {
+  "result": {
+   "lat": 51.2411142,
+   "lon": 22.5495014,
+   "name": "Henryka Wiercieńskiego"
+  },
+  "ts": 1782324914.0477176
+ },
+ "rva:51.2640,22.5857": {
+  "result": {
+   "road": "Przelot",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1782324915.806741
  }
 }
