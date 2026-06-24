@@ -7754,5 +7754,25 @@
    "city": "Lublin"
   },
   "ts": 1782238735.0969448
+ },
+ "unickiej": {
+  "result": {
+   "lat": 51.258474,
+   "lon": 22.5723486,
+   "name": "Unicka"
+  },
+  "ts": 1782294886.5050058
+ },
+ "ignacego rzeckiego": {
+  "result": {
+   "lat": 51.2363913,
+   "lon": 22.5297052,
+   "name": "Ignacego Rzeckiego"
+  },
+  "ts": 1782294887.9693763
+ },
+ "puławska 27": {
+  "result": null,
+  "ts": 1782294889.471684
  }
 }
