@@ -1,10 +1,11 @@
-/* SONAR SPRZEDAŻY MIESZKAŃ — Mapa 2 (wariant CANVAS, wysoka wydajność).
+/* SONAR SPRZEDAŻY MIESZKAŃ — mapa (wariant CANVAS, wysoka wydajność).
  *
- * Różnica względem script.js: pinezki NIE są markerami DOM (L.divIcon), tylko
- * kształtami rysowanymi na JEDNYM <canvas> (L.canvas). Zamiast ~2300 węzłów DOM
- * mamy jeden paint → płynny pan/zoom przy tysiącach ofert, BEZ klastrowania.
+ * Jedyna mapa projektu (ładowana przez docs/index.html). Pinezki NIE są
+ * markerami DOM (L.divIcon), tylko kształtami rysowanymi na JEDNYM <canvas>
+ * (L.canvas). Zamiast ~2300 węzłów DOM mamy jeden paint → płynny pan/zoom przy
+ * tysiącach ofert, BEZ klastrowania.
  *
- * Kształty zachowane 1:1 z mapy głównej (własne klasy Path na canvasie):
+ * Kształty (własne klasy Path na canvasie):
  *  - dokładny adres (coords_precision == 'exact')   → pinezka-kropla 40×50
  *  - ulica / przybliżona Otodom (inne)              → kwadrat 34×34 (ramka przerywana)
  *  - nieaktywne → × w środku; nowa → czerwona obwódka + badge N; zmiana ceny → badge ↓/↑
