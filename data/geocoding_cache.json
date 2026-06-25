@@ -7798,5 +7798,21 @@
    "city": "Lublin"
   },
   "ts": 1782324915.806741
+ },
+ "wędrownej": {
+  "result": {
+   "lat": 51.2710079,
+   "lon": 22.5250677,
+   "name": "Wędrowna"
+  },
+  "ts": 1782380930.5237794
+ },
+ "rva:51.2492,22.5276": {
+  "result": {
+   "road": null,
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1782380932.1817625
  }
 }
