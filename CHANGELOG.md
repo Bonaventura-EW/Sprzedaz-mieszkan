@@ -2,6 +2,23 @@
 
 ## [Niewydane]
 
+### Zmienione — 🗺️ jedna mapa (canvas) zamiast dwóch wariantów
+Wariant CANVAS sprawdził się w praktyce, więc został jedyną mapą projektu —
+stary wariant Leaflet (markery DOM) usunięty. Mniej kodu do utrzymania,
+spójna nawigacja.
+- **`docs/index.html`** — ładuje teraz `assets/script2.js` (canvas) zamiast
+  `assets/script.js`; z nawigacji usunięto link „🗺️ Mapa 2".
+- **Usunięto `docs/mapa2.html`** i **`docs/assets/script.js`** (stary Leaflet).
+  `script2.js` ma pełny parytet, w tym deep-link `index.html#offer=<id>`
+  używany przez podstrony „📐 Statystyki" i „🔄 Ruch".
+- **`docs/{analytics,statystyki,monitoring,oferty,zmiany,debug}.html`** —
+  z nawigacji usunięto link „🗺️ Mapa 2" (link „🗺️ Mapa" → `index.html`
+  bez zmian).
+- **`docs/assets/script2.js`** — nagłówkowy komentarz zaktualizowany (już nie
+  odwołuje się do usuniętego `script.js`; opis „jedyna mapa projektu").
+- **`src/map_generator.py`**, **`CLAUDE.md`** — odwołania `script.js` →
+  `script2.js`; opis przepływu danych odzwierciedla jeden wariant mapy.
+
 ### Naprawione — 👻 rekordy-widma z kart „podbicia" Otodom (pushed-up)
 Otodom w listingu zwracał DODATKOWĄ kartę „podbicia" (pushed-up) dla tej samej
 oferty: syntetyczne id `"9"+<realne_id>+"00067"`, placeholderowa data
