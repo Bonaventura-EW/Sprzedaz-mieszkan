@@ -7814,5 +7814,13 @@
    "city": "Lublin"
   },
   "ts": 1782380932.1817625
+ },
+ "rva:51.2754,22.5078": {
+  "result": {
+   "road": "Sławinkowska",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782412236.2053044
  }
 }
