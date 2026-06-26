@@ -7890,5 +7890,41 @@
    "city": "Lublin"
   },
   "ts": 1782467764.0860267
+ },
+ "motorowej": {
+  "result": {
+   "lat": 51.246658,
+   "lon": 22.6018425,
+   "name": "Motorowa"
+  },
+  "ts": 1782497225.6739118
+ },
+ "romera": {
+  "result": {
+   "lat": 51.2109563,
+   "lon": 22.5421005,
+   "name": "Eugeniusza Romera"
+  },
+  "ts": 1782497227.1628423
+ },
+ "dereckiego 13": {
+  "result": null,
+  "ts": 1782497228.443438
+ },
+ "rva:51.2417,22.5436": {
+  "result": {
+   "road": "Głęboka",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1782497229.952839
+ },
+ "rva:51.2791,22.5411": {
+  "result": {
+   "road": "Mirosława Dereckiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782497231.5111446
  }
 }
