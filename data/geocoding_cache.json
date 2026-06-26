@@ -7822,5 +7822,73 @@
    "city": "Lublin"
   },
   "ts": 1782412236.2053044
+ },
+ "czechowskiej": {
+  "result": {
+   "lat": 51.252503,
+   "lon": 22.5546372,
+   "name": "Czechowska"
+  },
+  "ts": 1782467749.46535
+ },
+ "radziwiłłowską": {
+  "result": {
+   "lat": 51.2493384,
+   "lon": 22.5608666,
+   "name": "Radziwiłłowska"
+  },
+  "ts": 1782467750.6993732
+ },
+ "ignacego domeyki 5": {
+  "result": null,
+  "ts": 1782467752.3179076
+ },
+ "radziwiłłowska": {
+  "result": {
+   "lat": 51.2493384,
+   "lon": 22.5608666,
+   "name": "Radziwiłłowska"
+  },
+  "ts": 1782467754.084743
+ },
+ "gęsiej": {
+  "result": {
+   "lat": 51.2254086,
+   "lon": 22.4805724,
+   "name": "Gęsia"
+  },
+  "ts": 1782467758.1961899
+ },
+ "rva:51.2256,22.5567": {
+  "result": {
+   "road": null,
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782467759.4589345
+ },
+ "rva:51.2263,22.5181": {
+  "result": {
+   "road": null,
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1782467761.0873888
+ },
+ "rva:51.2156,22.5509": {
+  "result": {
+   "road": "Diamentowa",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1782467762.7351627
+ },
+ "rva:51.2439,22.5956": {
+  "result": {
+   "road": null,
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1782467764.0860267
  }
 }
