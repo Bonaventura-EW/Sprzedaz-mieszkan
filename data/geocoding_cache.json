@@ -7946,5 +7946,13 @@
    "city": "Lublin"
   },
   "ts": 1782581691.1906826
+ },
+ "rva:51.2452,22.5984": {
+  "result": {
+   "road": null,
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1782639393.8436148
  }
 }
