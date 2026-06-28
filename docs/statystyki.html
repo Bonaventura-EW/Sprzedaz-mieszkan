@@ -34,6 +34,13 @@
     .deal .links a.go{background:var(--green-600);color:#fff}
     .deal .links a.map{background:#0284c7;color:#fff}
     .muted{color:var(--muted);font-size:13px}
+    .seg{display:inline-flex;gap:2px;background:var(--lime-soft);border-radius:999px;padding:3px}
+    .seg button{border:none;background:transparent;color:var(--green-800);font:inherit;font-size:12px;font-weight:700;
+      padding:5px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+    .seg button.on{background:var(--green-600);color:#fff}
+    .chart-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+    .chart-head h2{margin-bottom:0}
+    .gone-tall{height:320px}
     </style>
 </head>
 <body class="page-body">
@@ -95,6 +102,25 @@
             <h2>💡 Okazje cenowe <span class="muted" style="font-weight:400">(cena/m² wyraźnie poniżej mediany swojej dzielnicy, dzielnice z min. 4 ofertami)</span></h2>
             <div class="deals" id="deals"></div>
             <p class="muted" id="deals-empty" style="display:none">Brak ofert spełniających kryteria okazji w bieżących danych.</p>
+        </div>
+
+        <div class="chart-card">
+            <div class="chart-head">
+                <h2>📉 Oferty, które trwale zniknęły <span class="muted" style="font-weight:400">(wg dnia/miesiąca zniknięcia, z podziałem OLX/Otodom)</span></h2>
+                <div class="seg" id="gone-seg">
+                    <button data-mode="day" class="on">Dziennie</button>
+                    <button data-mode="month">Miesięcznie</button>
+                </div>
+            </div>
+            <div class="chart-wrap gone-tall"><canvas id="goneChart"></canvas></div>
+            <p class="muted" id="gone-empty" style="display:none">Brak ofert, które zniknęłyby na stałe — wykres pojawi się po kilku skanach.</p>
+            <p class="muted" style="margin-top:10px">
+                Liczymy oferty obecnie <b>nieaktywne</b> i grupujemy je po dacie zniknięcia.
+                Ogłoszenia bywają wznawiane — gdy oferta wróci, znika z tego wykresu, więc
+                <b>słupki z przeszłości mogą się zmniejszać</b>. Im dłużej sonar działa,
+                tym wierniej wykres pokazuje, ile mieszkań realnie zeszło z rynku.
+                Łącznie trwale zniknęło: <b id="gone-total">—</b> ofert.
+            </p>
         </div>
     </div>
 
@@ -223,6 +249,53 @@ async function init(){
           <div class="links"><a class="go" href="${esc(o.url)}" target="_blank" rel="noopener">Ogłoszenie ↗</a>${mapBtn}</div>
         </div>`;
     }).join('');
+
+    // === Trwale znikniete oferty (wg daty zniknięcia) ===
+    GONE = (data.offers||[]).filter(o=>!o.active && o.deactivated_at);
+    document.getElementById('gone-total').textContent=GONE.length.toLocaleString('pl-PL');
+    document.querySelectorAll('#gone-seg button').forEach(b=>
+        b.addEventListener('click',()=>{ goneMode=b.dataset.mode;
+            document.querySelectorAll('#gone-seg button').forEach(x=>x.classList.toggle('on',x===b));
+            renderGone(); }));
+    renderGone();
+}
+
+let GONE=[], goneMode='day', goneChart=null;
+function renderGone(){
+    const empty=document.getElementById('gone-empty');
+    const wrap=document.querySelector('.gone-tall');
+    if(!GONE.length){ empty.style.display='block'; wrap.style.display='none'; return; }
+    empty.style.display='none'; wrap.style.display='';
+
+    // klucz: 'YYYY-MM-DD' (dzień) lub 'YYYY-MM' (miesiąc), z podziałem na źródło
+    const cut=goneMode==='month'?7:10;
+    const buckets={}; // key -> {olx, otodom, inne}
+    GONE.forEach(o=>{
+        const key=String(o.deactivated_at).slice(0,cut);
+        const b=(buckets[key] ??= {olx:0,otodom:0,inne:0});
+        const s=(o.source||'').toLowerCase();
+        if(s==='olx')b.olx++; else if(s==='otodom')b.otodom++; else b.inne++;
+    });
+    const keys=Object.keys(buckets).sort();
+    const fmtKey=k=>{ const p=k.split('-');
+        return goneMode==='month' ? `${p[1]}.${p[0]}` : `${p[2]}.${p[1]}`; };
+    const labels=keys.map(fmtKey);
+    const ds=[
+        {label:'OLX',data:keys.map(k=>buckets[k].olx),backgroundColor:'#16a34a'},
+        {label:'Otodom',data:keys.map(k=>buckets[k].otodom),backgroundColor:'#7c3aed'},
+    ];
+    if(keys.some(k=>buckets[k].inne)) ds.push({label:'inne',data:keys.map(k=>buckets[k].inne),backgroundColor:'#94a3b8'});
+
+    if(goneChart) goneChart.destroy();
+    goneChart=new Chart(document.getElementById('goneChart'),{
+        type:'bar',
+        data:{labels,datasets:ds},
+        options:{responsive:true,maintainAspectRatio:false,
+            plugins:{legend:{display:true},
+                tooltip:{callbacks:{footer:items=>'Razem: '+items.reduce((s,i)=>s+i.parsed.y,0)}}},
+            scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,
+                title:{display:true,text:'liczba ofert'},ticks:{precision:0}}}}
+    });
 }
 
 const DIST_COLS=[

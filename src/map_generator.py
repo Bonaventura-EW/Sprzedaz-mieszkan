@@ -48,6 +48,9 @@ def build_map_offer(offer: dict) -> dict:
         'active': offer.get('active', False),
         'days_active': offer.get('days_active', 0),
         'also_at': offer.get('also_at'),
+        # FIX 2026-06-28: data dezaktywacji — zasila wykres „trwale znikniętych"
+        # ofert na statystyki.html (zniknięcia grupowane per dzień/miesiąc).
+        'deactivated_at': offer.get('deactivated_at'),
     }
 
 

@@ -2,6 +2,22 @@
 
 ## [Niewydane]
 
+### Dodane — 📉 wykres trwale znikniętych ofert na „📐 Statystyki"
+Nowa sekcja na dole `statystyki.html` pokazuje, ile ogłoszeń trwale zeszło
+z rynku, pogrupowanych po dacie zniknięcia (przełącznik **Dziennie /
+Miesięcznie**), z podziałem słupków na OLX/Otodom. Liczymy oferty obecnie
+nieaktywne wg ich `deactivated_at` — gdy ogłoszenie zostanie wznowione
+(`active=true`), automatycznie wypada z wykresu, więc słupki z przeszłości
+mogą maleć. Im dłużej sonar działa, tym wierniejszy obraz realnych zniknięć
+(zgodnie z założeniem: świeże dni jeszcze „drgają", stare się stabilizują).
+- **`src/map_generator.py`** — `build_map_offer` dorzuca pole `deactivated_at`
+  (zasila wykres; pole było już w `data/offers.json`, brakowało go w `data.json`).
+- **`docs/statystyki.html`** — nowa karta „📉 Oferty, które trwale zniknęły":
+  segmentowany przełącznik dzień/miesiąc, skumulowany wykres słupkowy
+  (Chart.js, źródła OLX/Otodom), nota metodologiczna i łączny licznik.
+- **`docs/data.json`** — przegenerowane, by od razu zawierało `deactivated_at`
+  (kolejny scan i tak nadpisze).
+
 ### Zmienione — 🗺️ jedna mapa (canvas) zamiast dwóch wariantów
 Wariant CANVAS sprawdził się w praktyce, więc został jedyną mapą projektu —
 stary wariant Leaflet (markery DOM) usunięty. Mniej kodu do utrzymania,
