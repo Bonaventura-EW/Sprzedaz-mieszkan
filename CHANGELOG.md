@@ -15,6 +15,9 @@ mogą maleć. Im dłużej sonar działa, tym wierniejszy obraz realnych zniknię
 - **`docs/statystyki.html`** — nowa karta „📉 Oferty, które trwale zniknęły":
   segmentowany przełącznik dzień/miesiąc, skumulowany wykres słupkowy
   (Chart.js, źródła OLX/Otodom), nota metodologiczna i łączny licznik.
+  Nad każdym słupkiem łączna suma zniknięć z danego dnia/miesiąca (własny
+  plugin `stackTotals` — bez dodatkowej zależności CDN; pomija serie wyłączone
+  w legendzie, więc suma zgadza się z tym, co widać).
 - **`docs/data.json`** — przegenerowane, by od razu zawierało `deactivated_at`
   (kolejny scan i tak nadpisze).
 

@@ -261,6 +261,29 @@ async function init(){
 }
 
 let GONE=[], goneMode='day', goneChart=null;
+// Rysuje łączną sumę (OLX+Otodom+inne) nad każdym skumulowanym słupkiem.
+// Pomija serie wyłączone w legendzie, by suma zgadzała się z tym, co widać.
+const stackTotals={
+    id:'stackTotals',
+    afterDatasetsDraw(chart){
+        const ctx=chart.ctx, n=chart.data.labels.length;
+        ctx.save();
+        ctx.font='700 12px system-ui,-apple-system,"Segoe UI",Roboto,sans-serif';
+        ctx.fillStyle='#1f2937'; ctx.textAlign='center'; ctx.textBaseline='bottom';
+        for(let i=0;i<n;i++){
+            let sum=0, topY=Infinity, x=null;
+            chart.data.datasets.forEach((dsi,di)=>{
+                const meta=chart.getDatasetMeta(di);
+                if(meta.hidden) return;
+                sum+=Number(dsi.data[i])||0;
+                const el=meta.data[i];
+                if(el){ topY=Math.min(topY,el.y); x=el.x; }
+            });
+            if(sum>0 && x!=null) ctx.fillText(sum, x, topY-4);
+        }
+        ctx.restore();
+    }
+};
 function renderGone(){
     const empty=document.getElementById('gone-empty');
     const wrap=document.querySelector('.gone-tall');
@@ -290,10 +313,11 @@ function renderGone(){
     goneChart=new Chart(document.getElementById('goneChart'),{
         type:'bar',
         data:{labels,datasets:ds},
+        plugins:[stackTotals],
         options:{responsive:true,maintainAspectRatio:false,
             plugins:{legend:{display:true},
                 tooltip:{callbacks:{footer:items=>'Razem: '+items.reduce((s,i)=>s+i.parsed.y,0)}}},
-            scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,
+            scales:{x:{stacked:true},y:{stacked:true,beginAtZero:true,grace:'8%',
                 title:{display:true,text:'liczba ofert'},ticks:{precision:0}}}}
     });
 }
