@@ -7954,5 +7954,33 @@
    "city": "Lublin"
   },
   "ts": 1782639393.8436148
+ },
+ "trześniowskiej": {
+  "result": {
+   "lat": 51.2629043,
+   "lon": 22.5920037,
+   "name": "Trześniowska"
+  },
+  "ts": 1782668371.06162
+ },
+ "przy stawie 4": {
+  "result": null,
+  "ts": 1782668372.4071348
+ },
+ "józefa mackiewicza": {
+  "result": {
+   "lat": 51.2662637,
+   "lon": 22.5622527,
+   "name": "Józefa Mackiewicza"
+  },
+  "ts": 1782668373.995213
+ },
+ "aleje racławickie 40/5": {
+  "result": {
+   "lat": 51.2513995,
+   "lon": 22.5267401,
+   "name": "Aleje Racławickie"
+  },
+  "ts": 1782668375.57223
  }
 }
