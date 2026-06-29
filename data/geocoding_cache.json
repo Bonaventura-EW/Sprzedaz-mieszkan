@@ -153,7 +153,7 @@
  },
  "kazmierza dulęby": {
   "result": null,
-  "ts": 1782070618.8656747
+  "ts": 1782732488.0197284
  },
  "pana balcera": {
   "result": {
@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1782072230.5011768
+  "ts": 1782732490.7546947
  },
  "granata": {
   "result": {
@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1782072234.9475071
+  "ts": 1782732492.0962136
  },
  "grażyny": {
   "result": {
@@ -713,7 +713,7 @@
  },
  "mieczysława dereckiego": {
   "result": null,
-  "ts": 1782072249.3268516
+  "ts": 1782732506.2754083
  },
  "koncertowej": {
   "result": {
@@ -725,7 +725,7 @@
  },
  "rumiankowa 3": {
   "result": null,
-  "ts": 1782072253.7465186
+  "ts": 1782732536.0818765
  },
  "rumiankowa": {
   "result": {
@@ -909,7 +909,7 @@
  },
  "ks ludwika zalewskiego 9": {
   "result": null,
-  "ts": 1782073236.2236998
+  "ts": 1782732489.4454443
  },
  "szafirowa": {
   "result": {
@@ -973,7 +973,7 @@
  },
  "wojciechowska 40": {
   "result": null,
-  "ts": 1782073249.4062142
+  "ts": 1782732546.063408
  },
  "wojciechowskiej": {
   "result": {
@@ -1089,7 +1089,7 @@
  },
  "kaziemierza dulęby": {
   "result": null,
-  "ts": 1782073277.0327382
+  "ts": 1782732494.923383
  },
  "daliowej": {
   "result": {
@@ -1229,7 +1229,7 @@
  },
  "dereckiegonumer": {
   "result": null,
-  "ts": 1782073312.6836684
+  "ts": 1782732496.3524988
  },
  "jantarowa": {
   "result": {
@@ -1812,8 +1812,12 @@
   "ts": 1782106554.2363017
  },
  "pawiej": {
-  "result": null,
-  "ts": 1782106557.2023256
+  "result": {
+   "lat": 51.2272337,
+   "lon": 22.571002,
+   "name": "Pawia"
+  },
+  "ts": 1782732533.0447102
  },
  "trześniowska": {
   "result": {
@@ -2088,8 +2092,12 @@
   "ts": 1782106627.003107
  },
  "pielgrzymiej": {
-  "result": null,
-  "ts": 1782106629.9097116
+  "result": {
+   "lat": 51.2320607,
+   "lon": 22.5396544,
+   "name": "Pielgrzymia"
+  },
+  "ts": 1782732500.6802828
  },
  "rev:51.2365,22.5333": {
   "result": "Emancypantek",
@@ -2464,8 +2472,12 @@
   "ts": 1782110423.1320095
  },
  "wschodniej": {
-  "result": null,
-  "ts": 1782110425.961237
+  "result": {
+   "lat": 51.2422029,
+   "lon": 22.5561211,
+   "name": "Wschodnia"
+  },
+  "ts": 1782732504.8517268
  },
  "dziewanny": {
   "result": {
@@ -2989,7 +3001,7 @@
  },
  "wyżynna 43": {
   "result": null,
-  "ts": 1782111886.7471423
+  "ts": 1782732507.5604393
  },
  "skłodowskiej-curie": {
   "result": {
@@ -3037,7 +3049,7 @@
  },
  "turkusowa 10": {
   "result": null,
-  "ts": 1782111896.9940596
+  "ts": 1782732509.0349145
  },
  "jana sawy": {
   "result": {
@@ -3065,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1782111903.0429223
+  "ts": 1782732510.3807096
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3213,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1782111934.2396815
+  "ts": 1782732511.6598682
  },
  "cypriana godebskiego": {
   "result": {
@@ -3369,7 +3381,7 @@
  },
  "garbarska 8b": {
   "result": null,
-  "ts": 1782111969.6423318
+  "ts": 1782732513.1022356
  },
  "leona wyczółkowskiego": {
   "result": {
@@ -3389,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1782111977.7042212
+  "ts": 1782732517.424262
  },
  "herbowa 8": {
   "result": null,
@@ -3509,7 +3521,7 @@
  },
  "pogodna 50e": {
   "result": null,
-  "ts": 1782112002.1502368
+  "ts": 1782732519.1822364
  },
  "sympatyczna": {
   "result": {
@@ -4317,7 +4329,7 @@
  },
  "generała witolda urbanowicza 5": {
   "result": null,
-  "ts": 1782126090.0507739
+  "ts": 1782732520.5715373
  },
  "lubelskiego lipca '80": {
   "result": {
@@ -4401,7 +4413,7 @@
  },
  "krzemieniecka 7": {
   "result": null,
-  "ts": 1782126107.1061752
+  "ts": 1782732521.8732812
  },
  "szmaragdowa": {
   "result": {
@@ -4429,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1782126112.8216958
+  "ts": 1782732523.2388387
  },
  "noskowskiego": {
   "result": {
@@ -4457,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1782126119.6672177
+  "ts": 1782732524.6853333
  },
  "krasińskiego": {
   "result": {
@@ -4477,7 +4489,7 @@
  },
  "koncerytowa": {
   "result": null,
-  "ts": 1782126123.9179223
+  "ts": 1782732526.1260974
  },
  "skibińska": {
   "result": {
@@ -4489,7 +4501,7 @@
  },
  "księdza wincentego granata 7": {
   "result": null,
-  "ts": 1782126126.6652157
+  "ts": 1782732527.5849307
  },
  "nowowiejskiego": {
   "result": {
@@ -4509,7 +4521,7 @@
  },
  "pawia 28": {
   "result": null,
-  "ts": 1782126132.000083
+  "ts": 1782732529.0922089
  },
  "perłowa": {
   "result": {
@@ -4521,7 +4533,7 @@
  },
  "zamojska 29": {
   "result": null,
-  "ts": 1782126134.7855237
+  "ts": 1782732534.6557112
  },
  "czeremchowa": {
   "result": {
@@ -7982,5 +7994,61 @@
    "name": "Aleje Racławickie"
   },
   "ts": 1782668375.57223
+ },
+ "prusa": {
+  "result": {
+   "lat": 51.2543598,
+   "lon": 22.5626266,
+   "name": "Bolesława Prusa"
+  },
+  "ts": 1782732537.5470996
+ },
+ "willowej": {
+  "result": {
+   "lat": 51.2656325,
+   "lon": 22.5175603,
+   "name": "Willowa"
+  },
+  "ts": 1782732540.3344026
+ },
+ "północnej": {
+  "result": {
+   "lat": 51.2551883,
+   "lon": 22.5607951,
+   "name": "Północna"
+  },
+  "ts": 1782732543.2283835
+ },
+ "mackiewicza lublin czechów": {
+  "result": null,
+  "ts": 1782732544.5947022
+ },
+ "perłowa 4": {
+  "result": null,
+  "ts": 1782732547.4872293
+ },
+ "perłowej": {
+  "result": {
+   "lat": 51.2252894,
+   "lon": 22.5071232,
+   "name": "Perłowa"
+  },
+  "ts": 1782732550.3461664
+ },
+ "rva:51.2258,22.4913": {
+  "result": {
+   "road": "Jana Pawła II",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1782732551.7147589
+ },
+ "rva:51.2503,22.5540": {
+  "result": {
+   "road": "Spokojna",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1782732553.1478963
  }
 }
