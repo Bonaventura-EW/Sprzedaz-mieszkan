@@ -685,7 +685,7 @@
  },
  "wolińskiego 1": {
   "result": null,
-  "ts": 1782072243.505
+  "ts": 1782813922.4238942
  },
  "boczna lubomelskiej": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1782126075.6882946
+  "ts": 1782813928.1118646
  },
  "cyruliczej": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1782157892.5959206
+  "ts": 1782813923.8640764
  },
  "altanowa": {
   "result": {
@@ -8082,5 +8082,37 @@
    "city": "Lublin"
   },
   "ts": 1782757652.5818012
+ },
+ "baśniowej": {
+  "result": {
+   "lat": 51.2523168,
+   "lon": 22.516452,
+   "name": "Baśniowa"
+  },
+  "ts": 1782813926.5915759
+ },
+ "gen. wł. sikorskiego": {
+  "result": null,
+  "ts": 1782813929.565891
+ },
+ "różanej": {
+  "result": {
+   "lat": 51.2322909,
+   "lon": 22.5177225,
+   "name": "Różana"
+  },
+  "ts": 1782813932.3386157
+ },
+ "dragonów 8": {
+  "result": null,
+  "ts": 1782813933.752154
+ },
+ "rva:51.2550,22.5290": {
+  "result": {
+   "road": "Aleja Generała Władysława Sikorskiego",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1782813935.251126
  }
 }
