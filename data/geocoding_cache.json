@@ -4373,7 +4373,7 @@
  },
  "bazylian": {
   "result": null,
-  "ts": 1782126098.5314033
+  "ts": 1782843519.342781
  },
  "bolesława chrobrego.przedmiotem": {
   "result": null,
@@ -8114,5 +8114,61 @@
    "city": "Lublin"
   },
   "ts": 1782813935.251126
+ },
+ "samsonowicza": {
+  "result": {
+   "lat": 51.2115201,
+   "lon": 22.5478152,
+   "name": "Jana Samsonowicza"
+  },
+  "ts": 1782843521.0114768
+ },
+ "karminowej": {
+  "result": null,
+  "ts": 1782843523.6063871
+ },
+ "jana kiepury": {
+  "result": {
+   "lat": 51.2574166,
+   "lon": 22.5419486,
+   "name": "Jana Kiepury"
+  },
+  "ts": 1782843524.851275
+ },
+ "karminowa": {
+  "result": null,
+  "ts": 1782843525.9795747
+ },
+ "rva:51.2023,22.5787": {
+  "result": {
+   "road": "Ludwika Zamenhofa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782843527.8637369
+ },
+ "rva:51.2217,22.5780": {
+  "result": {
+   "road": "Kajetana Koźmiana",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1782843529.5375414
+ },
+ "rva:51.2784,22.5427": {
+  "result": {
+   "road": "Aleksandra Zelwerowicza",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782843531.185671
+ },
+ "rva:51.2716,22.5098": {
+  "result": {
+   "road": "Jana Lisa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782843532.4838126
  }
 }
