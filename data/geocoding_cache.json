@@ -8170,5 +8170,37 @@
    "city": "Lublin"
   },
   "ts": 1782843532.4838126
+ },
+ "jemiołowa": {
+  "result": {
+   "lat": 51.2699627,
+   "lon": 22.5026176,
+   "name": "Jemiołowa"
+  },
+  "ts": 1782901137.5427778
+ },
+ "dereckiego 7": {
+  "result": {
+   "lat": 51.2795368,
+   "lon": 22.5406936,
+   "name": "Mirosława Dereckiego"
+  },
+  "ts": 1782901139.0017214
+ },
+ "rva:51.2715,22.5042": {
+  "result": {
+   "road": "Jemiołowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1782901140.4931629
+ },
+ "rva:51.2171,22.6335": {
+  "result": {
+   "road": "Zygmunta Augusta",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1782901141.9082563
  }
 }
