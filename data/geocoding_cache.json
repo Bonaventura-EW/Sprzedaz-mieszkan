@@ -8242,5 +8242,49 @@
    "city": "Lublin"
   },
   "ts": 1782985071.6664178
+ },
+ "agatowej": {
+  "result": {
+   "lat": 51.2240525,
+   "lon": 22.503458,
+   "name": "Agatowa"
+  },
+  "ts": 1783015574.2993443
+ },
+ "bukszpanowa 4": {
+  "result": null,
+  "ts": 1783015575.922907
+ },
+ "rva:51.2541,22.5932": {
+  "result": {
+   "road": "Aleja Władysława Andersa",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1783015577.3409362
+ },
+ "rva:51.2399,22.5480": {
+  "result": {
+   "road": "Poprzeczna",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1783015579.037671
+ },
+ "rva:51.2588,22.5701": {
+  "result": {
+   "road": "Obywatelska",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1783015580.7242732
+ },
+ "rva:51.2392,22.5299": {
+  "result": {
+   "road": "Filaretów",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1783015582.3552096
  }
 }
