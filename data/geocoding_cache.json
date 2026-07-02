@@ -8202,5 +8202,45 @@
    "city": "Lublin"
   },
   "ts": 1782901141.9082563
+ },
+ "garbarskiej": {
+  "result": {
+   "lat": 51.2333241,
+   "lon": 22.5796703,
+   "name": "Garbarska"
+  },
+  "ts": 1782985063.4652455
+ },
+ "kaliskiej": {
+  "result": {
+   "lat": 51.2353525,
+   "lon": 22.5239046,
+   "name": "Kaliska"
+  },
+  "ts": 1782985067.0159674
+ },
+ "rva:51.2830,22.5421": {
+  "result": {
+   "road": null,
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782985068.4775102
+ },
+ "rva:51.2783,22.5428": {
+  "result": {
+   "road": "Aleksandra Zelwerowicza",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1782985070.3491385
+ },
+ "rva:51.2536,22.5878": {
+  "result": {
+   "road": "Wojciecha Kiwerskiego",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1782985071.6664178
  }
 }
