@@ -8330,5 +8330,29 @@
    "city": "Lublin"
   },
   "ts": 1783071569.3960469
+ },
+ "skrzatów": {
+  "result": {
+   "lat": 51.2338437,
+   "lon": 22.5266917,
+   "name": "Skrzatów"
+  },
+  "ts": 1783101201.8328102
+ },
+ "rva:51.2627,22.5462": {
+  "result": {
+   "road": "Braci Wieniawskich",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1783101203.360875
+ },
+ "rva:51.2813,22.4987": {
+  "result": {
+   "road": "Apartamenty Sławinkowskie",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1783101204.6800246
  }
 }
