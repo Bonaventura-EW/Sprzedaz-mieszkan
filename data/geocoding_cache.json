@@ -8402,5 +8402,33 @@
    "city": "Lublin"
   },
   "ts": 1783155913.7090483
+ },
+ "kryształowa węglin": {
+  "result": null,
+  "ts": 1783186303.1230848
+ },
+ "rva:51.1984,22.5482": {
+  "result": {
+   "road": "Jacka Woronieckiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1783186304.5009458
+ },
+ "rva:51.2621,22.5494": {
+  "result": {
+   "road": "Aleja Mieczysława Smorawińskiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1783186305.9883862
+ },
+ "rva:51.2371,22.5879": {
+  "result": {
+   "road": "Majdan Tatarski",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1783186307.3172266
  }
 }
