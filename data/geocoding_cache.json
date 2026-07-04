@@ -7921,7 +7921,7 @@
  },
  "dereckiego 13": {
   "result": null,
-  "ts": 1782497228.443438
+  "ts": 1783155904.899547
  },
  "rva:51.2417,22.5436": {
   "result": {
@@ -8354,5 +8354,53 @@
    "city": "Lublin"
   },
   "ts": 1783101204.6800246
+ },
+ "jagiełły": {
+  "result": {
+   "lat": 51.2204666,
+   "lon": 22.6339201,
+   "name": "Władysława Jagiełły"
+  },
+  "ts": 1783155906.3177433
+ },
+ "rva:51.2707,22.5868": {
+  "result": {
+   "road": "Błogosławionego Księdza Ignacego Kłopotowskiego",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1783155907.8069208
+ },
+ "rva:51.2211,22.6304": {
+  "result": {
+   "road": "Władysława Jagiełły",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1783155909.2754762
+ },
+ "rva:51.2610,22.5680": {
+  "result": {
+   "road": "Ludwika Hirszfelda",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1783155910.7403612
+ },
+ "rva:51.2534,22.5797": {
+  "result": {
+   "road": "Kalinowszczyzna",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1783155912.2314954
+ },
+ "rva:51.1987,22.5526": {
+  "result": {
+   "road": "Księdza Wincentego Granata",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1783155913.7090483
  }
 }
