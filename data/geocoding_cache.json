@@ -8430,5 +8430,29 @@
    "city": "Lublin"
   },
   "ts": 1783186307.3172266
+ },
+ "biskupa fulmana": {
+  "result": {
+   "lat": 51.2003095,
+   "lon": 22.5447234,
+   "name": "Biskupa Mariana Fulmana"
+  },
+  "ts": 1783243588.408461
+ },
+ "sosnowej": {
+  "result": {
+   "lat": 51.2270109,
+   "lon": 22.5792986,
+   "name": "Sosnowa"
+  },
+  "ts": 1783243591.2428083
+ },
+ "rva:51.2580,22.4980": {
+  "result": {
+   "road": "Sławin",
+   "district": "Szerokie",
+   "city": "Lublin"
+  },
+  "ts": 1783243592.6996965
  }
 }
