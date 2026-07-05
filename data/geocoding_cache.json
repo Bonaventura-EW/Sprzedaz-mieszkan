@@ -8454,5 +8454,25 @@
    "city": "Lublin"
   },
   "ts": 1783243592.6996965
+ },
+ "rzeckiego": {
+  "result": {
+   "lat": 51.2363913,
+   "lon": 22.5297052,
+   "name": "Ignacego Rzeckiego"
+  },
+  "ts": 1783272938.3457022
+ },
+ "racławickie 10": {
+  "result": null,
+  "ts": 1783272940.0192637
+ },
+ "rva:51.2284,22.5873": {
+  "result": {
+   "road": "Krańcowa",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1783272941.4217403
  }
 }
