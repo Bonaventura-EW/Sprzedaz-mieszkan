@@ -8474,5 +8474,37 @@
    "city": "Lublin"
   },
   "ts": 1783272941.4217403
+ },
+ "ruckemana": {
+  "result": {
+   "lat": 51.256389,
+   "lon": 22.5863664,
+   "name": "Wilhelma Orlik-Rückemanna"
+  },
+  "ts": 1783336158.3372567
+ },
+ "dożynkowa 36": {
+  "result": null,
+  "ts": 1783336159.9131525
+ },
+ "jemiołuszki 18": {
+  "result": null,
+  "ts": 1783336161.4965036
+ },
+ "wilhelma orlika-ruckemana": {
+  "result": {
+   "lat": 51.256389,
+   "lon": 22.5863664,
+   "name": "Wilhelma Orlik-Rückemanna"
+  },
+  "ts": 1783336163.088969
+ },
+ "kołłątaja": {
+  "result": {
+   "lat": 51.2475058,
+   "lon": 22.5581677,
+   "name": "Hugona Kołłątaja"
+  },
+  "ts": 1783336164.7208679
  }
 }
