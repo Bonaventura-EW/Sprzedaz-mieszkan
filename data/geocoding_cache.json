@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1782732490.7546947
+  "ts": 1783362228.708898
  },
  "granata": {
   "result": {
@@ -725,7 +725,7 @@
  },
  "rumiankowa 3": {
   "result": null,
-  "ts": 1782732536.0818765
+  "ts": 1783362255.8495934
  },
  "rumiankowa": {
   "result": {
@@ -909,7 +909,7 @@
  },
  "ks ludwika zalewskiego 9": {
   "result": null,
-  "ts": 1782732489.4454443
+  "ts": 1783362227.443608
  },
  "szafirowa": {
   "result": {
@@ -1089,7 +1089,7 @@
  },
  "kaziemierza dulęby": {
   "result": null,
-  "ts": 1782732494.923383
+  "ts": 1783362231.274134
  },
  "daliowej": {
   "result": {
@@ -1229,7 +1229,7 @@
  },
  "dereckiegonumer": {
   "result": null,
-  "ts": 1782732496.3524988
+  "ts": 1783362232.542215
  },
  "jantarowa": {
   "result": {
@@ -3001,7 +3001,7 @@
  },
  "wyżynna 43": {
   "result": null,
-  "ts": 1782732507.5604393
+  "ts": 1783362234.234161
  },
  "skłodowskiej-curie": {
   "result": {
@@ -3049,7 +3049,7 @@
  },
  "turkusowa 10": {
   "result": null,
-  "ts": 1782732509.0349145
+  "ts": 1783362235.5182507
  },
  "jana sawy": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1782732510.3807096
+  "ts": 1783362237.2715123
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1782732511.6598682
+  "ts": 1783362238.9283378
  },
  "cypriana godebskiego": {
   "result": {
@@ -3381,7 +3381,7 @@
  },
  "garbarska 8b": {
   "result": null,
-  "ts": 1782732513.1022356
+  "ts": 1783362257.7907267
  },
  "leona wyczółkowskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1782732517.424262
+  "ts": 1783362243.1482525
  },
  "herbowa 8": {
   "result": null,
@@ -4329,7 +4329,7 @@
  },
  "generała witolda urbanowicza 5": {
   "result": null,
-  "ts": 1782732520.5715373
+  "ts": 1783362244.79514
  },
  "lubelskiego lipca '80": {
   "result": {
@@ -4413,7 +4413,7 @@
  },
  "krzemieniecka 7": {
   "result": null,
-  "ts": 1782732521.8732812
+  "ts": 1783362246.4431224
  },
  "szmaragdowa": {
   "result": {
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1782732523.2388387
+  "ts": 1783362248.0581224
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1782732524.6853333
+  "ts": 1783362249.428412
  },
  "krasińskiego": {
   "result": {
@@ -4489,7 +4489,7 @@
  },
  "koncerytowa": {
   "result": null,
-  "ts": 1782732526.1260974
+  "ts": 1783362250.863116
  },
  "skibińska": {
   "result": {
@@ -4501,7 +4501,7 @@
  },
  "księdza wincentego granata 7": {
   "result": null,
-  "ts": 1782732527.5849307
+  "ts": 1783362252.2136097
  },
  "nowowiejskiego": {
   "result": {
@@ -4533,7 +4533,7 @@
  },
  "zamojska 29": {
   "result": null,
-  "ts": 1782732534.6557112
+  "ts": 1783362254.0714743
  },
  "czeremchowa": {
   "result": {
@@ -8506,5 +8506,9 @@
    "name": "Hugona Kołłątaja"
   },
   "ts": 1783336164.7208679
+ },
+ "braci wieniawskich 1": {
+  "result": null,
+  "ts": 1783362259.0451436
  }
 }
