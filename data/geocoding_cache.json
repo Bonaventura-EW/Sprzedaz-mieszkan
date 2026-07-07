@@ -153,7 +153,7 @@
  },
  "kazmierza dulęby": {
   "result": null,
-  "ts": 1782732488.0197284
+  "ts": 1783448701.8818355
  },
  "pana balcera": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1782813928.1118646
+  "ts": 1783448704.7025084
  },
  "cyruliczej": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1782813923.8640764
+  "ts": 1783448703.257558
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1782813929.565891
+  "ts": 1783448705.973886
  },
  "różanej": {
   "result": {
@@ -8125,7 +8125,7 @@
  },
  "karminowej": {
   "result": null,
-  "ts": 1782843523.6063871
+  "ts": 1783448709.0412526
  },
  "jana kiepury": {
   "result": {
@@ -8137,7 +8137,7 @@
  },
  "karminowa": {
   "result": null,
-  "ts": 1782843525.9795747
+  "ts": 1783448710.2186086
  },
  "rva:51.2023,22.5787": {
   "result": {
@@ -8526,5 +8526,29 @@
    "city": "Lublin"
   },
   "ts": 1783418679.8389182
+ },
+ "cyrkoniowej": {
+  "result": {
+   "lat": 51.2245288,
+   "lon": 22.4880422,
+   "name": "Cyrkoniowa"
+  },
+  "ts": 1783448713.4907248
+ },
+ "rva:51.2229,22.5596": {
+  "result": {
+   "road": "Wyścigowa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1783448715.1882892
+ },
+ "rva:51.2215,22.5344": {
+  "result": {
+   "road": "Wyżynna",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1783448716.5345035
  }
 }
