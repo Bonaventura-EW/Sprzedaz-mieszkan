@@ -4893,7 +4893,7 @@
  },
  "ksiedza ludwika zalewskiego 7": {
   "result": null,
-  "ts": 1782757635.9355931
+  "ts": 1783418668.2089043
  },
  "bolesława śmiałego": {
   "result": {
@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1782757638.852274
+  "ts": 1783418671.0493653
  },
  "pozytywistów": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1782757640.6312752
+  "ts": 1783418672.5616562
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1782757642.0893333
+  "ts": 1783418673.9223797
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1782757637.3872037
+  "ts": 1783418669.6269357
  },
  "kredowa": {
   "result": {
@@ -8061,11 +8061,11 @@
  },
  "żywego": {
   "result": null,
-  "ts": 1782757646.29781
+  "ts": 1783418675.345914
  },
  "okrzei 6": {
   "result": null,
-  "ts": 1782757649.7362046
+  "ts": 1783418676.8604934
  },
  "rva:51.2229,22.5374": {
   "result": {
@@ -8510,5 +8510,21 @@
  "braci wieniawskich 1": {
   "result": null,
   "ts": 1783362259.0451436
+ },
+ "jagodowa": {
+  "result": {
+   "lat": 51.2698191,
+   "lon": 22.5809262,
+   "name": "Jagodowa"
+  },
+  "ts": 1783418678.3321648
+ },
+ "rva:51.2727,22.5429": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1783418679.8389182
  }
 }
