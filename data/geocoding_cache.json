@@ -8550,5 +8550,29 @@
    "city": "Lublin"
   },
   "ts": 1783448716.5345035
+ },
+ "rva:51.2262,22.6197": {
+  "result": {
+   "road": "Bohdana Dobrzańskiego",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1783500493.9687703
+ },
+ "rva:51.2170,22.6295": {
+  "result": {
+   "road": "Generała Stanisława Skalskiego",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1783500495.2301905
+ },
+ "rva:51.2549,22.5231": {
+  "result": {
+   "road": "Strzelecka",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1783500496.8932326
  }
 }
