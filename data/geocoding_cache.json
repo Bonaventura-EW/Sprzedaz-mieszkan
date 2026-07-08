@@ -8574,5 +8574,17 @@
    "city": "Lublin"
   },
   "ts": 1783500496.8932326
+ },
+ "lubartowska 60": {
+  "result": null,
+  "ts": 1783533316.6665742
+ },
+ "rva:51.2829,22.5420": {
+  "result": {
+   "road": null,
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1783533317.9769278
  }
 }
