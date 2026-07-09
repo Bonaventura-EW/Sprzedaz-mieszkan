@@ -5449,7 +5449,7 @@
  },
  "chabrowa 2": {
   "result": null,
-  "ts": 1782930036.614755
+  "ts": 1783591594.6441743
  },
  "ignacego daszyńskiego": {
   "result": {
@@ -8586,5 +8586,33 @@
    "city": "Lublin"
   },
   "ts": 1783533317.9769278
+ },
+ "solidarności": {
+  "result": {
+   "lat": 51.2639994,
+   "lon": 22.4935477,
+   "name": "Aleja Solidarności"
+  },
+  "ts": 1783591591.3099906
+ },
+ "urbanowicza 7": {
+  "result": null,
+  "ts": 1783591592.9731307
+ },
+ "rva:51.2833,22.5413": {
+  "result": {
+   "road": null,
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1783591596.2999194
+ },
+ "rva:51.2162,22.6298": {
+  "result": {
+   "road": "Generała Witolda Urbanowicza",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1783591597.958864
  }
 }
