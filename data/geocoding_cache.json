@@ -8614,5 +8614,53 @@
    "city": "Lublin"
   },
   "ts": 1783591597.958864
+ },
+ "granicznej": {
+  "result": {
+   "lat": 51.2429415,
+   "lon": 22.5587678,
+   "name": "Graniczna"
+  },
+  "ts": 1783620895.4157817
+ },
+ "nowomiejska": {
+  "result": {
+   "lat": 51.2363585,
+   "lon": 22.5426288,
+   "name": "Nowomiejska"
+  },
+  "ts": 1783620896.7001524
+ },
+ "obywatelska 10": {
+  "result": null,
+  "ts": 1783620898.2118893
+ },
+ "obywatelska i": {
+  "result": {
+   "lat": 51.2587634,
+   "lon": 22.5718183,
+   "name": "Obywatelska"
+  },
+  "ts": 1783620899.6690273
+ },
+ "relaksowa 18a": {
+  "result": null,
+  "ts": 1783620901.2015567
+ },
+ "rva:51.2385,22.5485": {
+  "result": {
+   "road": "Gliniana",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1783620902.6768522
+ },
+ "rva:51.2568,22.5864": {
+  "result": {
+   "road": "Wilhelma Orlik-Rückemanna",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1783620904.2295809
  }
 }
