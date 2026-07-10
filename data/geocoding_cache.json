@@ -8670,5 +8670,57 @@
    "name": "Wilhelma Orlik-Rückemanna"
   },
   "ts": 1783677402.2177377
+ },
+ "skołuby 2": {
+  "result": null,
+  "ts": 1783706705.4698646
+ },
+ "obrońców pokoju": {
+  "result": {
+   "lat": 51.2452205,
+   "lon": 22.5447724,
+   "name": "Obrońców Pokoju"
+  },
+  "ts": 1783706707.1284223
+ },
+ "rva:51.2445,22.5979": {
+  "result": {
+   "road": null,
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1783706708.5245295
+ },
+ "rva:51.2810,22.4983": {
+  "result": {
+   "road": "Skowronkowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1783706710.1822171
+ },
+ "rva:51.2443,22.6284": {
+  "result": {
+   "road": "Mełgiewska",
+   "district": "Hajdów-Zadębie",
+   "city": "Lublin"
+  },
+  "ts": 1783706711.8593981
+ },
+ "rva:51.2450,22.5325": {
+  "result": {
+   "road": "Głęboka",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1783706713.6251748
+ },
+ "rva:51.2527,22.5837": {
+  "result": {
+   "road": "Kalinowszczyzna",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1783706714.8995955
  }
 }
