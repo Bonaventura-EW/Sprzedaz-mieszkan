@@ -8722,5 +8722,21 @@
    "city": "Lublin"
   },
   "ts": 1783706714.8995955
+ },
+ "monte cassino": {
+  "result": {
+   "lat": 51.2455422,
+   "lon": 22.5065307,
+   "name": "Bohaterów Monte Cassino"
+  },
+  "ts": 1783757912.0487678
+ },
+ "3 maja": {
+  "result": {
+   "lat": 51.2491093,
+   "lon": 22.5581665,
+   "name": "3 Maja"
+  },
+  "ts": 1783757913.5779252
  }
 }
