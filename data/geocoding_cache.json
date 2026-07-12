@@ -973,7 +973,7 @@
  },
  "wojciechowska 40": {
   "result": null,
-  "ts": 1782732546.063408
+  "ts": 1783877408.042205
  },
  "wojciechowskiej": {
   "result": {
@@ -8738,5 +8738,9 @@
    "name": "3 Maja"
   },
   "ts": 1783757913.5779252
+ },
+ "czwartek 25": {
+  "result": null,
+  "ts": 1783877406.4179988
  }
 }
