@@ -8766,5 +8766,33 @@
    "city": "Lublin"
   },
   "ts": 1783936259.8123198
+ },
+ "tymiankowej": {
+  "result": {
+   "lat": 51.2285677,
+   "lon": 22.5094659,
+   "name": "Tymiankowa"
+  },
+  "ts": 1783966415.1031172
+ },
+ "sowińskiego": {
+  "result": {
+   "lat": 51.2377842,
+   "lon": 22.542419,
+   "name": "Józefa Sowińskiego"
+  },
+  "ts": 1783966416.4675913
+ },
+ "ignacego czumy 38": {
+  "result": null,
+  "ts": 1783966417.745846
+ },
+ "rva:51.2287,22.5095": {
+  "result": {
+   "road": "Tymiankowa",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1783966419.3897355
  }
 }
