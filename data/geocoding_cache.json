@@ -8742,5 +8742,29 @@
  "czwartek 25": {
   "result": null,
   "ts": 1783877406.4179988
+ },
+ "furmańskiej": {
+  "result": {
+   "lat": 51.2509601,
+   "lon": 22.568835,
+   "name": "Furmańska"
+  },
+  "ts": 1783936256.8835402
+ },
+ "juranda": {
+  "result": {
+   "lat": 51.23918,
+   "lon": 22.5189217,
+   "name": "Juranda"
+  },
+  "ts": 1783936258.3509989
+ },
+ "rva:51.2453,22.6099": {
+  "result": {
+   "road": "Projektowa",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1783936259.8123198
  }
 }
