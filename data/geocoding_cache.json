@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1783362228.708898
+  "ts": 1784017895.3807452
  },
  "granata": {
   "result": {
@@ -725,7 +725,7 @@
  },
  "rumiankowa 3": {
   "result": null,
-  "ts": 1783362255.8495934
+  "ts": 1784017918.061071
  },
  "rumiankowa": {
   "result": {
@@ -797,7 +797,7 @@
  },
  "jana długosza": {
   "result": null,
-  "ts": 1782072269.7056694
+  "ts": 1784017920.8969357
  },
  "lawinowa 3": {
   "result": null,
@@ -909,7 +909,7 @@
  },
  "ks ludwika zalewskiego 9": {
   "result": null,
-  "ts": 1783362227.443608
+  "ts": 1784017894.012527
  },
  "szafirowa": {
   "result": {
@@ -1089,7 +1089,7 @@
  },
  "kaziemierza dulęby": {
   "result": null,
-  "ts": 1783362231.274134
+  "ts": 1784017898.317872
  },
  "daliowej": {
   "result": {
@@ -1229,7 +1229,7 @@
  },
  "dereckiegonumer": {
   "result": null,
-  "ts": 1783362232.542215
+  "ts": 1784017899.7822094
  },
  "jantarowa": {
   "result": {
@@ -3001,7 +3001,7 @@
  },
  "wyżynna 43": {
   "result": null,
-  "ts": 1783362234.234161
+  "ts": 1784017901.2700038
  },
  "skłodowskiej-curie": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1783362237.2715123
+  "ts": 1784017902.928479
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1783362238.9283378
+  "ts": 1784017905.2966073
  },
  "cypriana godebskiego": {
   "result": {
@@ -3381,7 +3381,7 @@
  },
  "garbarska 8b": {
   "result": null,
-  "ts": 1783362257.7907267
+  "ts": 1784017919.424346
  },
  "leona wyczółkowskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1783362243.1482525
+  "ts": 1784017909.3388286
  },
  "herbowa 8": {
   "result": null,
@@ -4329,7 +4329,7 @@
  },
  "generała witolda urbanowicza 5": {
   "result": null,
-  "ts": 1783362244.79514
+  "ts": 1784017910.8268373
  },
  "lubelskiego lipca '80": {
   "result": {
@@ -4413,7 +4413,7 @@
  },
  "krzemieniecka 7": {
   "result": null,
-  "ts": 1783362246.4431224
+  "ts": 1784017912.3160748
  },
  "szmaragdowa": {
   "result": {
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1783362248.0581224
+  "ts": 1784017913.6539705
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1783362249.428412
+  "ts": 1784017915.0267682
  },
  "krasińskiego": {
   "result": {
@@ -4501,7 +4501,7 @@
  },
  "księdza wincentego granata 7": {
   "result": null,
-  "ts": 1783362252.2136097
+  "ts": 1784017916.5544367
  },
  "nowowiejskiego": {
   "result": {
@@ -8794,5 +8794,13 @@
    "city": "Lublin"
   },
   "ts": 1783966419.3897355
+ },
+ "kazimierza wielkiego": {
+  "result": {
+   "lat": 51.2389739,
+   "lon": 22.5343653,
+   "name": "Kazimierza Wielkiego"
+  },
+  "ts": 1784017922.2807214
  }
 }
