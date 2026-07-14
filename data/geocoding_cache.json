@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1783418671.0493653
+  "ts": 1784050679.6048036
  },
  "pozytywistów": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1783418672.5616562
+  "ts": 1784050680.9407005
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1783418673.9223797
+  "ts": 1784050682.5602913
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1783418669.6269357
+  "ts": 1784050678.3585627
  },
  "kredowa": {
   "result": {
@@ -8061,11 +8061,11 @@
  },
  "żywego": {
   "result": null,
-  "ts": 1783418675.345914
+  "ts": 1784050683.809188
  },
  "okrzei 6": {
   "result": null,
-  "ts": 1783418676.8604934
+  "ts": 1784050685.4625854
  },
  "rva:51.2229,22.5374": {
   "result": {
@@ -8802,5 +8802,49 @@
    "name": "Kazimierza Wielkiego"
   },
   "ts": 1784017922.2807214
+ },
+ "nagietkowa": {
+  "result": {
+   "lat": 51.2713335,
+   "lon": 22.5893712,
+   "name": "Nagietkowa"
+  },
+  "ts": 1784050686.7061076
+ },
+ "stefana okrzei 14": {
+  "result": null,
+  "ts": 1784050688.346273
+ },
+ "okulickiego": {
+  "result": {
+   "lat": 51.2085958,
+   "lon": 22.600278,
+   "name": "Leopolda Okulickiego"
+  },
+  "ts": 1784050689.6194417
+ },
+ "rva:51.2811,22.4984": {
+  "result": {
+   "road": "Skowronkowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1784050691.0245364
+ },
+ "rva:51.2794,22.5421": {
+  "result": {
+   "road": "Mirosława Dereckiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1784050692.6829276
+ },
+ "rva:51.2459,22.5446": {
+  "result": {
+   "road": "Marii Skłodowskiej-Curie",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1784050694.4841406
  }
 }
