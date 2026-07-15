@@ -8854,5 +8854,53 @@
    "city": "Lublin"
   },
   "ts": 1784104799.2388673
+ },
+ "kawaleryjskiej": {
+  "result": {
+   "lat": 51.2328845,
+   "lon": 22.511159,
+   "name": "Kawaleryjska"
+  },
+  "ts": 1784137380.9768457
+ },
+ "ochockiego": {
+  "result": {
+   "lat": 51.2354096,
+   "lon": 22.5337622,
+   "name": "Juliana Ochockiego"
+  },
+  "ts": 1784137382.6050425
+ },
+ "rva:51.2411,22.5466": {
+  "result": {
+   "road": "Głęboka",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1784137384.4747975
+ },
+ "rva:51.2483,22.5124": {
+  "result": {
+   "road": "Wojciechowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1784137386.3203473
+ },
+ "rva:51.2471,22.5007": {
+  "result": {
+   "road": "Wojciechowska",
+   "district": "Szerokie",
+   "city": "Lublin"
+  },
+  "ts": 1784137387.7871084
+ },
+ "rva:51.2618,22.5896": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1784137389.6246397
  }
 }
