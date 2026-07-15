@@ -153,7 +153,7 @@
  },
  "kazmierza dulęby": {
   "result": null,
-  "ts": 1783448701.8818355
+  "ts": 1784104788.0621626
  },
  "pana balcera": {
   "result": {
@@ -961,7 +961,7 @@
  },
  "rogatka warszawska": {
   "result": null,
-  "ts": 1782073246.7367997
+  "ts": 1784104797.7423537
  },
  "żołnierska": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1783448704.7025084
+  "ts": 1784104791.047928
  },
  "cyruliczej": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1783448703.257558
+  "ts": 1784104789.510864
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1783448705.973886
+  "ts": 1784104792.4961004
  },
  "różanej": {
   "result": {
@@ -8125,7 +8125,7 @@
  },
  "karminowej": {
   "result": null,
-  "ts": 1783448709.0412526
+  "ts": 1784104795.148715
  },
  "jana kiepury": {
   "result": {
@@ -8137,7 +8137,7 @@
  },
  "karminowa": {
   "result": null,
-  "ts": 1783448710.2186086
+  "ts": 1784104796.2869616
  },
  "rva:51.2023,22.5787": {
   "result": {
@@ -8846,5 +8846,13 @@
    "city": "Lublin"
   },
   "ts": 1784050694.4841406
+ },
+ "rva:51.2561,22.5485": {
+  "result": {
+   "road": "Karola Lipińskiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1784104799.2388673
  }
 }
