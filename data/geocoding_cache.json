@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1783591592.9731307
+  "ts": 1784223817.0832446
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -8914,5 +8914,45 @@
    "name": "Watykańska"
   },
   "ts": 1784191105.4525852
+ },
+ "puchacza": {
+  "result": {
+   "lat": 51.2337243,
+   "lon": 22.5891518,
+   "name": "Puchacza"
+  },
+  "ts": 1784223818.5601785
+ },
+ "bukowej": {
+  "result": {
+   "lat": 51.2296078,
+   "lon": 22.5820716,
+   "name": "Bukowa"
+  },
+  "ts": 1784223821.5400894
+ },
+ "rva:51.2504,22.5115": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1784223823.122691
+ },
+ "rva:51.2552,22.5792": {
+  "result": {
+   "road": "Krzemieniecka",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1784223824.6377316
+ },
+ "rva:51.2666,22.5175": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1784223826.1543446
  }
 }
