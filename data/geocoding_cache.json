@@ -8902,5 +8902,17 @@
    "city": "Lublin"
   },
   "ts": 1784137389.6246397
+ },
+ "agatowa czuby": {
+  "result": null,
+  "ts": 1784191102.2353816
+ },
+ "watykańskiej": {
+  "result": {
+   "lat": 51.228356,
+   "lon": 22.5216905,
+   "name": "Watykańska"
+  },
+  "ts": 1784191105.4525852
  }
 }
