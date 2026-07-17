@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1783677400.8316774
+  "ts": 1784309715.7339606
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -8974,5 +8974,45 @@
    "city": "Lublin"
   },
   "ts": 1784277146.8480532
+ },
+ "bema": {
+  "result": {
+   "lat": 51.246999,
+   "lon": 22.5360518,
+   "name": "Józefa Bema"
+  },
+  "ts": 1784309717.198993
+ },
+ "józefa bema": {
+  "result": {
+   "lat": 51.246999,
+   "lon": 22.5360518,
+   "name": "Józefa Bema"
+  },
+  "ts": 1784309718.4740334
+ },
+ "rva:51.2602,22.5869": {
+  "result": {
+   "road": null,
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1784309720.018216
+ },
+ "rva:51.2598,22.5299": {
+  "result": {
+   "road": "Północna",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1784309721.321802
+ },
+ "rva:51.2608,22.5292": {
+  "result": {
+   "road": "Pułkownika Stanisława Nowickiego",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1784309722.8238049
  }
 }
