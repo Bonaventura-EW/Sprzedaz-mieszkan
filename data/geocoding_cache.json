@@ -9038,5 +9038,13 @@
    "city": "Lublin"
   },
   "ts": 1784362409.4400377
+ },
+ "gabrieli zapolskiej": {
+  "result": {
+   "lat": 51.2739114,
+   "lon": 22.5036353,
+   "name": "Gabrieli Zapolskiej"
+  },
+  "ts": 1784395153.5053685
  }
 }
