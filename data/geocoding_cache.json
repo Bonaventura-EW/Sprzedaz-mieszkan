@@ -9014,5 +9014,29 @@
    "city": "Lublin"
   },
   "ts": 1784309722.8238049
+ },
+ "zachodnia": {
+  "result": {
+   "lat": 51.237082,
+   "lon": 22.5451518,
+   "name": "Zachodnia"
+  },
+  "ts": 1784362406.4350276
+ },
+ "rva:51.2727,22.5427": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1784362407.935717
+ },
+ "rva:51.2550,22.5542": {
+  "result": {
+   "road": "Oratoryjna",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1784362409.4400377
  }
 }
