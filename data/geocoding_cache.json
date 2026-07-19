@@ -9046,5 +9046,53 @@
    "name": "Gabrieli Zapolskiej"
   },
   "ts": 1784395153.5053685
+ },
+ "cynamonowej": {
+  "result": {
+   "lat": 51.2757193,
+   "lon": 22.5799897,
+   "name": "Cynamonowa"
+  },
+  "ts": 1784481672.2268786
+ },
+ "leszka czarnego": {
+  "result": {
+   "lat": 51.2409804,
+   "lon": 22.534243,
+   "name": "Leszka Czarnego"
+  },
+  "ts": 1784481673.4952846
+ },
+ "cynamonowa": {
+  "result": {
+   "lat": 51.2757193,
+   "lon": 22.5799897,
+   "name": "Cynamonowa"
+  },
+  "ts": 1784481674.623323
+ },
+ "rva:51.2395,22.5381": {
+  "result": {
+   "road": "Gliniana",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1784481675.8889143
+ },
+ "rva:51.2460,22.6069": {
+  "result": {
+   "road": "Mełgiewska",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1784481677.1678827
+ },
+ "rva:51.2513,22.5193": {
+  "result": {
+   "road": "Kolorowa",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1784481678.9386368
  }
 }
