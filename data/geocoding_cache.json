@@ -973,7 +973,7 @@
  },
  "wojciechowska 40": {
   "result": null,
-  "ts": 1783877408.042205
+  "ts": 1784540329.9465415
  },
  "wojciechowskiej": {
   "result": {
@@ -3521,7 +3521,7 @@
  },
  "pogodna 50e": {
   "result": null,
-  "ts": 1782732519.1822364
+  "ts": 1784540328.4376216
  },
  "sympatyczna": {
   "result": {
@@ -9094,5 +9094,21 @@
    "city": "Lublin"
   },
   "ts": 1784481678.9386368
+ },
+ "rva:51.2146,22.5694": {
+  "result": {
+   "road": null,
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1784540331.5560393
+ },
+ "rva:51.2065,22.5462": {
+  "result": {
+   "road": "Jana Samsonowicza",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1784540333.0922778
  }
 }
