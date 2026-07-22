@@ -9142,5 +9142,37 @@
    "city": "Lublin"
   },
   "ts": 1784710144.1152306
+ },
+ "jana pawła ii": {
+  "result": {
+   "lat": 51.2266201,
+   "lon": 22.4868918,
+   "name": "Jana Pawła II"
+  },
+  "ts": 1784742323.0335581
+ },
+ "rva:51.2241,22.6352": {
+  "result": {
+   "road": "Vetterów",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1784742324.803996
+ },
+ "rva:51.2356,22.5374": {
+  "result": {
+   "road": "Tomasza Zana",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1784742326.1221619
+ },
+ "rva:51.2219,22.5355": {
+  "result": {
+   "road": "Szczytowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1784742327.9354122
  }
 }
