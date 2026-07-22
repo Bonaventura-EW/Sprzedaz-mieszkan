@@ -153,7 +153,7 @@
  },
  "kazmierza dulęby": {
   "result": null,
-  "ts": 1784104788.0621626
+  "ts": 1784710130.9144905
  },
  "pana balcera": {
   "result": {
@@ -797,7 +797,7 @@
  },
  "jana długosza": {
   "result": null,
-  "ts": 1784017920.8969357
+  "ts": 1784710142.2473555
  },
  "lawinowa 3": {
   "result": null,
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1784104791.047928
+  "ts": 1784710133.9040327
  },
  "cyruliczej": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1784104789.510864
+  "ts": 1784710132.5316904
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1784104792.4961004
+  "ts": 1784710135.5401776
  },
  "różanej": {
   "result": {
@@ -8125,7 +8125,7 @@
  },
  "karminowej": {
   "result": null,
-  "ts": 1784104795.148715
+  "ts": 1784710138.1810536
  },
  "jana kiepury": {
   "result": {
@@ -8137,7 +8137,7 @@
  },
  "karminowa": {
   "result": null,
-  "ts": 1784104796.2869616
+  "ts": 1784710139.3104005
  },
  "rva:51.2023,22.5787": {
   "result": {
@@ -9126,5 +9126,21 @@
    "city": "Lublin"
   },
   "ts": 1784656196.9141347
+ },
+ "meczennikow majdanka": {
+  "result": {
+   "lat": 51.22163,
+   "lon": 22.6181311,
+   "name": "Józefa Franczaka \"Lalka\""
+  },
+  "ts": 1784710140.9562035
+ },
+ "rva:51.2379,22.5493": {
+  "result": {
+   "road": "Nadbystrzycka",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1784710144.1152306
  }
 }
