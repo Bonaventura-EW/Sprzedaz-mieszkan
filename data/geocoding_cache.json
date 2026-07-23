@@ -9174,5 +9174,33 @@
    "city": "Lublin"
   },
   "ts": 1784742327.9354122
+ },
+ "hetmańska 1": {
+  "result": null,
+  "ts": 1784796506.086234
+ },
+ "rva:51.2596,22.5846": {
+  "result": {
+   "road": null,
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1784796507.8536932
+ },
+ "rva:51.2447,22.5888": {
+  "result": {
+   "road": "Przyjaźni",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1784796509.1205935
+ },
+ "rva:51.2340,22.5898": {
+  "result": {
+   "road": null,
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1784796510.8879025
  }
 }
