@@ -5421,7 +5421,7 @@
  },
  "dolnej panny marii": {
   "result": null,
-  "ts": 1782131597.6284122
+  "ts": 1784915814.496038
  },
  "dolna marii panny": {
   "result": {
@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1784309715.7339606
+  "ts": 1784915813.125669
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -9262,5 +9262,65 @@
    "city": "Lublin"
   },
   "ts": 1784882803.276517
+ },
+ "elaktryczna": {
+  "result": null,
+  "ts": 1784915816.1128273
+ },
+ "elektrycznej": {
+  "result": {
+   "lat": 51.231168,
+   "lon": 22.5811308,
+   "name": "Elektryczna"
+  },
+  "ts": 1784915819.0839872
+ },
+ "pagi": {
+  "result": {
+   "lat": 51.2455918,
+   "lon": 22.5282678,
+   "name": "Lesława Pagi"
+  },
+  "ts": 1784915820.7216187
+ },
+ "cyprysowej": {
+  "result": {
+   "lat": 51.2716009,
+   "lon": 22.5813344,
+   "name": "Cyprysowa"
+  },
+  "ts": 1784915823.5991817
+ },
+ "kleniewskich": {
+  "result": {
+   "lat": 51.2596676,
+   "lon": 22.5708892,
+   "name": "Kleniewskich"
+  },
+  "ts": 1784915825.1818144
+ },
+ "rva:51.2438,22.5318": {
+  "result": {
+   "road": "Pana Tadeusza",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1784915826.8430905
+ },
+ "rva:51.2293,22.5824": {
+  "result": {
+   "road": "Pawia",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1784915828.4385316
+ },
+ "rva:51.2514,22.5257": {
+  "result": {
+   "road": "Rondo Honorowych Krwiodawców",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1784915829.8943248
  }
 }
