@@ -8957,7 +8957,7 @@
  },
  "operowa 10": {
   "result": null,
-  "ts": 1784277143.5998397
+  "ts": 1784882800.5208044
  },
  "rva:51.2685,22.5425": {
   "result": {
@@ -9246,5 +9246,21 @@
    "city": "Lublin"
   },
   "ts": 1784829060.4609635
+ },
+ "juliusza ligonia": {
+  "result": {
+   "lat": 51.2540334,
+   "lon": 22.5219934,
+   "name": "Juliusza Ligonia"
+  },
+  "ts": 1784882801.8204956
+ },
+ "rva:51.2251,22.4706": {
+  "result": {
+   "road": "Wróbla",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1784882803.276517
  }
 }
