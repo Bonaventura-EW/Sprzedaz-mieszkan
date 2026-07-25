@@ -9322,5 +9322,21 @@
    "city": "Lublin"
   },
   "ts": 1784915829.8943248
+ },
+ "rva:51.2396,22.4912": {
+  "result": {
+   "road": "Szwejka",
+   "district": "Węglin Północny",
+   "city": "Lublin"
+  },
+  "ts": 1785000019.811382
+ },
+ "rva:51.2235,22.5199": {
+  "result": {
+   "road": "Bursztynowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1785000021.3659325
  }
 }
