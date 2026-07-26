@@ -9346,5 +9346,25 @@
    "city": "Lublin"
   },
   "ts": 1785055399.8444169
+ },
+ "głęboka 23": {
+  "result": null,
+  "ts": 1785086489.9634602
+ },
+ "nadbytrzycka": {
+  "result": null,
+  "ts": 1785086491.362245
+ },
+ "wajdeloty 4": {
+  "result": null,
+  "ts": 1785086492.7512608
+ },
+ "michała ludomira rogowskiego": {
+  "result": {
+   "lat": 51.2577134,
+   "lon": 22.5408091,
+   "name": "Ludomira Michała Rogowskiego"
+  },
+  "ts": 1785086494.2074683
  }
 }
