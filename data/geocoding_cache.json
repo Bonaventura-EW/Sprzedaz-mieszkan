@@ -9398,5 +9398,53 @@
    "city": "Lublin"
   },
   "ts": 1785147224.3848176
+ },
+ "mariańskiej": {
+  "result": {
+   "lat": 51.2689399,
+   "lon": 22.5755855,
+   "name": "Mariańska"
+  },
+  "ts": 1785175179.8099077
+ },
+ "kapucyńskiej": {
+  "result": {
+   "lat": 51.2467008,
+   "lon": 22.5618699,
+   "name": "Kapucyńska"
+  },
+  "ts": 1785175182.7242615
+ },
+ "wojciecha kiwerskiego": {
+  "result": {
+   "lat": 51.2549426,
+   "lon": 22.5876501,
+   "name": "Wojciecha Kiwerskiego"
+  },
+  "ts": 1785175184.1927269
+ },
+ "rva:51.2093,22.5465": {
+  "result": {
+   "road": null,
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1785175185.664092
+ },
+ "rva:51.2174,22.6406": {
+  "result": {
+   "road": "Zygmunta Starego",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1785175187.114592
+ },
+ "rva:51.2498,22.5528": {
+  "result": {
+   "road": "Jerzego de Tramecourta",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1785175188.4187703
  }
 }
