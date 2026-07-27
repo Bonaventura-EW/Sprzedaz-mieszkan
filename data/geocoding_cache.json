@@ -2673,7 +2673,7 @@
  },
  "dr k. jaczewskiego": {
   "result": null,
-  "ts": 1782110475.6875954
+  "ts": 1785147219.6699343
  },
  "ogrodowa śródmieście": {
   "result": null,
@@ -3521,7 +3521,7 @@
  },
  "pogodna 50e": {
   "result": null,
-  "ts": 1784540328.4376216
+  "ts": 1785147215.428597
  },
  "sympatyczna": {
   "result": {
@@ -9366,5 +9366,37 @@
    "name": "Ludomira Michała Rogowskiego"
   },
   "ts": 1785086494.2074683
+ },
+ "samosnowicza": {
+  "result": null,
+  "ts": 1785147216.6868494
+ },
+ "wrońska 3d": {
+  "result": null,
+  "ts": 1785147218.166951
+ },
+ "rva:51.2081,22.5470": {
+  "result": {
+   "road": "Jana Samsonowicza",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1785147221.2145894
+ },
+ "rva:51.2341,22.5728": {
+  "result": {
+   "road": "Wolska",
+   "district": "Za Cukrownią",
+   "city": "Lublin"
+  },
+  "ts": 1785147222.7918413
+ },
+ "rva:51.2533,22.5190": {
+  "result": {
+   "road": "Czeremchowa",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1785147224.3848176
  }
 }
