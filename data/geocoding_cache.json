@@ -9482,5 +9482,21 @@
    "city": "Lublin"
   },
   "ts": 1785229833.4599993
+ },
+ "koryznowej": {
+  "result": {
+   "lat": 51.2669685,
+   "lon": 22.5928625,
+   "name": "Marii Koryznowej"
+  },
+  "ts": 1785260923.712494
+ },
+ "rva:51.2600,22.5836": {
+  "result": {
+   "road": null,
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1785260925.047282
  }
 }
