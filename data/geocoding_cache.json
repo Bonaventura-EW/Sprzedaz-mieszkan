@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1784623811.8610644
+  "ts": 1785229809.75072
  },
  "granata": {
   "result": {
@@ -909,7 +909,7 @@
  },
  "ks ludwika zalewskiego 9": {
   "result": null,
-  "ts": 1784623810.3960028
+  "ts": 1785229808.0830083
  },
  "szafirowa": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1784623814.9393091
+  "ts": 1785229811.067507
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1784623816.198497
+  "ts": 1785229812.3144062
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1784623820.447675
+  "ts": 1785229816.829634
  },
  "herbowa 8": {
   "result": null,
@@ -4329,7 +4329,7 @@
  },
  "generała witolda urbanowicza 5": {
   "result": null,
-  "ts": 1784623821.8719275
+  "ts": 1785229818.0707853
  },
  "lubelskiego lipca '80": {
   "result": {
@@ -4413,7 +4413,7 @@
  },
  "krzemieniecka 7": {
   "result": null,
-  "ts": 1784623823.3372185
+  "ts": 1785229819.3161569
  },
  "szmaragdowa": {
   "result": {
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1784623824.78207
+  "ts": 1785229820.5454996
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1784623826.2079926
+  "ts": 1785229822.2100363
  },
  "krasińskiego": {
   "result": {
@@ -4501,7 +4501,7 @@
  },
  "księdza wincentego granata 7": {
   "result": null,
-  "ts": 1784623827.4683487
+  "ts": 1785229823.9731026
  },
  "nowowiejskiego": {
   "result": {
@@ -5449,7 +5449,7 @@
  },
  "chabrowa 2": {
   "result": null,
-  "ts": 1783591594.6441743
+  "ts": 1785229828.1277766
  },
  "ignacego daszyńskiego": {
   "result": {
@@ -9446,5 +9446,41 @@
    "city": "Lublin"
   },
   "ts": 1785175188.4187703
+ },
+ "radzikowska": {
+  "result": {
+   "lat": 51.2262234,
+   "lon": 22.5488398,
+   "name": "Radzikowska"
+  },
+  "ts": 1785229825.2185166
+ },
+ "faraona": {
+  "result": {
+   "lat": 51.2365,
+   "lon": 22.5313756,
+   "name": "Faraona"
+  },
+  "ts": 1785229826.842543
+ },
+ "balladyny 12": {
+  "result": null,
+  "ts": 1785229829.9143069
+ },
+ "rva:51.2812,22.4980": {
+  "result": {
+   "road": "Skowronkowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1785229831.681638
+ },
+ "rva:51.2176,22.5804": {
+  "result": {
+   "road": "Adama Mickiewicza",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1785229833.4599993
  }
 }
