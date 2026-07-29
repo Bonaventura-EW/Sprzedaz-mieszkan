@@ -9506,5 +9506,37 @@
    "city": "Lublin"
   },
   "ts": 1785316477.4140801
+ },
+ "szwejka": {
+  "result": {
+   "lat": 51.2391122,
+   "lon": 22.4898621,
+   "name": "Szwejka"
+  },
+  "ts": 1785346965.4243147
+ },
+ "rva:51.2565,22.5954": {
+  "result": {
+   "road": "Krokusowa",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1785346966.9248946
+ },
+ "rumiankowej": {
+  "result": {
+   "lat": 51.2682714,
+   "lon": 22.5869729,
+   "name": "Rumiankowa"
+  },
+  "ts": 1785346969.786709
+ },
+ "rva:51.2094,22.5476": {
+  "result": {
+   "road": null,
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1785346971.2838774
  }
 }
