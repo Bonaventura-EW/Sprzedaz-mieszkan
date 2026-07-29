@@ -1287,6 +1287,20 @@
    "active": 2837,
    "with_coords": 2577,
    "total_in_db": 5065
+  },
+  {
+   "timestamp": "2026-07-29T11:11:59.503395+02:00",
+   "status": "completed",
+   "duration_s": 159.3,
+   "deactivated": 0,
+   "scraped_olx": 968,
+   "scraped_otodom": 1743,
+   "new": 19,
+   "updated": 2692,
+   "skipped_removed": 0,
+   "active": 2871,
+   "with_coords": 2608,
+   "total_in_db": 5084
   }
  ]
 }
