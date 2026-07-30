@@ -973,7 +973,7 @@
  },
  "wojciechowska 40": {
   "result": null,
-  "ts": 1784540329.9465415
+  "ts": 1785402452.4600985
  },
  "wojciechowskiej": {
   "result": {
@@ -9538,5 +9538,21 @@
    "city": "Lublin"
   },
   "ts": 1785346971.2838774
+ },
+ "skalskiego": {
+  "result": {
+   "lat": 51.2160289,
+   "lon": 22.6286119,
+   "name": "Generała Stanisława Skalskiego"
+  },
+  "ts": 1785402450.5822313
+ },
+ "rva:51.2540,22.5533": {
+  "result": {
+   "road": "Północna",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1785402454.2336907
  }
 }
