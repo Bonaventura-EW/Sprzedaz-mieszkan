@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1784829050.4895613
+  "ts": 1785434071.3264277
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -9229,7 +9229,7 @@
  },
  "jaspisowa 22": {
   "result": null,
-  "ts": 1784829057.6209137
+  "ts": 1785434072.987377
  },
  "rva:51.2325,22.5897": {
   "result": {
@@ -9554,5 +9554,29 @@
    "city": "Lublin"
   },
   "ts": 1785402454.2336907
+ },
+ "rva:51.2271,22.6348": {
+  "result": {
+   "road": "Laury Kaufman",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1785434074.6920958
+ },
+ "rva:51.2669,22.5623": {
+  "result": {
+   "road": "Józefa Mackiewicza",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1785434076.209297
+ },
+ "rva:51.2261,22.4859": {
+  "result": {
+   "road": "Gęsia",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1785434077.9061167
  }
 }
