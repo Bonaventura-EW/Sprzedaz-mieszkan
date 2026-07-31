@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1784915813.125669
+  "ts": 1785520628.0201192
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -9578,5 +9578,25 @@
    "city": "Lublin"
   },
   "ts": 1785434077.9061167
+ },
+ "pana balcera 1": {
+  "result": null,
+  "ts": 1785520629.6602855
+ },
+ "rva:51.2346,22.5820": {
+  "result": {
+   "road": null,
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1785520631.30892
+ },
+ "rva:51.2181,22.4842": {
+  "result": {
+   "road": "Węglinek",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1785520633.0895307
  }
 }
