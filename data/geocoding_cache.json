@@ -9598,5 +9598,17 @@
    "city": "Lublin"
   },
   "ts": 1785520633.0895307
+ },
+ "ligonia": {
+  "result": {
+   "lat": 51.2540334,
+   "lon": 22.5219934,
+   "name": "Juliusza Ligonia"
+  },
+  "ts": 1785573457.5651138
+ },
+ "niepodległości 16": {
+  "result": null,
+  "ts": 1785573459.3276849
  }
 }
