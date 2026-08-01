@@ -9610,5 +9610,13 @@
  "niepodległości 16": {
   "result": null,
   "ts": 1785573459.3276849
+ },
+ "inżynierskiej": {
+  "result": {
+   "lat": 51.2207562,
+   "lon": 22.5528394,
+   "name": "Inżynierska"
+  },
+  "ts": 1785604813.2040577
  }
 }
