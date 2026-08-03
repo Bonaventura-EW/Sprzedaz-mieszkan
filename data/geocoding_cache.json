@@ -9626,5 +9626,29 @@
    "name": "Abramowicka"
   },
   "ts": 1785691260.6897895
+ },
+ "rolnej": {
+  "result": {
+   "lat": 51.237581,
+   "lon": 22.5895997,
+   "name": "Rolna"
+  },
+  "ts": 1785751799.0829985
+ },
+ "rva:51.2447,22.5052": {
+  "result": {
+   "road": "Powstania Styczniowego",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1785751800.8529062
+ },
+ "rva:51.2438,22.5360": {
+  "result": {
+   "road": "Głęboka",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1785751802.6236587
  }
 }
