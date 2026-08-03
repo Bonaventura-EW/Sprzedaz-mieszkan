@@ -100,6 +100,28 @@ body {
 .stat-label { opacity: 0.8; }
 .stat-value { font-weight: 800; color: var(--lime); }
 
+/* CTA do podstrony „Trend w czasie" (FIX 2026-08-03) */
+.sidebar-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--lime), #d97706);
+    color: #3b1d00;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.sidebar-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(245, 158, 11, 0.45);
+}
+.sidebar-cta .cta-arrow { font-weight: 800; }
+
 .filters-container { display: flex; flex-direction: column; gap: 10px; }
 .filter-group {
     background: var(--card);

@@ -2,6 +2,13 @@
 
 ## [Niewydane]
 
+### Dodane — 🕒 guzik „Zobacz trend w czasie" na mapie
+Wyraźny bursztynowy przycisk CTA w panelu bocznym `index.html` (pod kartą
+statystyk), prowadzący do podstrony `trend.html` — obok istniejącego linku
+w górnej nawigacji.
+- **`docs/index.html`** — link `.sidebar-cta`; bump `style.css?v=7` → `?v=8`.
+- **`docs/assets/style.css`** — styl `.sidebar-cta` (gradient bursztynowy, hover).
+
 ### Dodane — 🕒 podstrona „Trend w czasie" (bliźniak SZPERACZ)
 Nowa strona `docs/trend.html` odtwarza wygląd i mechanikę
 `SZPERACZ/trend.html`: dwa wykresy canvas (dark/light, drag-to-zoom,
