@@ -2,6 +2,30 @@
 
 ## [Niewydane]
 
+### Dodane — 🕒 podstrona „Trend w czasie" (bliźniak SZPERACZ)
+Nowa strona `docs/trend.html` odtwarza wygląd i mechanikę
+`SZPERACZ/trend.html`: dwa wykresy canvas (dark/light, drag-to-zoom,
+tooltipy, watermark) — trend liczby aktywnych ofert w czasie oraz odpływ
+ofert (dzienny + średnia 7-dniowa). Zamiast „profili wyszukiwania" (których
+ten sonar nie ma) używamy kategorii naturalnych: **Wszystkie**, rynek
+**pierwotny/wtórny**, źródło **OLX/Otodom**, liczba **pokoi (1/2/3/4+)**.
+Szeregi dzienne są rekonstruowane z pól oferty (`first_seen` / `last_seen` /
+`deactivated_at`), a odpływ = liczba ofert zarchiwizowanych danego dnia.
+Duplikaty OLX↔Otodom (`duplicate_of`) są pomijane, jak chowa je mapa/API.
+- **`src/trend_generator.py`** (nowy) — `build_trend()` → `docs/api/trend.json`
+  (`labels` / `profiles` / `outflow`); pomija duplikaty, kotwiczy oś czasu od
+  pierwszej archiwizacji do dziś (Europe/Warsaw).
+- **`docs/trend.html`** (nowy) — pobiera `api/trend.json` + `api/status.json`
+  na żywo (czas skanu z `last_scan`), fonty JetBrains Mono / DM Sans.
+- **`.github/workflows/scanner.yml`** — krok „Generate trend data"
+  (`trend_generator.py`); `docs/api/` już jest commitowane, więc `trend.json`
+  wchodzi automatycznie.
+- **Nawigacja** — link „🕒 Trend" dodany do wszystkich podstron
+  (`index`, `analytics`, `statystyki`, `monitoring`, `oferty`, `zmiany`, `debug`).
+- **`tests/test_trend_generator.py`** (nowy) — 6 testów `build_trend`
+  (rekonstrukcja dzienna, odpływ, pomijanie duplikatów, predykaty kategorii,
+  etykiety, pusta baza).
+
 ### Dodane — 📉 wykres trwale znikniętych ofert na „📐 Statystyki"
 Nowa sekcja na dole `statystyki.html` pokazuje, ile ogłoszeń trwale zeszło
 z rynku, pogrupowanych po dacie zniknięcia (przełącznik **Dziennie /
