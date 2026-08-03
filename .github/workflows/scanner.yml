@@ -72,6 +72,14 @@ jobs:
           cd src
           python debug_generator.py || echo "::warning::Debug generator failed but continuing..."
 
+      # FIX 2026-08-03: nowa podstrona „Trend w czasie" (docs/api/trend.json)
+      - name: Generate trend data
+        if: always()
+        continue-on-error: true
+        run: |
+          cd src
+          python trend_generator.py || echo "::warning::Trend generator failed but continuing..."
+
       - name: Commit and push changes
         if: always()
         run: |
