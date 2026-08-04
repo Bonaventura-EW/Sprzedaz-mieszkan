@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1785229809.75072
+  "ts": 1785834809.5137558
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1785229811.067507
+  "ts": 1785834810.837519
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1785229812.3144062
+  "ts": 1785834812.4754117
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1785229816.829634
+  "ts": 1785834817.027146
  },
  "herbowa 8": {
   "result": null,
@@ -4329,7 +4329,7 @@
  },
  "generała witolda urbanowicza 5": {
   "result": null,
-  "ts": 1785229818.0707853
+  "ts": 1785834818.410448
  },
  "lubelskiego lipca '80": {
   "result": {
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1785229820.5454996
+  "ts": 1785834820.0386531
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1785229822.2100363
+  "ts": 1785834821.6610124
  },
  "krasińskiego": {
   "result": {
@@ -4501,7 +4501,7 @@
  },
  "księdza wincentego granata 7": {
   "result": null,
-  "ts": 1785229823.9731026
+  "ts": 1785834822.8682473
  },
  "nowowiejskiego": {
   "result": {
@@ -9674,5 +9674,45 @@
    "name": "Hanki Ordonówny"
   },
   "ts": 1785780776.2417085
+ },
+ "herberta 6": {
+  "result": null,
+  "ts": 1785834824.2653286
+ },
+ "leonarda wysoki standard": {
+  "result": null,
+  "ts": 1785834825.8809767
+ },
+ "cichej": {
+  "result": {
+   "lat": 51.2497297,
+   "lon": 22.5571574,
+   "name": "Cicha"
+  },
+  "ts": 1785834829.178263
+ },
+ "rva:51.2345,22.5803": {
+  "result": {
+   "road": "Garbarska",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1785834830.43537
+ },
+ "rva:51.2413,22.5175": {
+  "result": {
+   "road": null,
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1785834832.2044914
+ },
+ "rva:51.2701,22.5834": {
+  "result": {
+   "road": null,
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1785834833.512033
  }
 }
