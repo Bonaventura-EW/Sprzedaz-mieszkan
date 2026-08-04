@@ -9714,5 +9714,29 @@
    "city": "Lublin"
   },
   "ts": 1785834833.512033
+ },
+ "pana tadeusza": {
+  "result": {
+   "lat": 51.24383,
+   "lon": 22.5318664,
+   "name": "Pana Tadeusza"
+  },
+  "ts": 1785866878.4571311
+ },
+ "rva:51.2579,22.5819": {
+  "result": {
+   "road": "Jacka Kuronia",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1785866879.781488
+ },
+ "rva:51.2460,22.5973": {
+  "result": {
+   "road": null,
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1785866881.5875003
  }
 }
