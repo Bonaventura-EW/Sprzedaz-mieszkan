@@ -153,7 +153,7 @@
  },
  "kazmierza dulęby": {
   "result": null,
-  "ts": 1785316460.4802117
+  "ts": 1785952642.58989
  },
  "pana balcera": {
   "result": {
@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1782732492.0962136
+  "ts": 1785952643.9399474
  },
  "grażyny": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1785316470.6558409
+  "ts": 1785952652.0235975
  },
  "cyruliczej": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1785316464.7124078
+  "ts": 1785952646.9794228
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1785316466.2109263
+  "ts": 1785952648.6138895
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1785316463.2561593
+  "ts": 1785952645.6070251
  },
  "kredowa": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1785316467.7232385
+  "ts": 1785952650.256431
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1785316472.1764607
+  "ts": 1785952653.6716032
  },
  "różanej": {
   "result": {
@@ -8125,7 +8125,7 @@
  },
  "karminowej": {
   "result": null,
-  "ts": 1785316474.767435
+  "ts": 1785952656.2352643
  },
  "jana kiepury": {
   "result": {
@@ -8137,7 +8137,7 @@
  },
  "karminowa": {
   "result": null,
-  "ts": 1785316475.9248984
+  "ts": 1785952657.3847501
  },
  "rva:51.2023,22.5787": {
   "result": {
@@ -9746,5 +9746,21 @@
    "city": "Lublin"
   },
   "ts": 1785921038.663436
+ },
+ "smyczkowej": {
+  "result": {
+   "lat": 51.2648434,
+   "lon": 22.5492492,
+   "name": "Smyczkowa"
+  },
+  "ts": 1785952660.3987079
+ },
+ "rva:51.2520,22.5102": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1785952661.7254632
  }
 }
