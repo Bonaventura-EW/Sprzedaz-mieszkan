@@ -9738,5 +9738,13 @@
    "city": "Lublin"
   },
   "ts": 1785866881.5875003
+ },
+ "rva:51.2566,22.4817": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Szerokie",
+   "city": "Lublin"
+  },
+  "ts": 1785921038.663436
  }
 }
