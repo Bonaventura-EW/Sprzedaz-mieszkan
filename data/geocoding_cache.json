@@ -9762,5 +9762,21 @@
    "city": "Lublin"
   },
   "ts": 1785952661.7254632
+ },
+ "wilhelma orlika-rückemana": {
+  "result": {
+   "lat": 51.256389,
+   "lon": 22.5863664,
+   "name": "Wilhelma Orlik-Rückemanna"
+  },
+  "ts": 1786007431.384729
+ },
+ "rva:51.2729,22.5011": {
+  "result": {
+   "road": "Skowronkowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1786007433.2454588
  }
 }
