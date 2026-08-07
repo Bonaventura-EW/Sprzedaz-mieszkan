@@ -8957,7 +8957,7 @@
  },
  "operowa 10": {
   "result": null,
-  "ts": 1785489655.29534
+  "ts": 1786122738.326511
  },
  "rva:51.2685,22.5425": {
   "result": {
@@ -9782,5 +9782,17 @@
  "niepodległości 6": {
   "result": null,
   "ts": 1786088848.6466615
+ },
+ "jemiołuszki 6": {
+  "result": null,
+  "ts": 1786122739.9753077
+ },
+ "rva:51.2811,22.4983": {
+  "result": {
+   "road": "Skowronkowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1786122741.6525886
  }
 }
