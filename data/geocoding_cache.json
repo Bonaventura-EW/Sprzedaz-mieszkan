@@ -9818,5 +9818,33 @@
    "name": "Księdza Wincentego Granata"
   },
   "ts": 1786260084.825448
+ },
+ "pileckiego": {
+  "result": {
+   "lat": 51.2590316,
+   "lon": 22.532109,
+   "name": "Rondo Rotmistrza Witolda Pileckiego"
+  },
+  "ts": 1786294787.957845
+ },
+ "niepodledłości": {
+  "result": null,
+  "ts": 1786294789.3450258
+ },
+ "rva:51.2389,22.5092": {
+  "result": {
+   "road": null,
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1786294790.8943036
+ },
+ "rva:51.2248,22.4841": {
+  "result": {
+   "road": null,
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1786294792.362525
  }
 }
