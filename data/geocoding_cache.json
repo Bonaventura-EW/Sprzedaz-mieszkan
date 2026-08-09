@@ -9810,5 +9810,13 @@
    "city": "Lublin"
   },
   "ts": 1786173616.9461071
+ },
+ "księdza granata": {
+  "result": {
+   "lat": 51.1988984,
+   "lon": 22.5503874,
+   "name": "Księdza Wincentego Granata"
+  },
+  "ts": 1786260084.825448
  }
 }
