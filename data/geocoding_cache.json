@@ -2285,7 +2285,7 @@
  },
  "nadbystrzycka 74": {
   "result": null,
-  "ts": 1782110380.5734692
+  "ts": 1786382014.9028103
  },
  "kaczeńcowa": {
   "result": {
@@ -9866,5 +9866,41 @@
  "lwowska 22": {
   "result": null,
   "ts": 1786349352.2754138
+ },
+ "pankiewicza": {
+  "result": {
+   "lat": 51.2622277,
+   "lon": 22.5829741,
+   "name": "Józefa Pankiewicza"
+  },
+  "ts": 1786382013.53025
+ },
+ "padarewskiego": {
+  "result": null,
+  "ts": 1786382016.5443985
+ },
+ "rva:51.2302,22.5943": {
+  "result": {
+   "road": "Droga Męczenników Majdanka",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1786382018.0699449
+ },
+ "rva:51.2596,22.5952": {
+  "result": {
+   "road": null,
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1786382019.734026
+ },
+ "rva:51.2224,22.4858": {
+  "result": {
+   "road": "Koralowa",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1786382021.5022542
  }
 }
