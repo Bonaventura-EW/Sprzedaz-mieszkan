@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1785834809.5137558
+  "ts": 1786468596.8496082
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1785834810.837519
+  "ts": 1786468598.6258101
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1785834812.4754117
+  "ts": 1786468599.8899004
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1785834817.027146
+  "ts": 1786468604.2439642
  },
  "herbowa 8": {
   "result": null,
@@ -4329,7 +4329,7 @@
  },
  "generała witolda urbanowicza 5": {
   "result": null,
-  "ts": 1785834818.410448
+  "ts": 1786468606.0147
  },
  "lubelskiego lipca '80": {
   "result": {
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1785834820.0386531
+  "ts": 1786468607.3657808
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1785834821.6610124
+  "ts": 1786468608.7207348
  },
  "krasińskiego": {
   "result": {
@@ -4501,7 +4501,7 @@
  },
  "księdza wincentego granata 7": {
   "result": null,
-  "ts": 1785834822.8682473
+  "ts": 1786468610.4371707
  },
  "nowowiejskiego": {
   "result": {
@@ -9681,7 +9681,7 @@
  },
  "leonarda wysoki standard": {
   "result": null,
-  "ts": 1785834825.8809767
+  "ts": 1786468611.6613665
  },
  "cichej": {
   "result": {
@@ -9902,5 +9902,21 @@
    "city": "Lublin"
   },
   "ts": 1786382021.5022542
+ },
+ "rva:51.2640,22.5430": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1786468612.9285524
+ },
+ "rva:51.2700,22.4866": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1786468614.595281
  }
 }
