@@ -9918,5 +9918,49 @@
    "city": "Lublin"
   },
   "ts": 1786468614.595281
+ },
+ "milenijna": {
+  "result": {
+   "lat": 51.2612747,
+   "lon": 22.556463,
+   "name": "Milenijna"
+  },
+  "ts": 1786521438.2255096
+ },
+ "łabędzia 3": {
+  "result": null,
+  "ts": 1786521439.824331
+ },
+ "łabędziej": {
+  "result": {
+   "lat": 51.2315687,
+   "lon": 22.5943484,
+   "name": "Łabędzia"
+  },
+  "ts": 1786521444.323977
+ },
+ "hieronima łopacińskiego": {
+  "result": {
+   "lat": 51.2477834,
+   "lon": 22.5430604,
+   "name": "Hieronima Łopacińskiego"
+  },
+  "ts": 1786521445.9329808
+ },
+ "rva:51.2006,22.5488": {
+  "result": {
+   "road": "Jacka Woronieckiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1786521447.4752262
+ },
+ "rva:51.2719,22.5127": {
+  "result": {
+   "road": "Kameliowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1786521449.1626525
  }
 }
