@@ -9962,5 +9962,29 @@
    "city": "Lublin"
   },
   "ts": 1786521449.1626525
+ },
+ "jacka kuronia": {
+  "result": {
+   "lat": 51.2564973,
+   "lon": 22.5774643,
+   "name": "Jacka Kuronia"
+  },
+  "ts": 1786555077.7257342
+ },
+ "rva:51.2269,22.5262": {
+  "result": {
+   "road": "Fantastyczna",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1786555079.409993
+ },
+ "rva:51.2543,22.5277": {
+  "result": {
+   "road": "Aleja Generała Władysława Sikorskiego",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1786555080.8828704
  }
 }
