@@ -9986,5 +9986,37 @@
    "city": "Lublin"
   },
   "ts": 1786555080.8828704
+ },
+ "zygmunta starego": {
+  "result": {
+   "lat": 51.2154125,
+   "lon": 22.6422093,
+   "name": "Zygmunta Starego"
+  },
+  "ts": 1786641456.3699026
+ },
+ "rva:51.2443,22.5057": {
+  "result": {
+   "road": "Powstania Styczniowego",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1786641457.967811
+ },
+ "rva:51.2671,22.5223": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1786641459.4272525
+ },
+ "rva:51.2219,22.5163": {
+  "result": {
+   "road": null,
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1786641461.0562036
  }
 }
