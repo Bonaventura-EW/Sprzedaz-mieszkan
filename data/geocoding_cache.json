@@ -973,7 +973,7 @@
  },
  "wojciechowska 40": {
   "result": null,
-  "ts": 1785402452.4600985
+  "ts": 1786727812.7102387
  },
  "wojciechowskiej": {
   "result": {
@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1784050679.6048036
+  "ts": 1786727803.8439424
  },
  "pozytywistów": {
   "result": {
@@ -8957,7 +8957,7 @@
  },
  "operowa 10": {
   "result": null,
-  "ts": 1786122738.326511
+  "ts": 1786727805.2743876
  },
  "rva:51.2685,22.5425": {
   "result": {
@@ -10026,5 +10026,37 @@
    "name": "Abramowicka"
   },
   "ts": 1786694110.7091088
+ },
+ "jana sawy 9": {
+  "result": null,
+  "ts": 1786727806.8815625
+ },
+ "iwaszkiewicza": {
+  "result": {
+   "lat": 51.2035563,
+   "lon": 22.5813582,
+   "name": "Jarosława Iwaszkiewicza"
+  },
+  "ts": 1786727808.4711115
+ },
+ "jarosława iwaszkiewicza": {
+  "result": {
+   "lat": 51.2035563,
+   "lon": 22.5813582,
+   "name": "Jarosława Iwaszkiewicza"
+  },
+  "ts": 1786727810.0221574
+ },
+ "grabskiego 23": {
+  "result": null,
+  "ts": 1786727811.393502
+ },
+ "rva:51.2370,22.5239": {
+  "result": {
+   "road": "Jana Sawy",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1786727814.26271
  }
 }
