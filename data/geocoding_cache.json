@@ -10058,5 +10058,13 @@
    "city": "Lublin"
   },
   "ts": 1786727814.26271
+ },
+ "rva:51.2454,22.5543": {
+  "result": {
+   "road": "Okopowa",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1786777377.4627023
  }
 }
