@@ -10066,5 +10066,33 @@
    "city": "Lublin"
   },
   "ts": 1786777377.4627023
+ },
+ "jezuicka": {
+  "result": {
+   "lat": 51.2471404,
+   "lon": 22.5680317,
+   "name": "Jezuicka"
+  },
+  "ts": 1786898792.2729743
+ },
+ "aleja spódzielczości pracy": {
+  "result": null,
+  "ts": 1786898795.4053903
+ },
+ "rva:51.2658,22.5762": {
+  "result": {
+   "road": "Bazylianówka",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1786898797.0659552
+ },
+ "rva:51.2681,22.5709": {
+  "result": {
+   "road": "Techniczna",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1786898798.6927211
  }
 }
