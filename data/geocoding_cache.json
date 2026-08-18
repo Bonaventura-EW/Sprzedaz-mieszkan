@@ -3521,7 +3521,7 @@
  },
  "pogodna 50e": {
   "result": null,
-  "ts": 1786434150.0363996
+  "ts": 1787071986.3530922
  },
  "sympatyczna": {
   "result": {
@@ -9369,7 +9369,7 @@
  },
  "samosnowicza": {
   "result": null,
-  "ts": 1786434151.3535273
+  "ts": 1787071987.6119313
  },
  "wrońska 3d": {
   "result": null,
@@ -10122,5 +10122,37 @@
    "city": "Lublin"
   },
   "ts": 1787036959.2853374
+ },
+ "rozmarynowa": {
+  "result": {
+   "lat": 51.2773318,
+   "lon": 22.5011073,
+   "name": "Rozmarynowa"
+  },
+  "ts": 1787071988.9420204
+ },
+ "rva:51.2152,22.6313": {
+  "result": {
+   "road": "Generała Witolda Urbanowicza",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1787071990.6978724
+ },
+ "rva:51.2750,22.5506": {
+  "result": {
+   "road": "Stanisława Szpinalskiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787071992.3504179
+ },
+ "rva:51.2465,22.5684": {
+  "result": {
+   "road": "Podwale",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787071994.1064115
  }
 }
