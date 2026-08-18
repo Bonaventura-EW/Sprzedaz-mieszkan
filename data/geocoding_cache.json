@@ -10114,5 +10114,13 @@
    "city": "Lublin"
   },
   "ts": 1786985457.353886
+ },
+ "rva:51.2705,22.5477": {
+  "result": {
+   "road": "Poturzyńska",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787036959.2853374
  }
 }
