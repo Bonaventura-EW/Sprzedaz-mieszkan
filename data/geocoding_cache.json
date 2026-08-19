@@ -10182,5 +10182,29 @@
    "city": "Lublin"
   },
   "ts": 1787123415.8247006
+ },
+ "aleje racławickie 32": {
+  "result": null,
+  "ts": 1787158298.2093365
+ },
+ "radości 5": {
+  "result": null,
+  "ts": 1787158299.7152455
+ },
+ "rva:51.2429,22.5666": {
+  "result": {
+   "road": "Wesoła",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787158301.1553364
+ },
+ "rva:51.2427,22.5919": {
+  "result": {
+   "road": "Łęczyńska",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1787158302.7300496
  }
 }
