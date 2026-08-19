@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1786468596.8496082
+  "ts": 1787123395.0450935
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1786468598.6258101
+  "ts": 1787123396.4425871
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1786468599.8899004
+  "ts": 1787123397.7959735
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1786468604.2439642
+  "ts": 1787123402.408976
  },
  "herbowa 8": {
   "result": null,
@@ -4329,7 +4329,7 @@
  },
  "generała witolda urbanowicza 5": {
   "result": null,
-  "ts": 1786468606.0147
+  "ts": 1787123404.1760783
  },
  "lubelskiego lipca '80": {
   "result": {
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1786468607.3657808
+  "ts": 1787123405.8041146
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1786468608.7207348
+  "ts": 1787123407.447932
  },
  "krasińskiego": {
   "result": {
@@ -4501,7 +4501,7 @@
  },
  "księdza wincentego granata 7": {
   "result": null,
-  "ts": 1786468610.4371707
+  "ts": 1787123408.7975347
  },
  "nowowiejskiego": {
   "result": {
@@ -9681,7 +9681,7 @@
  },
  "leonarda wysoki standard": {
   "result": null,
-  "ts": 1786468611.6613665
+  "ts": 1787123410.06672
  },
  "cichej": {
   "result": {
@@ -10154,5 +10154,33 @@
    "city": "Lublin"
   },
   "ts": 1787071994.1064115
+ },
+ "wędrowna 2": {
+  "result": null,
+  "ts": 1787123411.3565133
+ },
+ "rva:51.2354,22.5446": {
+  "result": {
+   "road": "Nadbystrzycka",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787123412.66128
+ },
+ "rva:51.2300,22.5895": {
+  "result": {
+   "road": "Krańcowa",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1787123414.4265604
+ },
+ "rva:51.2248,22.4982": {
+  "result": {
+   "road": "Jana Pawła II",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787123415.8247006
  }
 }
