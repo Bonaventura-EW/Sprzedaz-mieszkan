@@ -153,7 +153,7 @@
  },
  "kazmierza dulęby": {
   "result": null,
-  "ts": 1786607915.418464
+  "ts": 1787244959.9925895
  },
  "pana balcera": {
   "result": {
@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1786607899.6785345
+  "ts": 1787244944.4978507
  },
  "grażyny": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1786607907.065349
+  "ts": 1787244951.4283574
  },
  "cyruliczej": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1786607902.7616255
+  "ts": 1787244947.2780392
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1786607904.0353484
+  "ts": 1787244948.5267222
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1786607901.3151095
+  "ts": 1787244945.8784401
  },
  "kredowa": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1786607905.3123167
+  "ts": 1787244950.110072
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1786607908.4022355
+  "ts": 1787244952.8061433
  },
  "różanej": {
   "result": {
@@ -8125,7 +8125,7 @@
  },
  "karminowej": {
   "result": null,
-  "ts": 1786607911.3739257
+  "ts": 1787244955.6850421
  },
  "jana kiepury": {
   "result": {
@@ -8137,7 +8137,7 @@
  },
  "karminowa": {
   "result": null,
-  "ts": 1786607912.500303
+  "ts": 1787244956.851029
  },
  "rva:51.2023,22.5787": {
   "result": {
@@ -10218,5 +10218,25 @@
  "bursztynowa 30": {
   "result": null,
   "ts": 1787209872.5407014
+ },
+ "wrońska 2f": {
+  "result": null,
+  "ts": 1787244961.597586
+ },
+ "bartnicza": {
+  "result": {
+   "lat": 51.2679701,
+   "lon": 22.5154475,
+   "name": "Bartnicza"
+  },
+  "ts": 1787244963.163962
+ },
+ "rva:51.2148,22.5688": {
+  "result": {
+   "road": "Zbigniewa Herberta",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787244964.8190691
  }
 }
