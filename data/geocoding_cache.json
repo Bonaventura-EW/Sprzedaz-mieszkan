@@ -10238,5 +10238,13 @@
    "city": "Lublin"
   },
   "ts": 1787244964.8190691
+ },
+ "rva:51.2709,22.5868": {
+  "result": {
+   "road": "Błogosławionego Księdza Ignacego Kłopotowskiego",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1787296332.0059385
  }
 }
