@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1786694107.7970984
+  "ts": 1787331376.6974812
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -9229,7 +9229,7 @@
  },
  "jaspisowa 22": {
   "result": null,
-  "ts": 1786694109.2422707
+  "ts": 1787331378.1658912
  },
  "rva:51.2325,22.5897": {
   "result": {
@@ -10246,5 +10246,45 @@
    "city": "Lublin"
   },
   "ts": 1787296332.0059385
+ },
+ "sekutowicza": {
+  "result": {
+   "lat": 51.2726656,
+   "lon": 22.5776814,
+   "name": "Bolesława Sekutowicza"
+  },
+  "ts": 1787331379.6078978
+ },
+ "zesłańców sybiru": {
+  "result": {
+   "lat": 51.2463866,
+   "lon": 22.5584904,
+   "name": "Zesłańców Sybiru"
+  },
+  "ts": 1787331381.0532284
+ },
+ "rva:51.2071,22.5436": {
+  "result": {
+   "road": "Wacława i Zofii Nałkowskich",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1787331382.5616803
+ },
+ "rva:51.2516,22.5303": {
+  "result": {
+   "road": "Aleje Racławickie",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1787331384.0655434
+ },
+ "rva:51.2510,22.5484": {
+  "result": {
+   "road": "Stanisława Leszczyńskiego",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1787331385.554344
  }
 }
