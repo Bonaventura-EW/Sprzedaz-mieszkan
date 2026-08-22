@@ -1,1 +1,1 @@
-{"status":"ok","generated_at":"2026-08-22T18:45:45.493422+02:00","last_scan":"2026-08-22T18:43:22.956422+02:00","last_scan_status":"completed","hours_since_last_scan":0.0}
+{"status":"degraded","generated_at":"2026-08-22T22:07:15.191621+02:00","last_scan":"2026-08-22T18:43:22.956422+02:00","last_scan_status":"completed","hours_since_last_scan":3.4,"source_alerts":[{"source":"olx","last_scraped":0,"consecutive_zero_scans":23,"recent_max_scraped":0,"active_in_db":959}]}

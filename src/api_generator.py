@@ -15,6 +15,7 @@ import pytz
 
 import paths
 from map_generator import build_map_offer
+from source_health import compute_source_alerts
 
 API_DIR = Path(paths.DOCS_DIR) / "api"
 STALE_AFTER_HOURS = 26  # 2 skany/dzień → >26 h bez skanu = problem
@@ -50,6 +51,7 @@ def generate():
 
     # status ostatniego skanu (czy się udał + bilans ofert)
     last_entry = {}
+    scans_for_status = []
     history_path_for_status = Path(paths.SCAN_HISTORY_JSON)
     if history_path_for_status.exists():
         with open(history_path_for_status, 'r', encoding='utf-8') as f:
@@ -157,15 +159,39 @@ def generate():
         hours_since = (now - datetime.fromisoformat(last_scan)).total_seconds() / 3600
     fresh = hours_since is not None and hours_since < STALE_AFTER_HOURS
     last_ok = last_entry.get('status', 'completed') == 'completed' if last_entry else True
+
+    # FIX 2026-08-22: alert per źródło — skan potrafi zakończyć się 'completed'
+    # mimo że całe źródło (np. OLX po blokadzie WAF) oddaje 0 ofert. Liczymy
+    # aktywne oferty per źródło (przed dedup) i wykrywamy martwe źródła.
+    active_by_source_raw = {}
+    for o in all_offers:
+        if o.get('active'):
+            active_by_source_raw[o['source']] = active_by_source_raw.get(o['source'], 0) + 1
+    source_alerts = compute_source_alerts(scans_for_status, active_by_source_raw)
+
+    if fresh and last_ok:
+        status = 'degraded' if source_alerts else 'ok'
+    elif not fresh:
+        status = 'stale'
+    else:
+        status = 'failing'
     write('health.json', {
-        'status': 'ok' if (fresh and last_ok) else 'stale' if not fresh else 'failing',
+        'status': status,
         'generated_at': now.isoformat(),
         'last_scan': last_scan,
         'last_scan_status': last_entry.get('status') if last_entry else None,
         'hours_since_last_scan': round(hours_since, 1) if hours_since is not None else None,
+        # lista martwych źródeł (puste = wszystko OK); alarmuje np. gdy OLX
+        # przestaje zwracać oferty mimo poprawnie zakończonych skanów
+        'source_alerts': source_alerts,
     })
 
     print(f"🔌 Wygenerowano API: {API_DIR} (status, offers[{len(active)}], history, health)")
+    if source_alerts:
+        for a in source_alerts:
+            print(f"   🚨 ALERT: źródło '{a['source']}' oddaje 0 ofert "
+                  f"({a['consecutive_zero_scans']} skanów z rzędu, "
+                  f"{a['active_in_db']} aktywnych wciąż w bazie)")
 
 
 if __name__ == "__main__":

@@ -24,6 +24,18 @@ from typing import Dict, List, Optional
 
 import requests
 
+# FIX 2026-08-22: OLX zaczął zwracać 0 ofert (blokada WAF po TLS fingerprincie —
+# `requests` ma charakterystyczny „pythonowy" JA3). curl_cffi z impersonate
+# podszywa się pod prawdziwy TLS Chrome'a i przechodzi przez WAF. Gdy biblioteki
+# nie ma (środowisko bez curl_cffi), spadamy z powrotem do requests, żeby nic
+# nie wywalić — patrz OLXMieszkaniaScraper.__init__.
+try:
+    from curl_cffi import requests as cffi_requests  # type: ignore
+    _HAS_CFFI = True
+except ImportError:  # pragma: no cover - zależne od środowiska
+    cffi_requests = None
+    _HAS_CFFI = False
+
 from cid import olx_offer_id
 
 
@@ -188,17 +200,33 @@ def normalize_ad(ad: dict) -> Optional[Dict]:
 
 
 class OLXMieszkaniaScraper:
+    # marka impersonacji dla curl_cffi (aktualna wersja Chrome — bije JA3 WAF-a)
+    IMPERSONATE = "chrome"
+
     def __init__(self, delay_range=(1.0, 2.0)):
         self.delay_min, self.delay_max = delay_range
-        self.session = requests.Session()
-        self.session.headers.update(HEADERS)
+        # FIX 2026-08-22: preferuj curl_cffi (impersonacja TLS Chrome) — OLX
+        # blokuje „pythonowy" fingerprint requests. Fallback do requests, gdy
+        # curl_cffi niedostępne.
+        if _HAS_CFFI:
+            self.session = cffi_requests.Session(impersonate=self.IMPERSONATE)
+            # impersonate ustawia komplet nagłówków przeglądarki; dokładamy tylko
+            # preferencję języka (polski listing)
+            self.session.headers.update({'Accept-Language': HEADERS['Accept-Language']})
+            self.engine = 'curl_cffi'
+        else:
+            self.session = requests.Session()
+            self.session.headers.update(HEADERS)
+            self.engine = 'requests'
+        print(f"🌐 OLX: silnik HTTP = {self.engine}"
+              + ("" if _HAS_CFFI else " (curl_cffi niedostępne — możliwa blokada WAF)"))
 
     def _fetch(self, url: str) -> Optional[str]:
         try:
             r = self.session.get(url, timeout=20)
             r.raise_for_status()
             return r.text
-        except requests.RequestException as e:
+        except Exception as e:  # curl_cffi rzuca własne wyjątki; łapiemy szeroko
             print(f"❌ OLX: błąd pobierania {url}: {e}")
             return None
 

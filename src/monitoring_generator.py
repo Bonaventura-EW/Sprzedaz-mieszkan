@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 
 import paths
+from source_health import compute_source_alerts
 
 OUTPUT_JSON = str(Path(paths.DOCS_DIR) / "monitoring_data.json")
 
@@ -46,9 +47,24 @@ def generate():
         ],
     }
 
+    # aktywne oferty per źródło (do wykrycia martwego źródła nawet gdy spadek
+    # wypadł już poza okno historii) — czytamy offers.json, jeśli jest
+    active_by_source = {}
+    offers_path = Path(paths.OFFERS_JSON)
+    if offers_path.exists():
+        try:
+            with open(offers_path, 'r', encoding='utf-8') as f:
+                for o in json.load(f).get('offers', []):
+                    if o.get('active'):
+                        active_by_source[o['source']] = active_by_source.get(o['source'], 0) + 1
+        except (json.JSONDecodeError, OSError):
+            pass
+    source_alerts = compute_source_alerts(scans, active_by_source)
+
     last = recent[-1] if recent else {}
     data = {
         'generated_at': last.get('timestamp'),
+        'source_alerts': source_alerts,
         'statistics': {
             'total_scans': len(scans),
             'avg_duration_s': round(sum(durations) / len(durations), 1) if durations else None,

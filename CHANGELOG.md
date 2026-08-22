@@ -2,6 +2,39 @@
 
 ## [Niewydane]
 
+### Naprawione — 🌐 OLX zwraca 0 ofert od 2026-08-11 (blokada WAF po TLS fingerprincie)
+Od skanu 2026-08-11 19:14 `scraped_olx` = 0 (ostatni udany 2026-08-11 09:40:
+933 oferty). Otodom działa bez zmian → to nie awaria pipeline'u, tylko blokada
+OLX po „pythonowym" fingerprincie TLS (JA3) biblioteki `requests`. Rozwiązanie:
+impersonacja TLS Chrome przez `curl_cffi`, z fallbackiem do `requests` gdy
+biblioteki brak (środowisko bez curl_cffi nadal działa).
+- **`src/olx_scraper.py`** — opcjonalny import `curl_cffi`; `OLXMieszkaniaScraper`
+  używa `Session(impersonate="chrome")`, fallback do `requests.Session`;
+  `_fetch` łapie szeroko wyjątki (curl_cffi ma własne); log wybranego silnika.
+- **`requirements.txt`** — dodano `curl_cffi>=0.7`.
+- ⚠️ Do potwierdzenia realnym skanem (`scanner.yml` na `main`) — z tego
+  środowiska nie odpytujemy OLX na żywo.
+
+### Dodane — 🚨 alert w API/monitoringu, gdy całe źródło przestaje zwracać oferty
+Wcześniej skan z `scraped_olx == 0` kończył się `completed`, więc `health.json`
+zostawał „ok" i nic nie sygnalizowało wypadnięcia OLX. Dodano alert per źródło.
+- **`src/source_health.py`** (nowy) — `compute_source_alerts()`: wykrywa źródło,
+  które w ostatnim skanie oddało 0 ofert, mimo historii ofert lub aktywnych
+  ofert trzymanych w bazie karencją; liczy `consecutive_zero_scans`.
+- **`src/api_generator.py`** — `health.json` niesie `source_alerts`, a `status`
+  = `degraded`, gdy jakieś źródło jest martwe (dotąd tylko ok/stale/failing).
+- **`src/monitoring_generator.py`** — `monitoring_data.json` niesie
+  `source_alerts` (aktywne oferty per źródło czytane z `offers.json`, by alert
+  przetrwał zsunięcie okna historii).
+- **`docs/monitoring.html`** — czerwony baner alertu nad kartami KPI.
+- **`tests/test_source_health.py`** (nowy) — 5 testów logiki alertu.
+
+### Audyt — 🗺️ oznaczenia na mapie (bez zmian w kodzie; ustalenia)
+Audyt `docs/data.json` (5340 ofert, 4940 z pinezką). Ustalono m.in. błędne
+przypisania ulicy z opisu (refiner nie waliduje ulicy względem dzielnicy) —
+klaster 272 ofert na „ul. Zalewskiego" mimo dzielnic Sławin/Śródmieście/Stare
+Miasto. Szczegóły i propozycja poprawki przekazane w odpowiedzi (do decyzji).
+
 ### Dodane — 🕒 guzik „Zobacz trend w czasie" na mapie
 Wyraźny bursztynowy przycisk CTA w panelu bocznym `index.html` (pod kartą
 statystyk), prowadzący do podstrony `trend.html` — obok istniejącego linku
