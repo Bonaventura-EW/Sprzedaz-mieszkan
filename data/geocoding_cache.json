@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1786812368.9705472
+  "ts": 1787431388.3442936
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -9797,7 +9797,7 @@
  },
  "dębowskiego": {
   "result": null,
-  "ts": 1786812370.4623797
+  "ts": 1787431389.9387908
  },
  "lotnicza 8": {
   "result": null,
@@ -10290,5 +10290,893 @@
  "skrzatów 2": {
   "result": null,
   "ts": 1787417143.3817325
+ },
+ "kruka": {
+  "result": {
+   "lat": 51.2427391,
+   "lon": 22.4984743,
+   "name": "Generała Michała Kruka"
+  },
+  "ts": 1787431391.5596144
+ },
+ "zwycięska": {
+  "result": {
+   "lat": 51.234113,
+   "lon": 22.4971267,
+   "name": "Zwycięska"
+  },
+  "ts": 1787431392.7783294
+ },
+ "składowej": {
+  "result": {
+   "lat": 51.2391571,
+   "lon": 22.5805572,
+   "name": "Składowa"
+  },
+  "ts": 1787431395.6181347
+ },
+ "kaprysowa": {
+  "result": {
+   "lat": 51.2632611,
+   "lon": 22.5461976,
+   "name": "Kaprysowa"
+  },
+  "ts": 1787431396.8559403
+ },
+ "błękitnej": {
+  "result": {
+   "lat": 51.2137212,
+   "lon": 22.5679853,
+   "name": "Błękitna"
+  },
+  "ts": 1787431399.819841
+ },
+ "czechowska ogrodowa litewski": {
+  "result": null,
+  "ts": 1787431401.4191818
+ },
+ "wileńskiej": {
+  "result": {
+   "lat": 51.2451405,
+   "lon": 22.5269436,
+   "name": "Wileńska"
+  },
+  "ts": 1787431404.6918185
+ },
+ "milenijnej": {
+  "result": {
+   "lat": 51.2612747,
+   "lon": 22.556463,
+   "name": "Milenijna"
+  },
+  "ts": 1787431407.2032712
+ },
+ "wareńczyka": {
+  "result": null,
+  "ts": 1787431408.4169836
+ },
+ "jezuickiej": {
+  "result": {
+   "lat": 51.2471404,
+   "lon": 22.5680317,
+   "name": "Jezuicka"
+  },
+  "ts": 1787431411.237722
+ },
+ "paganiniegona": {
+  "result": null,
+  "ts": 1787431412.5385277
+ },
+ "spadowej": {
+  "result": {
+   "lat": 51.2542166,
+   "lon": 22.5257095,
+   "name": "Spadowa"
+  },
+  "ts": 1787431415.0565295
+ },
+ "skouby": {
+  "result": null,
+  "ts": 1787431416.6348486
+ },
+ "rva:51.2426,22.5946": {
+  "result": {
+   "road": "Hutnicza",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1787431417.9968896
+ },
+ "rva:51.2434,22.5878": {
+  "result": {
+   "road": "Przyjaźni",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1787431419.3435752
+ },
+ "rva:51.2788,22.5912": {
+  "result": {
+   "road": "Dożynkowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1787431420.6269596
+ },
+ "rva:51.2227,22.5082": {
+  "result": {
+   "road": "Szafirowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1787431422.2845862
+ },
+ "rva:51.2207,22.5082": {
+  "result": {
+   "road": "Opalowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1787431423.9219759
+ },
+ "rva:51.2410,22.5309": {
+  "result": {
+   "road": "Grażyny",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431425.2089946
+ },
+ "rva:51.2437,22.5175": {
+  "result": {
+   "road": "Skierki",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431426.8372555
+ },
+ "rva:51.2506,22.5314": {
+  "result": {
+   "road": "Aleje Racławickie",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1787431428.4991598
+ },
+ "rva:51.2467,22.5542": {
+  "result": {
+   "road": "Fryderyka Chopina",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431430.159257
+ },
+ "rva:51.2803,22.5447": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787431431.4415455
+ },
+ "rva:51.2683,22.5599": {
+  "result": {
+   "road": "Doktora Witolda Chodźki",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431433.0971844
+ },
+ "rva:51.2570,22.5747": {
+  "result": {
+   "road": "Unicka",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431434.9582226
+ },
+ "rva:51.2316,22.5943": {
+  "result": {
+   "road": "Łabędzia",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1787431436.2580488
+ },
+ "rva:51.2517,22.5432": {
+  "result": {
+   "road": "Aleja Jana Długosza",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1787431437.5530155
+ },
+ "rva:51.2330,22.5023": {
+  "result": {
+   "road": "Władysława Orkana",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1787431438.8864875
+ },
+ "rva:51.2320,22.5996": {
+  "result": {
+   "road": "Pogodna",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1787431440.148943
+ },
+ "rva:51.2766,22.5084": {
+  "result": {
+   "road": "Bukszpanowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1787431441.9146729
+ },
+ "rva:51.2253,22.5738": {
+  "result": {
+   "road": "Władysława Kunickiego",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787431443.671291
+ },
+ "rva:51.2509,22.5538": {
+  "result": {
+   "road": "Spokojna",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431445.037506
+ },
+ "rva:51.2515,22.5518": {
+  "result": {
+   "road": "Lubomelska",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1787431446.7971027
+ },
+ "rva:51.2367,22.5265": {
+  "result": {
+   "road": "Pana Balcera",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431448.0807061
+ },
+ "rva:51.2760,22.5935": {
+  "result": {
+   "road": "Narcyzowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1787431449.3377476
+ },
+ "rva:51.2584,22.5353": {
+  "result": {
+   "road": "Północna",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431451.0054724
+ },
+ "rva:51.2505,22.5673": {
+  "result": {
+   "road": "Lubartowska",
+   "district": "Stare Miasto",
+   "city": "Lublin"
+  },
+  "ts": 1787431452.8674011
+ },
+ "rva:51.2422,22.5561": {
+  "result": {
+   "road": "Wschodnia",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431454.6339824
+ },
+ "rva:51.2267,22.5279": {
+  "result": {
+   "road": "Fantastyczna",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1787431456.0030406
+ },
+ "rva:51.2497,22.5370": {
+  "result": {
+   "road": "Aleje Racławickie",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1787431457.8633602
+ },
+ "rva:51.2795,22.5407": {
+  "result": {
+   "road": "Mirosława Dereckiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787431459.1219664
+ },
+ "rva:51.2417,22.5257": {
+  "result": {
+   "road": "Konrada Wallenroda",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431460.7994936
+ },
+ "rva:51.2253,22.5617": {
+  "result": {
+   "road": "Nowy Świat",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787431462.0376623
+ },
+ "rva:51.2710,22.5251": {
+  "result": {
+   "road": "Wędrowna",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1787431463.8002548
+ },
+ "rva:51.2425,22.5574": {
+  "result": {
+   "road": "Środkowa",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431465.0825472
+ },
+ "rva:51.2552,22.5322": {
+  "result": {
+   "road": "Puławska",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1787431466.7150264
+ },
+ "rva:51.2259,22.5326": {
+  "result": {
+   "road": "Przytulna",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1787431468.4756718
+ },
+ "rva:51.2323,22.5177": {
+  "result": {
+   "road": "Różana",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1787431470.2346048
+ },
+ "rva:51.2497,22.5572": {
+  "result": {
+   "road": "Cicha",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431472.0978196
+ },
+ "rva:51.2647,22.5577": {
+  "result": {
+   "road": "Młodej Polski",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431473.750122
+ },
+ "rva:51.2677,22.5201": {
+  "result": {
+   "road": "Relaksowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1787431475.408767
+ },
+ "rva:51.2556,22.5806": {
+  "result": {
+   "road": "Lwowska",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1787431477.0711248
+ },
+ "rva:51.2245,22.4940": {
+  "result": {
+   "road": "Kryształowa",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431478.465277
+ },
+ "rva:51.2746,22.5002": {
+  "result": {
+   "road": "Skowronkowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1787431479.7389975
+ },
+ "rva:51.2249,22.5733": {
+  "result": {
+   "road": "Kwiatowa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787431481.4970577
+ },
+ "rva:51.2747,22.5293": {
+  "result": {
+   "road": "Poligonowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787431482.86404
+ },
+ "rva:51.2591,22.5788": {
+  "result": {
+   "road": "Walecznych",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1787431484.6285982
+ },
+ "rva:51.2392,22.5435": {
+  "result": {
+   "road": "Gliniana",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431486.3779364
+ },
+ "rva:51.2693,22.5414": {
+  "result": {
+   "road": "Operowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787431488.150749
+ },
+ "rva:51.2462,22.5212": {
+  "result": {
+   "road": "Balladyny",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431489.8112137
+ },
+ "rva:51.2531,22.5366": {
+  "result": {
+   "road": "Księdza Jerzego Popiełuszki",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1787431491.3197842
+ },
+ "rva:51.2776,22.5896": {
+  "result": {
+   "road": "Daliowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1787431492.9569857
+ },
+ "rva:51.2347,22.5985": {
+  "result": {
+   "road": "Zimowa",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1787431494.613993
+ },
+ "rva:51.2357,22.5403": {
+  "result": {
+   "road": "Tomasza Zana",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431496.2756643
+ },
+ "rva:51.2401,22.5333": {
+  "result": {
+   "road": "Bolesława Chrobrego",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431497.933825
+ },
+ "rva:51.2412,22.5103": {
+  "result": {
+   "road": "Irydiona",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1787431499.2049189
+ },
+ "rva:51.2558,22.5779": {
+  "result": {
+   "road": "Krzemieniecka",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1787431500.8684583
+ },
+ "rva:51.2552,22.5360": {
+  "result": {
+   "road": "Skautów",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1787431502.6199164
+ },
+ "rva:51.2214,22.6358": {
+  "result": {
+   "road": "Królowej Jadwigi",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1787431504.3828166
+ },
+ "rva:51.2549,22.5877": {
+  "result": {
+   "road": "Wojciecha Kiwerskiego",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1787431505.6175323
+ },
+ "rva:51.2505,22.5641": {
+  "result": {
+   "road": "Stanisława Staszica",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431507.3779736
+ },
+ "rva:51.2438,22.5555": {
+  "result": {
+   "road": "Konopnicka",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431508.6375914
+ },
+ "rva:51.2506,22.5607": {
+  "result": {
+   "road": "Niecała",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431510.3955874
+ },
+ "rva:51.2198,22.6406": {
+  "result": {
+   "road": "Aleja Wincentego Witosa",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1787431511.7818003
+ },
+ "rva:51.2306,22.5794": {
+  "result": {
+   "road": "Długa",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1787431513.0585988
+ },
+ "rva:51.2458,22.5659": {
+  "result": {
+   "road": "Bernardyńska",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431514.7139523
+ },
+ "rva:51.2548,22.5669": {
+  "result": {
+   "road": "Mieczysława Biernackiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431515.9979596
+ },
+ "rva:51.2490,22.5194": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1787431517.7600617
+ },
+ "rva:51.2576,22.5545": {
+  "result": {
+   "road": "Oratoryjna",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431519.0423656
+ },
+ "rva:51.2208,22.6202": {
+  "result": {
+   "road": "Józefa Franczaka \"Lalka\"",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1787431520.398955
+ },
+ "rva:51.2312,22.5811": {
+  "result": {
+   "road": "Elektryczna",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1787431521.6811428
+ },
+ "rva:51.2471,22.5048": {
+  "result": {
+   "road": "Wojciechowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1787431523.3452067
+ },
+ "rva:51.2328,22.5135": {
+  "result": {
+   "road": "Stokrotki",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1787431524.9883516
+ },
+ "rva:51.2252,22.5700": {
+  "result": {
+   "road": "Wojenna",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787431526.6382732
+ },
+ "rva:51.2204,22.4882": {
+  "result": {
+   "road": "Kwarcowa",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431528.2846835
+ },
+ "rva:51.2276,22.5111": {
+  "result": {
+   "road": "Bociania",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1787431529.9263308
+ },
+ "rva:51.2732,22.5544": {
+  "result": {
+   "road": "Józefa Śliwińskiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787431531.3331347
+ },
+ "rva:51.2551,22.5738": {
+  "result": {
+   "road": "Czwartek",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431532.7207966
+ },
+ "rva:51.2236,22.5126": {
+  "result": {
+   "road": "Turkusowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1787431533.9593136
+ },
+ "rva:51.2351,22.4983": {
+  "result": {
+   "road": "Husarska",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1787431535.4097161
+ },
+ "rva:51.2652,22.5528": {
+  "result": {
+   "road": "Kameralna",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431537.0334442
+ },
+ "rva:51.2757,22.5684": {
+  "result": {
+   "road": "Do Dysa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787431538.3069038
+ },
+ "rva:51.2152,22.5647": {
+  "result": {
+   "road": "Zbigniewa Herberta",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787431539.9553
+ },
+ "rva:51.2402,22.5534": {
+  "result": {
+   "road": "Prezydenta Gabriela Narutowicza",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787431541.5930698
+ },
+ "rva:51.2820,22.5521": {
+  "result": {
+   "road": "Choiny",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787431543.234497
+ },
+ "rva:51.2536,22.5901": {
+  "result": {
+   "road": "Generała Józefa Kustronia",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1787431544.8904016
+ },
+ "rva:51.2363,22.5837": {
+  "result": {
+   "road": "Wrońska",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1787431546.5284405
+ },
+ "rva:51.2508,22.5681": {
+  "result": {
+   "road": "Cyrulicza",
+   "district": "Stare Miasto",
+   "city": "Lublin"
+  },
+  "ts": 1787431548.1936991
+ },
+ "rva:51.2331,22.5398": {
+  "result": {
+   "road": "Nadbystrzycka",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431549.8546278
+ },
+ "rva:51.2531,22.5839": {
+  "result": {
+   "road": "Krzemieniecka",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1787431551.6196353
+ },
+ "rva:51.2253,22.4894": {
+  "result": {
+   "road": "Jaspisowa",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431552.9223237
+ },
+ "rva:51.2755,22.5526": {
+  "result": {
+   "road": "Teodora Leszetyckiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787431554.3122861
+ },
+ "rva:51.2048,22.5493": {
+  "result": {
+   "road": "Ignacego Domeyki",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1787431555.7002952
+ },
+ "rva:51.2329,22.5958": {
+  "result": {
+   "road": "Sokola",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1787431557.4663007
+ },
+ "rva:51.2321,22.5397": {
+  "result": {
+   "road": "Pielgrzymia",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787431558.7934916
+ },
+ "rva:51.2616,22.5898": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1787431560.051672
+ },
+ "rva:51.2359,22.5035": {
+  "result": {
+   "road": "Ułanów",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1787431561.3134613
+ },
+ "rva:51.2067,22.5739": {
+  "result": {
+   "road": "Aleksandra Świętochowskiego",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787431562.957926
+ },
+ "rva:51.2248,22.4743": {
+  "result": {
+   "road": "Wróbla",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431564.6204104
+ },
+ "rva:51.2597,22.5498": {
+  "result": {
+   "road": "Radzyńska",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787431565.8776476
+ },
+ "rva:51.2200,22.5869": {
+  "result": {
+   "road": "Adama Mickiewicza",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1787431567.2634494
+ },
+ "rva:51.2190,22.5716": {
+  "result": {
+   "road": "Ksawerego Dunikowskiego",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787431568.5317526
+ },
+ "rva:51.2030,22.5470": {
+  "result": {
+   "road": "Bernarda Wapowskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1787431570.194756
  }
 }
