@@ -1959,6 +1959,20 @@
    "active": 2913,
    "with_coords": 2682,
    "total_in_db": 6078
+  },
+  {
+   "timestamp": "2026-08-22T18:43:22.956422+02:00",
+   "status": "completed",
+   "duration_s": 142.0,
+   "deactivated": 40,
+   "scraped_olx": 0,
+   "scraped_otodom": 1803,
+   "new": 10,
+   "updated": 1793,
+   "skipped_removed": 0,
+   "active": 2889,
+   "with_coords": 2658,
+   "total_in_db": 6088
   }
  ]
 }
