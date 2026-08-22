@@ -2,6 +2,22 @@
 
 ## [Niewydane]
 
+### Operacja — ✅ merge do main + skan weryfikacyjny #142 (2026-08-22 22:40)
+Zmerge'owano gałąź do `main` i odpalono `scanner.yml` (workflow_dispatch, run #142,
+6 min, sukces). Wyniki potwierdzają wdrożenia:
+- **OLX wrócił**: `scraped_olx = 931` (z 0 przez 11 dni) — `curl_cffi(impersonate)`
+  pokonał blokadę WAF. `health.json` → `status: ok`, `source_alerts: []` (alert
+  poprawnie zgasł).
+- **Opcja A działa**: log skanera `🚫 76 pinezek 'street' w złej dzielnicy →
+  sekcja 'bez GPS'`; Debug `zla_dzielnica=53`. Reszta klastra Zalewskiego (Otodom)
+  dobierze się w kolejnych skanach (budżet reverse 100/skan).
+- **Audyt pinezek OLX**: 283 pinezki OLX na mapie (reszta z 931 ukryta jako
+  duplikaty Otodom), wszystkie precyzji `street`; reverse-check 116/116 bez
+  niezgodności (pinezka stoi na deklarowanej ulicy), brak zrzutu na centroid
+  miasta. Ograniczenie strukturalne: OLX nie ma dzielnicy → 3b3 go nie waliduje,
+  ale w praktyce pinezki OLX nie są przesunięte.
+- Stan: 2837 aktywnych (2525 z pinezką, 312 „bez GPS"); 682 duplikaty OLX↔Otodom.
+
 ### Naprawione — 🗺️ Opcja A: walidacja pinezek „street" względem dzielnicy
 Refiner (`refine_offer_location`) stawiał pinezkę na ulicy wyłapanej z tekstu bez
 sprawdzenia, czy leży w deklarowanej dzielnicy oferty. Ulica z opisu dewelopera
