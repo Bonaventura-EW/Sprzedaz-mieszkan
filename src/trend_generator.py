@@ -19,8 +19,15 @@ Format wyjścia (kontrakt dla docs/trend.html):
   "generated": ISO,
   "labels":   { key: {"label": str, "is_category": bool} },
   "profiles": { key: [{"date": "YYYY-MM-DD", "count": int}, ...] },  # ciągła seria dzienna
-  "outflow":  { key: [{"date": "YYYY-MM-DD", "count": int}, ...] }   # sparse: dni z odpływem
+  "outflow":  { key: [{"date": "YYYY-MM-DD", "count": int}, ...] },  # sparse: dni z odpływem
+  "inflow":   { key: [...] },  # sparse: napływ dnia = nowe + reaktywacje
+  "reactivations": { key: [...] }  # sparse: reaktywacje danego dnia
 }
+
+Napływ i reaktywacje (FIX 2026-08-22, wzór SONAR-POKOJOWY):
+- reaktywacja danego dnia D = liczba wpisów w `reactivation_dates` (fallback:
+  skalarne `reactivated_at`) z datą == D,
+- napływ danego dnia D = nowe (first_seen == D) + reaktywacje tego dnia.
 """
 
 import json
@@ -64,7 +71,7 @@ def build_trend(db, today=None):
     offers = [o for o in db.get('offers', []) if not o.get('duplicate_of')]
 
     # Dla każdej oferty: dzień pojawienia i dzień zniknięcia (końca obecności).
-    spans = []  # (start_date, end_date, deact_date|None, offer)
+    spans = []  # (start_date, end_date, deact_date|None, react_dates, offer)
     global_start = None
     for o in offers:
         start = _parse_date(o.get('first_seen')) or _parse_date(o.get('created_at'))
@@ -80,13 +87,18 @@ def build_trend(db, today=None):
             end = _parse_date(o.get('last_seen')) or start
         if end < start:
             end = start
-        spans.append((start, end, deact, o))
+        # daty reaktywacji: pełna lista, a gdy jej brak — skalarny fallback
+        raw_react = o.get('reactivation_dates')
+        if raw_react is None:
+            raw_react = [o['reactivated_at']] if o.get('reactivated_at') else []
+        react_dates = [d for d in (_parse_date(x) for x in raw_react) if d]
+        spans.append((start, end, deact, react_dates, o))
         if global_start is None or start < global_start:
             global_start = start
 
     if global_start is None:
         return {'generated': datetime.now(tz).isoformat(), 'labels': {},
-                'profiles': {}, 'outflow': {}}
+                'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {}}
 
     # Oś czasu: dzień po dniu od pierwszej archiwizacji do dziś.
     days = []
@@ -100,11 +112,18 @@ def build_trend(db, today=None):
     labels = {}
     profiles = {}
     outflow = {}
+    inflow = {}
+    reactivations = {}
+
+    def _sparse(m):
+        return [{'date': dd.isoformat(), 'count': c} for dd, c in sorted(m.items())]
 
     for key, label, is_category, pred in CATEGORIES:
         active_daily = [0] * n_days   # liczba obecnych danego dnia
         outflow_map = {}              # date -> liczba zarchiwizowanych tego dnia
-        for start, end, deact, o in spans:
+        new_map = {}                  # date -> nowe oferty (first_seen)
+        react_map = {}                # date -> reaktywacje
+        for start, end, deact, react_dates, o in spans:
             if not pred(o):
                 continue
             si = day_index.get(start, 0)
@@ -113,18 +132,33 @@ def build_trend(db, today=None):
                 active_daily[i] += 1
             if deact and deact in day_index:
                 outflow_map[deact] = outflow_map.get(deact, 0) + 1
+            # pierwszy dzień osi = „zasianie" bazy (cały korpus dostał wtedy
+            # first_seen) — to artefakt startu skanera, nie realny napływ; pomijamy
+            if start in day_index and start != days[0]:
+                new_map[start] = new_map.get(start, 0) + 1
+            for rd in react_dates:
+                if rd in day_index:
+                    react_map[rd] = react_map.get(rd, 0) + 1
+
+        # napływ = nowe + reaktywacje (dzień po dniu)
+        inflow_map = dict(new_map)
+        for dd, c in react_map.items():
+            inflow_map[dd] = inflow_map.get(dd, 0) + c
 
         labels[key] = {'label': label, 'is_category': is_category}
         profiles[key] = [{'date': days[i].isoformat(), 'count': active_daily[i]}
                          for i in range(n_days)]
-        outflow[key] = [{'date': dd.isoformat(), 'count': c}
-                        for dd, c in sorted(outflow_map.items())]
+        outflow[key] = _sparse(outflow_map)
+        inflow[key] = _sparse(inflow_map)
+        reactivations[key] = _sparse(react_map)
 
     return {
         'generated': datetime.now(tz).isoformat(),
         'labels': labels,
         'profiles': profiles,
         'outflow': outflow,
+        'inflow': inflow,
+        'reactivations': reactivations,
     }
 
 

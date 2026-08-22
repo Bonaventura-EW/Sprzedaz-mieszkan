@@ -25,7 +25,7 @@ from olx_scraper import OLXMieszkaniaScraper
 from otodom_scraper import OtodomMieszkaniaScraper
 from location_refiner import (
     StreetGeocoder, refine_offer_location, verify_otodom_coords,
-    otodom_coords_plausible)
+    otodom_coords_plausible, district_consistent)
 
 # Ranking precyzji coords — przy deduplikacji zostaje oferta z najlepszą lokalizacją
 PRECISION_RANK = {'exact': 3, 'street': 2, 'approx': 1, None: 0}
@@ -163,7 +163,17 @@ class SonarSprzedazy:
 
         if not existing.get('active', True):
             existing['active'] = True
+            # FIX 2026-08-22: prowadzimy PEŁNĄ listę dat reaktywacji
+            # (reactivation_dates) — zasila wykres „reaktywacje/napływ" na
+            # trend.html (wzór: SONAR-POKOJOWY). reactivated_at zostaje jako
+            # ostatnia reaktywacja (kompatybilność wsteczna).
+            dates = existing.get('reactivation_dates')
+            if dates is None:
+                # zasiej historyczną (skalarną) reaktywację, jeśli była
+                dates = [existing['reactivated_at']] if existing.get('reactivated_at') else []
+                existing['reactivation_dates'] = dates
             existing['reactivated_at'] = now
+            dates.append(now)
             print(f"   🔄 REAKTYWOWANO: {existing['id']}")
 
     def _add_new(self, new: Dict):
@@ -470,6 +480,27 @@ class SonarSprzedazy:
             if verify_otodom_coords(offer, geocoder):
                 corrected_count += 1
 
+        # 3b3. Walidacja pinezek 'street' (z refinera) względem DZIELNICY.
+        # FIX 2026-08-22: refine_offer_location bierze ulicę z tytułu/opisu, ale
+        # nie sprawdza, czy leży ona w deklarowanej dzielnicy oferty. Nazwa ulicy
+        # wyłapana z opisu dewelopera (adres biura, „dojazd od ul. X") potrafiła
+        # postawić pinezkę kilka km od faktycznej lokalizacji (np. klaster ~270
+        # ofert na „ul. Zalewskiego" mimo dzielnic Sławin/Śródmieście/Stare Miasto).
+        # Gdy oferta ma podaną dzielnicę, a reverse geocoding pinezki daje inną →
+        # pinezka błędna, usuwamy (oferta → sekcja „bez GPS"). Leniwie: bez budżetu
+        # reverse zostawiamy; OLX bez dzielnicy pomijamy (nie ma czym walidować).
+        street_stripped = 0
+        for offer in self.database['offers']:
+            loc = offer.get('location') or {}
+            if not (offer.get('active') and loc.get('coords')):
+                continue
+            if loc.get('coords_precision') != 'street' or not loc.get('district'):
+                continue
+            if not district_consistent(offer, geocoder):
+                loc['coords'] = None
+                loc['coords_precision'] = None
+                street_stripped += 1
+
         # 3c. Walidacja przybliżonych współrzędnych Otodom względem DZIELNICY.
         # Otodom podaje geolokalizację — UŻYWAMY jej na mapie (zamiast wyrzucać),
         # ale reverse geocodingiem sprawdzamy, czy pinezka jest w granicach Lublina
@@ -501,6 +532,9 @@ class SonarSprzedazy:
                   f"(przeniesione na ulicę z ogłoszenia)")
         if kept_otodom:
             print(f"   📍 Użyto {kept_otodom} przybliżonych pinezek Otodom (zgodna dzielnica)")
+        if street_stripped:
+            print(f"   🚫 {street_stripped} pinezek 'street' w złej dzielnicy "
+                  f"(ulica z opisu ≠ lokalizacja) → sekcja 'bez GPS'")
         if stripped_coords:
             print(f"   📭 {stripped_coords} ofert bez wiarygodnej lokalizacji → sekcja 'bez GPS'")
 

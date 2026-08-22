@@ -162,8 +162,10 @@ body {
 }
 .chart-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
   background: linear-gradient(90deg, var(--accent), #818cf8); }
-.chart-card.outflow { margin-top: 12px; }
-.chart-card.outflow::before { background: linear-gradient(90deg, #e8624c, #f0a35e); }
+.chart-card.flow { margin-top: 12px; }
+.chart-card.flow-outflow::before { background: linear-gradient(90deg, #e8624c, #f0a35e); }
+.chart-card.flow-inflow::before  { background: linear-gradient(90deg, #2fa66f, #7fd8ac); }
+.chart-card.flow-react::before   { background: linear-gradient(90deg, #7c6cf0, #b4a9f5); }
 .c-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
 .c-sub { margin-top: 6px; font-family: var(--font-display); font-size: 13px; color: var(--text-secondary); }
 .c-stats { margin-top: 14px; display: flex; gap: 22px; flex-wrap: wrap;
@@ -181,7 +183,7 @@ body {
   opacity: 0.05; user-select: none; }
 .watermark .w1 { font-family: var(--font-display); font-size: 52px; font-weight: 700; letter-spacing: 0.18em; }
 .watermark .w2 { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.35em; margin-top: 4px; }
-#trendCanvas, #outflowCanvas { position: relative; z-index: 1; width: 100%; height: 100%; display: block; cursor: crosshair; }
+.chart-host canvas { position: relative; z-index: 1; width: 100%; height: 100%; display: block; cursor: crosshair; }
 
 .chart-hint { margin-top: 10px; font-family: var(--font-display); font-size: 10px; color: var(--text-muted); opacity: 0.8; }
 
@@ -296,16 +298,15 @@ let PROFILES = {};
 let scanTime = null;
 let currentProfile = null;
 let currentDays = 0;
-let outDays = 0;
 let zoomRange = null;
 let hoverIndex = -1;
 let viewPts = [];
 let geom = null;
 let isDragging = false, dragStartX = null, dragCurX = null;
 let OUTFLOW = {};
-let viewOut = [];
-let geomO = null;
-let hoverO = -1;
+let INFLOW = {};
+let REACT = {};
+let FLOWS = [];   // instancje wykresów przepływu (odpływ / napływ / reaktywacje)
 
 function toggleTheme(){
   const html = document.documentElement;
@@ -316,7 +317,7 @@ function toggleTheme(){
   document.getElementById('btnTheme').textContent = next === 'dark' ? '🌙' : '☀️';
   localStorage.setItem('sonar-sprzedazy-theme', next);
   if (viewPts.length) draw();
-  if (viewOut.length) drawOutflow();
+  FLOWS.forEach(f => f.redraw());
 }
 (function initTheme(){
   const saved = localStorage.getItem('sonar-sprzedazy-theme');
@@ -360,12 +361,15 @@ async function loadAndRender(){
     document.getElementById('pageContent').innerHTML = `<div class="loading">Brak danych historycznych.</div>`;
     return;
   }
-  OUTFLOW = {};
-  for (const [key, arr] of Object.entries(trend.outflow || {})){
-    const endTs = (PROFILES[key] && PROFILES[key].points.length)
-      ? PROFILES[key].points[PROFILES[key].points.length-1][0] : null;
-    OUTFLOW[key] = outflowWithMA(expandDaily(arr, endTs), 7);
-  }
+  const endTsOf = key => (PROFILES[key] && PROFILES[key].points.length)
+    ? PROFILES[key].points[PROFILES[key].points.length-1][0] : null;
+  OUTFLOW = {}; INFLOW = {}; REACT = {};
+  for (const [key, arr] of Object.entries(trend.outflow || {}))
+    OUTFLOW[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
+  for (const [key, arr] of Object.entries(trend.inflow || {}))
+    INFLOW[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
+  for (const [key, arr] of Object.entries(trend.reactivations || {}))
+    REACT[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
   buildUI(trend.generated);
 }
 
@@ -402,32 +406,10 @@ function buildUI(generated){
       </div>
     </div>
 
-    <div class="chart-card outflow" id="outflowCard">
-      <div class="c-title">📉 Odpływ ofert</div>
-      <div class="c-sub">Ile ogłoszeń znika z rynku — dzienny odpływ + średnia 7-dniowa</div>
-      <div class="c-stats" id="oStats"></div>
-      <div class="chart-row" id="outflowRow">
-        <div class="chart-host" id="outflowHost">
-          <div class="watermark"><div class="w1">SONAR</div><div class="w2">MIESZKANIA · LUBLIN</div></div>
-          <canvas id="outflowCanvas"></canvas>
-          <div class="chart-tooltip" id="tooltipO"></div>
-        </div>
-        <div class="range-side" id="outRangeTabs">
-          <button class="range-tab" data-days="30">1M</button>
-          <button class="range-tab" data-days="90">3M</button>
-          <button class="range-tab" data-days="180">6M</button>
-          <button class="range-tab" data-days="365">1R</button>
-          <button class="range-tab active" data-days="0">Całość</button>
-        </div>
-      </div>
-      <div class="loading" id="outflowEmpty" style="display:none; padding:60px 20px"></div>
-      <div class="chart-legend">
-        <span><span class="dot" style="border-top-color:#e8624c;border-top-style:solid;border-top-width:2px"></span>Znikło danego dnia</span>
-        <span><span class="dot" style="border-top-color:#f0a35e;border-top-style:solid;border-top-width:3px"></span>Średnia 7 dni</span>
-      </div>
-      <div class="chart-hint">Źródło: dla każdego dnia liczba ofert zarchiwizowanych tego dnia (zniknęły z OLX/Otodom)</div>
-    </div>
+    ${FLOW_CONFIGS.map(flowCardHTML).join('')}
   `;
+
+  FLOWS = FLOW_CONFIGS.map(makeFlowChart);
 
   const sel = document.getElementById('profileSel');
   const entries = Object.entries(PROFILES);
@@ -443,7 +425,7 @@ function buildUI(generated){
   }
   currentProfile = PROFILES['wszystkie'] ? 'wszystkie' : entries[0][0];
   sel.value = currentProfile;
-  sel.addEventListener('change', e => { currentProfile = e.target.value; resetZoom(false); hoverIndex = -1; hoverO = -1; renderAll(); });
+  sel.addEventListener('change', e => { currentProfile = e.target.value; resetZoom(false); hoverIndex = -1; renderAll(); });
 
   document.querySelectorAll('#rangeTabs .range-tab').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -455,33 +437,23 @@ function buildUI(generated){
   });
   document.getElementById('btnResetZoom').addEventListener('click', () => resetZoom(true));
 
-  document.querySelectorAll('#outRangeTabs .range-tab').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('#outRangeTabs .range-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      outDays = parseInt(btn.dataset.days, 10);
-      hoverO = -1; renderOutflow();
-    });
-  });
-
   const canvas = document.getElementById('trendCanvas');
   canvas.addEventListener('mousemove', onMove);
   canvas.addEventListener('mouseleave', onLeave);
   canvas.addEventListener('mousedown', onDown);
   window.addEventListener('mouseup', onUp);
 
-  const oCanvas = document.getElementById('outflowCanvas');
-  if (oCanvas){ oCanvas.addEventListener('mousemove', onMoveO); oCanvas.addEventListener('mouseleave', onLeaveO); }
+  FLOWS.forEach(f => f.bind());
 
   let rT; window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(()=>{
     if(viewPts.length) draw();
-    if(viewOut.length) drawOutflow();
+    FLOWS.forEach(f => f.redraw());
   }, 120); });
 
   renderAll();
 }
 
-function renderAll(){ render(); renderOutflow(); }
+function renderAll(){ render(); FLOWS.forEach(f => f.render()); }
 function resetZoom(doRender){
   zoomRange = null;
   const btn = document.getElementById('btnResetZoom');
@@ -741,160 +713,227 @@ function onLeave(){
   if (viewPts.length) draw();
 }
 
-function renderOutflow(){
-  const prof = PROFILES[currentProfile];
-  const series = OUTFLOW[currentProfile] || [];
-  const row   = document.getElementById('outflowRow');
-  const empty = document.getElementById('outflowEmpty');
-  const stats = document.getElementById('oStats');
-  if (!series.length){
-    if (row)   row.style.display = 'none';
-    if (empty){ empty.style.display = 'block';
-      empty.textContent = 'Brak danych o odpływie dla tego profilu (nic nie trafiło jeszcze do archiwum).'; }
-    if (stats) stats.innerHTML = '';
-    viewOut = []; geomO = null;
-    return;
-  }
-  if (row)   row.style.display = '';
-  if (empty) empty.style.display = 'none';
-  const lastTs = prof.points[prof.points.length-1][0];
-  let winMin, winMax;
-  if (outDays > 0){ winMax = lastTs; winMin = lastTs - outDays*DAY_MS; }
-  else { winMin = series[0][0]; winMax = Math.max(lastTs, series[series.length-1][0]); }
-  let pts = series.filter(p => p[0] >= winMin && p[0] <= winMax);
-  if (pts.length < 1) pts = series;
-  viewOut = pts;
-  const total = pts.reduce((s,p) => s + p[1], 0);
-  const rate  = pts.length ? total/pts.length : 0;
-  let maxP = pts[0];
-  for (const p of pts) if (p[1] > maxP[1]) maxP = p;
-  stats.innerHTML =
-    `<span><span class="lab">Śr./dzień:</span><span class="down">${rate.toFixed(1).replace('.',',')}</span></span>` +
-    `<span><span class="lab">Rekord:</span><span class="down">${maxP[1]}</span>` +
-      `<span style="color:var(--text-muted);font-weight:600;margin-left:5px">(${fmtDate(maxP[0])})</span></span>` +
-    `<span><span class="lab">Suma w oknie:</span><span>${total}</span></span>`;
-  drawOutflow();
+// ── Generyczny wykres „przepływu" (dzienny słupek/linia + średnia 7-dniowa) ──
+// Jeden kod dla trzech kart: odpływ, napływ (nowe+reaktywacje), reaktywacje.
+const FLOW_CONFIGS = [
+  { id: 'outflow', cls: 'flow-outflow', title: '📉 Odpływ ofert',
+    sub: 'Ile ogłoszeń znika z rynku — dzienny odpływ + średnia 7-dniowa',
+    data: () => OUTFLOW, line: '#e8624c', ma: '#f0a35e',
+    legendDaily: 'Znikło danego dnia', statLabel: 'Śr. odpływ/dzień', statCls: 'down',
+    empty: 'Brak danych o odpływie dla tego profilu (nic nie trafiło jeszcze do archiwum).',
+    hint: 'Źródło: dla każdego dnia liczba ofert zarchiwizowanych tego dnia (zniknęły z OLX/Otodom)' },
+  { id: 'inflow', cls: 'flow-inflow', title: '🔀 Napływ ofert',
+    sub: 'Nowe + reaktywacje wchodzące na rynek — dziennie + średnia 7-dniowa',
+    data: () => INFLOW, line: '#2fa66f', ma: '#7fd8ac',
+    legendDaily: 'Weszło danego dnia', statLabel: 'Śr. napływ/dzień', statCls: 'up',
+    empty: 'Brak danych o napływie dla tego profilu.',
+    hint: 'Źródło: dla każdego dnia liczba nowych ofert (first_seen) + reaktywacji tego dnia' },
+  { id: 'react', cls: 'flow-react', title: '♻️ Reaktywacje',
+    sub: 'Oferty wracające na rynek — dzienne reaktywacje + średnia 7-dniowa',
+    data: () => REACT, line: '#7c6cf0', ma: '#b4a9f5',
+    legendDaily: 'Wróciło danego dnia', statLabel: 'Śr. reaktywacji/dzień', statCls: 'flat',
+    empty: 'Brak reaktywacji dla tego profilu (żadna oferta jeszcze nie wróciła).',
+    hint: 'Źródło: dla każdego dnia liczba ofert, które po dezaktywacji ponownie pojawiły się w skanie' },
+];
+
+function flowCardHTML(cfg){
+  return `
+    <div class="chart-card flow ${cfg.cls}" id="card-${cfg.id}">
+      <div class="c-title">${cfg.title}</div>
+      <div class="c-sub">${cfg.sub}</div>
+      <div class="c-stats" id="stats-${cfg.id}"></div>
+      <div class="chart-row" id="row-${cfg.id}">
+        <div class="chart-host">
+          <div class="watermark"><div class="w1">SONAR</div><div class="w2">MIESZKANIA · LUBLIN</div></div>
+          <canvas id="canvas-${cfg.id}"></canvas>
+          <div class="chart-tooltip" id="tip-${cfg.id}"></div>
+        </div>
+        <div class="range-side" id="tabs-${cfg.id}">
+          <button class="range-tab" data-days="30">1M</button>
+          <button class="range-tab" data-days="90">3M</button>
+          <button class="range-tab" data-days="180">6M</button>
+          <button class="range-tab" data-days="365">1R</button>
+          <button class="range-tab active" data-days="0">Całość</button>
+        </div>
+      </div>
+      <div class="loading" id="empty-${cfg.id}" style="display:none; padding:60px 20px"></div>
+      <div class="chart-legend">
+        <span><span class="dot" style="border-top-color:${cfg.line};border-top-style:solid;border-top-width:2px"></span>${cfg.legendDaily}</span>
+        <span><span class="dot" style="border-top-color:${cfg.ma};border-top-style:solid;border-top-width:3px"></span>Średnia 7 dni</span>
+      </div>
+      <div class="chart-hint">${cfg.hint}</div>
+    </div>`;
 }
 
-function drawOutflow(){
-  const canvas = document.getElementById('outflowCanvas');
-  if (!canvas) return;
-  const host = canvas.parentElement;
-  const dpr = window.devicePixelRatio || 1;
-  const W = host.clientWidth, H = host.clientHeight;
-  canvas.width = W*dpr; canvas.height = H*dpr;
-  const ctx = canvas.getContext('2d');
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  ctx.clearRect(0,0,W,H);
-  if (!viewOut.length) return;
-  const col = { muted: cssVar('--text-muted'), grid: cssVar('--border'),
-    red: cssVar('--red'), orange: cssVar('--orange') };
-  const padL = 52, padR = 18, padT = 34, padB = 30;
-  const plotW = W - padL - padR, plotH = H - padT - padB;
-  const counts = viewOut.map(p => p[1]);
-  const maxV = Math.max(...counts, 1);
-  const step = niceStep(maxV * 1.15, 5);
-  let yMax = Math.ceil((maxV * 1.12) / step) * step;
-  if (yMax <= 0) yMax = step;
-  const yMin = 0;
-  const t0 = viewOut[0][0], t1 = viewOut[viewOut.length-1][0];
-  const tSpan = Math.max(1, t1 - t0);
-  const xOf = ts => padL + (ts - t0)/tSpan * plotW;
-  const yOf = v  => padT + (1 - (v - yMin)/(yMax - yMin)) * plotH;
-  ctx.font = '11px "JetBrains Mono", monospace';
-  ctx.textBaseline = 'middle';
-  ctx.strokeStyle = col.grid; ctx.fillStyle = col.muted; ctx.lineWidth = 1;
-  for (let v = yMin; v <= yMax + 1e-6; v += step){
-    const y = yOf(v);
-    ctx.globalAlpha = 0.5; ctx.setLineDash([4,4]);
-    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W-padR, y); ctx.stroke();
-    ctx.setLineDash([]); ctx.globalAlpha = 1;
-    ctx.textAlign = 'right';
-    ctx.fillText(String(Math.round(v)), padL-8, y);
+function makeFlowChart(cfg){
+  const canvas = document.getElementById('canvas-' + cfg.id);
+  const state = { view: [], geom: null, hover: -1, days: 0 };
+
+  function render(){
+    const prof = PROFILES[currentProfile];
+    const series = (cfg.data()[currentProfile]) || [];
+    const row = document.getElementById('row-' + cfg.id);
+    const empty = document.getElementById('empty-' + cfg.id);
+    const stats = document.getElementById('stats-' + cfg.id);
+    const hasAny = series.some(p => p[1] > 0);
+    if (!series.length || !hasAny){
+      row.style.display = 'none';
+      empty.style.display = 'block'; empty.textContent = cfg.empty;
+      stats.innerHTML = ''; state.view = []; state.geom = null;
+      return;
+    }
+    row.style.display = ''; empty.style.display = 'none';
+    const lastTs = prof.points[prof.points.length-1][0];
+    let winMin, winMax;
+    if (state.days > 0){ winMax = lastTs; winMin = lastTs - state.days*DAY_MS; }
+    else { winMin = series[0][0]; winMax = Math.max(lastTs, series[series.length-1][0]); }
+    let pts = series.filter(p => p[0] >= winMin && p[0] <= winMax);
+    if (pts.length < 1) pts = series;
+    state.view = pts;
+    const total = pts.reduce((s,p) => s + p[1], 0);
+    const rate = pts.length ? total/pts.length : 0;
+    let maxP = pts[0];
+    for (const p of pts) if (p[1] > maxP[1]) maxP = p;
+    stats.innerHTML =
+      `<span><span class="lab">${cfg.statLabel}:</span><span class="${cfg.statCls}">${rate.toFixed(1).replace('.',',')}</span></span>` +
+      `<span><span class="lab">Rekord:</span><span class="${cfg.statCls}">${maxP[1]}</span>` +
+        `<span style="color:var(--text-muted);font-weight:600;margin-left:5px">(${fmtDate(maxP[0])})</span></span>` +
+      `<span><span class="lab">Suma w oknie:</span><span>${total}</span></span>`;
+    draw();
   }
-  ctx.textAlign = 'center'; ctx.fillStyle = col.muted;
-  const d0 = new Date(t0);
-  let my = d0.getUTCFullYear(), mm = d0.getUTCMonth();
-  let curM = Date.UTC(my, mm, 1);
-  if (curM < t0){ mm++; if (mm>11){mm=0;my++;} curM = Date.UTC(my, mm, 1); }
-  let lastLabelX = -1e9; const minGap = 46;
-  while (curM <= t1){
-    const x = xOf(curM);
-    if (x - lastLabelX > minGap){
-      const dd = new Date(curM);
-      ctx.fillText(`${PL_MONTHS[dd.getUTCMonth()]} '${String(dd.getUTCFullYear()).slice(2)}`, x, H-padB+14);
-      ctx.strokeStyle = col.grid; ctx.globalAlpha = 0.25;
+
+  function draw(){
+    if (!canvas) return;
+    const host = canvas.parentElement;
+    const dpr = window.devicePixelRatio || 1;
+    const W = host.clientWidth, H = host.clientHeight;
+    canvas.width = W*dpr; canvas.height = H*dpr;
+    const ctx = canvas.getContext('2d');
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,H);
+    const view = state.view;
+    if (!view.length) return;
+    const col = { muted: cssVar('--text-muted'), grid: cssVar('--border') };
+    const padL = 52, padR = 18, padT = 34, padB = 30;
+    const plotW = W - padL - padR, plotH = H - padT - padB;
+    const counts = view.map(p => p[1]);
+    const maxV = Math.max(...counts, 1);
+    const step = niceStep(maxV * 1.15, 5);
+    let yMax = Math.ceil((maxV * 1.12) / step) * step;
+    if (yMax <= 0) yMax = step;
+    const yMin = 0;
+    const t0 = view[0][0], t1 = view[view.length-1][0];
+    const tSpan = Math.max(1, t1 - t0);
+    const xOf = ts => padL + (ts - t0)/tSpan * plotW;
+    const yOf = v  => padT + (1 - (v - yMin)/(yMax - yMin)) * plotH;
+    ctx.font = '11px "JetBrains Mono", monospace';
+    ctx.textBaseline = 'middle';
+    ctx.strokeStyle = col.grid; ctx.fillStyle = col.muted; ctx.lineWidth = 1;
+    for (let v = yMin; v <= yMax + 1e-6; v += step){
+      const y = yOf(v);
+      ctx.globalAlpha = 0.5; ctx.setLineDash([4,4]);
+      ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W-padR, y); ctx.stroke();
+      ctx.setLineDash([]); ctx.globalAlpha = 1;
+      ctx.textAlign = 'right';
+      ctx.fillText(String(Math.round(v)), padL-8, y);
+    }
+    ctx.textAlign = 'center'; ctx.fillStyle = col.muted;
+    const d0 = new Date(t0);
+    let my = d0.getUTCFullYear(), mm = d0.getUTCMonth();
+    let curM = Date.UTC(my, mm, 1);
+    if (curM < t0){ mm++; if (mm>11){mm=0;my++;} curM = Date.UTC(my, mm, 1); }
+    let lastLabelX = -1e9; const minGap = 46;
+    while (curM <= t1){
+      const x = xOf(curM);
+      if (x - lastLabelX > minGap){
+        const dd = new Date(curM);
+        ctx.fillText(`${PL_MONTHS[dd.getUTCMonth()]} '${String(dd.getUTCFullYear()).slice(2)}`, x, H-padB+14);
+        ctx.strokeStyle = col.grid; ctx.globalAlpha = 0.25;
+        ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, H-padB); ctx.stroke();
+        ctx.globalAlpha = 1; lastLabelX = x;
+      }
+      mm++; if (mm>11){mm=0;my++;} curM = Date.UTC(my, mm, 1);
+    }
+    const LINE = cfg.line, MA = cfg.ma;
+    const grad = ctx.createLinearGradient(0, padT, 0, H-padB);
+    grad.addColorStop(0, hexA(LINE, 0.16));
+    grad.addColorStop(1, hexA(LINE, 0.01));
+    ctx.beginPath();
+    ctx.moveTo(xOf(view[0][0]), yOf(view[0][1]));
+    for (const p of view) ctx.lineTo(xOf(p[0]), yOf(p[1]));
+    ctx.lineTo(xOf(t1), H-padB); ctx.lineTo(xOf(t0), H-padB); ctx.closePath();
+    ctx.fillStyle = grad; ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(xOf(view[0][0]), yOf(view[0][1]));
+    for (const p of view) ctx.lineTo(xOf(p[0]), yOf(p[1]));
+    ctx.strokeStyle = hexA(LINE, 0.92); ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+    const n = view.length;
+    ctx.beginPath();
+    ctx.moveTo(xOf(view[0][0]), yOf(view[0][2]));
+    if (n < 3){
+      for (const p of view) ctx.lineTo(xOf(p[0]), yOf(p[2]));
+    } else {
+      for (let i = 1; i < n-1; i++){
+        const xc = (xOf(view[i][0]) + xOf(view[i+1][0])) / 2;
+        const yc = (yOf(view[i][2]) + yOf(view[i+1][2])) / 2;
+        ctx.quadraticCurveTo(xOf(view[i][0]), yOf(view[i][2]), xc, yc);
+      }
+      ctx.quadraticCurveTo(xOf(view[n-2][0]), yOf(view[n-2][2]),
+                           xOf(view[n-1][0]), yOf(view[n-1][2]));
+    }
+    ctx.strokeStyle = MA; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
+    let maxP = view[0];
+    for (const p of view) if (p[1] > maxP[1]) maxP = p;
+    if (maxP[1] > 0){
+      drawDot(ctx, xOf(maxP[0]), yOf(maxP[1]), LINE);
+      drawTag(ctx, `MAX: ${maxP[1]}`, xOf(maxP[0]), yOf(maxP[1]) - 16, LINE, '#fff', 'center', W);
+    }
+    if (state.hover >= 0 && state.hover < view.length){
+      const p = view[state.hover], x = xOf(p[0]);
+      ctx.strokeStyle = col.muted; ctx.globalAlpha = 0.6; ctx.setLineDash([3,3]);
       ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, H-padB); ctx.stroke();
-      ctx.globalAlpha = 1; lastLabelX = x;
+      ctx.setLineDash([]); ctx.globalAlpha = 1;
+      drawDot(ctx, x, yOf(p[2]), MA, 4, true);
+      drawDot(ctx, x, yOf(p[1]), LINE, 4, true);
     }
-    mm++; if (mm>11){mm=0;my++;} curM = Date.UTC(my, mm, 1);
+    state.geom = { padL, padR, padT, padB, plotW, plotH, t0, t1, tSpan, xOf, yOf, W, H };
   }
-  const CORAL = '#e8624c';
-  const AMBER = '#f0a35e';
-  const grad = ctx.createLinearGradient(0, padT, 0, H-padB);
-  grad.addColorStop(0, hexA(CORAL, 0.16));
-  grad.addColorStop(1, hexA(CORAL, 0.01));
-  ctx.beginPath();
-  ctx.moveTo(xOf(viewOut[0][0]), yOf(viewOut[0][1]));
-  for (const p of viewOut) ctx.lineTo(xOf(p[0]), yOf(p[1]));
-  ctx.lineTo(xOf(t1), H-padB); ctx.lineTo(xOf(t0), H-padB); ctx.closePath();
-  ctx.fillStyle = grad; ctx.fill();
-  ctx.beginPath();
-  ctx.moveTo(xOf(viewOut[0][0]), yOf(viewOut[0][1]));
-  for (const p of viewOut) ctx.lineTo(xOf(p[0]), yOf(p[1]));
-  ctx.strokeStyle = hexA(CORAL, 0.92); ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
-  const n = viewOut.length;
-  ctx.beginPath();
-  ctx.moveTo(xOf(viewOut[0][0]), yOf(viewOut[0][2]));
-  if (n < 3){
-    for (const p of viewOut) ctx.lineTo(xOf(p[0]), yOf(p[2]));
-  } else {
-    for (let i = 1; i < n-1; i++){
-      const xc = (xOf(viewOut[i][0]) + xOf(viewOut[i+1][0])) / 2;
-      const yc = (yOf(viewOut[i][2]) + yOf(viewOut[i+1][2])) / 2;
-      ctx.quadraticCurveTo(xOf(viewOut[i][0]), yOf(viewOut[i][2]), xc, yc);
-    }
-    ctx.quadraticCurveTo(xOf(viewOut[n-2][0]), yOf(viewOut[n-2][2]),
-                         xOf(viewOut[n-1][0]), yOf(viewOut[n-1][2]));
+
+  function onMove(e){
+    if (!state.geom || !state.view.length) return;
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const g = state.geom;
+    const ts = g.t0 + (mx - g.padL)/g.plotW * g.tSpan;
+    let best = 0, bestD = Infinity;
+    for (let i=0;i<state.view.length;i++){ const d = Math.abs(state.view[i][0]-ts); if (d<bestD){bestD=d;best=i;} }
+    state.hover = best; draw();
+    const p = state.view[best];
+    const tt = document.getElementById('tip-' + cfg.id);
+    tt.innerHTML = `<div class="tt-date">${fmtDateLong(p[0])}</div>` +
+      `<div class="tt-val">${p[1]} ${plForm(p[1])}</div>` +
+      `<div class="tt-ma">śr. 7 dni: ${p[2].toFixed(1).replace('.',',')}</div>`;
+    tt.style.left = g.xOf(p[0]) + 'px';
+    tt.style.top  = g.yOf(Math.max(p[1], p[2])) + 'px';
+    tt.style.opacity = '1';
   }
-  ctx.strokeStyle = AMBER; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
-  let maxP = viewOut[0];
-  for (const p of viewOut) if (p[1] > maxP[1]) maxP = p;
-  if (maxP[1] > 0){
-    drawDot(ctx, xOf(maxP[0]), yOf(maxP[1]), CORAL);
-    drawTag(ctx, `MAX: ${maxP[1]}`, xOf(maxP[0]), yOf(maxP[1]) - 16, CORAL, '#fff', 'center', W);
+  function onLeave(){
+    state.hover = -1;
+    const tt = document.getElementById('tip-' + cfg.id); if (tt) tt.style.opacity = '0';
+    if (state.view.length) draw();
   }
-  if (hoverO >= 0 && hoverO < viewOut.length){
-    const p = viewOut[hoverO], x = xOf(p[0]);
-    ctx.strokeStyle = col.muted; ctx.globalAlpha = 0.6; ctx.setLineDash([3,3]);
-    ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, H-padB); ctx.stroke();
-    ctx.setLineDash([]); ctx.globalAlpha = 1;
-    drawDot(ctx, x, yOf(p[2]), AMBER, 4, true);
-    drawDot(ctx, x, yOf(p[1]), CORAL, 4, true);
+  function bind(){
+    if (canvas){ canvas.addEventListener('mousemove', onMove); canvas.addEventListener('mouseleave', onLeave); }
+    document.querySelectorAll('#tabs-' + cfg.id + ' .range-tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#tabs-' + cfg.id + ' .range-tab').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.days = parseInt(btn.dataset.days, 10);
+        state.hover = -1; render();
+      });
+    });
   }
-  geomO = { padL, padR, padT, padB, plotW, plotH, t0, t1, tSpan, xOf, yOf, W, H };
-}
-function onMoveO(e){
-  if (!geomO || !viewOut.length) return;
-  const rect = document.getElementById('outflowCanvas').getBoundingClientRect();
-  const mx = e.clientX - rect.left;
-  const ts = geomO.t0 + (mx - geomO.padL)/geomO.plotW * geomO.tSpan;
-  let best = 0, bestD = Infinity;
-  for (let i=0;i<viewOut.length;i++){ const d = Math.abs(viewOut[i][0]-ts); if (d<bestD){bestD=d;best=i;} }
-  hoverO = best; drawOutflow();
-  const p = viewOut[best];
-  const tt = document.getElementById('tooltipO');
-  tt.innerHTML = `<div class="tt-date">${fmtDateLong(p[0])}</div>` +
-    `<div class="tt-val">${p[1]} ${plForm(p[1])}</div>` +
-    `<div class="tt-ma">śr. 7 dni: ${p[2].toFixed(1).replace('.',',')}</div>`;
-  tt.style.left = geomO.xOf(p[0]) + 'px';
-  tt.style.top  = geomO.yOf(Math.max(p[1], p[2])) + 'px';
-  tt.style.opacity = '1';
-}
-function onLeaveO(){
-  hoverO = -1;
-  const tt = document.getElementById('tooltipO'); if (tt) tt.style.opacity = '0';
-  if (viewOut.length) drawOutflow();
+  return { render, redraw: () => { if (state.view.length) draw(); }, bind };
 }
 
 loadAndRender();

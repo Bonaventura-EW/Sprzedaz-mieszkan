@@ -353,6 +353,41 @@ def otodom_coords_plausible(offer: Dict, geocoder: StreetGeocoder) -> bool:
     return True
 
 
+def district_consistent(offer: Dict, geocoder: StreetGeocoder) -> bool:
+    """Czy pinezka oferty stoi w dzielnicy zgodnej z ogłoszeniem (reverse geocoding).
+
+    Używane do walidacji pinezek precyzji 'street' (z refinera). refine_offer_location
+    bierze ulicę z tytułu/opisu, ale nie sprawdza, czy leży ona w deklarowanej
+    dzielnicy — nazwa ulicy wyłapana z opisu dewelopera (adres biura,
+    „dojazd od ul. X", sąsiedztwo) potrafi postawić pinezkę kilka km od faktycznej
+    lokalizacji (np. „ul. Zalewskiego" dla oferty na Sławinku).
+
+    Leniwie:
+    - brak dzielnicy w ogłoszeniu (np. OLX) → True (nie ma czym walidować),
+    - brak reverse (wyczerpany budżet/błąd) → True (dobierze się w kolejnym skanie).
+    Poza Lublinem lub inna dzielnica → False (pinezka błędna).
+    """
+    loc = offer.get('location') or {}
+    coords = loc.get('coords')
+    if not coords:
+        return False
+    if not _in_lublin(coords):
+        return False
+    if not loc.get('district'):
+        return True  # brak deklarowanej dzielnicy — nie walidujemy (np. OLX)
+    addr = geocoder.reverse_address(coords['lat'], coords['lon'])
+    if addr is None:
+        return True  # nie zweryfikowano (budżet/błąd) — zostawiamy
+    city = addr.get('city')
+    if city and 'lublin' not in city.lower():
+        return False
+    if not district_matches(loc.get('district'), addr.get('district')):
+        loc['district_mismatch'] = True
+        return False
+    loc.pop('district_mismatch', None)
+    return True
+
+
 def verify_otodom_coords(offer: Dict, geocoder: StreetGeocoder,
                          min_dist_km: float = 0.7) -> bool:
     """Weryfikuje „dokładną" pinezkę Otodom względem ulicy z tytułu/treści.

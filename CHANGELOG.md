@@ -2,6 +2,37 @@
 
 ## [Niewydane]
 
+### Naprawione — 🗺️ Opcja A: walidacja pinezek „street" względem dzielnicy
+Refiner (`refine_offer_location`) stawiał pinezkę na ulicy wyłapanej z tekstu bez
+sprawdzenia, czy leży w deklarowanej dzielnicy oferty. Ulica z opisu dewelopera
+(adres biura, „dojazd od ul. X") potrafiła przesunąć pinezkę o kilka km — klaster
+~270 ofert na „ul. Zalewskiego" mimo dzielnic Sławin/Śródmieście/Stare Miasto.
+- **`src/location_refiner.py`** — nowa funkcja `district_consistent()`: reverse
+  geocoding pinezki i porównanie dzielnicy z ogłoszeniem (leniwie: brak dzielnicy
+  lub brak budżetu reverse → zostawiamy; inna dzielnica / poza Lublinem → odrzut).
+- **`src/main.py`** — krok 3b3: pinezki precyzji `street` z podaną dzielnicą, które
+  reverse lokuje w innej dzielnicy → coords usuwane (oferta → sekcja „bez GPS").
+  OLX (bez dzielnicy) i pinezki bez pokrycia reverse zostają nietknięte.
+- **`tests/test_location_refiner.py`** — 5 testów `district_consistent`.
+- Suchy przebieg na obecnym cache: 7 usunięć od ręki (Jemiołuszki, Urbanowicza,
+  Wieniawska…), reszta dobierze się przez kilka skanów (budżet reverse 100/skan).
+
+### Dodane — ♻️ wykresy reaktywacji i napływu na trend.html (wzór SONAR-POKOJOWY)
+Reaktywacje były zapisywane (`reactivated_at`), ale nigdzie nie pokazywane. Dodano
+dwa wykresy „dzienny + średnia 7-dniowa" (jak odpływ): 🔀 Napływ (nowe+reaktywacje)
+i ♻️ Reaktywacje, obok istniejącego 📉 Odpływu.
+- **`src/main.py`** — reaktywacja prowadzi pełną listę `reactivation_dates`
+  (skalarny `reactivated_at` zostaje dla kompatybilności; historia zasiewana).
+- **`src/trend_generator.py`** — `build_trend()` zwraca dodatkowo `inflow` i
+  `reactivations` (sparse). Napływ = nowe (first_seen) + reaktywacje; pierwszy dzień
+  osi (zasianie bazy) pomijany jako artefakt startu skanera.
+- **`docs/trend.html`** — mechanika „odpływu" uogólniona w reużywalny komponent
+  `makeFlowChart` (jeden kod dla 3 kart: odpływ/napływ/reaktywacje), własne zakładki
+  zakresu i tooltipy; kolory: koral / zieleń / fiolet.
+- **`tests/test_trend_generator.py`** — 3 testy (napływ, reaktywacje, fallback
+  skalarny, pominięcie dnia zerowego).
+- Zweryfikowano renderem headless (Chromium): 4 karty, brak błędów JS.
+
 ### Naprawione — 🌐 OLX zwraca 0 ofert od 2026-08-11 (blokada WAF po TLS fingerprincie)
 Od skanu 2026-08-11 19:14 `scraped_olx` = 0 (ostatni udany 2026-08-11 09:40:
 933 oferty). Otodom działa bez zmian → to nie awaria pipeline'u, tylko blokada

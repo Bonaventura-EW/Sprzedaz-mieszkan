@@ -2,8 +2,58 @@
 
 from location_refiner import (
     extract_street_candidates, nominative_variants, refine_offer_location,
-    StreetGeocoder,
+    district_consistent, StreetGeocoder,
 )
+
+
+class ReverseGeocoder:
+    """Atrapa geokodera do walidacji dzielnicy — reverse zwraca zadany adres."""
+    def __init__(self, addr):
+        self._addr = addr
+    def reverse_address(self, lat, lon):
+        return self._addr
+
+
+def test_district_consistent_rejects_wrong_district():
+    # pinezka w Lublinie, ale reverse pokazuje inną dzielnicę niż podana
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 51.1968, 'lon': 22.5428}, 'coords_precision': 'street',
+        'district': 'Sławin'}}
+    geo = ReverseGeocoder({'road': 'Zalewskiego', 'district': 'Za Cukrownią', 'city': 'Lublin'})
+    assert district_consistent(offer, geo) is False
+    assert offer['location'].get('district_mismatch') is True
+
+
+def test_district_consistent_accepts_matching_district():
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 51.28, 'lon': 22.55}, 'coords_precision': 'street',
+        'district': 'Sławin'}}
+    geo = ReverseGeocoder({'road': 'X', 'district': 'Sławin', 'city': 'Lublin'})
+    assert district_consistent(offer, geo) is True
+
+
+def test_district_consistent_lenient_without_district():
+    # OLX bez dzielnicy — nie ma czym walidować, zostawiamy pinezkę
+    offer = {'source': 'olx', 'location': {
+        'coords': {'lat': 51.24, 'lon': 22.55}, 'coords_precision': 'street',
+        'district': None}}
+    geo = ReverseGeocoder({'road': 'X', 'district': 'Rury', 'city': 'Lublin'})
+    assert district_consistent(offer, geo) is True
+
+
+def test_district_consistent_lenient_when_reverse_unavailable():
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 51.24, 'lon': 22.55}, 'coords_precision': 'street',
+        'district': 'Rury'}}
+    assert district_consistent(offer, ReverseGeocoder(None)) is True
+
+
+def test_district_consistent_rejects_outside_lublin():
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 52.23, 'lon': 21.01}, 'coords_precision': 'street',
+        'district': 'Rury'}}
+    geo = ReverseGeocoder({'road': 'X', 'district': 'Śródmieście', 'city': 'Warszawa'})
+    assert district_consistent(offer, geo) is False
 
 
 def test_extract_street_basic():

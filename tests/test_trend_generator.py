@@ -93,3 +93,46 @@ def test_empty_db_returns_empty_structures():
     payload = build_trend({'offers': []}, today=date(2026, 6, 1))
     assert payload['profiles'] == {}
     assert payload['outflow'] == {}
+    assert payload['inflow'] == {}
+    assert payload['reactivations'] == {}
+
+
+def _sparse_map(payload, kind, key):
+    return {p['date']: p['count'] for p in payload[kind][key]}
+
+
+def test_new_offers_and_first_day_seed_excluded():
+    # A = najstarsza (dzień 0 osi = zasianie bazy → NIE liczymy jako napływ);
+    # B pojawia się dzień później → realnie nowa
+    db = {'offers': [
+        _offer('a', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00'),
+        _offer('b', 'otodom', 'wtorny', 2, '2026-06-02T10:00:00+02:00'),
+    ]}
+    payload = build_trend(db, today=date(2026, 6, 3))
+    inflow = _sparse_map(payload, 'inflow', 'wszystkie')
+    # 01.06 (seed) pominięty, 02.06 = 1 nowa
+    assert inflow == {'2026-06-02': 1}
+
+
+def test_reactivations_counted_and_folded_into_inflow():
+    offer = _offer('otodom:1', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00')
+    offer['reactivation_dates'] = ['2026-06-03T08:00:00+02:00', '2026-06-04T08:00:00+02:00']
+    # druga oferta jako „dzień 0", żeby 01.06 nie był jedyną datą osi
+    db = {'offers': [offer, _offer('x', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00')]}
+    payload = build_trend(db, today=date(2026, 6, 5))
+    react = _sparse_map(payload, 'reactivations', 'wszystkie')
+    assert react == {'2026-06-03': 1, '2026-06-04': 1}
+    # reaktywacje wchodzą też do napływu
+    inflow = _sparse_map(payload, 'inflow', 'wszystkie')
+    assert inflow.get('2026-06-03') == 1
+    assert inflow.get('2026-06-04') == 1
+
+
+def test_reactivated_at_scalar_fallback():
+    # brak listy reactivation_dates → używamy skalarnego reactivated_at
+    offer = _offer('otodom:2', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00')
+    offer['reactivated_at'] = '2026-06-03T08:00:00+02:00'
+    db = {'offers': [offer, _offer('x', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00')]}
+    payload = build_trend(db, today=date(2026, 6, 4))
+    react = _sparse_map(payload, 'reactivations', 'wszystkie')
+    assert react == {'2026-06-03': 1}
