@@ -2015,6 +2015,20 @@
    "active": 2845,
    "with_coords": 2389,
    "total_in_db": 6369
+  },
+  {
+   "timestamp": "2026-08-24T09:30:56.523200+02:00",
+   "status": "completed",
+   "duration_s": 224.9,
+   "deactivated": 42,
+   "scraped_olx": 910,
+   "scraped_otodom": 1793,
+   "new": 13,
+   "updated": 2690,
+   "skipped_removed": 0,
+   "active": 2832,
+   "with_coords": 2372,
+   "total_in_db": 6382
   }
  ]
 }
