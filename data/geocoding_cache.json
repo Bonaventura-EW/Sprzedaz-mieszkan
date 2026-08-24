@@ -2285,7 +2285,7 @@
  },
  "nadbystrzycka 74": {
   "result": null,
-  "ts": 1786382014.9028103
+  "ts": 1787590768.9219348
  },
  "kaczeńcowa": {
   "result": {
@@ -7921,7 +7921,7 @@
  },
  "dereckiego 13": {
   "result": null,
-  "ts": 1786985455.8803232
+  "ts": 1787590765.9861755
  },
  "rva:51.2417,22.5436": {
   "result": {
@@ -9801,7 +9801,7 @@
  },
  "lotnicza 8": {
   "result": null,
-  "ts": 1786173614.308236
+  "ts": 1787590767.4552238
  },
  "rva:51.2172,22.6356": {
   "result": {
@@ -13182,5 +13182,85 @@
    "city": "Lublin"
   },
   "ts": 1787556879.9825957
+ },
+ "wesoła": {
+  "result": {
+   "lat": 51.2426417,
+   "lon": 22.5671482,
+   "name": "Wesoła"
+  },
+  "ts": 1787590770.2044585
+ },
+ "aleja kraśnicka": {
+  "result": {
+   "lat": 51.2226049,
+   "lon": 22.4648556,
+   "name": "Aleja Kraśnicka"
+  },
+  "ts": 1787590771.6653247
+ },
+ "rva:51.2411,22.5492": {
+  "result": {
+   "road": "Henryka Wiercieńskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787590773.164134
+ },
+ "rva:51.2241,22.5004": {
+  "result": {
+   "road": "Jana Pawła II",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787590774.681524
+ },
+ "rva:51.2228,22.5367": {
+  "result": {
+   "road": "Wąwozowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1787590776.156711
+ },
+ "rva:51.2426,22.5671": {
+  "result": {
+   "road": "Wesoła",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787590777.7172537
+ },
+ "rva:51.2226,22.4649": {
+  "result": {
+   "road": "Aleja Kraśnicka",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787590779.1302197
+ },
+ "rva:51.2364,22.5426": {
+  "result": {
+   "road": "Nowomiejska",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787590780.5790215
+ },
+ "rva:51.2429,22.5075": {
+  "result": {
+   "road": "Aleja Kraśnicka",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1787590782.1048727
+ },
+ "rva:51.2531,22.5883": {
+  "result": {
+   "road": "Generała Józefa Kustronia",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1787590783.4288805
  }
 }
