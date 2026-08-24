@@ -2,6 +2,15 @@
 
 ## [Niewydane]
 
+### Operacja — 🔎 przebieg propagacji (evaluate-propagation), 2026-08-24 08:00
+Pierwszy przebieg etapu decyzji. Sprawdzono manifesty zmian u czwórki rodzeństwa
+(`SONAR-POKOJOWY`, `SONAR-MIESZKANIOWY`, `SONAR---DZIA-KOWY`, `parkingi-i-garaze`)
+— tylko `parkingi-i-garaze` miał realny manifest: `2026-08-23-olx-tls-impersonation`
+(curl_cffi z impersonacją TLS Chrome, ominięcie blokady WAF CloudFront na OLX).
+**Werdykt: skip** — ten sam fix już wdrożony tu niezależnie 2026-08-22 i potwierdzony
+na produkcji skanem #142 (`scraped_olx` wróciło z 0 do 931). Bez akcji. Wpis w
+`.propagation/decisions.jsonl`, `last-review.json` zaktualizowany.
+
 ### Operacja — ✅ merge do main + skan weryfikacyjny #142 (2026-08-22 22:40)
 Zmerge'owano gałąź do `main` i odpalono `scanner.yml` (workflow_dispatch, run #142,
 6 min, sukces). Wyniki potwierdzają wdrożenia:
