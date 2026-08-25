@@ -9369,7 +9369,7 @@
  },
  "samosnowicza": {
   "result": null,
-  "ts": 1787071987.6119313
+  "ts": 1787677211.496791
  },
  "wrońska 3d": {
   "result": null,
@@ -13270,5 +13270,41 @@
    "city": "Lublin"
   },
   "ts": 1787642004.7907314
+ },
+ "podzamcze 4": {
+  "result": null,
+  "ts": 1787677212.9594057
+ },
+ "prusa 2": {
+  "result": null,
+  "ts": 1787677214.3513181
+ },
+ "skierki 7": {
+  "result": null,
+  "ts": 1787677215.8109708
+ },
+ "rva:51.2524,22.5702": {
+  "result": {
+   "road": "Nowy Plac Targowy",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787677217.253126
+ },
+ "rva:51.2533,22.5754": {
+  "result": {
+   "road": "Podzamcze",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1787677219.0422118
+ },
+ "rva:51.2234,22.5754": {
+  "result": {
+   "road": "Dywizjonu 303",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787677220.4578946
  }
 }
