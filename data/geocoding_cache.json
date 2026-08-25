@@ -13262,5 +13262,13 @@
    "city": "Lublin"
   },
   "ts": 1787590783.4288805
+ },
+ "rva:51.2588,22.5718": {
+  "result": {
+   "road": "Obywatelska",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787642004.7907314
  }
 }
