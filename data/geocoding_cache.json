@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1787123395.0450935
+  "ts": 1787728390.5480733
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1787123396.4425871
+  "ts": 1787728401.9141145
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1787123397.7959735
+  "ts": 1787728391.8785083
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1787123402.408976
+  "ts": 1787728395.681431
  },
  "herbowa 8": {
   "result": null,
@@ -4329,7 +4329,7 @@
  },
  "generała witolda urbanowicza 5": {
   "result": null,
-  "ts": 1787123404.1760783
+  "ts": 1787728397.3466766
  },
  "lubelskiego lipca '80": {
   "result": {
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1787123405.8041146
+  "ts": 1787728398.949643
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1787123407.447932
+  "ts": 1787728400.5266325
  },
  "krasińskiego": {
   "result": {
@@ -9681,7 +9681,7 @@
  },
  "leonarda wysoki standard": {
   "result": null,
-  "ts": 1787123410.06672
+  "ts": 1787728403.1618156
  },
  "cichej": {
   "result": {
@@ -13306,5 +13306,17 @@
    "city": "Lublin"
   },
   "ts": 1787677220.4578946
+ },
+ "kleberga": {
+  "result": null,
+  "ts": 1787728404.3430455
+ },
+ "rva:51.2248,22.5574": {
+  "result": {
+   "road": "Nowy Świat",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787728405.7725365
  }
 }
