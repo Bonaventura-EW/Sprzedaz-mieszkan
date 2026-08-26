@@ -3001,7 +3001,7 @@
  },
  "wyżynna 43": {
   "result": null,
-  "ts": 1784017901.2700038
+  "ts": 1787766815.7720385
  },
  "skłodowskiej-curie": {
   "result": {
@@ -13318,5 +13318,37 @@
    "city": "Lublin"
   },
   "ts": 1787728405.7725365
+ },
+ "rva:51.2774,22.5122": {
+  "result": {
+   "road": "Kameralny Sławin",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1787766817.3306642
+ },
+ "rva:51.2243,22.5580": {
+  "result": {
+   "road": "Nowy Świat",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1787766818.845785
+ },
+ "rva:51.2333,22.5797": {
+  "result": {
+   "road": "Garbarska",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1787766820.313241
+ },
+ "rva:51.2435,22.5569": {
+  "result": {
+   "road": "Prezydenta Gabriela Narutowicza",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1787766821.7866905
  }
 }
