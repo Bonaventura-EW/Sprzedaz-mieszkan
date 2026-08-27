@@ -2,6 +2,20 @@
 
 ## [Niewydane]
 
+### Naprawione — 🔎 reverse geocoding przepalał budżet na ofertach bez dzielnicy
+Przy rozszerzaniu obszaru o Świdnik przestawiłem kolejność w `district_consistent`
+tak, że reverse geocoding wołał się PRZED wyjściem dla ofert bez dzielnicy —
+czyli dla całego OLX-a, gdzie i tak nie ma czego walidować. Ograniczony budżet
+`MAX_REVERSE_GEOCODES` schodził więc na oferty, które nic z tego nie miały,
+zamiast na te z dzielnicą do sprawdzenia.
+- Wyjście wróciło przed wywołanie reverse. Miasta w tej ścieżce nie sprawdzamy:
+  pinezkę `street` postawił nasz geokoder, związany bboxem i nazwą miasta oferty,
+  więc kontrola niczego nie dokłada.
+- Scenariusz „pinezka w sąsiedniej gminie" przeniesiony do testów
+  `otodom_coords_plausible` — tam współrzędne pochodzą z Otodom (nie z naszego
+  geokodera), reverse i tak leci, więc kontrola miasta faktycznie chroni.
+- Nowy test pilnuje, że oferta bez dzielnicy nie wywołuje reverse ani razu. 63 testy.
+
 ### Naprawione — 🏙️ Otodom Świdnik: 404 na zgadniętej ścieżce listingu (skan #151)
 Pierwszy skan po rozszerzeniu obszaru pokazał, że **OLX Świdnik działa (77 ofert),
 a Otodom Świdnik zwracał 404**. Ścieżka Otodom to województwo/powiat/gmina/miasto,

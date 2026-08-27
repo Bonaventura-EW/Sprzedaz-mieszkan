@@ -445,13 +445,18 @@ def district_consistent(offer: Dict, geocoder: StreetGeocoder) -> bool:
         return False
     if not _in_city(coords, offer_city_key(offer)):
         return False
-    addr = geocoder.reverse_address(coords['lat'], coords['lon'])
-    if addr is not None and not city_consistent(loc.get('city'), addr.get('city')):
-        return False  # pinezka w innym mieście niż ogłoszenie
     if not loc.get('district'):
-        return True  # brak deklarowanej dzielnicy — nie walidujemy (np. OLX)
+        # FIX 2026-08-27: wyjście PRZED reverse — inaczej oferty bez dzielnicy
+        # (cały OLX) przepalają ograniczony budżet MAX_REVERSE_GEOCODES, którego
+        # brakuje potem tam, gdzie faktycznie jest co walidować. Miasta tu nie
+        # sprawdzamy, bo pinezkę 'street' i tak postawił nasz geokoder, związany
+        # bboxem i nazwą miasta oferty.
+        return True  # brak deklarowanej dzielnicy — nie ma czym walidować
+    addr = geocoder.reverse_address(coords['lat'], coords['lon'])
     if addr is None:
         return True  # nie zweryfikowano (budżet/błąd) — zostawiamy
+    if not city_consistent(loc.get('city'), addr.get('city')):
+        return False  # pinezka w innym mieście niż ogłoszenie
     if not district_matches(loc.get('district'), addr.get('district')):
         loc['district_mismatch'] = True
         return False

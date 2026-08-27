@@ -3,7 +3,7 @@
 from location_refiner import (
     extract_street_candidates, nominative_variants, refine_offer_location,
     district_consistent, StreetGeocoder, city_key, city_consistent,
-    offer_city_key,
+    offer_city_key, otodom_coords_plausible,
 )
 
 
@@ -94,13 +94,40 @@ def test_district_consistent_rejects_lublin_offer_pinned_in_swidnik():
     assert district_consistent(offer, geo) is False
 
 
-def test_district_consistent_rejects_neighbouring_municipality():
-    # Mełgiew sąsiaduje ze Świdnikiem, ale jest poza obszarem zbierania
+def test_district_consistent_skips_reverse_without_district():
+    # Oferta bez dzielnicy (cały OLX) nie może zjadać budżetu MAX_REVERSE_GEOCODES —
+    # pinezkę 'street' postawił nasz geokoder, związany bboxem i nazwą miasta.
+    class CountingReverse:
+        def __init__(self):
+            self.calls = 0
+        def reverse_address(self, lat, lon):
+            self.calls += 1
+            return {'road': 'X', 'district': 'Rury', 'city': 'Lublin'}
+
+    offer = {'source': 'olx', 'location': {
+        'coords': {'lat': 51.24, 'lon': 22.55}, 'coords_precision': 'street',
+        'city': 'Lublin', 'district': None}}
+    geo = CountingReverse()
+    assert district_consistent(offer, geo) is True
+    assert geo.calls == 0
+
+
+def test_otodom_coords_rejects_neighbouring_municipality():
+    # Mełgiew sąsiaduje ze Świdnikiem, ale jest poza obszarem zbierania.
+    # Współrzędne 'approx' pochodzą z Otodom, więc tu reverse decyduje.
     offer = {'source': 'otodom', 'location': {
-        'coords': {'lat': 51.2206, 'lon': 22.6961}, 'coords_precision': 'street',
+        'coords': {'lat': 51.2206, 'lon': 22.6961}, 'coords_precision': 'approx',
         'city': 'Świdnik', 'district': None}}
     geo = ReverseGeocoder({'road': 'X', 'district': None, 'city': 'Mełgiew'})
-    assert district_consistent(offer, geo) is False
+    assert otodom_coords_plausible(offer, geo) is False
+
+
+def test_otodom_coords_accepts_swidnik():
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 51.2206, 'lon': 22.6961}, 'coords_precision': 'approx',
+        'city': 'Świdnik', 'district': None}}
+    geo = ReverseGeocoder({'road': 'X', 'district': None, 'city': 'Świdnik'})
+    assert otodom_coords_plausible(offer, geo) is True
 
 
 def test_refine_asks_nominatim_about_offer_city():

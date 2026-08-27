@@ -43,6 +43,8 @@ from location_refiner import city_key  # rejestr miast — jedno źródło prawd
 # kandydatów i bierzemy pierwszą ścieżkę, która cokolwiek zwróci — dzięki temu
 # zmiana slugu po stronie Otodom degraduje się do kolejnego wariantu, zamiast
 # po cichu zbierać zero ofert.
+# POTWIERDZONE skanem #152: działa pierwszy kandydat `lubelskie/swidnicki/swidnik/
+# swidnik` (98 ofert). Kolejne warianty zostają jako siatka bezpieczeństwa.
 _LISTING_BASE = "https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/"
 _LISTING_QUERY = "?ownerTypeSingleSelect=ALL&limit=72"
 LISTING_PATHS = {
