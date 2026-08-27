@@ -8485,7 +8485,7 @@
  },
  "dożynkowa 36": {
   "result": null,
-  "ts": 1786088850.2654643
+  "ts": 1787838289.5462298
  },
  "jemiołuszki 18": {
   "result": null,
@@ -13350,5 +13350,301 @@
    "city": "Lublin"
   },
   "ts": 1787766821.7866905
+ },
+ "plac zamkowy": {
+  "result": {
+   "lat": 51.2505873,
+   "lon": 22.5698573,
+   "name": "Plac Zamkowy"
+  },
+  "ts": 1787838234.0189106
+ },
+ "swidnik|racławickiej": {
+  "result": {
+   "lat": 51.218407,
+   "lon": 22.6863429,
+   "name": "Racławicka"
+  },
+  "ts": 1787838236.8859267
+ },
+ "swidnik|niepodległości": {
+  "result": {
+   "lat": 51.2206189,
+   "lon": 22.6958163,
+   "name": "Niepodległości"
+  },
+  "ts": 1787838238.178842
+ },
+ "swidnik|jarzębinowa": {
+  "result": {
+   "lat": 51.2150868,
+   "lon": 22.7007751,
+   "name": "Jarzębinowa"
+  },
+  "ts": 1787838239.5322094
+ },
+ "swidnik|skarżyńskiego": {
+  "result": {
+   "lat": 51.2144134,
+   "lon": 22.6959805,
+   "name": "Stanisława Skarżyńskiego"
+  },
+  "ts": 1787838241.1380856
+ },
+ "swidnik|wyszyńskiego": {
+  "result": {
+   "lat": 51.2114638,
+   "lon": 22.6963221,
+   "name": "Kardynała Stefana Wyszyńskiego"
+  },
+  "ts": 1787838242.7629495
+ },
+ "swidnik|polnej": {
+  "result": {
+   "lat": 51.2294334,
+   "lon": 22.6707516,
+   "name": "Stokrotki Polnej"
+  },
+  "ts": 1787838244.0316546
+ },
+ "swidnik|gen. j. hallera": {
+  "result": null,
+  "ts": 1787838245.3241787
+ },
+ "swidnik|cisowa": {
+  "result": {
+   "lat": 51.2110345,
+   "lon": 22.7006075,
+   "name": "Cisowa"
+  },
+  "ts": 1787838246.5891733
+ },
+ "swidnik|cisowej": {
+  "result": {
+   "lat": 51.2110345,
+   "lon": 22.7006075,
+   "name": "Cisowa"
+  },
+  "ts": 1787838248.9301493
+ },
+ "swidnik|hallera": {
+  "result": {
+   "lat": 51.2174586,
+   "lon": 22.7109715,
+   "name": "Generała Józefa Hallera"
+  },
+  "ts": 1787838250.2011538
+ },
+ "swidnik|kościuszki": {
+  "result": {
+   "lat": 51.216109,
+   "lon": 22.7046088,
+   "name": "Tadeusza Kościuszki"
+  },
+  "ts": 1787838251.4691863
+ },
+ "swidnik|brata alberta": {
+  "result": {
+   "lat": 51.2102596,
+   "lon": 22.6864841,
+   "name": "Świętego Brata Alberta"
+  },
+  "ts": 1787838252.762897
+ },
+ "swidnik|racławicka": {
+  "result": {
+   "lat": 51.218407,
+   "lon": 22.6863429,
+   "name": "Racławicka"
+  },
+  "ts": 1787838253.9047225
+ },
+ "swidnik|olimpijczyków": {
+  "result": {
+   "lat": 51.2091158,
+   "lon": 22.7121596,
+   "name": "Olimpijczyków"
+  },
+  "ts": 1787838255.530767
+ },
+ "swidnik|kosynierów": {
+  "result": {
+   "lat": 51.2151734,
+   "lon": 22.7081793,
+   "name": "Kosynierów"
+  },
+  "ts": 1787838256.75165
+ },
+ "swidnik|witosa": {
+  "result": {
+   "lat": 51.2194433,
+   "lon": 22.7148565,
+   "name": "Wincentego Witosa"
+  },
+  "ts": 1787838257.9968452
+ },
+ "swidnik|reja": {
+  "result": {
+   "lat": 51.2209524,
+   "lon": 22.6961737,
+   "name": "Mikołaja Reja"
+  },
+  "ts": 1787838259.2218597
+ },
+ "swidnik|wolska": {
+  "result": null,
+  "ts": 1787838260.8057747
+ },
+ "swidnik|modrzewiowa": {
+  "result": {
+   "lat": 51.2112464,
+   "lon": 22.7011098,
+   "name": "Modrzewiowa"
+  },
+  "ts": 1787838262.3846998
+ },
+ "swidnik|kopernika": {
+  "result": {
+   "lat": 51.2205361,
+   "lon": 22.7074257,
+   "name": "Mikołaja Kopernika"
+  },
+  "ts": 1787838264.030258
+ },
+ "swidnik|norwida": {
+  "result": {
+   "lat": 51.2217086,
+   "lon": 22.6964565,
+   "name": "Cypriana Kamila Norwida"
+  },
+  "ts": 1787838265.2998972
+ },
+ "swidnik|kaczyńskiego": {
+  "result": {
+   "lat": 51.2170805,
+   "lon": 22.7192991,
+   "name": "Prezydenta Lecha Kaczyńskiego"
+  },
+  "ts": 1787838266.9117293
+ },
+ "swidnik|klonowej": {
+  "result": {
+   "lat": 51.210874,
+   "lon": 22.6868153,
+   "name": "Klonowa"
+  },
+  "ts": 1787838269.7623878
+ },
+ "swidnik|hotelowa": {
+  "result": {
+   "lat": 51.2183149,
+   "lon": 22.7044044,
+   "name": "Hotelowa"
+  },
+  "ts": 1787838271.390416
+ },
+ "swidnik|lecha kaczyńskiego": {
+  "result": {
+   "lat": 51.2170805,
+   "lon": 22.7192991,
+   "name": "Prezydenta Lecha Kaczyńskiego"
+  },
+  "ts": 1787838272.6566765
+ },
+ "swidnik|kochanowskiego": {
+  "result": {
+   "lat": 51.2199521,
+   "lon": 22.7034234,
+   "name": "Jana Kochanowskiego"
+  },
+  "ts": 1787838274.0299516
+ },
+ "swidnik|bronisława ratajczaka": {
+  "result": {
+   "lat": 51.2127309,
+   "lon": 22.6912835,
+   "name": "Bronisława Ratajczaka"
+  },
+  "ts": 1787838275.6311328
+ },
+ "swidnik|okulickiego": {
+  "result": {
+   "lat": 51.222403,
+   "lon": 22.6969132,
+   "name": "Generała Leopolda Okulickiego"
+  },
+  "ts": 1787838277.2551515
+ },
+ "swidnik|środkowa": {
+  "result": {
+   "lat": 51.2202778,
+   "lon": 22.6960187,
+   "name": "Środkowa"
+  },
+  "ts": 1787838278.459782
+ },
+ "swidnik|akacjowa": {
+  "result": {
+   "lat": 51.2113933,
+   "lon": 22.7084669,
+   "name": "Akacjowa"
+  },
+  "ts": 1787838280.083472
+ },
+ "swidnik|armii krajowej": {
+  "result": {
+   "lat": 51.2197064,
+   "lon": 22.7160892,
+   "name": "Armii Krajowej"
+  },
+  "ts": 1787838281.7238014
+ },
+ "swidnik|fabryczna": {
+  "result": {
+   "lat": 51.2259644,
+   "lon": 22.7018532,
+   "name": "Fabryczna"
+  },
+  "ts": 1787838283.1212943
+ },
+ "swidnik|gen. s. roweckiego": {
+  "result": null,
+  "ts": 1787838284.4101362
+ },
+ "swidnik|spadochroniarzy": {
+  "result": {
+   "lat": 51.2140061,
+   "lon": 22.6895751,
+   "name": "Spadochroniarzy"
+  },
+  "ts": 1787838286.013934
+ },
+ "stanisława szpinalskiego 2": {
+  "result": null,
+  "ts": 1787838287.7820404
+ },
+ "rva:51.2397,22.5481": {
+  "result": {
+   "road": "Poprzeczna",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787838291.3142846
+ },
+ "rva:51.2429,22.5335": {
+  "result": {
+   "road": "Filaretów",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1787838292.7906735
+ },
+ "rva:51.2355,22.5029": {
+  "result": {
+   "road": "Ułanów",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1787838294.0752196
  }
 }
