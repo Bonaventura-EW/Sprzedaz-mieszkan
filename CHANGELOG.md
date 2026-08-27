@@ -2,6 +2,34 @@
 
 ## [Niewydane]
 
+### Dodane — 💎 zakładka „Okazje": ranking ofert wg ceny za m²
+Nowa podstrona `docs/okazje.html` (link w nawigacji wszystkich zakładek) pokazuje
+oferty o najlepszym stosunku ceny do metrażu. Sama najniższa cena/m² w mieście to
+za mało — tanie zł/m² zwykle znaczy tylko „daleko od centrum", dlatego okazję
+liczymy **względem porównywalnych mieszkań**.
+- **Odniesienie** = mediana zł/m² najwęższej grupy, w której starcza danych:
+  dzielnica+pokoje+rynek (≥5) → dzielnica+pokoje (≥5) → dzielnica (≥5) →
+  pokoje+rynek w całym Lublinie (≥8) → cały Lublin. Karta pokazuje, z czym
+  dokładnie porównano ofertę i ile mieszkań było w grupie.
+- **Rabat** = o ile % cena/m² jest niższa od mediany grupy; **szacowana
+  oszczędność** = różnica zł/m² × powierzchnia.
+- Dwa tryby rankingu: „największy rabat" (domyślny, próg ≥10%) i „najniższa
+  cena/m²" (odczyt dosłowny). Filtry: źródło, rynek, pokoje, dzielnica, cena,
+  powierzchnia, nowe (7 dni), od właściciela, po obniżce, tylko z lokalizacją,
+  szukajka; sortowanie po rabacie / zł/m² / oszczędności / cenie / powierzchni /
+  dacie. Widok kart i tabeli, doładowywanie po 60 pozycji.
+- **Oferty nietypowe** (TBS/SIM, udziały, licytacje/syndyk, prawo lokatorskie,
+  zamiana oraz zł/m² poniżej 55% mediany miasta) są domyślnie ukryte — inaczej
+  zajmowały cały szczyt rankingu, mimo że nie są zwykłą sprzedażą własności.
+  Checkbox je przywraca z bursztynową ramką i powodem oznaczenia; te oferty są
+  też wykluczone z liczenia median odniesienia, żeby nie zaniżały rynku.
+- Ranking liczy tylko oferty aktywne, z `docs/data.json` (już po deduplikacji
+  OLX↔Otodom) — bez zmian w scraperach i generatorach.
+- Sekcja „💡 Okazje cenowe" na `statystyki.html` dostała link do pełnego rankingu.
+- Zweryfikowane w headless Chromium na produkcyjnym `data.json` (2128 aktywnych):
+  386 okazji przy progu 10%, brak błędów w konsoli, poprawne działanie filtrów,
+  obu widoków, „pokaż więcej" i layoutu mobilnego (390 px, bez poziomego scrolla).
+
 ### Operacja — 🔎 przebieg propagacji (evaluate-propagation), 2026-08-24 08:00
 Pierwszy przebieg etapu decyzji. Sprawdzono manifesty zmian u czwórki rodzeństwa
 (`SONAR-POKOJOWY`, `SONAR-MIESZKANIOWY`, `SONAR---DZIA-KOWY`, `parkingi-i-garaze`)
