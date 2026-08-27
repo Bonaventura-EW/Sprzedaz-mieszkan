@@ -2,6 +2,26 @@
 
 ## [Niewydane]
 
+### Zmienione — 💎 „rabat" → „poniżej ceny rynkowej" w zakładce Okazje
+Słowo „rabat" sugerowało obniżkę ceny przez sprzedającego — a od tego jest na
+karcie osobny znacznik `💲↓`, więc dwa różne pojęcia chodziły pod jedną nazwą.
+Nowe słownictwo mówi wprost, o co chodzi: **„X% poniżej ceny rynkowej"** (za ten
+metraż). Świadomie używamy pełnego „cena rynkowa", nie samego „rynek" — „rynek"
+w tym projekcie znaczy już pierwotny/wtórny i kolidowałoby z badge'em obok.
+- Procent przeniesiony z rzędu badge'ów do linii ceny (`7610 zł/m² · 46% poniżej
+  ceny rynkowej`) — stoi teraz przy liczbie, którą opisuje, i ma miejsce na pełne
+  zdanie zamiast samego „−46%" obok znaczników źródła.
+- Etykiety: KPI „Najlepszy rabat" → „Najlepsza okazja" (podpis: „poniżej ceny
+  rynkowej · …"), tryb „💎 Największy rabat" → „💎 Poniżej ceny rynkowej",
+  filtr „Min. rabat" → „Min. różnica", sortowanie „rabat vs porównywalne" →
+  „różnica do ceny rynkowej", kolumna tabeli „Rabat" → „Poniżej rynkowej".
+- Minus zniknął z wartości procentowych — kierunek niesie słowo „poniżej",
+  więc `−46%` przy „poniżej" było podwójnym zaprzeczeniem.
+- Sekcja „jak liczymy okazję" mówi teraz wprost, że to **nie jest** obniżka ceny
+  przez sprzedającego, i odsyła do znacznika `💲↓`.
+- Podpis „mediana grupy" pod paskiem wyrównany do fioletowego znacznika
+  (wcześniej dosunięty do prawej krawędzi, nie wskazywał tego, co opisuje).
+
 ### Dodane — 💎 zakładka „Okazje": ranking ofert wg ceny za m²
 Nowa podstrona `docs/okazje.html` (link w nawigacji wszystkich zakładek) pokazuje
 oferty o najlepszym stosunku ceny do metrażu. Sama najniższa cena/m² w mieście to
