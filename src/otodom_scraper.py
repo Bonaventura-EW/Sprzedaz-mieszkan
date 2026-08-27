@@ -31,20 +31,33 @@ import requests
 
 from cid import otodom_offer_id
 from olx_scraper import strip_html  # ten sam helper czyszczenia HTML
+from location_refiner import city_key  # rejestr miast — jedno źródło prawdy
 
 
 # FIX 2026-08-27: obszar zbierania to Lublin + Świdnik — osobny listing na miasto.
-# Ścieżka Otodom to województwo/powiat/gmina/miasto.
+# Ścieżka Otodom to województwo/powiat/gmina/miasto. Lublin jest miastem na
+# prawach powiatu (stąd trzy razy „lublin"), ale Świdnik leży w powiecie
+# ŚWIDNICKIM — slug powiatu nie jest równy nazwie miasta. Pierwsze wdrożenie
+# strzelało `swidnik/swidnik/swidnik` i dostało 404 (skan #151), bo URL-a nie da
+# się sprawdzić z maszyny agenta (otodom.pl niedostępny). Dlatego trzymamy listę
+# kandydatów i bierzemy pierwszą ścieżkę, która cokolwiek zwróci — dzięki temu
+# zmiana slugu po stronie Otodom degraduje się do kolejnego wariantu, zamiast
+# po cichu zbierać zero ofert.
+_LISTING_BASE = "https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/"
 _LISTING_QUERY = "?ownerTypeSingleSelect=ALL&limit=72"
-LISTING_URLS = {
-    'lublin': "https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/lubelskie/lublin/lublin/lublin"
-              + _LISTING_QUERY,
-    'swidnik': "https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/lubelskie/swidnik/swidnik/swidnik"
-               + _LISTING_QUERY,
+LISTING_PATHS = {
+    'lublin': ["lubelskie/lublin/lublin/lublin"],
+    'swidnik': [
+        "lubelskie/swidnicki/swidnik/swidnik",
+        "lubelskie/swidnicki/swidnik",
+        "lubelskie/swidnicki",
+    ],
 }
+LISTING_URLS = {city: [_LISTING_BASE + p + _LISTING_QUERY for p in paths]
+                for city, paths in LISTING_PATHS.items()}
 
 # zgodność wsteczna dla importów spoza modułu
-LISTING_URL = LISTING_URLS['lublin']
+LISTING_URL = LISTING_URLS['lublin'][0]
 OFFER_BASE_URL = "https://www.otodom.pl/pl/oferta/"
 
 HEADERS = {
@@ -216,12 +229,33 @@ class OtodomMieszkaniaScraper:
         offers: List[Dict] = []
         seen_ids = set()
         seen_slugs = set()
-        for city, listing_url in LISTING_URLS.items():
+        for city, candidates in LISTING_URLS.items():
             before = len(offers)
-            self._scrape_city_listing(city, listing_url, max_pages,
-                                      offers, seen_ids, seen_slugs)
-            print(f"   → Otodom {city}: {len(offers) - before} ofert")
+            listing_url = self._pick_listing_url(city, candidates)
+            if listing_url:
+                self._scrape_city_listing(city, listing_url, max_pages,
+                                          offers, seen_ids, seen_slugs)
+            got = len(offers) - before
+            print(f"   → Otodom {city}: {got} ofert")
+            if not got:
+                print(f"   ⚠️ Otodom {city}: ŻADEN listing nie zwrócił ofert — "
+                      f"sprawdź ścieżki w LISTING_PATHS['{city}']")
         return offers
+
+    def _pick_listing_url(self, city: str, candidates: List[str]) -> Optional[str]:
+        """Pierwszy z kandydatów, który na stronie 1 zwraca oferty.
+
+        Otodom zmienia slugi jednostek administracyjnych, a zły slug daje 404 —
+        bez tej próby miasto po cichu zbierałoby zero ofert.
+        """
+        for url in candidates:
+            items = ((self._fetch_search_ads(1, url) or {}).get('items')) or []
+            if items:
+                if url != candidates[0]:
+                    print(f"   ℹ️ Otodom {city}: działa wariant ścieżki {url}")
+                return url
+            print(f"   ⚠️ Otodom {city}: listing bez ofert — {url}")
+        return None
 
     def _scrape_city_listing(self, city: str, listing_url: str, max_pages: int,
                              offers: List[Dict], seen_ids: set,
@@ -263,6 +297,13 @@ class OtodomMieszkaniaScraper:
             for item in items:
                 offer = normalize_item(item)
                 if not offer or offer['id'] in seen_ids:
+                    continue
+                # FIX 2026-08-27: listing Otodom dokleja miejscowości z okolicy
+                # (Jakubowice Konińskie, Dominów) — do bazy wpuszczamy tylko
+                # obsługiwane miasta. Brak miasta w ofercie → przepuszczamy
+                # (nie karzemy za brak danych).
+                offer_city = (offer.get('location') or {}).get('city')
+                if offer_city and city_key(offer_city) is None:
                     continue
                 # ten sam slug = ta sama oferta (slug zawiera -IDxxxx). Gdyby
                 # Otodom zmienił schemat kart "podbicia", slug i tak je odsieje.

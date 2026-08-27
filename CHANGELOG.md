@@ -2,6 +2,28 @@
 
 ## [Niewydane]
 
+### Naprawione — 🏙️ Otodom Świdnik: 404 na zgadniętej ścieżce listingu (skan #151)
+Pierwszy skan po rozszerzeniu obszaru pokazał, że **OLX Świdnik działa (77 ofert),
+a Otodom Świdnik zwracał 404**. Ścieżka Otodom to województwo/powiat/gmina/miasto,
+a ja zbudowałem ją przez analogię do Lublina (`lubelskie/lublin/lublin/lublin`) —
+tyle że Lublin jest miastem na prawach powiatu, a Świdnik leży w powiecie
+**świdnickim**, więc slug powiatu nie równa się nazwie miasta.
+- `LISTING_URLS` w `otodom_scraper.py` trzyma teraz **listę kandydatów** na miasto;
+  `_pick_listing_url()` bierze pierwszą ścieżkę, która na stronie 1 cokolwiek
+  zwróci, i loguje, który wariant zadziałał. Powód: URL-i nie da się sprawdzić
+  z maszyny agenta (brak dostępu do otodom.pl), więc bez tego każda pomyłka
+  w slugu kosztowała pełny skan. Efekt uboczny jest trwale przydatny — zmiana
+  slugu po stronie Otodom degraduje się do kolejnego wariantu zamiast po cichu
+  zbierać zero ofert.
+- Miasto, które nie zebrało ani jednej oferty, krzyczy w logu (wcześniej cicha
+  linijka „0 ofert" ginęła — ochrona przed masową dezaktywacją działa PER ŹRÓDŁO,
+  więc puste miasto niczego nie zapala).
+- **Filtr miasta dla Otodom**: listing dokleja miejscowości z okolicy — w bazie
+  siedziało 6 ofert z Jakubowic Konińskich i 1 z Dominowa, wszystkie z Otodom.
+  Teraz oferta z miastem spoza `CITIES` jest odrzucana już w scraperze (brak
+  miasta w ofercie nadal przechodzi). To zabezpiecza też ostatniego kandydata
+  ścieżki (poziom powiatu), żeby nie wciągnął Mełgwi i Piask.
+
 ### Dodane — 🗺️ obszar zbierania rozszerzony o Świdnik (Lublin + miasto Świdnik)
 Wariant A z ustaleń: portale odpytujemy o dwa miasta, bez powiatu i bez promienia.
 Sam URL listingu by nie wystarczył — pinezki ze Świdnika i tak wypadałyby jako
