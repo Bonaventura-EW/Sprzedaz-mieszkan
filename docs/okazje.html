@@ -31,6 +31,8 @@
 .b-olx{background:#e0f2fe;color:#075985}.b-otodom{background:#ede9fe;color:#5b21b6}
 .b-pierwotny{background:#fef3c7;color:#92400e}.b-wtorny{background:#ede9fe;color:#5b21b6}.b-nieokreslony{background:#f1f5f9;color:#475569}
 .b-new{background:#dcfce7;color:#166534}.b-drop{background:#dcfce7;color:#166534}
+a.b-drop{text-decoration:none;cursor:pointer}
+a.b-drop:hover{background:#16a34a;color:#fff}
 .b-priv{background:#e0e7ff;color:#3730a3}.b-warn{background:#fef3c7;color:#92400e}
 .deals{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 .deal{background:#fff;border:1px solid var(--line);border-left:4px solid #16a34a;border-radius:12px;
@@ -373,7 +375,8 @@ function card(o) {
         `<span class="badge b-${o.source}">${esc(SRC_LABELS[o.source] || o.source || '?')}</span>`,
         `<span class="badge b-${o.market || 'nieokreslony'}">${MARKET_LABELS[o.market] || 'nieokreśl.'}</span>`,
         o._new ? '<span class="badge b-new">🆕 nowa</span>' : '',
-        o._drop ? `<span class="badge b-drop">💲↓ ${fmtZl(o._drop)}</span>` : '',
+        o._drop ? `<a class="badge b-drop" href="oferty.html#offer=${encodeURIComponent(o.id)}"
+             title="Cena spadła o ${fmtZl(o._drop)} — zobacz historię ceny tej oferty">💲↓ ${fmtZl(o._drop)}</a>` : '',
         o.is_private_owner ? '<span class="badge b-priv">👤 właściciel</span>' : '',
         o._odd.length ? '<span class="badge b-warn">⚠️ nietypowa</span>' : '',
     ].join('');

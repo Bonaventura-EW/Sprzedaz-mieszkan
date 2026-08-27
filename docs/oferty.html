@@ -220,7 +220,7 @@ function renderTable(rows){
 function renderSplit(rows){
   if(SPLITSEL.size===0&&rows.length)SPLITSEL.add(rows[0].id);
   const chosen=rows.filter(o=>SPLITSEL.has(o.id));
-  const list=rows.length?rows.map(o=>`<label class="li ${SPLITSEL.has(o.id)?'sel':''}">
+  const list=rows.length?rows.map(o=>`<label class="li ${SPLITSEL.has(o.id)?'sel':''}" data-id="${esc(o.id)}">
     <input type="checkbox" class="chk" ${SPLITSEL.has(o.id)?'checked':''} onchange="toggleSplit('${esc(o.id)}')">
     <span class="li-main"><span class="li-t">${esc(o.title||'—')}</span>
     <span class="pricem">${srcBadge(o)} ${PLN(o.price)} · ${AREA(o.area_m2)} · ${PERM2(o.price_per_m2)}</span></span>
@@ -249,6 +249,32 @@ function toggleDir(){SORT.dir*=-1;syncSortUI();applyAndRender();}
 function syncSortUI(){document.getElementById('sort-key').value=SORT.key;
   document.getElementById('sort-dir').textContent=(SORT.dir<0?'▼ malejąco':'▲ rosnąco');}
 function toggleSplit(id){SPLITSEL.has(id)?SPLITSEL.delete(id):SPLITSEL.add(id);renderSplit(filtered());}
+
+// Wejście z linku `oferty.html#offer=<id>` — używa go znacznik obniżki 💲↓
+// w zakładce Okazje. Pokazuje Split z zaznaczoną ofertą i wykresem jej ceny.
+function revealOffer(id){
+  const o=OFFERS.find(x=>x.id===id);
+  if(!o)return false;
+  // Zdejmujemy tylko te filtry, które akurat ukrywają WSKAZANĄ ofertę —
+  // reszta ustawień użytkownika zostaje nietknięta.
+  if(!o.active)document.getElementById('active-only').checked=false;
+  if(SRCFILTER.size&&!SRCFILTER.has(o.source)){
+    SRCFILTER.clear();
+    document.querySelectorAll('#src-chips .of-chip').forEach(c=>c.classList.remove('on'));
+  }
+  const q=document.getElementById('search'),qv=q.value.trim().toLowerCase();
+  if(qv&&!((o.title||'')+' '+(o.district||'')).toLowerCase().includes(qv))q.value='';
+  SPLITSEL.clear();SPLITSEL.add(id);
+  setView('split');
+  const el=document.querySelector(`.li[data-id="${CSS.escape(id)}"]`);
+  if(el)el.scrollIntoView({block:'center'});
+  return true;
+}
+function focusOfferFromHash(){
+  const m=location.hash.match(/offer=([^&]+)/);
+  return m?revealOffer(decodeURIComponent(m[1])):false;
+}
+window.addEventListener('hashchange',focusOfferFromHash);
 function toggleSrc(k,el){SRCFILTER.has(k)?SRCFILTER.delete(k):SRCFILTER.add(k);el.classList.toggle('on');applyAndRender();}
 function showChart(id){const o=OFFERS.find(x=>x.id===id);if(!o)return;
   document.getElementById('modal-body').innerHTML=`<h2 class="vtitle">📈 ${esc(o.title||'')}</h2>${offerMeta(o)}${bigChart([o],{w:600,h:320})}`;
@@ -273,7 +299,7 @@ async function load(){
     OFFERS=(data.offers||[]).map(o=>{o._tl=buildTimeline(o);o._changes=(o.price_changes||[]).length;
       o._delta=o._tl.length>1?(o._tl.at(-1).p-o._tl[0].p):0;return o;});
     document.getElementById('of-loading').style.display='none';
-    setView('table');
+    if(!focusOfferFromHash())setView('table');
   }catch(e){
     document.getElementById('of-loading').innerHTML='❌ Błąd ładowania data.json: '+e.message;
   }

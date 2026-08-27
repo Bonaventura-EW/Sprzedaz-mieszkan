@@ -2,6 +2,22 @@
 
 ## [Niewydane]
 
+### Dodane — 💲↓ znacznik obniżki w Okazjach prowadzi do historii ceny
+Znacznik `💲↓ <kwota>` na karcie w zakładce Okazje mówił, że sprzedający zszedł
+z ceny, ale nie dawało się sprawdzić kiedy i z jakiego poziomu. Teraz jest
+linkiem do `oferty.html#offer=<id>`, który otwiera zakładkę Oferty **w widoku
+Split, z tą ofertą zaznaczoną i jej wykresem ceny w czasie**.
+- `docs/okazje.html` — znacznik jako `<a>` z podpowiedzią („Cena spadła o X —
+  zobacz historię ceny tej oferty") i podświetleniem pod kursorem, żeby było
+  widać, że jest klikalny.
+- `docs/oferty.html` — obsługa `#offer=<id>` przy wejściu i przy `hashchange`
+  (działa też wstecz/naprzód w przeglądarce): przełącza na Split, zaznacza ofertę,
+  przewija do niej listę. Format hasha jest ten sam co w mapie (`index.html`).
+- Filtry: zdejmujemy **tylko te**, które akurat ukrywają wskazaną ofertę
+  („tylko aktywne" dla nieaktywnej, chipy źródła przy konflikcie, szukajka gdy
+  nie pasuje) — reszta ustawień użytkownika zostaje nietknięta. Nieznane id nie
+  robi nic: strona otwiera się normalnie w widoku tabeli.
+
 ### Naprawione — 🔎 reverse geocoding przepalał budżet na ofertach bez dzielnicy
 Przy rozszerzaniu obszaru o Świdnik przestawiłem kolejność w `district_consistent`
 tak, że reverse geocoding wołał się PRZED wyjściem dla ofert bez dzielnicy —
