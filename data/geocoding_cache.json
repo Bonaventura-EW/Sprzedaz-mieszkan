@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1787244944.4978507
+  "ts": 1787852573.8409197
  },
  "grażyny": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1787244951.4283574
+  "ts": 1787852581.9092088
  },
  "cyruliczej": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1787244947.2780392
+  "ts": 1787852577.1488051
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1787244948.5267222
+  "ts": 1787852578.5251791
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1787244945.8784401
+  "ts": 1787852575.4785788
  },
  "kredowa": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1787244950.110072
+  "ts": 1787852580.1419072
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1787244952.8061433
+  "ts": 1787852583.5549335
  },
  "różanej": {
   "result": {
@@ -8125,7 +8125,7 @@
  },
  "karminowej": {
   "result": null,
-  "ts": 1787244955.6850421
+  "ts": 1787852586.7696173
  },
  "jana kiepury": {
   "result": {
@@ -8137,7 +8137,7 @@
  },
  "karminowa": {
   "result": null,
-  "ts": 1787244956.851029
+  "ts": 1787852587.8973806
  },
  "rva:51.2023,22.5787": {
   "result": {
@@ -14082,5 +14082,37 @@
    "city": "Świdnik"
   },
   "ts": 1787838891.108259
+ },
+ "swidnik|leopolda okulickiego": {
+  "result": {
+   "lat": 51.222403,
+   "lon": 22.6969132,
+   "name": "Generała Leopolda Okulickiego"
+  },
+  "ts": 1787852589.0946245
+ },
+ "swidnik|olimpijczyków 6": {
+  "result": null,
+  "ts": 1787852590.3497248
+ },
+ "lwowska 24": {
+  "result": null,
+  "ts": 1787852592.2112625
+ },
+ "rva:51.2551,22.5484": {
+  "result": {
+   "road": "Niccolo Paganiniego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787852593.490535
+ },
+ "rva:51.2224,22.6969": {
+  "result": {
+   "road": "Generała Leopolda Okulickiego",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787852595.26009
  }
 }
