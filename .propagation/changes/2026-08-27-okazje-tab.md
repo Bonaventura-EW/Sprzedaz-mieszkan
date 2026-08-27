@@ -10,7 +10,7 @@ how: Statyczna strona `docs/okazje.html` czytająca istniejący `docs/data.json`
 surface: docs/okazje.html, docs/index.html, docs/analytics.html, docs/statystyki.html, docs/monitoring.html, docs/oferty.html, docs/zmiany.html, docs/debug.html
 generality: family
 propagate: yes
-commit: (uzupełniane przy commicie)
+commit: c663135
 ---
 
 # Kontekst dla braci
