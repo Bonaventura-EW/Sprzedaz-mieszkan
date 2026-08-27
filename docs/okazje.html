@@ -49,7 +49,10 @@
 .rbar{position:relative;height:8px;border-radius:999px;background:#eef2f0;overflow:visible}
 .rbar i{position:absolute;left:0;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,#16a34a,#65a30d)}
 .rbar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:#7c3aed}
-.rbar-note{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
+.rbar-note{position:relative;height:22px;font-size:10px;color:var(--muted)}
+.rbar-note .l{position:absolute;left:0;top:8px}
+.rbar-note .m{position:absolute;left:66.7%;transform:translateX(-50%);white-space:nowrap;text-align:center}
+.rbar-note .m::before{content:'▲';display:block;color:#7c3aed;line-height:1;font-size:8px}
 .deal .meta{color:var(--muted);line-height:1.55}
 .deal .save{font-weight:700;color:#15803d}
 .deal .warn{font-size:11px;color:#92400e;background:#fef3c7;border-radius:8px;padding:5px 8px;line-height:1.45}
@@ -343,7 +346,7 @@ function ratioBar(o) {
     // skala 0 … 1,5 × mediana grupy; fioletowy znacznik = mediana porównywalnych
     const pos = Math.max(2, Math.min(100, (o._ratio / 1.5) * 100));
     return `<div class="rbar"><i style="width:${pos.toFixed(1)}%"></i><u style="left:66.7%"></u></div>
-      <div class="rbar-note"><span>ta oferta</span><span>mediana porównywalnych ▏</span></div>`;
+      <div class="rbar-note"><span class="l">ta oferta</span><span class="m">mediana grupy</span></div>`;
 }
 
 function card(o) {
