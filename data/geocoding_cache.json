@@ -13646,5 +13646,441 @@
    "city": "Lublin"
   },
   "ts": 1787838294.0752196
+ },
+ "swidnik|tadeusza kościuszki": {
+  "result": {
+   "lat": 51.216109,
+   "lon": 22.7046088,
+   "name": "Tadeusza Kościuszki"
+  },
+  "ts": 1787838807.5801454
+ },
+ "swidnik|niepodległości 27": {
+  "result": null,
+  "ts": 1787838809.0502048
+ },
+ "swidnik|głowackiego 9": {
+  "result": null,
+  "ts": 1787838810.3071618
+ },
+ "swidnik|wincentego witosa": {
+  "result": {
+   "lat": 51.2194433,
+   "lon": 22.7148565,
+   "name": "Wincentego Witosa"
+  },
+  "ts": 1787838811.9188046
+ },
+ "swidnik|mikołaja kopernika": {
+  "result": {
+   "lat": 51.2205361,
+   "lon": 22.7074257,
+   "name": "Mikołaja Kopernika"
+  },
+  "ts": 1787838813.985069
+ },
+ "swidnik|bartosza głowackiego": {
+  "result": {
+   "lat": 51.2173642,
+   "lon": 22.7018967,
+   "name": "Bartosza Głowackiego"
+  },
+  "ts": 1787838815.2228615
+ },
+ "swidnik|cypriana kamila norwida": {
+  "result": {
+   "lat": 51.2217086,
+   "lon": 22.6964565,
+   "name": "Cypriana Kamila Norwida"
+  },
+  "ts": 1787838816.8700411
+ },
+ "swidnik|juliana tuwima": {
+  "result": {
+   "lat": 51.2210522,
+   "lon": 22.7026707,
+   "name": "Juliana Tuwima"
+  },
+  "ts": 1787838818.5088358
+ },
+ "swidnik|stanisława skarżyńskiego": {
+  "result": {
+   "lat": 51.2144134,
+   "lon": 22.6959805,
+   "name": "Stanisława Skarżyńskiego"
+  },
+  "ts": 1787838820.1216865
+ },
+ "swidnik|mikołaja reja": {
+  "result": {
+   "lat": 51.2209524,
+   "lon": 22.6961737,
+   "name": "Mikołaja Reja"
+  },
+  "ts": 1787838821.7538962
+ },
+ "swidnik|jana kochanowskiego": {
+  "result": {
+   "lat": 51.2199521,
+   "lon": 22.7034234,
+   "name": "Jana Kochanowskiego"
+  },
+  "ts": 1787838822.946896
+ },
+ "swidnik|gen. stefana roweckiego \"grota\"": {
+  "result": {
+   "lat": 51.2152707,
+   "lon": 22.7176757,
+   "name": "Generała Stefana \"Grota\" Roweckiego"
+  },
+  "ts": 1787838824.556211
+ },
+ "swidnik|juliusza słowackiego": {
+  "result": {
+   "lat": 51.220251,
+   "lon": 22.704748,
+   "name": "Juliusza Słowackiego"
+  },
+  "ts": 1787838826.1938705
+ },
+ "swidnik|3 maja": {
+  "result": {
+   "lat": 51.2176714,
+   "lon": 22.7007183,
+   "name": "3 Maja"
+  },
+  "ts": 1787838827.6216965
+ },
+ "swidnik|głogowa": {
+  "result": {
+   "lat": 51.2141521,
+   "lon": 22.7090116,
+   "name": "Głogowa"
+  },
+  "ts": 1787838829.2322545
+ },
+ "swidnik|prezydenta lecha kaczyńskiego": {
+  "result": {
+   "lat": 51.2170805,
+   "lon": 22.7192991,
+   "name": "Prezydenta Lecha Kaczyńskiego"
+  },
+  "ts": 1787838830.4553232
+ },
+ "swidnik|jana kilińskiego": {
+  "result": {
+   "lat": 51.2190361,
+   "lon": 22.6974707,
+   "name": "Jana Kilińskiego"
+  },
+  "ts": 1787838831.6658204
+ },
+ "swidnik|hallera 4": {
+  "result": null,
+  "ts": 1787838832.9206963
+ },
+ "swidnik|stanisława wyspiańskiego": {
+  "result": {
+   "lat": 51.2195042,
+   "lon": 22.6966579,
+   "name": "Stanisława Wyspiańskiego"
+  },
+  "ts": 1787838834.176513
+ },
+ "swidnik|gen. s. roweckiego \"grota\"": {
+  "result": null,
+  "ts": 1787838835.5203636
+ },
+ "swidnik|niepodległości 32": {
+  "result": null,
+  "ts": 1787838837.1749082
+ },
+ "swidnik|krótka": {
+  "result": null,
+  "ts": 1787838838.3859112
+ },
+ "swidnik|niepodległości 18": {
+  "result": null,
+  "ts": 1787838839.6507668
+ },
+ "swidnik|gen. józefa hallera": {
+  "result": {
+   "lat": 51.2174586,
+   "lon": 22.7109715,
+   "name": "Generała Józefa Hallera"
+  },
+  "ts": 1787838840.9142003
+ },
+ "swidnik|wyspiańskiego": {
+  "result": {
+   "lat": 51.2195042,
+   "lon": 22.6966579,
+   "name": "Stanisława Wyspiańskiego"
+  },
+  "ts": 1787838842.1552808
+ },
+ "rva:51.2149,22.6813": {
+  "result": {
+   "road": "Polna",
+   "district": "Osiedle Słoneczne",
+   "city": "Świdnik"
+  },
+  "ts": 1787838843.917926
+ },
+ "rva:51.2019,22.7072": {
+  "result": {
+   "road": "Janusza Kusocińskiego",
+   "district": null,
+   "city": "gmina Mełgiew"
+  },
+  "ts": 1787838845.5781853
+ },
+ "rva:51.2103,22.7091": {
+  "result": {
+   "road": "Olimpijczyków",
+   "district": "Osiedle Kusocińskiego",
+   "city": "Świdnik"
+  },
+  "ts": 1787838846.8798027
+ },
+ "rva:51.2204,22.7071": {
+  "result": {
+   "road": "Mikołaja Kopernika",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1787838848.1546204
+ },
+ "rva:51.2260,22.6893": {
+  "result": {
+   "road": "Willowa",
+   "district": "Osiedle Żwirki i Wigury",
+   "city": "Świdnik"
+  },
+  "ts": 1787838849.5819476
+ },
+ "rva:51.2115,22.6908": {
+  "result": {
+   "road": "Bronisława Ratajczaka",
+   "district": "Osiedle Polesie",
+   "city": "Świdnik"
+  },
+  "ts": 1787838851.3448918
+ },
+ "rva:51.2139,22.6897": {
+  "result": {
+   "road": "Spadochroniarzy",
+   "district": "Osiedle Radość",
+   "city": "Świdnik"
+  },
+  "ts": 1787838852.624694
+ },
+ "rva:51.2172,22.7023": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Brzeziny I",
+   "city": "Świdnik"
+  },
+  "ts": 1787838853.9004085
+ },
+ "rva:51.2180,22.7113": {
+  "result": {
+   "road": "Generała Józefa Hallera",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1787838855.6588943
+ },
+ "rva:51.2199,22.7004": {
+  "result": {
+   "road": "Niepodległości",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787838857.3902662
+ },
+ "rva:51.2001,22.6948": {
+  "result": {
+   "road": null,
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787838859.0324566
+ },
+ "rva:51.2215,22.6975": {
+  "result": {
+   "road": "Stanisława Wyspiańskiego",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787838860.265615
+ },
+ "rva:51.2205,22.6999": {
+  "result": {
+   "road": "Kardynała Stefana Wyszyńskiego",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787838861.524994
+ },
+ "rva:51.2197,22.7015": {
+  "result": {
+   "road": "Niepodległości",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787838862.763752
+ },
+ "rva:51.2219,22.6971": {
+  "result": {
+   "road": "Stanisława Wyspiańskiego",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787838864.4220362
+ },
+ "rva:51.2176,22.7096": {
+  "result": {
+   "road": "Generała Józefa Hallera",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1787838865.8896046
+ },
+ "rva:51.2204,22.7044": {
+  "result": {
+   "road": "Generała Leopolda Okulickiego",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1787838867.7063146
+ },
+ "rva:51.2138,22.7005": {
+  "result": {
+   "road": "Jarzębinowa",
+   "district": "Osiedle Brzeziny-Kalina",
+   "city": "Świdnik"
+  },
+  "ts": 1787838868.9630878
+ },
+ "rva:51.2231,22.6966": {
+  "result": {
+   "road": "Aleja Lotników Polskich",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787838870.6234336
+ },
+ "rva:51.2164,22.7165": {
+  "result": {
+   "road": "Generała Stefana \"Grota\" Roweckiego",
+   "district": "Nowy Krępiec",
+   "city": "Świdnik"
+  },
+  "ts": 1787838872.2678742
+ },
+ "rva:51.2156,22.7045": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Brzeziny I",
+   "city": "Świdnik"
+  },
+  "ts": 1787838873.9044094
+ },
+ "rva:51.2161,22.7163": {
+  "result": {
+   "road": "Generała Stefana \"Grota\" Roweckiego",
+   "district": "Nowy Krępiec",
+   "city": "Świdnik"
+  },
+  "ts": 1787838875.1596513
+ },
+ "rva:51.2188,22.7116": {
+  "result": {
+   "road": "Kosynierów",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1787838876.414858
+ },
+ "rva:51.2152,22.6967": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1787838877.6490333
+ },
+ "rva:51.2207,22.6966": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Letnisko",
+   "city": "Świdnik"
+  },
+  "ts": 1787838879.297243
+ },
+ "rva:51.2114,22.6972": {
+  "result": {
+   "road": "Cisowa",
+   "district": "Osiedle Brzeziny-Kalina",
+   "city": "Świdnik"
+  },
+  "ts": 1787838881.063155
+ },
+ "rva:51.2208,22.6990": {
+  "result": {
+   "road": "Niepodległości",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787838882.3213682
+ },
+ "rva:51.2167,22.7006": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Brzeziny I",
+   "city": "Świdnik"
+  },
+  "ts": 1787838883.9892035
+ },
+ "rva:51.2142,22.7093": {
+  "result": {
+   "road": "Głogowa",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1787838885.218897
+ },
+ "rva:51.2166,22.7147": {
+  "result": {
+   "road": "Aleja Armii Krajowej",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1787838886.4780772
+ },
+ "rva:51.2161,22.6973": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1787838888.1184325
+ },
+ "rva:51.2162,22.7007": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Brzeziny I",
+   "city": "Świdnik"
+  },
+  "ts": 1787838889.7678628
+ },
+ "rva:51.2195,22.7011": {
+  "result": {
+   "road": "Plac Konstytucji 3 Maja",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1787838891.108259
  }
 }
