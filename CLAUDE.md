@@ -5,7 +5,8 @@ Czytaj na starcie każdej sesji.
 
 ## Czym jest projekt
 
-**SONAR SPRZEDAŻY MIESZKAŃ** — agent monitorujący oferty **sprzedaży mieszkań w Lublinie**
+**SONAR SPRZEDAŻY MIESZKAŃ** — agent monitorujący oferty **sprzedaży mieszkań
+w Lublinie i Świdniku**
 (OLX + Otodom), z mapą na GitHub Pages i podziałem na **rynek pierwotny / wtórny**.
 Kolejny z rodziny sonarów; architektura wzorowana na `SONAR-DZIAŁKOWY`
 i `SONAR-MIESZKANIOWY`.
@@ -111,15 +112,28 @@ Testy: `pytest` z roota repo (konfiguracja w `pytest.ini`, `pythonpath = src`).
    `_flag_generic_otodom_coords` degraduje fałszywie dokładne klastry (≥3 oferty
    w 250 m) do `approx`. Współrzędne `approx` z Otodom NIE są ślepo usuwane —
    walidujemy je względem dzielnicy (`otodom_coords_plausible`, krok 3c w
-   `main.py`): pinezka musi być w granicach Lublina i w dzielnicy zgodnej z
+   `main.py`): pinezka musi być w granicach miasta oferty i w dzielnicy zgodnej z
    ogłoszeniem (reverse geocoding). Zgodne zostają na mapie (kwadrat), niezgodne
-   / poza Lublinem → usuwane (sekcja „bez GPS"). OLX nadal bez coords (centroid
+   / poza miastem oferty → usuwane (sekcja „bez GPS"). OLX nadal bez coords (centroid
    miasta). `_strip_approx_coords` (metoda) pozostaje pomocniczo/testowo.
 6a. **Weryfikacja pinezek Otodom** (`verify_otodom_coords`): Otodom bywa
    nieprecyzyjny. Dla `exact` robimy reverse geocoding i jeśli pinezka stoi na
    innej ulicy niż podana w tytule/treści (i > 0,7 km od niej), przenosimy ją na
    ulicę z ogłoszenia (`street`, znacznik `otodom_coord_corrected`). Reverse
    poprawnie zostawia pinezki na długich ulicach. Osobny budżet `MAX_REVERSE_GEOCODES`.
+6b. **Obszar zbierania: Lublin + miasto Świdnik** (`CITIES` w `location_refiner.py`).
+   Rejestr miast jest jednym źródłem prawdy — dodanie kolejnego miasta to wpis
+   w `CITIES` + listing w `LISTING_URLS` obu scraperów. NIE zaszywaj nazwy miasta
+   w kodzie: geokodowanie pyta Nominatim o miasto oferty (`offer_city_key`),
+   a walidacja pinezek porównuje miasto z reverse geocodingu z miastem
+   ogłoszenia (`city_consistent`). Bboxy Lublina i Świdnika ZACHODZĄ na siebie
+   (miasta sąsiadują) — dlatego o przynależności decyduje nazwa miasta, nie sam
+   bbox. Klucz cache geokodowania dla Lublina jest celowo BEZ prefiksu miasta
+   (zgodność wsteczna z `data/geocoding_cache.json` — inaczej cały cache
+   stałby się zimny i skany przepalałyby budżet 100 zapytań).
+   KONSEKWENCJA dla `okazje.html`: miasto jest częścią KAŻDEGO klucza grupowania.
+   Bez tego tańszy Świdnik porównywałby się z medianą Lublina i każde tamtejsze
+   mieszkanie wychodziłoby jako okazja.
 7. **OLX dokleja wyniki „z okolicy"** na końcu listingu — filtrujemy po
    `cityNormalizedName == 'lublin'`.
 8. **Ochrona przed masową dezaktywacją** (`main.py::_mark_inactive`): działa

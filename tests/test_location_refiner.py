@@ -2,7 +2,8 @@
 
 from location_refiner import (
     extract_street_candidates, nominative_variants, refine_offer_location,
-    district_consistent, StreetGeocoder,
+    district_consistent, StreetGeocoder, city_key, city_consistent,
+    offer_city_key,
 )
 
 
@@ -46,6 +47,76 @@ def test_district_consistent_lenient_when_reverse_unavailable():
         'coords': {'lat': 51.24, 'lon': 22.55}, 'coords_precision': 'street',
         'district': 'Rury'}}
     assert district_consistent(offer, ReverseGeocoder(None)) is True
+
+
+def test_city_key_normalizes_spelling_and_inflection():
+    assert city_key('Lublin') == 'lublin'
+    assert city_key('Lublinie') == 'lublin'
+    assert city_key('Świdnik') == 'swidnik'
+    assert city_key('swidnik') == 'swidnik'     # bez ogonków
+    assert city_key('Świdniku') == 'swidnik'    # miejscownik
+    assert city_key('Warszawa') is None         # poza obszarem
+    assert city_key('Mełgiew') is None          # sąsiednia gmina, ale nie nasza
+    assert city_key(None) is None
+
+
+def test_city_consistent_rules():
+    assert city_consistent('Lublin', 'Lublin') is True
+    assert city_consistent('Świdnik', 'Świdnik') is True
+    assert city_consistent('Lublin', 'Świdnik') is False   # pinezka w złym mieście
+    assert city_consistent(None, 'Warszawa') is False      # poza obszarem
+    assert city_consistent('Lublin', None) is True         # brak reverse — leniwie
+    assert city_consistent(None, 'Świdnik') is True        # ogłoszenie bez miasta
+
+
+def test_offer_city_key_falls_back_to_base_city():
+    assert offer_city_key({'location': {'city': 'Świdnik'}}) == 'swidnik'
+    assert offer_city_key({'location': {'city': None}}) == 'lublin'
+    assert offer_city_key({}) == 'lublin'
+
+
+def test_district_consistent_accepts_pin_in_swidnik():
+    # oferta ze Świdnika z pinezką w Świdniku — przed rozszerzeniem obszaru
+    # wypadała jako „poza Lublinem"
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 51.2206, 'lon': 22.6961}, 'coords_precision': 'street',
+        'city': 'Świdnik', 'district': None}}
+    geo = ReverseGeocoder({'road': 'Kard. Wyszyńskiego', 'district': None, 'city': 'Świdnik'})
+    assert district_consistent(offer, geo) is True
+
+
+def test_district_consistent_rejects_lublin_offer_pinned_in_swidnik():
+    # ogłoszenie mówi Lublin, a pinezka stoi w Świdniku → pinezka błędna
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 51.2206, 'lon': 22.6961}, 'coords_precision': 'street',
+        'city': 'Lublin', 'district': 'Sławin'}}
+    geo = ReverseGeocoder({'road': 'X', 'district': None, 'city': 'Świdnik'})
+    assert district_consistent(offer, geo) is False
+
+
+def test_district_consistent_rejects_neighbouring_municipality():
+    # Mełgiew sąsiaduje ze Świdnikiem, ale jest poza obszarem zbierania
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 51.2206, 'lon': 22.6961}, 'coords_precision': 'street',
+        'city': 'Świdnik', 'district': None}}
+    geo = ReverseGeocoder({'road': 'X', 'district': None, 'city': 'Mełgiew'})
+    assert district_consistent(offer, geo) is False
+
+
+def test_refine_asks_nominatim_about_offer_city():
+    offer = {
+        'title': 'Mieszkanie ul. Krężnickiej',
+        'description': '',
+        'location': {'coords': None, 'coords_precision': None,
+                     'street': None, 'city': 'Świdnik'},
+    }
+    geo = FakeGeocoder()
+    refine_offer_location(offer, geo)
+    assert geo.last_city == 'swidnik'   # nie 'lublin'
+
+
+def test_city_name_is_not_a_street():
+    assert extract_street_candidates('Mieszkanie przy ul. Świdniku') == []
 
 
 def test_district_consistent_rejects_outside_lublin():
@@ -126,10 +197,18 @@ def test_nominative_variants():
 
 
 class FakeGeocoder:
-    """Atrapa geokodera — zwraca punkt dla znanych ulic, None dla reszty."""
+    """Atrapa geokodera — zwraca punkt dla znanych ulic, None dla reszty.
+
+    Zapamiętuje miasto ostatniego zapytania, żeby testy mogły sprawdzić, że
+    refiner pyta o miasto oferty, a nie zawsze o Lublin.
+    """
     KNOWN = {'krężnicka': {'lat': 51.19, 'lon': 22.52, 'name': 'Krężnicka'}}
 
-    def geocode_street(self, street):
+    def __init__(self):
+        self.last_city = None
+
+    def geocode_street(self, street, city=None):
+        self.last_city = city
         for variant in nominative_variants(street):
             hit = self.KNOWN.get(variant.lower())
             if hit:

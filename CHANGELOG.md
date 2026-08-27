@@ -2,6 +2,47 @@
 
 ## [Niewydane]
 
+### Dodane — 🗺️ obszar zbierania rozszerzony o Świdnik (Lublin + miasto Świdnik)
+Wariant A z ustaleń: portale odpytujemy o dwa miasta, bez powiatu i bez promienia.
+Sam URL listingu by nie wystarczył — pinezki ze Świdnika i tak wypadałyby jako
+„poza Lublinem", bo nazwa miasta była zaszyta w trzech miejscach geokodowania.
+- **`src/location_refiner.py`** — rejestr `CITIES` (Lublin, Świdnik) zamiast
+  zaszytego „Lublin": `city_key()` (normalizuje odmianę i zapis bez ogonków),
+  `offer_city_key()`, `city_consistent()`, `_in_city()`. Nominatim pytamy
+  o miasto oferty, a nie zawsze o Lublin. Bboxy obu miast ZACHODZĄ na siebie
+  (sąsiadują), więc o przynależności decyduje nazwa miasta w adresie, nie bbox.
+  Klucz cache geokodowania dla Lublina został BEZ prefiksu — inaczej cały
+  `data/geocoding_cache.json` stałby się zimny i skany przepalałyby budżet
+  100 zapytań. Nazwa miasta dopisana do stop-words ekstrakcji ulic.
+- **`src/olx_scraper.py`, `src/otodom_scraper.py`** — `LISTING_URL` →
+  `LISTING_URLS` (osobny listing na miasto), paginacja w pętli po miastach ze
+  wspólnym `seen_ids`. OLX: filtr `cityNormalizedName` przepuszcza teraz oba
+  miasta zamiast samego Lublina.
+- **`src/main.py`** — deduplikacja OLX↔Otodom pilnuje miasta: przy obszarze
+  z dwóch miast sama zgodność ceny i metrażu to za mało, bo OLX nie ma GPS
+  i identyczna kawalerka z Lublina i ze Świdnika sklejałaby się w jedną ofertę.
+- **`src/map_generator.py`** — `city` jedzie do `docs/data.json`.
+- **`docs/okazje.html`** — miasto jest częścią KAŻDEGO klucza grupowania
+  (kaskada: miasto+dzielnica+pokoje+rynek → … → całe miasto → cały obszar).
+  Bez tego tańszy Świdnik porównywałby się z medianą Lublina i **każde** tamtejsze
+  mieszkanie wychodziłoby jako okazja. Doszedł filtr „Miasto", kolumna w tabeli,
+  miasto w szukajce i na karcie.
+- **`docs/assets/script2.js`** — `LUBLIN_CENTER` → `AREA_CENTER`
+  `[51.2380, 22.6150]`: widok startowy obejmuje oba miasta (Świdnik leży ~10 km
+  na wschód od centrum Lublina).
+- Tytuły, README i CLAUDE.md mówią teraz „Lublin i Świdnik"; nowy punkt 6b
+  w CLAUDE.md opisuje rejestr miast i pułapkę z grupowaniem okazji.
+- Testy: 8 nowych (normalizacja nazw miast, pinezka w Świdniku przechodzi,
+  oferta z Lublina z pinezką w Świdniku odrzucona, sąsiednia gmina odrzucona,
+  refiner pyta o miasto oferty, nazwa miasta nie jest ulicą). 61 przechodzi.
+
+⚠️ **Niezweryfikowane na żywo**: URL-i listingów Świdnika nie dało się sprawdzić
+z sandboxa (ruch do olx.pl i otodom.pl blokowany przez proxy). Ścieżki są zbudowane
+wg schematu działających listingów lubelskich (OLX `/sprzedaz/swidnik/`, Otodom
+`/lubelskie/swidnik/swidnik/swidnik`) — do potwierdzenia pierwszym skanem
+`scanner.yml`. Gdyby były błędne, scrapery zalogują puste strony i pominą miasto,
+bez wpływu na oferty lubelskie (ochrona przed masową dezaktywacją działa per źródło).
+
 ### Zmienione — 💎 „rabat" → „poniżej ceny rynkowej" w zakładce Okazje
 Słowo „rabat" sugerowało obniżkę ceny przez sprzedającego — a od tego jest na
 karcie osobny znacznik `💲↓`, więc dwa różne pojęcia chodziły pod jedną nazwą.

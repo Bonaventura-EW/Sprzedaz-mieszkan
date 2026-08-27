@@ -311,7 +311,7 @@ class SonarSprzedazy:
 
     def _tag_cross_portal_duplicates(self):
         """To samo mieszkanie wystawione na OLX i Otodom: identyczna cena,
-        powierzchnia ±1% i (gdy oba mają GPS) odległość <2 km.
+        powierzchnia ±1%, to samo miasto i (gdy oba mają GPS) odległość <2 km.
 
         Kanoniczna zostaje oferta z najlepszą precyzją coords (exact > street >
         approx), przy remisie Otodom. Duplikaty dostają `duplicate_of`
@@ -338,6 +338,13 @@ class SonarSprzedazy:
                     continue
                 if other['source'] == canonical['source']:
                     continue  # duplikaty w obrębie źródła to inny problem
+                # FIX 2026-08-27: przy obszarze z dwóch miast sama cena+metraż
+                # to za mało — bez GPS (a OLX go nie ma) identyczna kawalerka
+                # w Lublinie i w Świdniku sklejałaby się w jedną ofertę.
+                city_a = ((canonical.get('location') or {}).get('city') or '').lower()
+                city_b = ((other.get('location') or {}).get('city') or '').lower()
+                if city_a and city_b and city_a != city_b:
+                    continue
                 if other['price']['current'] != canonical['price']['current']:
                     continue
                 if abs(other['area_m2'] - canonical['area_m2']) > \
@@ -503,8 +510,8 @@ class SonarSprzedazy:
 
         # 3c. Walidacja przybliżonych współrzędnych Otodom względem DZIELNICY.
         # Otodom podaje geolokalizację — UŻYWAMY jej na mapie (zamiast wyrzucać),
-        # ale reverse geocodingiem sprawdzamy, czy pinezka jest w granicach Lublina
-        # i w dzielnicy zgodnej z ogłoszeniem. Pinezki w złej dzielnicy/poza miastem
+        # ale reverse geocodingiem sprawdzamy, czy pinezka jest w granicach miasta
+        # oferty i w dzielnicy zgodnej z ogłoszeniem. Pinezki w złej dzielnicy/poza miastem
         # odrzucamy → sekcja „bez GPS". Dotyczy coords 'approx' (exact/street są już
         # zweryfikowane wyżej). OLX nie ma coords, więc go to nie dotyczy.
         kept_otodom = stripped_coords = 0

@@ -1,6 +1,6 @@
 # SONAR SPRZEDAŻY MIESZKAŃ 🛰️🏠
 
-Automatyczny agent monitorujący oferty **sprzedaży mieszkań w Lublinie**
+Automatyczny agent monitorujący oferty **sprzedaży mieszkań w Lublinie i Świdniku**
 (źródła: **OLX** + **Otodom**) i zaznaczający je na mapie, z podziałem na
 **rynek pierwotny i wtórny**. Kolejny z rodziny sonarów (obok
 [SONAR-POKOJOWY](https://github.com/Bonaventura-EW/SONAR-POKOJOWY),
@@ -32,8 +32,8 @@ listy **„bez lokalizacji GPS"** pod mapą — nie udajemy, że wiemy gdzie są
 
 | Portal | Co dostajemy | Lokalizacja |
 |--------|-------------|-------------|
-| OLX (mieszkania na sprzedaż, Lublin) | cena, powierzchnia, cena/m², rynek, pokoje, piętro, opis | tylko ulica z tytułu/opisu (portal daje centroid miasta) |
-| Otodom (mieszkania na sprzedaż, Lublin) | cena, powierzchnia, cena/m², rynek, pokoje, piętro, opis, ulica | **dokładna** ze strony szczegółów (dla nowych ofert) |
+| OLX (mieszkania na sprzedaż, Lublin + Świdnik) | cena, powierzchnia, cena/m², rynek, pokoje, piętro, opis | tylko ulica z tytułu/opisu (portal daje centroid miasta) |
+| Otodom (mieszkania na sprzedaż, Lublin + Świdnik) | cena, powierzchnia, cena/m², rynek, pokoje, piętro, opis, ulica | **dokładna** ze strony szczegółów (dla nowych ofert) |
 
 Oba portale osadzają dane w JSON (`__PRERENDERED_STATE__` / `__NEXT_DATA__`).
 Rynek pierwotny/wtórny: OLX podaje go w listingu, Otodom na stronie szczegółów

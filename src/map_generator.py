@@ -36,6 +36,10 @@ def build_map_offer(offer: dict) -> dict:
         'market': offer.get('market') or 'nieokreslony',
         'rooms': offer.get('rooms'),
         'floor': offer.get('floor'),
+        # FIX 2026-08-27: miasto jedzie na front — Świdnik ma inny poziom cen niż
+        # Lublin, a bez tego pola ranking okazji porównywałby go do mediany Lublina
+        # i KAŻDE mieszkanie ze Świdnika wychodziłoby jako okazja.
+        'city': loc.get('city'),
         'district': loc.get('district'),
         'street': loc.get('street'),
         'coords': loc.get('coords'),

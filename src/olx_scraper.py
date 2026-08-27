@@ -39,8 +39,19 @@ except ImportError:  # pragma: no cover - zależne od środowiska
 from cid import olx_offer_id
 
 
-# Listing mieszkań na sprzedaż w Lublinie (rynek pierwotny + wtórny razem)
-LISTING_URL = "https://www.olx.pl/nieruchomosci/mieszkania/sprzedaz/lublin/"
+# FIX 2026-08-27: obszar zbierania to Lublin + Świdnik — osobny listing na miasto
+# (rynek pierwotny + wtórny razem). OLX dokleja do listingu wyniki „z okolicy",
+# więc Świdnik częściowo wpadał już z listingu lubelskiego, ale niekompletnie —
+# dlatego pobieramy go własnym listingiem, a `ALLOWED_CITIES` pilnuje, żeby nie
+# wpuścić przy okazji Mełgwi czy Piask.
+LISTING_URLS = {
+    'lublin': "https://www.olx.pl/nieruchomosci/mieszkania/sprzedaz/lublin/",
+    'swidnik': "https://www.olx.pl/nieruchomosci/mieszkania/sprzedaz/swidnik/",
+}
+ALLOWED_CITIES = set(LISTING_URLS)  # wg `cityNormalizedName` z listingu
+
+# zgodność wsteczna dla importów spoza modułu
+LISTING_URL = LISTING_URLS['lublin']
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
@@ -231,13 +242,26 @@ class OLXMieszkaniaScraper:
             return None
 
     def scrape(self, max_pages: int = 25) -> List[Dict]:
-        """Pobiera wszystkie strony listingu i zwraca znormalizowane oferty."""
-        print("🔍 OLX: scraping mieszkań na sprzedaż (Lublin)...")
+        """Pobiera listingi wszystkich obsługiwanych miast i zwraca oferty.
+
+        `seen_ids` jest wspólne dla miast: ta sama oferta bywa w obu listingach
+        (OLX dokleja wyniki „z okolicy"), a chcemy ją policzyć raz.
+        """
         offers: List[Dict] = []
         seen_ids = set()
+        for city, listing_url in LISTING_URLS.items():
+            self._scrape_city(city, listing_url, max_pages, offers, seen_ids)
+        print(f"✅ OLX: zebrano {len(offers)} ofert\n")
+        return offers
+
+    def _scrape_city(self, city: str, listing_url: str, max_pages: int,
+                     offers: List[Dict], seen_ids: set) -> None:
+        """Paginuje listing jednego miasta, dopisując oferty do `offers`."""
+        print(f"🔍 OLX: scraping mieszkań na sprzedaż ({city.capitalize()})...")
+        before = len(offers)
 
         for page in range(1, max_pages + 1):
-            url = LISTING_URL if page == 1 else f"{LISTING_URL}?page={page}"
+            url = listing_url if page == 1 else f"{listing_url}?page={page}"
             html = self._fetch(url)
             if not html:
                 break
@@ -250,13 +274,16 @@ class OLXMieszkaniaScraper:
             listing = (state.get('listing') or {}).get('listing') or {}
             ads = listing.get('ads') or []
             total = listing.get('totalElements')
-            print(f"📄 OLX strona {page}: {len(ads)} ogłoszeń (łącznie w serwisie: {total})")
+            print(f"📄 OLX {city} strona {page}: {len(ads)} ogłoszeń "
+                  f"(łącznie w serwisie: {total})")
 
             new_on_page = 0
             for ad in ads:
-                # OLX dokleja na końcu wyniki "z okolicy" — pilnujemy miasta
-                city = ((ad.get('location') or {}).get('cityNormalizedName') or '').lower()
-                if city and city != 'lublin':
+                # OLX dokleja na końcu wyniki "z okolicy" — pilnujemy miasta.
+                # Oferta z sąsiedniego miasta Z NASZEJ listy jest OK (dublet
+                # odsieje `seen_ids`); spoza listy — odrzucamy.
+                ad_city = ((ad.get('location') or {}).get('cityNormalizedName') or '').lower()
+                if ad_city and ad_city not in ALLOWED_CITIES:
                     continue
                 offer = normalize_ad(ad)
                 if not offer or offer['id'] in seen_ids:
@@ -269,7 +296,7 @@ class OLXMieszkaniaScraper:
             # powtórkami / wynikami "z okolicy" nie może ucinać kolejnych stron
             if not ads:
                 break
-            if total and len(seen_ids) >= total:
+            if total and len(offers) - before >= total:
                 break
             if new_on_page == 0 and page > 1:
                 # strona 2+ bez żadnej nowej oferty = koniec (OLX powtarza
@@ -278,8 +305,7 @@ class OLXMieszkaniaScraper:
 
             time.sleep(random.uniform(self.delay_min, self.delay_max))
 
-        print(f"✅ OLX: zebrano {len(offers)} ofert\n")
-        return offers
+        print(f"   → {city}: {len(offers) - before} ofert")
 
 
 if __name__ == "__main__":

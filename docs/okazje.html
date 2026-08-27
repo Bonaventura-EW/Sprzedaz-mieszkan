@@ -109,7 +109,7 @@ table.ok-tbl td.ttl a:hover{color:var(--green-700)}
             <div class="kpi-card"><h3>Okazji w rankingu</h3><div class="kpi-value" id="kpi-count">—</div><div class="kpi-sub" id="kpi-count-sub">z — aktywnych ofert</div></div>
             <div class="kpi-card"><h3>Najlepsza okazja</h3><div class="kpi-value" id="kpi-best">—</div><div class="kpi-sub" id="kpi-best-sub">—</div></div>
             <div class="kpi-card"><h3>Najniższa cena/m²</h3><div class="kpi-value" id="kpi-min">—</div><div class="kpi-sub" id="kpi-min-sub">—</div></div>
-            <div class="kpi-card"><h3>Mediana ceny/m² (Lublin)</h3><div class="kpi-value" id="kpi-med">—</div><div class="kpi-sub">odniesienie rynkowe</div></div>
+            <div class="kpi-card"><h3>Mediana ceny/m² (obszar)</h3><div class="kpi-value" id="kpi-med">—</div><div class="kpi-sub">odniesienie rynkowe</div></div>
         </div>
 
         <div class="chart-card">
@@ -146,6 +146,8 @@ table.ok-tbl td.ttl a:hover{color:var(--green-700)}
                     <span class="ok-lbl">Pokoje</span><span id="f-rooms"></span>
                 </div>
                 <div class="row">
+                    <span class="ok-lbl">Miasto</span>
+                    <select id="f-city"><option value="">wszystkie</option></select>
                     <span class="ok-lbl">Dzielnica</span>
                     <select id="f-district"><option value="">wszystkie</option></select>
                     <span class="ok-lbl">Cena</span>
@@ -156,7 +158,7 @@ table.ok-tbl td.ttl a:hover{color:var(--green-700)}
                     <input type="number" id="f-area-max" placeholder="do m²" step="5">
                 </div>
                 <div class="row">
-                    <input type="search" id="f-q" placeholder="szukaj: tytuł / dzielnica / ulica…">
+                    <input type="search" id="f-q" placeholder="szukaj: tytuł / miasto / dzielnica / ulica…">
                     <label class="tg"><input type="checkbox" id="f-new"> 🆕 tylko nowe (7 dni)</label>
                     <label class="tg"><input type="checkbox" id="f-priv"> 👤 tylko od właściciela</label>
                     <label class="tg"><input type="checkbox" id="f-drop"> 💲↓ tylko po obniżce</label>
@@ -184,15 +186,18 @@ table.ok-tbl td.ttl a:hover{color:var(--green-700)}
             <p class="method">
                 Okazja to oferta, której <b>cena za m² jest wyraźnie niższa od porównywalnych mieszkań</b>,
                 a nie po prostu tania — 40 m² za 300 tys. zł na Sławinie bywa lepszym interesem niż
-                to samo w Kośminku. Dla każdej aktywnej oferty szukamy więc mediany zł/m² w najwęższej
+                to samo w Kośminku. <b>Miasto jest częścią każdej grupy</b>: mieszkanie ze Świdnika
+                porównujemy ze Świdnikiem, nie z Lublinem — inaczej tańszy Świdnik wychodziłby
+                w całości jako okazja. Dla każdej aktywnej oferty szukamy mediany zł/m² w najwęższej
                 grupie, w której jest dość danych:
             </p>
             <ol class="method">
-                <li>dzielnica + liczba pokoi + rynek (min. 5 ofert),</li>
-                <li>dzielnica + liczba pokoi (min. 5 ofert),</li>
-                <li>dzielnica (min. 5 ofert),</li>
-                <li>liczba pokoi + rynek — cały Lublin (min. 8 ofert),</li>
-                <li>cały Lublin.</li>
+                <li>miasto + dzielnica + liczba pokoi + rynek (min. 5 ofert),</li>
+                <li>miasto + dzielnica + liczba pokoi (min. 5 ofert),</li>
+                <li>miasto + dzielnica (min. 5 ofert),</li>
+                <li>miasto + liczba pokoi + rynek (min. 8 ofert),</li>
+                <li>całe miasto (min. 8 ofert),</li>
+                <li>cały obserwowany obszar.</li>
             </ol>
             <p class="method">
                 <b>„X% poniżej ceny rynkowej"</b> = o tyle procent cena za m² tej oferty jest niższa
@@ -212,7 +217,7 @@ table.ok-tbl td.ttl a:hover{color:var(--green-700)}
                 sprawdź ogłoszenie źródłowe</b> przed decyzją.
             </p>
             <p class="method">
-                Ranking liczy tylko oferty <b>aktywne</b> i po deduplikacji OLX↔Otodom (to samo mieszkanie
+                Obserwowany obszar to <b>Lublin i Świdnik</b>. Ranking liczy tylko oferty <b>aktywne</b> i po deduplikacji OLX↔Otodom (to samo mieszkanie
                 z dwóch portali liczy się raz). Dane pochodzą z ostatniego skanu — patrz data w nagłówku.
             </p>
         </div>
@@ -232,7 +237,7 @@ let GLOBAL_MED = null;
 
 const S = {
     mode: 'discount', minDisc: 10, sort: 'disc',
-    src: new Set(), market: new Set(), rooms: new Set(), district: '',
+    src: new Set(), market: new Set(), rooms: new Set(), city: '', district: '',
     priceMin: null, priceMax: null, areaMin: null, areaMax: null,
     onlyNew: false, onlyPriv: false, onlyDrop: false, onlyGps: false, hideOdd: true, q: '',
 };
@@ -277,31 +282,39 @@ function oddReasons(o) {
 }
 
 // --- odniesienie: mediana zł/m² najwęższej grupy z wystarczającą próbką ------
+// Miasto jest częścią KAŻDEGO klucza — Świdnik ma inny poziom cen niż Lublin,
+// a bez tego każde mieszkanie ze Świdnika wychodziłoby jako okazja (porównanie
+// z medianą Lublina). Oferty bez pola `city` (dane sprzed rozszerzenia obszaru)
+// wpadają do jednej wspólnej grupy — czyli zachowują się jak wcześniej.
 function buildReferences(base) {
-    const g1 = {}, g2 = {}, g3 = {}, g4 = {};
+    const g1 = {}, g2 = {}, g3 = {}, g4 = {}, g5 = {};
     base.forEach(o => {
-        const d = o.district, rb = roomBucket(o.rooms), m = o.market || 'nieokreslony';
-        if (d && rb) (g1[d + '§' + rb + '§' + m] ??= []).push(o.price_per_m2);
-        if (d && rb) (g2[d + '§' + rb] ??= []).push(o.price_per_m2);
-        if (d)       (g3[d] ??= []).push(o.price_per_m2);
-        if (rb)      (g4[rb + '§' + m] ??= []).push(o.price_per_m2);
+        const c = o.city || '', d = o.district, rb = roomBucket(o.rooms), m = o.market || 'nieokreslony';
+        if (d && rb) (g1[c + '§' + d + '§' + rb + '§' + m] ??= []).push(o.price_per_m2);
+        if (d && rb) (g2[c + '§' + d + '§' + rb] ??= []).push(o.price_per_m2);
+        if (d)       (g3[c + '§' + d] ??= []).push(o.price_per_m2);
+        if (rb)      (g4[c + '§' + rb + '§' + m] ??= []).push(o.price_per_m2);
+        (g5[c] ??= []).push(o.price_per_m2);
     });
     const med = g => Object.fromEntries(Object.entries(g).map(([k, v]) => [k, {med: median(v), n: v.length}]));
-    return {g1: med(g1), g2: med(g2), g3: med(g3), g4: med(g4)};
+    return {g1: med(g1), g2: med(g2), g3: med(g3), g4: med(g4), g5: med(g5)};
 }
 function resolveRef(o, R) {
-    const d = o.district, rb = roomBucket(o.rooms), m = o.market || 'nieokreslony';
+    const c = o.city || '', d = o.district, rb = roomBucket(o.rooms), m = o.market || 'nieokreslony';
     const mLbl = MARKET_LABELS[m] || m;
+    const cLbl = o.city || 'obszar';
     let hit;
-    if (d && rb && (hit = R.g1[d + '§' + rb + '§' + m]) && hit.n >= 5)
+    if (d && rb && (hit = R.g1[c + '§' + d + '§' + rb + '§' + m]) && hit.n >= 5)
         return {value: hit.med, n: hit.n, label: `${d} · ${roomLabel(rb)} · ${mLbl}`};
-    if (d && rb && (hit = R.g2[d + '§' + rb]) && hit.n >= 5)
+    if (d && rb && (hit = R.g2[c + '§' + d + '§' + rb]) && hit.n >= 5)
         return {value: hit.med, n: hit.n, label: `${d} · ${roomLabel(rb)}`};
-    if (d && (hit = R.g3[d]) && hit.n >= 5)
+    if (d && (hit = R.g3[c + '§' + d]) && hit.n >= 5)
         return {value: hit.med, n: hit.n, label: d};
-    if (rb && (hit = R.g4[rb + '§' + m]) && hit.n >= 8)
-        return {value: hit.med, n: hit.n, label: `${roomLabel(rb)} · ${mLbl} · cały Lublin`};
-    return {value: GLOBAL_MED, n: ALL.length, label: 'cały Lublin'};
+    if (rb && (hit = R.g4[c + '§' + rb + '§' + m]) && hit.n >= 8)
+        return {value: hit.med, n: hit.n, label: `${roomLabel(rb)} · ${mLbl} · cały ${cLbl}`};
+    if ((hit = R.g5[c]) && hit.n >= 8)
+        return {value: hit.med, n: hit.n, label: `cały ${cLbl}`};
+    return {value: GLOBAL_MED, n: ALL.length, label: 'cały obszar'};
 }
 
 function priceDrop(o) {
@@ -319,6 +332,7 @@ function passes(o) {
     if (S.src.size && !S.src.has(o.source)) return false;
     if (S.market.size && !S.market.has(o.market || 'nieokreslony')) return false;
     if (S.rooms.size && !S.rooms.has(roomBucket(o.rooms))) return false;
+    if (S.city && (o.city || '') !== S.city) return false;
     if (S.district && o.district !== S.district) return false;
     if (S.priceMin != null && (o.price == null || o.price < S.priceMin)) return false;
     if (S.priceMax != null && (o.price == null || o.price > S.priceMax)) return false;
@@ -329,7 +343,8 @@ function passes(o) {
     if (S.onlyDrop && !o._drop) return false;
     if (S.onlyGps && !o.coords) return false;
     if (S.q) {
-        const hay = ((o.title || '') + ' ' + (o.district || '') + ' ' + (o.street || '')).toLowerCase();
+        const hay = ((o.title || '') + ' ' + (o.city || '') + ' ' +
+                     (o.district || '') + ' ' + (o.street || '')).toLowerCase();
         if (!hay.includes(S.q)) return false;
     }
     return true;
@@ -362,7 +377,7 @@ function card(o) {
         o.is_private_owner ? '<span class="badge b-priv">👤 właściciel</span>' : '',
         o._odd.length ? '<span class="badge b-warn">⚠️ nietypowa</span>' : '',
     ].join('');
-    const where = [o.district, o.street].filter(Boolean).map(esc).join(' · ') || 'lokalizacja nieznana';
+    const where = [o.city, o.district, o.street].filter(Boolean).map(esc).join(' · ') || 'lokalizacja nieznana';
     const mapBtn = o.coords ? `<a class="map" href="index.html#offer=${encodeURIComponent(o.id)}">📍 Mapa</a>` : '';
     const warn = o._odd.length
         ? `<div class="warn">⚠️ ${o._odd.map(esc).join(' · ')} — sprawdź ogłoszenie przed decyzją.</div>` : '';
@@ -390,6 +405,7 @@ const TCOLS = [
     ['Cena', o => fmtZl(o.price)],
     ['Pow.', o => fmtArea(o.area_m2)],
     ['Pok.', o => o.rooms ?? '—'],
+    ['Miasto', o => esc(o.city || '—')],
     ['Dzielnica', o => esc(o.district || '—')],
     ['Rynek', o => `<span class="badge b-${o.market || 'nieokreslony'}">${MARKET_LABELS[o.market] || 'nieokreśl.'}</span>`],
     ['Źródło', o => `<span class="badge b-${o.source}">${esc(SRC_LABELS[o.source] || o.source || '?')}</span>`],
@@ -478,6 +494,7 @@ function wireControls() {
     const on = (id, ev, fn) => document.getElementById(id).addEventListener(ev, e => { fn(e.target); SHOWN = 60; render(); });
     on('f-mindisc', 'change', el => S.minDisc = parseFloat(el.value) || 0);
     on('f-sort', 'change', el => S.sort = el.value);
+    on('f-city', 'change', el => S.city = el.value);
     on('f-district', 'change', el => S.district = el.value);
     on('f-price-min', 'input', el => S.priceMin = numOrNull(el));
     on('f-price-max', 'input', el => S.priceMax = numOrNull(el));
@@ -523,9 +540,12 @@ async function init() {
         const oddN = CAND.filter(o => o._odd.length).length;
         document.getElementById('odd-count').textContent = oddN ? `(${oddN})` : '';
 
-        const districts = [...new Set(ALL.map(o => o.district).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'pl'));
-        document.getElementById('f-district').insertAdjacentHTML('beforeend',
-            districts.map(d => `<option value="${esc(d)}">${esc(d)}</option>`).join(''));
+        const opts = (sel, values) => document.getElementById(sel).insertAdjacentHTML('beforeend',
+            values.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join(''));
+        const uniq = key => [...new Set(ALL.map(o => o[key]).filter(Boolean))]
+            .sort((a, b) => a.localeCompare(b, 'pl'));
+        opts('f-city', uniq('city'));
+        opts('f-district', uniq('district'));
 
         wireControls();
         document.getElementById('ok-loading').style.display = 'none';

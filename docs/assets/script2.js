@@ -17,7 +17,9 @@
  *  - culling poza widokiem robi sam renderer canvas (_pxBounds / _empty).
  */
 
-const LUBLIN_CENTER = [51.2465, 22.5684];
+// FIX 2026-08-27: widok startowy obejmuje Lublin i Świdnik (Świdnik leży
+// ~10 km na wschód od centrum Lublina) — środek przesunięty na wschód.
+const AREA_CENTER = [51.2380, 22.6150];
 const NEW_OFFER_DAYS = 7;
 const QUANTILE_COLORS = ['#15803d', '#4ca11e', '#84cc16', '#c4d62b', '#eab308',
                          '#f59e0b', '#f97316', '#ef4444', '#db2777', '#7c3aed'];
@@ -173,7 +175,7 @@ function computeStyle(o) {
 init();
 
 async function init() {
-    map = L.map('map', { preferCanvas: true }).setView(LUBLIN_CENTER, 12);
+    map = L.map('map', { preferCanvas: true }).setView(AREA_CENTER, 12);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; OpenStreetMap', maxZoom: 19,
         updateWhenZooming: false, keepBuffer: 2,

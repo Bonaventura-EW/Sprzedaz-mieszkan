@@ -33,10 +33,18 @@ from cid import otodom_offer_id
 from olx_scraper import strip_html  # ten sam helper czyszczenia HTML
 
 
-LISTING_URL = (
-    "https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/lubelskie/lublin/lublin/lublin"
-    "?ownerTypeSingleSelect=ALL&limit=72"
-)
+# FIX 2026-08-27: obszar zbierania to Lublin + Świdnik — osobny listing na miasto.
+# Ścieżka Otodom to województwo/powiat/gmina/miasto.
+_LISTING_QUERY = "?ownerTypeSingleSelect=ALL&limit=72"
+LISTING_URLS = {
+    'lublin': "https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/lubelskie/lublin/lublin/lublin"
+              + _LISTING_QUERY,
+    'swidnik': "https://www.otodom.pl/pl/wyniki/sprzedaz/mieszkanie/lubelskie/swidnik/swidnik/swidnik"
+               + _LISTING_QUERY,
+}
+
+# zgodność wsteczna dla importów spoza modułu
+LISTING_URL = LISTING_URLS['lublin']
 OFFER_BASE_URL = "https://www.otodom.pl/pl/oferta/"
 
 HEADERS = {
@@ -187,10 +195,10 @@ class OtodomMieszkaniaScraper:
             print(f"❌ Otodom: błąd pobierania {url}: {e}")
             return None
 
-    def _fetch_search_ads(self, page: int) -> Optional[dict]:
+    def _fetch_search_ads(self, page: int, listing_url: str = LISTING_URL) -> Optional[dict]:
         """Pobiera jedną stronę listingu z 1 ponowieniem; zwraca searchAds lub None."""
         for attempt in range(2):
-            html = self._fetch(f"{LISTING_URL}&page={page}")
+            html = self._fetch(f"{listing_url}&page={page}")
             if html:
                 data = extract_next_data(html)
                 if data:
@@ -200,7 +208,25 @@ class OtodomMieszkaniaScraper:
         return None
 
     def _scrape_listing(self, max_pages: int) -> List[Dict]:
-        """Pobiera CAŁY listing (wszystkie strony do totalPages).
+        """Pobiera CAŁE listingi wszystkich obsługiwanych miast.
+
+        `seen_ids`/`seen_slugs` są wspólne dla miast — ta sama oferta potrafi
+        wpaść z dwóch listingów, a ma się policzyć raz.
+        """
+        offers: List[Dict] = []
+        seen_ids = set()
+        seen_slugs = set()
+        for city, listing_url in LISTING_URLS.items():
+            before = len(offers)
+            self._scrape_city_listing(city, listing_url, max_pages,
+                                      offers, seen_ids, seen_slugs)
+            print(f"   → Otodom {city}: {len(offers) - before} ofert")
+        return offers
+
+    def _scrape_city_listing(self, city: str, listing_url: str, max_pages: int,
+                             offers: List[Dict], seen_ids: set,
+                             seen_slugs: set) -> None:
+        """Paginuje listing jednego miasta, dopisując oferty do `offers`.
 
         WAŻNE: nie przerywamy na pojedynczej pustej/nieudanej stronie — Otodom
         bywa kapryśny (transient pusta strona / chwilowy throttling), a wcześniejsze
@@ -208,16 +234,14 @@ class OtodomMieszkaniaScraper:
         listing powodował FAŁSZYWĄ dezaktywację ofert z dalszych stron. Przerywamy
         dopiero po kilku NIEUDANYCH stronach z rzędu.
         """
-        offers: List[Dict] = []
-        seen_ids = set()
-        seen_slugs = set()  # FIX 2026-06-23: druga linia obrony przed kartami-widmami
+        # seen_slugs: FIX 2026-06-23 — druga linia obrony przed kartami-widmami
         total_pages = 1
         consecutive_misses = 0
 
         for page in range(1, max_pages + 1):
             if page > total_pages:
                 break
-            search_ads = self._fetch_search_ads(page)
+            search_ads = self._fetch_search_ads(page, listing_url)
             items = (search_ads or {}).get('items') or []
             pagination = (search_ads or {}).get('pagination') or {}
             if pagination.get('totalPages'):
@@ -225,16 +249,16 @@ class OtodomMieszkaniaScraper:
 
             if not items:
                 consecutive_misses += 1
-                print(f"⚠️ Otodom: strona {page}/{total_pages} bez ofert "
+                print(f"⚠️ Otodom {city}: strona {page}/{total_pages} bez ofert "
                       f"({consecutive_misses} z rzędu)")
                 if consecutive_misses >= 3:
-                    print("⚠️ Otodom: 3 puste strony z rzędu — przerywam listing")
+                    print(f"⚠️ Otodom {city}: 3 puste strony z rzędu — przerywam listing")
                     break
                 time.sleep(random.uniform(self.delay_min, self.delay_max))
                 continue
             consecutive_misses = 0
 
-            print(f"📄 Otodom strona {page}/{total_pages}: {len(items)} ogłoszeń "
+            print(f"📄 Otodom {city} strona {page}/{total_pages}: {len(items)} ogłoszeń "
                   f"(łącznie w serwisie: {pagination.get('totalItems')})")
             for item in items:
                 offer = normalize_item(item)
@@ -248,8 +272,6 @@ class OtodomMieszkaniaScraper:
                 seen_slugs.add(item.get('slug'))
                 offers.append(offer)
             time.sleep(random.uniform(self.delay_min, self.delay_max))
-
-        return offers
 
     def fetch_details(self, offer: Dict) -> Dict:
         """Dociąga ze strony szczegółów: dokładne coords, rynek, opis, piętro/pokoje."""
@@ -312,7 +334,8 @@ class OtodomMieszkaniaScraper:
                           (reszta nowych ofert dobierze się następnym razem).
         """
         known_offers = known_offers or {}
-        print("🔍 Otodom: scraping mieszkań na sprzedaż (Lublin)...")
+        print("🔍 Otodom: scraping mieszkań na sprzedaż "
+              f"({', '.join(c.capitalize() for c in LISTING_URLS)})...")
         offers = self._scrape_listing(max_pages)
         print(f"✅ Otodom: listing dał {len(offers)} ofert")
 

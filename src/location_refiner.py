@@ -9,7 +9,8 @@ Ten moduł:
 1. wyciąga kandydatów na ulicę z tekstu (regex po prefiksach ul./ulica/al.),
 2. normalizuje polską odmianę (dopełniacz → mianownik: „Wyżynnej" → „Wyżynna"),
 3. geokoduje przez Nominatim (zapytanie strukturalne street+city, cache na
-   dysku, limit 1 req/s) i zwraca punkt TYLKO gdy leży w Lublinie.
+   dysku, limit 1 req/s) i zwraca punkt TYLKO gdy leży w mieście oferty
+   (obsługiwane miasta: patrz CITIES — Lublin i Świdnik).
 
 Oferty z dokładnymi coords (Otodom, precyzja 'exact') nie są ruszane.
 Po udanym geokodowaniu oferta dostaje precyzję 'street' (lepsze niż 'approx',
@@ -33,8 +34,64 @@ HEADERS = {'User-Agent': 'SONAR-SPRZEDAZY/1.0 (github.com/Bonaventura-EW/Sprzeda
 CACHE_FILE = Path(paths.DATA_DIR) / "geocoding_cache.json"
 NEGATIVE_TTL_S = 7 * 24 * 3600  # nieudane zapytania ponawiamy po tygodniu
 
-# Granice Lublina z marginesem — wynik spoza nich odrzucamy
-LUBLIN_BBOX = {'lat_min': 51.10, 'lat_max': 51.36, 'lon_min': 22.40, 'lon_max': 22.78}
+# FIX 2026-08-27: obszar zbierania rozszerzony o Świdnik (Lublin + miasto
+# Świdnik). Zamiast zaszytego wszędzie „Lublin" mamy rejestr miast — dodanie
+# kolejnego to jeden wpis tutaj, a nie polowanie na literały w trzech plikach.
+# Granice z marginesem; wynik geokodowania spoza bboxa swojego miasta odrzucamy.
+# UWAGA: bbox Lublina geometrycznie zawiera Świdnik (miasta sąsiadują), więc sam
+# bbox nie rozróżnia miast — od tego jest sprawdzenie nazwy w `display_name`
+# (geokodowanie) i `city_consistent` (reverse).
+CITIES = {
+    'lublin': {
+        'name': 'Lublin',
+        'bbox': {'lat_min': 51.10, 'lat_max': 51.36, 'lon_min': 22.40, 'lon_max': 22.78},
+    },
+    'swidnik': {
+        'name': 'Świdnik',
+        'bbox': {'lat_min': 51.19, 'lat_max': 51.26, 'lon_min': 22.63, 'lon_max': 22.78},
+    },
+}
+DEFAULT_CITY = 'lublin'
+
+# odmiana i zapis bez ogonków: „Świdniku", „swidnik", „Lublinie" → klucz miasta
+_CITY_ALIASES = {
+    'lublin': 'lublin', 'lublinie': 'lublin', 'lublina': 'lublin',
+    'swidnik': 'swidnik', 'swidniku': 'swidnik', 'swidnika': 'swidnik',
+}
+_DIACRITICS = str.maketrans('ąćęłńóśżźĄĆĘŁŃÓŚŻŹ', 'acelnoszzACELNOSZZ')
+
+
+def city_key(name: Optional[str]) -> Optional[str]:
+    """Nazwa miasta (dowolna odmiana/zapis) → klucz w CITIES, albo None gdy to
+    miasto spoza obsługiwanego obszaru (np. Warszawa)."""
+    if not name:
+        return None
+    s = str(name).strip().lower().translate(_DIACRITICS)
+    s = re.sub(r'[^a-z]', '', s)
+    return _CITY_ALIASES.get(s)
+
+
+def offer_city_key(offer: Dict) -> str:
+    """Klucz miasta oferty; gdy ogłoszenie go nie podaje — miasto bazowe."""
+    return city_key((offer.get('location') or {}).get('city')) or DEFAULT_CITY
+
+
+def city_consistent(stated: Optional[str], found: Optional[str]) -> bool:
+    """Czy miasto z reverse geocodingu pinezki pasuje do obsługiwanego obszaru
+    i do miasta podanego w ogłoszeniu.
+
+    Leniwie: brak wyniku z reverse albo brak miasta w ogłoszeniu → nie blokujemy.
+    Miasto spoza CITIES (Warszawa, Mełgiew) → False, pinezka na pewno błędna.
+    """
+    if not found:
+        return True
+    fk = city_key(found)
+    if fk is None:
+        return False
+    sk = city_key(stated)
+    if sk is None:
+        return True
+    return sk == fk
 
 # ulica musi zaczynać się wielką literą; łapiemy do 3 słów (np. "Gen. Urbanowicza").
 # Prefiks „ul"/„al" jest case-insensitive (sprzedający piszą „Al. Racławickie",
@@ -53,7 +110,8 @@ _ABBR = {'ul', 'al', 'gen', 'św', 'sw', 'płk', 'plk', 'ks', 'pl', 'bp', 'dr',
 
 # słowa, które NIE są nazwą ulicy (ucinamy je z końca dopasowania)
 _STOP_WORDS = {
-    'dzielnica', 'oferta', 'lublin', 'lublinie', 'lublina', 'mieszkanie',
+    'dzielnica', 'oferta', 'lublin', 'lublinie', 'lublina',
+    'świdnik', 'świdniku', 'świdnika', 'mieszkanie',
     'mieszkania', 'cena', 'nr', 'obok', 'blisko', 'oraz', 'czyli', 'gmina',
     'okolice', 'najważniejsze', 'sprzedam', 'sprzedaż', 'pokoje', 'pokoi',
     'parter', 'piętro', 'osiedle',
@@ -145,14 +203,15 @@ class StreetGeocoder:
         with open(self.cache_file, 'w', encoding='utf-8') as f:
             json.dump(self.cache, f, ensure_ascii=False, indent=1)
 
-    def _query(self, street: str) -> Optional[Dict]:
+    def _query(self, street: str, ck: str = DEFAULT_CITY) -> Optional[Dict]:
         """Jedno zapytanie strukturalne do Nominatim (z rate limitem)."""
+        city = CITIES[ck]
         wait = self.delay_s - (time.time() - self._last_request)
         if wait > 0:
             time.sleep(wait)
         try:
             r = requests.get(NOMINATIM_URL, params={
-                'street': street, 'city': 'Lublin', 'country': 'Poland',
+                'street': street, 'city': city['name'], 'country': 'Poland',
                 'format': 'json', 'limit': 3,
             }, headers=HEADERS, timeout=15)
             self._last_request = time.time()
@@ -169,17 +228,28 @@ class StreetGeocoder:
             # (np. 'Lublinie') dopasowuje samo miasto i pinezka ląduje w centrum
             if res.get('class') != 'highway':
                 continue
-            if 'Lublin' not in res.get('display_name', ''):
+            # nazwa miasta w adresie ODRÓŻNIA miasta — bboxy Lublina i Świdnika
+            # zachodzą na siebie, więc sam bbox by tu nie wystarczył
+            if city['name'] not in res.get('display_name', ''):
                 continue
-            if not (LUBLIN_BBOX['lat_min'] <= lat <= LUBLIN_BBOX['lat_max']
-                    and LUBLIN_BBOX['lon_min'] <= lon <= LUBLIN_BBOX['lon_max']):
+            bbox = city['bbox']
+            if not (bbox['lat_min'] <= lat <= bbox['lat_max']
+                    and bbox['lon_min'] <= lon <= bbox['lon_max']):
                 continue
             return {'lat': lat, 'lon': lon, 'name': res.get('name') or street}
         return None
 
-    def geocode_street(self, street: str) -> Optional[Dict]:
-        """Geokoduje ulicę (z wariantami odmiany). Zwraca {'lat','lon','name'} lub None."""
-        key = street.lower()
+    def geocode_street(self, street: str, city: Optional[str] = None) -> Optional[Dict]:
+        """Geokoduje ulicę w danym mieście (z wariantami odmiany).
+
+        `city` to nazwa miasta albo jego klucz z CITIES; None → miasto bazowe.
+        Zwraca {'lat','lon','name'} lub None.
+        """
+        ck = city_key(city) or DEFAULT_CITY
+        # Klucz cache dla miasta bazowego zostaje BEZ prefiksu — inaczej cały
+        # data/geocoding_cache.json (tysiące wpisów) stałby się zimny i kolejne
+        # skany przepalałyby budżet 100 zapytań na ponowne geokodowanie Lublina.
+        key = street.lower() if ck == DEFAULT_CITY else f"{ck}|{street.lower()}"
         if key in self.cache:
             entry = self.cache[key]
             if entry.get('result'):
@@ -195,7 +265,7 @@ class StreetGeocoder:
             if self.max_live is not None and self.live_requests >= self.max_live:
                 budget_exhausted = True
                 break
-            result = self._query(variant)
+            result = self._query(variant, ck)
             if result:
                 break
         if result is not None or not budget_exhausted:
@@ -308,9 +378,12 @@ def street_candidates(offer: Dict) -> List[str]:
     return cands
 
 
-def _in_lublin(coords: Dict) -> bool:
-    return (LUBLIN_BBOX['lat_min'] <= coords['lat'] <= LUBLIN_BBOX['lat_max']
-            and LUBLIN_BBOX['lon_min'] <= coords['lon'] <= LUBLIN_BBOX['lon_max'])
+def _in_city(coords: Dict, ck: str = DEFAULT_CITY) -> bool:
+    """Czy punkt leży w granicach (z marginesem) danego miasta."""
+    bbox = CITIES[ck]['bbox']
+    return (bbox['lat_min'] <= coords['lat'] <= bbox['lat_max']
+            and bbox['lon_min'] <= coords['lon'] <= bbox['lon_max'])
+
 
 
 def district_matches(stated: str, found: str) -> bool:
@@ -328,8 +401,8 @@ def district_matches(stated: str, found: str) -> bool:
 def otodom_coords_plausible(offer: Dict, geocoder: StreetGeocoder) -> bool:
     """Czy współrzędne Otodom są na tyle wiarygodne, by użyć ich na mapie.
 
-    Mechanizm: pinezka musi być w granicach Lublina, a dzielnica wykryta z reverse
-    geocodingu pinezki musi zgadzać się z dzielnicą podaną w ogłoszeniu. Dzięki
+    Mechanizm: pinezka musi być w granicach miasta oferty, a dzielnica wykryta
+    z reverse geocodingu pinezki musi zgadzać się z dzielnicą podaną w ogłoszeniu. Dzięki
     temu używamy lokalizacji z Otodom (zamiast ją wyrzucać), ale odrzucamy pinezki
     stojące w złym miejscu. Leniwie: gdy reverse niedostępny (budżet), zostawiamy
     coords (korzystamy z lokalizacji Otodom; weryfikacja dobierze się w kolejnym skanie).
@@ -338,13 +411,12 @@ def otodom_coords_plausible(offer: Dict, geocoder: StreetGeocoder) -> bool:
     coords = loc.get('coords')
     if not coords:
         return False
-    if not _in_lublin(coords):
-        return False  # poza Lublinem — pinezka na pewno błędna
+    if not _in_city(coords, offer_city_key(offer)):
+        return False  # poza miastem oferty — pinezka na pewno błędna
     addr = geocoder.reverse_address(coords['lat'], coords['lon'])
     if addr is None:
         return True  # nie zweryfikowano (budżet/błąd) — używamy lokalizacji Otodom
-    city = addr.get('city')
-    if city and 'lublin' not in city.lower():
+    if not city_consistent(loc.get('city'), addr.get('city')):
         return False
     if not district_matches(loc.get('district'), addr.get('district')):
         loc['district_mismatch'] = True
@@ -365,22 +437,21 @@ def district_consistent(offer: Dict, geocoder: StreetGeocoder) -> bool:
     Leniwie:
     - brak dzielnicy w ogłoszeniu (np. OLX) → True (nie ma czym walidować),
     - brak reverse (wyczerpany budżet/błąd) → True (dobierze się w kolejnym skanie).
-    Poza Lublinem lub inna dzielnica → False (pinezka błędna).
+    Poza miastem oferty lub inna dzielnica → False (pinezka błędna).
     """
     loc = offer.get('location') or {}
     coords = loc.get('coords')
     if not coords:
         return False
-    if not _in_lublin(coords):
+    if not _in_city(coords, offer_city_key(offer)):
         return False
+    addr = geocoder.reverse_address(coords['lat'], coords['lon'])
+    if addr is not None and not city_consistent(loc.get('city'), addr.get('city')):
+        return False  # pinezka w innym mieście niż ogłoszenie
     if not loc.get('district'):
         return True  # brak deklarowanej dzielnicy — nie walidujemy (np. OLX)
-    addr = geocoder.reverse_address(coords['lat'], coords['lon'])
     if addr is None:
         return True  # nie zweryfikowano (budżet/błąd) — zostawiamy
-    city = addr.get('city')
-    if city and 'lublin' not in city.lower():
-        return False
     if not district_matches(loc.get('district'), addr.get('district')):
         loc['district_mismatch'] = True
         return False
@@ -414,8 +485,9 @@ def verify_otodom_coords(offer: Dict, geocoder: StreetGeocoder,
         return False  # pinezka stoi na podanej ulicy — OK, nie ruszamy
 
     # pinezka jest na innej ulicy niż podana → przenieś na podaną (jeśli geokodowalna)
+    ck = offer_city_key(offer)
     for c in cands:
-        geo = geocoder.geocode_street(c)
+        geo = geocoder.geocode_street(c, ck)
         if geo and haversine_km(coords, geo) > min_dist_km:
             loc['coords'] = {'lat': geo['lat'], 'lon': geo['lon']}
             loc['coords_precision'] = 'street'
@@ -441,8 +513,9 @@ def refine_offer_location(offer: Dict, geocoder: StreetGeocoder) -> bool:
     text = (offer.get('title') or '') + '\n' + (offer.get('description') or '')
     candidates.extend(c for c in extract_street_candidates(text) if c not in candidates)
 
+    ck = offer_city_key(offer)
     for candidate in candidates:
-        result = geocoder.geocode_street(candidate)
+        result = geocoder.geocode_street(candidate, ck)
         if result:
             loc['coords'] = {'lat': result['lat'], 'lon': result['lon']}
             loc['coords_precision'] = 'street'
