@@ -10,7 +10,7 @@ how: Rejestr `CITIES` w location_refiner jako jedno źródło prawdy (nazwa + bb
 surface: src/location_refiner.py, src/olx_scraper.py, src/otodom_scraper.py, src/main.py, src/map_generator.py, docs/okazje.html, docs/assets/script2.js, tests/test_location_refiner.py
 generality: family
 propagate: maybe
-commit: (uzupełniane przy commicie)
+commit: 8da1871
 ---
 
 # Kontekst dla braci
