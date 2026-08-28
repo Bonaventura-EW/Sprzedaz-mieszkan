@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1787331376.6974812
+  "ts": 1787942981.5759964
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -14114,5 +14114,65 @@
    "city": "Świdnik"
   },
   "ts": 1787852595.26009
+ },
+ "nowy świat.dziesiąt": {
+  "result": null,
+  "ts": 1787942983.1568933
+ },
+ "dr. m.m": {
+  "result": {
+   "lat": 51.2376421,
+   "lon": 22.5407584,
+   "name": "Doktora Wacława Lasockiego"
+  },
+  "ts": 1787942985.2261543
+ },
+ "narutowicza 64": {
+  "result": null,
+  "ts": 1787942987.7892246
+ },
+ "koncertowa 18": {
+  "result": null,
+  "ts": 1787942989.4388711
+ },
+ "rva:51.2816,22.5850": {
+  "result": {
+   "road": "Goździkowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1787942991.092308
+ },
+ "rva:51.2428,22.5935": {
+  "result": {
+   "road": "Hutnicza",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1787942992.3908906
+ },
+ "rva:51.2700,22.5420": {
+  "result": {
+   "road": "Melomanów",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787942994.1524773
+ },
+ "rva:51.2561,22.5509": {
+  "result": {
+   "road": "Niccolo Paganiniego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1787942995.8067808
+ },
+ "rva:51.2802,22.5424": {
+  "result": {
+   "road": "Mirosława Dereckiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1787942997.1981993
  }
 }
