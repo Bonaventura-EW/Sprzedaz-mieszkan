@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1787382254.1681075
+  "ts": 1788007571.7516348
  },
  "pozytywistów": {
   "result": {
@@ -10029,7 +10029,7 @@
  },
  "jana sawy 9": {
   "result": null,
-  "ts": 1787382255.4636424
+  "ts": 1788007575.0188677
  },
  "iwaszkiewicza": {
   "result": {
@@ -14174,5 +14174,41 @@
    "city": "Lublin"
   },
   "ts": 1787942997.1981993
+ },
+ "piękna": {
+  "result": {
+   "lat": 51.2259998,
+   "lon": 22.5710976,
+   "name": "Piękna"
+  },
+  "ts": 1788007573.3877285
+ },
+ "swidnik|ratajczaka": {
+  "result": {
+   "lat": 51.2127309,
+   "lon": 22.6912835,
+   "name": "Bronisława Ratajczaka"
+  },
+  "ts": 1788007576.2729318
+ },
+ "szukasz": {
+  "result": null,
+  "ts": 1788007577.867333
+ },
+ "rva:51.2103,22.6916": {
+  "result": {
+   "road": "Klonowa",
+   "district": "Osiedle Polesie",
+   "city": "Świdnik"
+  },
+  "ts": 1788007579.724059
+ },
+ "rva:51.2586,22.5559": {
+  "result": {
+   "road": "Organowa",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788007581.4760845
  }
 }
