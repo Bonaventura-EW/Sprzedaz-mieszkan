@@ -10289,7 +10289,7 @@
  },
  "skrzatów 2": {
   "result": null,
-  "ts": 1787417143.3817325
+  "ts": 1788031690.3308518
  },
  "kruka": {
   "result": {
@@ -14210,5 +14210,13 @@
    "city": "Lublin"
   },
   "ts": 1788007581.4760845
+ },
+ "swidnik|lotników polskich": {
+  "result": {
+   "lat": 51.2268732,
+   "lon": 22.7003637,
+   "name": "Lotników Polskich"
+  },
+  "ts": 1788031691.7746263
  }
 }
