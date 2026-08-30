@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1787503674.4266667
+  "ts": 1788117790.7084527
  },
  "mełgiewskiej": {
   "result": {
@@ -6393,7 +6393,7 @@
  },
  "fabryczna 7": {
   "result": null,
-  "ts": 1787503678.193959
+  "ts": 1788117792.4666135
  },
  "feliksa nowowiejskiego": {
   "result": {
@@ -10077,7 +10077,7 @@
  },
  "aleja spódzielczości pracy": {
   "result": null,
-  "ts": 1787503680.8144243
+  "ts": 1788117795.3589907
  },
  "rva:51.2658,22.5762": {
   "result": {
@@ -14218,5 +14218,37 @@
    "name": "Lotników Polskich"
   },
   "ts": 1788031691.7746263
+ },
+ "na stoku": {
+  "result": {
+   "lat": 51.222692,
+   "lon": 22.5273998,
+   "name": "Na Stoku"
+  },
+  "ts": 1788117797.033469
+ },
+ "swidnik|tuwima": {
+  "result": {
+   "lat": 51.2210522,
+   "lon": 22.7026707,
+   "name": "Juliana Tuwima"
+  },
+  "ts": 1788117798.7983272
+ },
+ "rva:51.2507,22.5475": {
+  "result": {
+   "road": "Stanisława Leszczyńskiego",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1788117800.7644446
+ },
+ "rva:51.2227,22.5274": {
+  "result": {
+   "road": "Na Stoku",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1788117802.426838
  }
 }
