@@ -2285,7 +2285,7 @@
  },
  "nadbystrzycka 74": {
   "result": null,
-  "ts": 1787590768.9219348
+  "ts": 1788211938.8378193
  },
  "kaczeńcowa": {
   "result": {
@@ -2673,7 +2673,7 @@
  },
  "dr k. jaczewskiego": {
   "result": null,
-  "ts": 1785147219.6699343
+  "ts": 1788211940.456178
  },
  "ogrodowa śródmieście": {
   "result": null,
@@ -14306,5 +14306,21 @@
    "city": "Lublin"
   },
   "ts": 1788184915.059986
+ },
+ "rva:51.2582,22.5677": {
+  "result": {
+   "road": "Doktora Kazimierza Jaczewskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1788211942.2453868
+ },
+ "rva:51.2548,22.4736": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Szerokie",
+   "city": "Lublin"
+  },
+  "ts": 1788211943.6392548
  }
 }
