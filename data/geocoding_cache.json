@@ -9829,7 +9829,7 @@
  },
  "niepodledłości": {
   "result": null,
-  "ts": 1787556807.2302296
+  "ts": 1788184898.7019196
  },
  "rva:51.2389,22.5092": {
   "result": {
@@ -14250,5 +14250,61 @@
    "city": "Lublin"
   },
   "ts": 1788117802.426838
+ },
+ "powstania styczniowego": {
+  "result": {
+   "lat": 51.2442268,
+   "lon": 22.5010758,
+   "name": "Powstania Styczniowego"
+  },
+  "ts": 1788184899.9938943
+ },
+ "leszczyńskiego": {
+  "result": {
+   "lat": 51.2502869,
+   "lon": 22.5500381,
+   "name": "Stanisława Leszczyńskiego"
+  },
+  "ts": 1788184901.5027032
+ },
+ "przybylskiego": {
+  "result": {
+   "lat": 51.2147231,
+   "lon": 22.5751915,
+   "name": "Jacka Przybylskiego"
+  },
+  "ts": 1788184902.8574142
+ },
+ "rva:51.2520,22.5100": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1788184910.8739932
+ },
+ "rva:51.2442,22.5011": {
+  "result": {
+   "road": "Powstania Styczniowego",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1788184912.2094665
+ },
+ "rva:51.2503,22.5500": {
+  "result": {
+   "road": "Stanisława Leszczyńskiego",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1788184913.6867213
+ },
+ "rva:51.2147,22.5752": {
+  "result": {
+   "road": "Jacka Przybylskiego",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1788184915.059986
  }
 }
