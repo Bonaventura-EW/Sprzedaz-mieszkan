@@ -14322,5 +14322,45 @@
    "city": "Lublin"
   },
   "ts": 1788211943.6392548
+ },
+ "jastrzębiej": {
+  "result": {
+   "lat": 51.2348198,
+   "lon": 22.5895133,
+   "name": "Jastrzębia"
+  },
+  "ts": 1788263192.9541068
+ },
+ "piekarskiej": {
+  "result": {
+   "lat": 51.2254185,
+   "lon": 22.5487025,
+   "name": "Piekarska"
+  },
+  "ts": 1788263195.8020504
+ },
+ "rva:51.2081,22.5294": {
+  "result": {
+   "road": "Janowska",
+   "district": "Zemborzyce",
+   "city": "Lublin"
+  },
+  "ts": 1788263197.5607271
+ },
+ "rva:51.2348,22.5895": {
+  "result": {
+   "road": "Jastrzębia",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1788263199.3149335
+ },
+ "rva:51.2394,22.5138": {
+  "result": {
+   "road": "Pana Wołodyjowskiego",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1788263201.0702338
  }
 }
