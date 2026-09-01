@@ -13273,7 +13273,7 @@
  },
  "podzamcze 4": {
   "result": null,
-  "ts": 1787677212.9594057
+  "ts": 1788290865.0330853
  },
  "prusa 2": {
   "result": null,
@@ -13281,7 +13281,7 @@
  },
  "skierki 7": {
   "result": null,
-  "ts": 1787677215.8109708
+  "ts": 1788290866.5048575
  },
  "rva:51.2524,22.5702": {
   "result": {
@@ -14362,5 +14362,65 @@
    "city": "Lublin"
   },
   "ts": 1788263201.0702338
+ },
+ "zimowej": {
+  "result": {
+   "lat": 51.2346782,
+   "lon": 22.5985315,
+   "name": "Zimowa"
+  },
+  "ts": 1788290869.121801
+ },
+ "niepodleglosci": {
+  "result": {
+   "lat": 51.2563198,
+   "lon": 22.594525,
+   "name": "Niepodległości"
+  },
+  "ts": 1788290870.5694964
+ },
+ "tadeusza szeligowskiego 15": {
+  "result": null,
+  "ts": 1788290872.020049
+ },
+ "rva:51.2697,22.5163": {
+  "result": {
+   "road": "Kasztelańska",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1788290873.5854328
+ },
+ "rva:51.2082,22.5439": {
+  "result": {
+   "road": null,
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1788290874.9031062
+ },
+ "rva:51.2563,22.5945": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1788290876.3385572
+ },
+ "rva:51.2648,22.5597": {
+  "result": {
+   "road": "Tadeusza Szeligowskiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788290877.7977464
+ },
+ "rva:51.2191,22.7038": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1788290879.264723
  }
 }
