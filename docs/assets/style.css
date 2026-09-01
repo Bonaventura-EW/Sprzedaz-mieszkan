@@ -191,6 +191,23 @@ body {
 /* markery divIcon nie mogą mieć tła Leafleta */
 .pin-marker, .square-marker { background: transparent; border: none; }
 
+/* ===== Popup pinezki-stosu (wiele ofert pod jednym adresem) ===== */
+.stack-head { font-weight: 800; font-size: 14px; margin-bottom: 4px; }
+.stack-where { font-size: 12px; color: #4b5563; margin-bottom: 6px; }
+.stack-list { max-height: 260px; overflow-y: auto; margin: 0 -4px; }
+.stack-row {
+    display: block; text-decoration: none; color: inherit;
+    padding: 6px 8px; border-radius: 8px; border-top: 1px solid #eef1f4;
+}
+.stack-row:first-child { border-top: none; }
+.stack-row:hover { background: #f1f5f9; }
+.stack-row-focus { background: #fef9c3; box-shadow: inset 0 0 0 2px #eab308; }
+.stack-row-top { font-size: 14px; font-weight: 800; color: var(--green-700); }
+.stack-row-meta { font-size: 11px; color: #4b5563; margin: 1px 0; }
+.stack-row-title { font-size: 12px; color: #1f2937; line-height: 1.25;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.stack-inactive { color: #dc2626; font-weight: 700; font-size: 10px; }
+
 /* ===== Oferty bez GPS ===== */
 #unlocalised-bar { text-align: center; padding: 8px; background: #fef9c3; border-top: 1px solid #fde047; cursor: pointer; font-size: 13px; color: #854d0e; }
 #unlocalised-section { padding: 12px 20px; background: #fefce8; border-top: 2px solid #eab308; max-height: 320px; overflow-y: auto; }

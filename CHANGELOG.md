@@ -2,6 +2,31 @@
 
 ## [Niewydane]
 
+### Naprawione — grupowanie pinezek na identycznych współrzędnych (klikalność)
+Precyzja `street` (geokodowanie ulicy bez numeru domu, `location_refiner.py`)
+zwraca jeden reprezentatywny punkt dla całej ulicy, więc każda oferta bez numeru
+na danej ulicy lądowała w dokładnie tym samym `lat/lon`. Na canvasie hit-testing
+trafiał tylko wierzchni kształt — reszta była wizualnie i funkcjonalnie
+niedostępna. Na naszych danych (`docs/data.json`) to **463 punktów-stosów i 4410
+ofert nie do otwarcia**, rekordowo **257 ofert w jednym punkcie**
+(np. ul. Księdza Ludwika Zalewskiego).
+- `docs/assets/script2.js` — przed rysowaniem grupuję oferty po zaokrąglonych
+  współrzędnych (`lat.toFixed(6),lon.toFixed(6)`). Grupa 1-elementowa idzie starą
+  ścieżką; większa dostaje **jedną pinezkę tego samego kształtu** (kropla/kwadrat)
+  z **liczbą ofert w środku** i kolorem najtańszej pozycji (wg ceny/m²).
+- Popup stosu: nagłówek „N ofert pod tym adresem" + **przewijalna, płaska lista**
+  posortowana od najtańszej; każdy wiersz to link do ogłoszenia (`http(s)`-only).
+  Skala u nas bywa duża (257) → lista scrolluje się (`max-height`).
+- W rejestrze `markerById` **każde id z grupy** wskazuje ten sam marker, więc
+  deep-link `#offer=<id>` do oferty w stosie otwiera popup i **przewija do jej
+  wiersza** (podświetlenie `.stack-row-focus`).
+- `docs/assets/style.css` — style listy stosu; `docs/index.html` — bump
+  `style.css`/`script2.js` na `?v=9` (cache-busting).
+- Propagacja z **SONAR-POKOJOWY** (`2026-08-31-coincident-marker-stacks`,
+  issue #8). U brata to Leaflet `L.divIcon`; u nas przeniesione na renderer
+  canvas (własne klasy `Path`), a „podświetlenie karty w panelu" zastąpione
+  linkiem, bo nie mamy panelu kart — tylko popup.
+
 ### Dodane — 💲↓ znacznik obniżki w Okazjach prowadzi do historii ceny
 Znacznik `💲↓ <kwota>` na karcie w zakładce Okazje mówił, że sprzedający zszedł
 z ceny, ale nie dawało się sprawdzić kiedy i z jakiego poziomu. Teraz jest
