@@ -166,6 +166,7 @@ body {
 .chart-card.flow-outflow::before { background: linear-gradient(90deg, #e8624c, #f0a35e); }
 .chart-card.flow-inflow::before  { background: linear-gradient(90deg, #2fa66f, #7fd8ac); }
 .chart-card.flow-react::before   { background: linear-gradient(90deg, #7c6cf0, #b4a9f5); }
+.chart-card.flow-promoted::before { background: linear-gradient(90deg, #e0a020, #f4cf6a); }
 .c-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
 .c-sub { margin-top: 6px; font-family: var(--font-display); font-size: 13px; color: var(--text-secondary); }
 .c-stats { margin-top: 14px; display: flex; gap: 22px; flex-wrap: wrap;
@@ -306,7 +307,8 @@ let isDragging = false, dragStartX = null, dragCurX = null;
 let OUTFLOW = {};
 let INFLOW = {};
 let REACT = {};
-let FLOWS = [];   // instancje wykresów przepływu (odpływ / napływ / reaktywacje)
+let PROMOTED = {};
+let FLOWS = [];   // instancje wykresów przepływu (odpływ / napływ / reaktywacje / wyróżnienia)
 
 function toggleTheme(){
   const html = document.documentElement;
@@ -363,13 +365,15 @@ async function loadAndRender(){
   }
   const endTsOf = key => (PROFILES[key] && PROFILES[key].points.length)
     ? PROFILES[key].points[PROFILES[key].points.length-1][0] : null;
-  OUTFLOW = {}; INFLOW = {}; REACT = {};
+  OUTFLOW = {}; INFLOW = {}; REACT = {}; PROMOTED = {};
   for (const [key, arr] of Object.entries(trend.outflow || {}))
     OUTFLOW[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
   for (const [key, arr] of Object.entries(trend.inflow || {}))
     INFLOW[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
   for (const [key, arr] of Object.entries(trend.reactivations || {}))
     REACT[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
+  for (const [key, arr] of Object.entries(trend.promoted || {}))
+    PROMOTED[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
   buildUI(trend.generated);
 }
 
@@ -734,6 +738,14 @@ const FLOW_CONFIGS = [
     legendDaily: 'Wróciło danego dnia', statLabel: 'Śr. reaktywacji/dzień', statCls: 'flat',
     empty: 'Brak reaktywacji dla tego profilu (żadna oferta jeszcze nie wróciła).',
     hint: 'Źródło: dla każdego dnia liczba ofert, które po dezaktywacji ponownie pojawiły się w skanie' },
+  { id: 'promoted', cls: 'flow-promoted', title: '⭐ Płatne wyróżnienia (OLX)',
+    sub: 'Ile ofert jest płatnie wypychanych na górę listingu — dziennie + średnia 7-dniowa',
+    data: () => PROMOTED, line: '#e0a020', ma: '#f4cf6a', noTotal: true,
+    legendDaily: 'Wyróżnionych danego dnia', statLabel: 'Śr. wyróżnionych/dzień', statCls: 'flat',
+    empty: 'Brak danych o wyróżnieniach dla tego profilu. Metryka dotyczy tylko OLX '
+      + '(Otodom nie ma tej atrybucji) i zbiera się od wdrożenia — wyróżnień nie da się odtworzyć wstecz.',
+    hint: 'Źródło: parametr search_reason w URL-u oferty OLX (płatne promowanie listingu); '
+      + 'dla każdego dnia liczba ofert widzianych tego dnia jako wyróżnione' },
 ];
 
 function flowCardHTML(cfg){
@@ -798,7 +810,9 @@ function makeFlowChart(cfg){
       `<span><span class="lab">${cfg.statLabel}:</span><span class="${cfg.statCls}">${rate.toFixed(1).replace('.',',')}</span></span>` +
       `<span><span class="lab">Rekord:</span><span class="${cfg.statCls}">${maxP[1]}</span>` +
         `<span style="color:var(--text-muted);font-weight:600;margin-left:5px">(${fmtDate(maxP[0])})</span></span>` +
-      `<span><span class="lab">Suma w oknie:</span><span>${total}</span></span>`;
+      // „Suma w oknie" ma sens dla przepływów (odpływ/napływ), ale nie dla metryki
+      // STANU jak wyróżnienia (sumowanie dni nic nie znaczy) — pomijamy przy noTotal
+      (cfg.noTotal ? '' : `<span><span class="lab">Suma w oknie:</span><span>${total}</span></span>`);
     draw();
   }
 
