@@ -21,6 +21,7 @@ import re
 import time
 import random
 from typing import Dict, List, Optional
+from urllib.parse import urlparse, parse_qs
 
 import requests
 
@@ -136,6 +137,25 @@ def _parse_floor(raw: Optional[str]) -> Optional[str]:
     return raw
 
 
+# FIX 2026-09-01: detekcja płatnych wyróżnień na listingu OLX (propagacja
+# z SONAR-POKOJOWY). OLX doszywa do href-a/URL-a oferty parametr atrybucji
+# `search_reason=search|promoted` (organiczne: `search|organic`). To pewniejszy
+# sygnał niż klasy CSS czy `data-testid`, bo generuje go serwer OLX, nie warstwa
+# prezentacji. U nas URL jest dostępny w `__PRERENDERED_STATE__` z pełnym query
+# stringiem PRZED przycięciem do zapisu (`url.split('?')[0]`), więc czytamy go
+# w `normalize_ad`. Metryka liczy się dopiero od wdrożenia — wyróżnienia to stan
+# chwilowy listingu, nie da się go odtworzyć wstecz.
+def _is_promoted_href(url: str) -> bool:
+    """Czy oferta jest PŁATNIE WYRÓŻNIONA na listingu (parametr `search_reason`)?"""
+    if '?' not in (url or ''):
+        return False
+    try:
+        reasons = parse_qs(urlparse(url).query).get('search_reason', [])
+    except ValueError:
+        return False
+    return any('promoted' in r.lower() for r in reasons)
+
+
 def normalize_ad(ad: dict) -> Optional[Dict]:
     """Normalizuje ogłoszenie OLX do wspólnego schematu SONARA SPRZEDAŻY MIESZKAŃ."""
     url = ad.get('url') or ''
@@ -187,6 +207,9 @@ def normalize_ad(ad: dict) -> Optional[Dict]:
         'id': olx_offer_id(url),
         'source': 'olx',
         'url': url.split('?')[0],
+        # płatne wyróżnienie z parametru atrybucji (czytane z PEŁNEGO url powyżej,
+        # zanim przytniemy query string do zapisu) — patrz _is_promoted_href
+        'promoted': _is_promoted_href(url),
         'title': ad.get('title', '').strip(),
         'price': price,
         'area_m2': area,
@@ -216,6 +239,11 @@ class OLXMieszkaniaScraper:
 
     def __init__(self, delay_range=(1.0, 2.0)):
         self.delay_min, self.delay_max = delay_range
+        # Statystyki wyróżnień (płatne promowanie): `attributed` = ile ofert
+        # niosło w ogóle parametr `search_reason`. attributed == 0 przy niepustym
+        # listingu znaczy, że OLX zmienił format atrybucji i metryka promowanych
+        # po cichu spadłaby do zera — o tym alarmuje `scrape()`.
+        self.promoted_stats = {'cards': 0, 'attributed': 0, 'promoted': 0}
         # FIX 2026-08-22: preferuj curl_cffi (impersonacja TLS Chrome) — OLX
         # blokuje „pythonowy" fingerprint requests. Fallback do requests, gdy
         # curl_cffi niedostępne.
@@ -251,7 +279,12 @@ class OLXMieszkaniaScraper:
         seen_ids = set()
         for city, listing_url in LISTING_URLS.items():
             self._scrape_city(city, listing_url, max_pages, offers, seen_ids)
-        print(f"✅ OLX: zebrano {len(offers)} ofert\n")
+        ps = self.promoted_stats
+        print(f"✅ OLX: zebrano {len(offers)} ofert "
+              f"(⭐ wyróżnionych: {ps['promoted']})\n")
+        if ps['cards'] and not ps['attributed']:
+            print("🚨 OLX: żadna oferta nie miała parametru search_reason — "
+                  "OLX zmienił atrybucję, detekcja wyróżnień może nie działać!\n")
         return offers
 
     def _scrape_city(self, city: str, listing_url: str, max_pages: int,
@@ -289,6 +322,11 @@ class OLXMieszkaniaScraper:
                 if not offer or offer['id'] in seen_ids:
                     continue
                 seen_ids.add(offer['id'])
+                self.promoted_stats['cards'] += 1
+                if 'search_reason=' in (ad.get('url') or ''):
+                    self.promoted_stats['attributed'] += 1
+                if offer.get('promoted'):
+                    self.promoted_stats['promoted'] += 1
                 offers.append(offer)
                 new_on_page += 1
 

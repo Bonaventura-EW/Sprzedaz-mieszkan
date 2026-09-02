@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1787728390.5480733
+  "ts": 1788348472.5066118
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1787728401.9141145
+  "ts": 1788348484.4327283
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1787728391.8785083
+  "ts": 1788348473.7731469
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1787728395.681431
+  "ts": 1788348477.4980032
  },
  "herbowa 8": {
   "result": null,
@@ -4329,7 +4329,7 @@
  },
  "generała witolda urbanowicza 5": {
   "result": null,
-  "ts": 1787728397.3466766
+  "ts": 1788348479.1454089
  },
  "lubelskiego lipca '80": {
   "result": {
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1787728398.949643
+  "ts": 1788348480.802437
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1787728400.5266325
+  "ts": 1788348482.4665022
  },
  "krasińskiego": {
   "result": {
@@ -14422,5 +14422,117 @@
    "city": "Świdnik"
   },
   "ts": 1788290879.264723
+ },
+ "w. kiwerskiego": {
+  "result": {
+   "lat": 51.2549426,
+   "lon": 22.5876501,
+   "name": "Wojciecha Kiwerskiego"
+  },
+  "ts": 1788348485.6578696
+ },
+ "herberta 9": {
+  "result": null,
+  "ts": 1788348487.4286532
+ },
+ "rva:51.2324,22.5223": {
+  "result": {
+   "road": "Różana",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1788348489.2064993
+ },
+ "rva:51.2120,22.7205": {
+  "result": {
+   "road": "Gabriela Narutowicza",
+   "district": "Nowy Krępiec",
+   "city": "Świdnik"
+  },
+  "ts": 1788348490.9799974
+ },
+ "rva:51.2120,22.7203": {
+  "result": {
+   "road": "Gabriela Narutowicza",
+   "district": "Nowy Krępiec",
+   "city": "Świdnik"
+  },
+  "ts": 1788348492.7510095
+ },
+ "rva:51.2431,22.5564": {
+  "result": {
+   "road": "Prezydenta Gabriela Narutowicza",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1788348494.0776045
+ },
+ "swidnik|stachonia": {
+  "result": {
+   "lat": 51.211358,
+   "lon": 22.6920093,
+   "name": "Bolesława Stachonia"
+  },
+  "ts": 1788377349.694594
+ },
+ "lublin": {
+  "result": null,
+  "ts": 1788377351.19035
+ },
+ "skośna": {
+  "result": {
+   "lat": 51.2290532,
+   "lon": 22.5732585,
+   "name": "Skośna"
+  },
+  "ts": 1788377352.6546688
+ },
+ "rva:51.2170,22.5785": {
+  "result": {
+   "road": "Adama Mickiewicza",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1788377353.957203
+ },
+ "rva:51.2291,22.5733": {
+  "result": {
+   "road": "Skośna",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1788377355.4508953
+ },
+ "rva:51.2324,22.4924": {
+  "result": {
+   "road": "Roztocze",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788377356.7295053
+ },
+ "rva:51.2259,22.4916": {
+  "result": {
+   "road": "Jana Pawła II",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788377358.0844347
+ },
+ "rva:51.2259,22.4918": {
+  "result": {
+   "road": "Jana Pawła II",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788377359.5311158
+ },
+ "rva:51.2344,22.4970": {
+  "result": {
+   "road": "Zwycięska",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1788377360.9739375
  }
 }

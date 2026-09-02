@@ -21,8 +21,17 @@ Format wyjścia (kontrakt dla docs/trend.html):
   "profiles": { key: [{"date": "YYYY-MM-DD", "count": int}, ...] },  # ciągła seria dzienna
   "outflow":  { key: [{"date": "YYYY-MM-DD", "count": int}, ...] },  # sparse: dni z odpływem
   "inflow":   { key: [...] },  # sparse: napływ dnia = nowe + reaktywacje
-  "reactivations": { key: [...] }  # sparse: reaktywacje danego dnia
+  "reactivations": { key: [...] },  # sparse: reaktywacje danego dnia
+  "promoted": { key: [...] }  # sparse: liczba płatnie wyróżnionych ofert (OLX) danego dnia
 }
+
+Płatne wyróżnienia OLX (propagacja z SONAR-POKOJOWY):
+- wyróżnienie danego dnia D = liczba ofert z datą == D w `promoted_dates`
+  (scraper czyta flagę z parametru `search_reason` w URL-u OLX, main._track_promoted
+  dopisuje max 1 wpis/dzień). To metryka STANU (ile ofert jest wyróżnionych danego
+  dnia), tylko dla OLX — Otodom nie ma takiej atrybucji, więc kategoria „Otodom"
+  ma tu pustą serię. Historia liczy się dopiero od wdrożenia detekcji: wyróżnienia
+  to stan chwilowy listingu, nie da się ich odtworzyć wstecz.
 
 Napływ i reaktywacje (FIX 2026-08-22, wzór SONAR-POKOJOWY):
 - reaktywacja danego dnia D = liczba wpisów w `reactivation_dates` (fallback:
@@ -98,7 +107,8 @@ def build_trend(db, today=None):
 
     if global_start is None:
         return {'generated': datetime.now(tz).isoformat(), 'labels': {},
-                'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {}}
+                'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
+                'promoted': {}}
 
     # Oś czasu: dzień po dniu od pierwszej archiwizacji do dziś.
     days = []
@@ -114,6 +124,7 @@ def build_trend(db, today=None):
     outflow = {}
     inflow = {}
     reactivations = {}
+    promoted = {}
 
     def _sparse(m):
         return [{'date': dd.isoformat(), 'count': c} for dd, c in sorted(m.items())]
@@ -123,6 +134,7 @@ def build_trend(db, today=None):
         outflow_map = {}              # date -> liczba zarchiwizowanych tego dnia
         new_map = {}                  # date -> nowe oferty (first_seen)
         react_map = {}                # date -> reaktywacje
+        promoted_map = {}             # date -> liczba ofert wyróżnionych tego dnia
         for start, end, deact, react_dates, o in spans:
             if not pred(o):
                 continue
@@ -139,6 +151,13 @@ def build_trend(db, today=None):
             for rd in react_dates:
                 if rd in day_index:
                     react_map[rd] = react_map.get(rd, 0) + 1
+            # płatne wyróżnienia OLX: dzień, w którym oferta była promowana
+            # (main._track_promoted, max 1 wpis/dzień). Historia zaczyna się od
+            # wdrożenia detekcji — wyróżnień nie da się odtworzyć wstecz.
+            for pd in (o.get('promoted_dates') or []):
+                pdd = _parse_date(pd)
+                if pdd and pdd in day_index:
+                    promoted_map[pdd] = promoted_map.get(pdd, 0) + 1
 
         # napływ = nowe + reaktywacje (dzień po dniu)
         inflow_map = dict(new_map)
@@ -151,6 +170,7 @@ def build_trend(db, today=None):
         outflow[key] = _sparse(outflow_map)
         inflow[key] = _sparse(inflow_map)
         reactivations[key] = _sparse(react_map)
+        promoted[key] = _sparse(promoted_map)
 
     return {
         'generated': datetime.now(tz).isoformat(),
@@ -159,6 +179,7 @@ def build_trend(db, today=None):
         'outflow': outflow,
         'inflow': inflow,
         'reactivations': reactivations,
+        'promoted': promoted,
     }
 
 

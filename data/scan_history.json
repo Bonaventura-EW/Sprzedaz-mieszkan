@@ -2267,6 +2267,34 @@
    "active": 3050,
    "with_coords": 2536,
    "total_in_db": 7009
+  },
+  {
+   "timestamp": "2026-09-02T13:25:05.190743+02:00",
+   "status": "completed",
+   "duration_s": 190.7,
+   "deactivated": 0,
+   "scraped_olx": 407,
+   "scraped_otodom": 1915,
+   "new": 38,
+   "updated": 2284,
+   "skipped_removed": 0,
+   "active": 3103,
+   "with_coords": 2570,
+   "total_in_db": 7047
+  },
+  {
+   "timestamp": "2026-09-02T21:26:10.375802+02:00",
+   "status": "completed",
+   "duration_s": 192.7,
+   "deactivated": 38,
+   "scraped_olx": 999,
+   "scraped_otodom": 1909,
+   "new": 46,
+   "updated": 2862,
+   "skipped_removed": 0,
+   "active": 3128,
+   "with_coords": 2598,
+   "total_in_db": 7093
   }
  ]
 }
