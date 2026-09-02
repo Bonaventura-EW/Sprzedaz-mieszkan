@@ -106,6 +106,11 @@ function drawPin(ctx, p, st) {
     ctx.lineWidth = st.strokeW;
     ctx.strokeStyle = st.stroke;
     ctx.stroke();
+    // FIX 2026-09-01: stos ofert pod tym samym adresem → liczba w środku bąbla
+    if (st.count > 1) {
+        drawStackCount(ctx, ox + 20, oy + 18, st.count, true);
+        return;
+    }
     // wewnętrzne kółko (białe) / × dla nieaktywnej
     ctx.beginPath();
     ctx.arc(ox + 20, oy + 18, st.inactive ? 9 : 7, 0, Math.PI * 2);
@@ -126,8 +131,39 @@ function drawSquare(ctx, p, st) {
     ctx.setLineDash([4, 3]);
     ctx.strokeRect(left + 3, top + 3, s - 6, s - 6);
     ctx.setLineDash([]);
+    // FIX 2026-09-01: stos ofert pod tym samym adresem → liczba w środku kwadratu
+    if (st.count > 1) {
+        drawStackCount(ctx, p.x, p.y, st.count, false);
+        return;
+    }
     if (st.inactive) drawX(ctx, p.x, p.y, 20, '#ffffff');
     drawBadge(ctx, left + s - 2, top + 2, st);
+}
+
+// Liczba ofert w stosie (kilka ofert na identycznych coords) rysowana w środku
+// kształtu. onPin=true: biały bąbel + ciemna cyfra (jak wewnętrzne kółko kropli);
+// onPin=false: biała cyfra z ciemnym obrysem na wypełnionym kolorem kwadracie.
+function drawStackCount(ctx, cx, cy, count, onPin) {
+    const txt = count > 999 ? '999+' : String(count);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    if (onPin) {
+        const r = txt.length >= 3 ? 11 : (txt.length === 2 ? 10 : 9);
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+        ctx.fillStyle = '#1f2937';
+        ctx.font = '700 ' + (txt.length >= 3 ? 9 : 11) + 'px -apple-system, system-ui, sans-serif';
+        ctx.fillText(txt, cx, cy + 0.5);
+    } else {
+        ctx.font = '800 ' + (txt.length >= 3 ? 13 : 16) + 'px -apple-system, system-ui, sans-serif';
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = 'rgba(0,0,0,0.55)';
+        ctx.strokeText(txt, cx, cy + 0.5);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(txt, cx, cy + 0.5);
+    }
 }
 
 function drawX(ctx, cx, cy, size, color) {
@@ -170,6 +206,26 @@ function computeStyle(o) {
         inactive: !o.active,
         badge: badgeType(o),
     };
+}
+
+// FIX 2026-09-01: najtańsza (wg ceny/m²) oferta ze stosu — jej kolor/kształt
+// reprezentuje całą pinezkę-stos (jak u brata SONAR-POKOJOWY).
+function cheapestOffer(offers) {
+    let best = offers[0];
+    for (let i = 1; i < offers.length; i++) {
+        const o = offers[i];
+        if (o.price_per_m2 != null &&
+            (best.price_per_m2 == null || o.price_per_m2 < best.price_per_m2)) best = o;
+    }
+    return best;
+}
+
+// Styl pinezki-stosu: kształt/kolor najtańszej pozycji + liczba ofert w środku.
+function computeStackStyle(offers) {
+    const st = computeStyle(cheapestOffer(offers));
+    st.count = offers.length;
+    st.badge = '';   // licznik zastępuje badge N / ↓ / ↑ przy stosie
+    return st;
 }
 
 init();
@@ -244,7 +300,15 @@ function focusOfferFromHash() {
     if (o.coords) {
         map.setView([o.coords.lat, o.coords.lon], 16, { animate: true });
         const mk = markerById[o.id];
-        if (mk) setTimeout(() => mk.openPopup(), 250);
+        if (mk) setTimeout(() => {
+            mk.openPopup();
+            // FIX 2026-09-01: deep-link do oferty w stosie → przewiń do jej wiersza
+            const row = document.querySelector(`.stack-row[data-offer-id="${o.id}"]`);
+            if (row) {
+                row.classList.add('stack-row-focus');
+                row.scrollIntoView({ block: 'nearest' });
+            }
+        }, 250);
     }
 }
 
@@ -471,22 +535,54 @@ function render() {
         const o = allOffers[i];
         if (passes(o, ctx) && o.coords) located.push(o);
     }
-    located.sort((a, b) => zKey(a) - zKey(b));
 
+    // FIX 2026-09-01: grupuj oferty o identycznych coords w jedną pinezkę-stos.
+    // Precyzja `street` (ulica bez numeru) zwraca ten sam punkt dla wielu ofert,
+    // więc na canvasie klikalna była tylko wierzchnia — reszta niedostępna.
+    // (propagacja z SONAR-POKOJOWY, coincident-marker-stacks)
+    const groups = new Map();
     for (let i = 0; i < located.length; i++) {
         const o = located[i];
-        const pin = !isApprox(o);
+        const key = o.coords.lat.toFixed(6) + ',' + o.coords.lon.toFixed(6);
+        let g = groups.get(key);
+        if (!g) groups.set(key, g = []);
+        g.push(o);
+    }
+
+    // jednostka rysowania = grupa; kolejność jak wcześniej (kwadraty pod
+    // pinezkami, nieaktywne pod aktywnymi) wg maks. zKey w grupie.
+    const units = [];
+    for (const offers of groups.values()) {
+        let z = 0;
+        for (let i = 0; i < offers.length; i++) z = Math.max(z, zKey(offers[i]));
+        units.push({ offers, z });
+    }
+    units.sort((a, b) => a.z - b.z);
+
+    for (let i = 0; i < units.length; i++) {
+        const offers = units[i].offers;
+        const stack = offers.length > 1;
+        const rep = stack ? cheapestOffer(offers) : offers[0];
+        const pin = !isApprox(rep);
         const Cls = pin ? PinMarker : SquareMarker;
-        const mk = new Cls([o.coords.lat, o.coords.lon], {
+        const mk = new Cls([rep.coords.lat, rep.coords.lon], {
             renderer: canvasRenderer, radius: 20, interactive: true,
             bubblingMouseEvents: false,
         });
-        mk._st = computeStyle(o);
-        mk.bindPopup(() => popupHtml(o), {
-            maxWidth: 330, offset: pin ? [0, -44] : [0, -16],
-        });
+        if (stack) {
+            mk._st = computeStackStyle(offers);
+            mk.bindPopup(() => stackPopupHtml(offers), {
+                maxWidth: 340, offset: pin ? [0, -44] : [0, -16],
+            });
+        } else {
+            mk._st = computeStyle(rep);
+            mk.bindPopup(() => popupHtml(rep), {
+                maxWidth: 330, offset: pin ? [0, -44] : [0, -16],
+            });
+        }
         markersLayer.addLayer(mk);
-        markerById[o.id] = mk;
+        // KAŻDE id z grupy wskazuje ten sam marker (deep-link/hash trafia w stos).
+        for (let j = 0; j < offers.length; j++) markerById[offers[j].id] = mk;
     }
 
     renderStats(ctx);
@@ -527,6 +623,49 @@ function popupHtml(o) {
         <div class="popup-links">
             <a href="${o.url}" target="_blank" rel="noopener">Zobacz ogłoszenie ↗</a>${alsoAt}
         </div>`;
+}
+
+// FIX 2026-09-01: popup pinezki-stosu — nagłówek z liczbą ofert + przewijalna
+// płaska lista (posortowana od najtańszej). Każdy wiersz to link do ogłoszenia;
+// nie ma tu panelu kart jak u brata, więc podświetlanie zastępujemy linkiem.
+// Skala u nas bywa duża (rekord 252 oferty na jednej ulicy) → lista scrolluje się.
+function stackPopupHtml(offers) {
+    const sorted = offers.slice().sort((a, b) =>
+        (a.price == null ? Infinity : a.price) - (b.price == null ? Infinity : b.price));
+    const rep = sorted[0];
+    const where = [rep.street, rep.district].filter(Boolean).join(', ');
+    const precision = rep.coords_precision === 'exact' ? 'dokładny adres'
+        : rep.coords_precision === 'street' ? 'lokalizacja: ulica'
+        : rep.coords_precision === 'approx' ? 'przybliżona — Otodom' : '';
+    const rows = sorted.map(o => {
+        const trend = o.price_trend === 'down'
+            ? ` <span class="trend-down">↓</span>`
+            : o.price_trend === 'up' ? ` <span class="trend-up">↑</span>` : '';
+        const newB = isNew(o) ? ' <span class="badge-new">NOWA</span>' : '';
+        const inact = o.active ? '' : ' <span class="stack-inactive">⏸ nieaktywna</span>';
+        const meta = [fmtArea(o.area_m2),
+            o.price_per_m2 ? fmtPrice(o.price_per_m2) + '/m²' : null,
+            o.rooms ? fmtRooms(o.rooms) : null, fmtFloor(o.floor)]
+            .filter(Boolean).join(' • ');
+        return `<a class="stack-row" data-offer-id="${escapeHtml(o.id)}" ` +
+            `href="${safeUrl(o.url)}" target="_blank" rel="noopener">` +
+            `<div class="stack-row-top"><span class="stack-price">${fmtPrice(o.price)}</span>` +
+            `${trend}${newB}${inact}</div>` +
+            `<div class="stack-row-meta">${escapeHtml(meta)} • ${escapeHtml((o.source || '').toUpperCase())}` +
+            `${o.is_private_owner ? ' • właściciel' : ''}</div>` +
+            `<div class="stack-row-title">${escapeHtml(o.title || '')}</div></a>`;
+    }).join('');
+    return `<div class="stack-head">${offers.length} ofert pod tym adresem</div>` +
+        (where || precision
+            ? `<div class="stack-where">📍 ${escapeHtml(where)}${where && precision ? ' ' : ''}` +
+              `${precision ? '(' + precision + ')' : ''}</div>`
+            : '') +
+        `<div class="stack-list">${rows}</div>`;
+}
+
+// href tylko http(s) — treść pochodzi z zewnętrznych portali (uwaga z manifestu brata).
+function safeUrl(u) {
+    return (typeof u === 'string' && /^https?:\/\//i.test(u)) ? u : '#';
 }
 
 function escapeHtml(s) {
