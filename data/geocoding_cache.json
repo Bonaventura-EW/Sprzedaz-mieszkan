@@ -14466,5 +14466,73 @@
    "city": "Lublin"
   },
   "ts": 1788348494.0776045
+ },
+ "swidnik|stachonia": {
+  "result": {
+   "lat": 51.211358,
+   "lon": 22.6920093,
+   "name": "Bolesława Stachonia"
+  },
+  "ts": 1788377349.694594
+ },
+ "lublin": {
+  "result": null,
+  "ts": 1788377351.19035
+ },
+ "skośna": {
+  "result": {
+   "lat": 51.2290532,
+   "lon": 22.5732585,
+   "name": "Skośna"
+  },
+  "ts": 1788377352.6546688
+ },
+ "rva:51.2170,22.5785": {
+  "result": {
+   "road": "Adama Mickiewicza",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1788377353.957203
+ },
+ "rva:51.2291,22.5733": {
+  "result": {
+   "road": "Skośna",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1788377355.4508953
+ },
+ "rva:51.2324,22.4924": {
+  "result": {
+   "road": "Roztocze",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788377356.7295053
+ },
+ "rva:51.2259,22.4916": {
+  "result": {
+   "road": "Jana Pawła II",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788377358.0844347
+ },
+ "rva:51.2259,22.4918": {
+  "result": {
+   "road": "Jana Pawła II",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788377359.5311158
+ },
+ "rva:51.2344,22.4970": {
+  "result": {
+   "road": "Zwycięska",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1788377360.9739375
  }
 }
