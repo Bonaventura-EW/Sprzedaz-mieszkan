@@ -149,6 +149,9 @@ class SonarSprzedazy:
         if new.get('_details_fetched'):
             existing['_details_fetched'] = True
 
+        # płatne wyróżnienie na listingu OLX (patrz _track_promoted)
+        self._track_promoted(existing, new.get('promoted', False))
+
         # coords: nie nadpisuj dokładnych przybliżonymi
         new_loc = new.get('location') or {}
         old_loc = existing.setdefault('location', {})
@@ -187,7 +190,31 @@ class SonarSprzedazy:
         new['last_seen'] = now
         new['active'] = True
         new['days_active'] = 0
+        # płatne wyróżnienie na listingu OLX: stan bieżący + historia dni
+        # (promoted_dates zasila dzienny szereg w trend.json — patrz _track_promoted)
+        new['promoted'] = bool(new.get('promoted'))
+        new['promoted_dates'] = ([datetime.now(self.tz).strftime('%Y-%m-%d')]
+                                 if new['promoted'] else [])
         self.database['offers'].append(new)
+
+    def _track_promoted(self, existing: Dict, promoted: bool) -> bool:
+        """Zapisuje płatne wyróżnienie oferty na listingu OLX — max 1 dzień/wpis.
+
+        `promoted` = flaga z bieżącego skanu (scraper czyta ją z parametru
+        atrybucji `search_reason` w URL-u oferty, patrz olx_scraper._is_promoted_href).
+        Aktualizuje stan bieżący i dopisuje dzisiejszą datę do `promoted_dates`,
+        jeśli jeszcze jej tam nie ma. Skanujemy 2×/dzień, więc dzień z choć jednym
+        wyróżnionym wystąpieniem liczy się raz. Zwraca True, gdy dopisano nowy dzień.
+        """
+        existing['promoted'] = bool(promoted)
+        if not promoted:
+            return False
+        today = datetime.now(self.tz).strftime('%Y-%m-%d')
+        dates = existing.setdefault('promoted_dates', [])
+        if today in dates:
+            return False
+        dates.append(today)
+        return True
 
     def _mark_inactive(self, scraped_by_source: Dict[str, List[Dict]]) -> int:
         """Dezaktywuje oferty nieobecne w skanie — per źródło, z ochroną
@@ -222,6 +249,10 @@ class SonarSprzedazy:
             for offer in active_in_db:
                 if offer['id'] in scraped_ids:
                     continue
+                # oferty poza bieżącym listingiem nie są dziś wyróżnione — zdejmij
+                # stan bieżący (historia `promoted_dates` zostaje, zasila trend).
+                # Inaczej wyróżnienie „zawisłoby" na ofercie pominiętej przez skan.
+                offer['promoted'] = False
                 try:
                     last_seen = datetime.fromisoformat(offer['last_seen'])
                 except (KeyError, ValueError):
@@ -560,6 +591,8 @@ class SonarSprzedazy:
         active = sum(1 for o in self.database['offers'] if o.get('active'))
         with_coords = sum(1 for o in self.database['offers']
                           if o.get('active') and (o.get('location') or {}).get('coords'))
+        promoted = sum(1 for o in self.database['offers']
+                       if o.get('active') and o.get('promoted'))
         duration = time.time() - start
         self._log_scan({
             'timestamp': now.isoformat(),
@@ -573,13 +606,14 @@ class SonarSprzedazy:
             'skipped_removed': skipped_removed,
             'active': active,
             'with_coords': with_coords,
+            'promoted': promoted,
             'total_in_db': len(self.database['offers']),
         })
 
         print("\n" + "=" * 60)
         print("📊 PODSUMOWANIE SCANU")
         print("=" * 60)
-        print(f"✅ Aktywne oferty: {active} (z pinezką: {with_coords})")
+        print(f"✅ Aktywne oferty: {active} (z pinezką: {with_coords}, ⭐ wyróżnione: {promoted})")
         print(f"🆕 Nowe: {new_count} | 🔄 Zaktualizowane: {updated_count}")
         print(f"📦 Łącznie w bazie: {len(self.database['offers'])}")
         print(f"⏱️ Czas: {duration:.1f}s")

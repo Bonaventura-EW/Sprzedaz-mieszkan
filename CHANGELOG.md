@@ -2,6 +2,38 @@
 
 ## [Niewydane]
 
+### Dodane — ⭐ wykrywanie płatnych wyróżnień OLX + trend (propagacja z SONAR-POKOJOWY)
+Nie zbieraliśmy dotąd żadnej informacji o tym, ile ofert jest płatnie wypychanych
+na górę listingu OLX ani jak ten udział zmienia się w czasie. Teraz scraper czyta
+wyróżnienie z parametru atrybucji `search_reason=search|promoted`, który OLX
+doszywa do URL-a oferty (pewniejsze niż klasy CSS / `data-testid`), a zakładka
+„Trend w czasie" pokazuje dzienny wykres liczby wyróżnionych ofert.
+- `src/olx_scraper.py` — `_is_promoted_href` (odczyt `search_reason` z query
+  stringa URL-a, czytany w `normalize_ad` PRZED przycięciem `url.split('?')[0]`);
+  pole `promoted` w znormalizowanej ofercie; licznik atrybucji + alarm w logach,
+  gdy żadna oferta nie niesie `search_reason` (OLX zmienił format → metryka po
+  cichu spadłaby do zera). Otodom nie ma tej atrybucji — feature dotyczy tylko OLX.
+- `src/main.py` — `_track_promoted` zapisuje stan bieżący (`promoted`) i historię
+  dni (`promoted_dates`, max 1 wpis/dzień — z niej liczy się szereg czasowy);
+  `_add_new` zasiewa historię, `_mark_inactive` zdejmuje `promoted` ofertom poza
+  bieżącym listingiem (historia zostaje). Licznik wyróżnionych w podsumowaniu skanu
+  i w `scan_history.json`.
+- `src/trend_generator.py` — nowa seria `promoted` w `trend.json` (per kategoria,
+  sparse: liczba wyróżnionych ofert danego dnia). Historia startuje od wdrożenia —
+  wyróżnień nie da się odtworzyć wstecz.
+- `docs/trend.html` — czwarta karta przepływu „⭐ Płatne wyróżnienia (OLX)"
+  (dzienna liczba + średnia 7 dni) na istniejącej mechanice `FLOW_CONFIGS`; dla
+  metryki STANU pomijamy stat „Suma w oknie" (`noTotal`).
+- `tests/test_promoted.py` — detekcja z URL-a, trackowanie dni, reset przy zniknięciu
+  z listingu, dzienny szereg w `build_trend`.
+
+Różnice wobec wersji brata (SONAR-POKOJOWY): brat parsuje HTML kart (BeautifulSoup)
+i ma fallback na plakietkę `data-testid`; my czytamy `__PRERENDERED_STATE__` (JSON),
+więc detekcja opiera się wyłącznie na `search_reason` w URL-u, bez fallbacku CSS.
+Frontend brata to ApexCharts z osobnym wykresem udziału — u nas kategorie dzienne
+`trend_generator` + karta `FLOW_CONFIGS`, bez osobnej serii udziału (proporcjonalna,
+dublowałaby kształt).
+
 ### Dodane — 💲↓ znacznik obniżki w Okazjach prowadzi do historii ceny
 Znacznik `💲↓ <kwota>` na karcie w zakładce Okazje mówił, że sprzedający zszedł
 z ceny, ale nie dawało się sprawdzić kiedy i z jakiego poziomu. Teraz jest
