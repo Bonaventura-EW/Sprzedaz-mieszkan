@@ -14534,5 +14534,17 @@
    "city": "Lublin"
   },
   "ts": 1788377360.9739375
+ },
+ "zamojska 39": {
+  "result": null,
+  "ts": 1788434583.0174685
+ },
+ "rva:51.2239,22.4979": {
+  "result": {
+   "road": "Kryształowa",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788434584.4913015
  }
 }
