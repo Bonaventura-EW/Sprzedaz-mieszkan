@@ -2,6 +2,25 @@
 
 ## [Niewydane]
 
+### Naprawione — belka nawigacji na zakładce „Trend w czasie"
+`docs/trend.html` był jedyną podstroną bez wspólnej belki (fioletowy pasek
+z logo i pigułkami Mapa / Okazje / Analityka / …). Powstał jako samodzielna
+strona z własnym designem (własne zmienne CSS, `JetBrains Mono` + `DM Sans`,
+przełącznik motywu) i **nie linkował `assets/style.css`** — miał zamiast tego
+własny `.topbar` z jednym przyciskiem „← Mapa", więc z Trendu nie dało się
+przejść wprost do żadnej innej zakładki.
+- `docs/trend.html` — dołączony `assets/style.css?v=9`; `.topbar` (wraz z
+  `.btn-back`, `.logo`, `.page-title`) zastąpiony standardowym
+  `.header` + `.header-nav` z kompletem 9 linków i `trend.html` jako `active`.
+- Zachowany przełącznik motywu Trendu — `.btn-theme` przestylowany na bursztynową
+  pigułkę belki i wstawiony obok „Ostatni scan" (`.header-right`).
+- `#last-scan` uzupełniany z `api/status.json` (fallback: `trend.generated`),
+  tak jak na pozostałych podstronach; dołączony `assets/logo.js?v=7` (SVG logo).
+- Kolizje ze wspólnym arkuszem: `.chart-card` z `style.css` wnosiło
+  `margin-bottom: 16px` → wyzerowane lokalnie; belka dostała rodzinę czcionek
+  ze `style.css`, żeby wyglądała identycznie jak na pozostałych zakładkach.
+- Sprawdzone: jasny i ciemny motyw, 1920 / 1500 / 400 px (bez poziomego scrolla).
+
 ### Naprawione — grupowanie pinezek na identycznych współrzędnych (klikalność)
 Precyzja `street` (geokodowanie ulicy bez numeru domu, `location_refiner.py`)
 zwraca jeden reprezentatywny punkt dla całej ulicy, więc każda oferta bez numeru
