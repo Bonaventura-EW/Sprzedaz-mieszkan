@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1787852573.8409197
+  "ts": 1788463275.289159
  },
  "grażyny": {
   "result": {
@@ -3521,7 +3521,7 @@
  },
  "pogodna 50e": {
   "result": null,
-  "ts": 1787071986.3530922
+  "ts": 1788463276.65983
  },
  "sympatyczna": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1787852581.9092088
+  "ts": 1788463283.5018477
  },
  "cyruliczej": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1787852577.1488051
+  "ts": 1788463279.3974984
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1787852578.5251791
+  "ts": 1788463280.7718823
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1787852575.4785788
+  "ts": 1788463277.92723
  },
  "kredowa": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1787852580.1419072
+  "ts": 1788463282.2035446
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1787852583.5549335
+  "ts": 1788463284.9964359
  },
  "różanej": {
   "result": {
@@ -13409,7 +13409,7 @@
  },
  "swidnik|gen. j. hallera": {
   "result": null,
-  "ts": 1787838245.3241787
+  "ts": 1788463290.5647972
  },
  "swidnik|cisowa": {
   "result": {
@@ -13493,7 +13493,7 @@
  },
  "swidnik|wolska": {
   "result": null,
-  "ts": 1787838260.8057747
+  "ts": 1788463286.467537
  },
  "swidnik|modrzewiowa": {
   "result": {
@@ -13609,7 +13609,7 @@
  },
  "swidnik|gen. s. roweckiego": {
   "result": null,
-  "ts": 1787838284.4101362
+  "ts": 1788463287.7810333
  },
  "swidnik|spadochroniarzy": {
   "result": {
@@ -13661,7 +13661,7 @@
  },
  "swidnik|głowackiego 9": {
   "result": null,
-  "ts": 1787838810.3071618
+  "ts": 1788463289.0779133
  },
  "swidnik|wincentego witosa": {
   "result": {
@@ -13793,11 +13793,11 @@
  },
  "swidnik|niepodległości 32": {
   "result": null,
-  "ts": 1787838837.1749082
+  "ts": 1788463291.8697135
  },
  "swidnik|krótka": {
   "result": null,
-  "ts": 1787838838.3859112
+  "ts": 1788463293.1607916
  },
  "swidnik|niepodległości 18": {
   "result": null,
@@ -14546,5 +14546,41 @@
    "city": "Lublin"
   },
   "ts": 1788434584.4913015
+ },
+ "kurantowa 4": {
+  "result": null,
+  "ts": 1788463294.6367593
+ },
+ "spadochroniarzy": {
+  "result": {
+   "lat": 51.2478155,
+   "lon": 22.5309357,
+   "name": "Spadochroniarzy"
+  },
+  "ts": 1788463295.9109912
+ },
+ "rva:51.2449,22.5981": {
+  "result": {
+   "road": null,
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1788463297.773977
+ },
+ "rva:51.2478,22.5309": {
+  "result": {
+   "road": "Spadochroniarzy",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1788463299.117412
+ },
+ "rva:51.2306,22.5908": {
+  "result": {
+   "road": "Kazimierza Dulęby",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1788463300.6030037
  }
 }
