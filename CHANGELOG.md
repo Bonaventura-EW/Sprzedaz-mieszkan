@@ -2,6 +2,14 @@
 
 ## [Niewydane]
 
+### Dodane — checklista „Zanim zaczniesz pracę" w `CLAUDE.md`
+Nowa sekcja na samej górze pliku: przed rozpoczęciem zadania sprawdź otwarte
+issues (zwłaszcza `propagation`), otwarte PR-y i gałęzie `claude/*`, sekcję
+`## [Niewydane]` w tym pliku, `.propagation/changes/` oraz ostatnie przebiegi
+Actions. Powód z życia: belkę nawigacji na `trend.html` naprawiliśmy „na świeżo",
+a automat propagacji miał już otwarte issue #13 z gotową analizą, listą pułapek
+i trafną rekomendacją — kilka godzin wcześniej.
+
 ### Naprawione — belka nawigacji na zakładce „Trend w czasie"
 `docs/trend.html` był jedyną podstroną bez wspólnej belki (fioletowy pasek
 z logo i pigułkami Mapa / Okazje / Analityka / …). Powstał jako samodzielna

@@ -3,6 +3,31 @@
 Wytyczne dla Claude Code (i innych agentów) pracujących w tym repozytorium.
 Czytaj na starcie każdej sesji.
 
+## Zanim zaczniesz pracę (WYMAGANE)
+
+Nim ruszysz z zadaniem, sprawdź, czy temat już gdzieś nie wisi — inaczej łatwo
+zrobić drugi raz to samo albo rozjechać się z pracą w toku:
+
+1. **Otwarte issues**, zwłaszcza z etykietą `propagation` — automat propagacji
+   sam zakłada issue z gotową analizą, listą pułapek i rekomendacją; często
+   opisuje dokładnie ten problem, który masz naprawić (tak było z belką
+   nawigacji na `trend.html` → issue #13).
+2. **Otwarte PR-y i gałęzie `claude/*`** — czy poprzednia sesja albo brat-automat
+   już tego nie robi.
+3. **`CHANGELOG.md`, sekcja `## [Niewydane]`** — czy zmiana nie została już
+   wprowadzona i tylko nie zdążyła się zdeployować na Pages.
+4. **`.propagation/changes/`** — manifesty braci, jeśli zadanie brzmi jak coś,
+   co u rodzeństwa już rozwiązano.
+5. **Ostatnie przebiegi Actions** — czy `scanner.yml` akurat nie leci (jego
+   commit na `main` zaraz i tak przestawi ci bazę).
+
+Jeśli coś wisi: potraktuj to jako kontekst, a nie przeszkodę — rekomendacje
+z issues propagacyjnych bywają trafne i oszczędzają analizę. Po skończonej
+pracy podlinkuj albo zamknij issue, zamiast zostawiać duplikat.
+
+W środowisku bez `gh` używaj narzędzi MCP GitHub (`list_issues`,
+`list_pull_requests`, `actions_list`).
+
 ## Czym jest projekt
 
 **SONAR SPRZEDAŻY MIESZKAŃ** — agent monitorujący oferty **sprzedaży mieszkań
