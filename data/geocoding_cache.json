@@ -14582,5 +14582,29 @@
    "city": "Lublin"
   },
   "ts": 1788463300.6030037
+ },
+ "kwiatów polnych": {
+  "result": {
+   "lat": 51.2775697,
+   "lon": 22.5019099,
+   "name": "Kwiatów Polnych"
+  },
+  "ts": 1788521176.2854843
+ },
+ "rva:51.2395,22.5382": {
+  "result": {
+   "road": "Gliniana",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1788521177.7087548
+ },
+ "rva:51.2776,22.5019": {
+  "result": {
+   "road": "Kwiatów Polnych",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1788521179.2090383
  }
 }
