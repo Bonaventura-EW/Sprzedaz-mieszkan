@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1787942981.5759964
+  "ts": 1788548567.5970302
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -14117,7 +14117,7 @@
  },
  "nowy świat.dziesiąt": {
   "result": null,
-  "ts": 1787942983.1568933
+  "ts": 1788548568.8093996
  },
  "dr. m.m": {
   "result": {
@@ -14133,7 +14133,7 @@
  },
  "koncertowa 18": {
   "result": null,
-  "ts": 1787942989.4388711
+  "ts": 1788548570.1829407
  },
  "rva:51.2816,22.5850": {
   "result": {
@@ -14606,5 +14606,37 @@
    "city": "Lublin"
   },
   "ts": 1788521179.2090383
+ },
+ "wiklinowej": {
+  "result": {
+   "lat": 51.2316977,
+   "lon": 22.508157,
+   "name": "Wiklinowa"
+  },
+  "ts": 1788548573.1598978
+ },
+ "biłgorajska": {
+  "result": {
+   "lat": 51.2388682,
+   "lon": 22.5800615,
+   "name": "Biłgorajska"
+  },
+  "ts": 1788548574.4340527
+ },
+ "rva:51.2502,22.5561": {
+  "result": {
+   "road": "Ogrodowa",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1788548575.703852
+ },
+ "rva:51.2533,22.5814": {
+  "result": {
+   "road": "Krzemieniecka",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1788548577.2644076
  }
 }
