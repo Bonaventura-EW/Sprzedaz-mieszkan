@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1788007571.7516348
+  "ts": 1788632615.855919
  },
  "pozytywistów": {
   "result": {
@@ -10029,7 +10029,7 @@
  },
  "jana sawy 9": {
   "result": null,
-  "ts": 1788007575.0188677
+  "ts": 1788632617.1314034
  },
  "iwaszkiewicza": {
   "result": {
@@ -14646,5 +14646,13 @@
    "city": "Lublin"
   },
   "ts": 1788605010.708861
+ },
+ "rva:51.2832,22.5413": {
+  "result": {
+   "road": null,
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1788632618.7086933
  }
 }
