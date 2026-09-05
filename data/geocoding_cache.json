@@ -14638,5 +14638,13 @@
    "city": "Lublin"
   },
   "ts": 1788548577.2644076
+ },
+ "rva:51.2753,22.5801": {
+  "result": {
+   "road": "Tomasza Strzembosza",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1788605010.708861
  }
 }
