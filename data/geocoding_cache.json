@@ -10289,7 +10289,7 @@
  },
  "skrzatów 2": {
   "result": null,
-  "ts": 1788031690.3308518
+  "ts": 1788692692.5946116
  },
  "kruka": {
   "result": {
@@ -14654,5 +14654,29 @@
    "city": "Lublin"
   },
   "ts": 1788632618.7086933
+ },
+ "jacka przybylskiego": {
+  "result": {
+   "lat": 51.2147231,
+   "lon": 22.5751915,
+   "name": "Jacka Przybylskiego"
+  },
+  "ts": 1788692694.1160023
+ },
+ "jaworowej": {
+  "result": {
+   "lat": 51.2644173,
+   "lon": 22.5933363,
+   "name": "Jaworowa"
+  },
+  "ts": 1788692696.8436124
+ },
+ "topolowej": {
+  "result": {
+   "lat": 51.2311871,
+   "lon": 22.5858238,
+   "name": "Topolowa"
+  },
+  "ts": 1788692699.6112456
  }
 }

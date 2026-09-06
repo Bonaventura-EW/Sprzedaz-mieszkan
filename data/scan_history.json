@@ -2385,6 +2385,21 @@
    "with_coords": 2583,
    "promoted": 0,
    "total_in_db": 7282
+  },
+  {
+   "timestamp": "2026-09-06T13:02:47.180700+02:00",
+   "status": "completed",
+   "duration_s": 134.8,
+   "deactivated": 46,
+   "scraped_olx": 1018,
+   "scraped_otodom": 1920,
+   "new": 9,
+   "updated": 2929,
+   "skipped_removed": 0,
+   "active": 3116,
+   "with_coords": 2560,
+   "promoted": 0,
+   "total_in_db": 7291
   }
  ]
 }
