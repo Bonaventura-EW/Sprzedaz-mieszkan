@@ -189,9 +189,15 @@ def generate():
     print(f"🔌 Wygenerowano API: {API_DIR} (status, offers[{len(active)}], history, health)")
     if source_alerts:
         for a in source_alerts:
-            print(f"   🚨 ALERT: źródło '{a['source']}' oddaje 0 ofert "
-                  f"({a['consecutive_zero_scans']} skanów z rzędu, "
-                  f"{a['active_in_db']} aktywnych wciąż w bazie)")
+            if a.get('kind') == 'partial':
+                # FIX 2026-09-06: niekompletny listing (np. timeout strony OLX)
+                print(f"   🚨 ALERT: źródło '{a['source']}' oddało tylko "
+                      f"{a['last_scraped']} ofert vs {a['recent_max_scraped']} "
+                      f"zwykle — listing niekompletny")
+            else:
+                print(f"   🚨 ALERT: źródło '{a['source']}' oddaje 0 ofert "
+                      f"({a['consecutive_zero_scans']} skanów z rzędu, "
+                      f"{a['active_in_db']} aktywnych wciąż w bazie)")
 
 
 if __name__ == "__main__":

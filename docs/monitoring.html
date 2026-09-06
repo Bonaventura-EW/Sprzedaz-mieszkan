@@ -89,10 +89,18 @@ async function init() {
     const alerts = data.source_alerts || [];
     const alertBox = document.getElementById('source-alert');
     if (alerts.length) {
-        alertBox.innerHTML = '🚨 ' + alerts.map(a =>
-            `Źródło <strong>${(a.source || '').toUpperCase()}</strong> nie zwraca ofert `
-            + `(0 od ${a.consecutive_zero_scans} skanów; ${a.active_in_db} aktywnych wciąż w bazie z karencji).`
-        ).join('<br>') + '<br>Sprawdź scraper — możliwa blokada portalu (WAF).';
+        alertBox.innerHTML = '🚨 ' + alerts.map(a => {
+            const src = `<strong>${(a.source || '').toUpperCase()}</strong>`;
+            // kind 'partial' = źródło żyje, ale oddało ułamek zwykłej liczby ofert
+            // (niekompletny listing, np. timeout strony) — patrz source_health.py
+            if (a.kind === 'partial') {
+                return `Źródło ${src} oddało w ostatnim skanie tylko `
+                    + `<strong>${a.last_scraped}</strong> ofert zamiast ~${a.recent_max_scraped} `
+                    + `(${Math.round((a.scraped_ratio || 0) * 100)}%) — listing niekompletny.`;
+            }
+            return `Źródło ${src} nie zwraca ofert `
+                + `(0 od ${a.consecutive_zero_scans} skanów; ${a.active_in_db} aktywnych wciąż w bazie z karencji).`;
+        }).join('<br>') + '<br>Sprawdź scraper — możliwa blokada portalu (WAF) lub timeouty stron.';
         alertBox.style.display = 'block';
     }
 

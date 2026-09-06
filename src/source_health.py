@@ -14,6 +14,13 @@ from typing import Dict, List, Optional
 # źródła, dla których scan_history trzyma pole `scraped_<source>`
 SOURCES = ('olx', 'otodom')
 
+# FIX 2026-09-06: samo „0 ofert" to za mało. 2026-09-02 i 2026-09-04 OLX oddał
+# 407 i 486 ofert zamiast ~1000 (timeout jednej strony ucinał resztę listingu) —
+# dla tego alertu było to „źródło żyje", więc na dashboardzie nic nie mrugnęło,
+# a awarię widać było dopiero w logu przebiegu. Teraz alarmujemy też przy
+# CZĘŚCIOWYM załamaniu: ostatni skan poniżej tego ułamka maksimum z okna.
+PARTIAL_SCRAPE_RATIO = 0.6
+
 
 def compute_source_alerts(scans: List[Dict],
                           active_by_source: Optional[Dict[str, int]] = None,
@@ -51,9 +58,22 @@ def compute_source_alerts(scans: List[Dict],
         if last == 0 and (recent_max > 0 or active_cnt > 0):
             alerts.append({
                 'source': source,
+                'kind': 'dead',
                 'last_scraped': last,
                 'consecutive_zero_scans': consecutive_zero,
                 'recent_max_scraped': recent_max,
+                'active_in_db': active_cnt,
+            })
+        # alert: źródło żyje, ale oddało ułamek tego, co zwykle — niekompletny
+        # listing (timeout strony, rwący się WAF). Patrz PARTIAL_SCRAPE_RATIO.
+        elif last and recent_max and last < recent_max * PARTIAL_SCRAPE_RATIO:
+            alerts.append({
+                'source': source,
+                'kind': 'partial',
+                'last_scraped': last,
+                'consecutive_zero_scans': 0,
+                'recent_max_scraped': recent_max,
+                'scraped_ratio': round(last / recent_max, 2),
                 'active_in_db': active_cnt,
             })
     return alerts

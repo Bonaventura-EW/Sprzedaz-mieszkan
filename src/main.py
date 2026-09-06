@@ -32,6 +32,13 @@ PRECISION_RANK = {'exact': 3, 'street': 2, 'approx': 1, None: 0}
 
 # Maksymalna wiarygodna zmiana ceny między skanami (ochrona przed błędami parsowania)
 MAX_PRICE_CHANGE_PERCENT = 70
+# FIX 2026-09-06: skok ponad ten próg był ignorowany BEZ KOŃCA — jeśli portal
+# naprawdę zmienił cenę, oferta zostawała w bazie ze starą już na zawsze
+# (np. otodom:68193431 wisiał na 78 900 zł przy 759 000 zł na portalu, czyli
+# 1201 zł/m² — wieczna „okazja" na szczycie okazje.html). Teraz skok wymaga
+# potwierdzenia: ta sama nowa cena w tylu skanach z rzędu i zostaje przyjęta.
+# Jednorazowy błąd parsowania się nie powtórzy, realna zmiana ceny — tak.
+PRICE_JUMP_CONFIRM_SCANS = 2
 # Ochrona przed masową dezaktywacją: scraper źródła musi zwrócić >= 50%
 # wcześniejszej liczby aktywnych ofert tego źródła, inaczej pomijamy dezaktywację
 # (niekompletny/zablokowany skan ≠ zniknięcie ofert)
@@ -112,23 +119,35 @@ class SonarSprzedazy:
         new_price = new['price']
         if new_price and new_price != old_price:
             change_pct = abs(new_price - old_price) / old_price * 100
-            if change_pct <= MAX_PRICE_CHANGE_PERCENT:
+            suspicious = change_pct > MAX_PRICE_CHANGE_PERCENT
+            confirmed = self._confirm_price_jump(existing, new_price, now) if suspicious else False
+            if not suspicious or confirmed:
                 trend = 'down' if new_price < old_price else 'up'
                 arrow = '📉' if trend == 'down' else '📈'
+                tag = ' (potwierdzony skok)' if confirmed else ''
                 print(f"   {arrow} Zmiana ceny {existing['id']}: "
-                      f"{old_price} → {new_price} zł")
+                      f"{old_price} → {new_price} zł{tag}")
                 existing['price']['previous_price'] = old_price
                 existing['price']['current'] = new_price
                 existing['price']['price_trend'] = trend
                 existing['price']['price_changed_at'] = now
                 existing['price']['history'].append(new_price)
-                existing['price'].setdefault('price_changes', []).append({
-                    'old_price': old_price, 'new_price': new_price,
-                    'changed_at': now, 'trend': trend,
-                })
+                change = {'old_price': old_price, 'new_price': new_price,
+                          'changed_at': now, 'trend': trend}
+                if confirmed:
+                    change['jump'] = True  # >MAX_PRICE_CHANGE_PERCENT, potwierdzony
+                existing['price'].setdefault('price_changes', []).append(change)
+                existing['price'].pop('pending_change', None)
             else:
+                pending = existing['price'].get('pending_change') or {}
                 print(f"   ⚠️ PODEJRZANA zmiana ceny {existing['id']}: "
-                      f"{old_price} → {new_price} zł ({change_pct:.0f}%) — ignoruję")
+                      f"{old_price} → {new_price} zł ({change_pct:.0f}%) — "
+                      f"czekam na potwierdzenie "
+                      f"({pending.get('seen', 1)}/{PRICE_JUMP_CONFIRM_SCANS} skanów)")
+        elif new_price == old_price:
+            # cena wróciła/nie drgnęła → zapomnij oczekujący skok (jednorazowy
+            # błąd parsowania nie może się „uzbierać" na przestrzeni tygodni)
+            existing['price'].pop('pending_change', None)
 
         # uzupełnij/odśwież pola merytoryczne (nowy skan = świeższe dane)
         if new.get('area_m2'):
@@ -179,6 +198,26 @@ class SonarSprzedazy:
             dates.append(now)
             print(f"   🔄 REAKTYWOWANO: {existing['id']}")
 
+    def _confirm_price_jump(self, existing: Dict, new_price: int, now: str) -> bool:
+        """Czy skokową zmianę ceny potwierdził już kolejny skan? (FIX 2026-09-06)
+
+        Trzyma „oczekujący skok" w `price.pending_change`. Ta sama nowa cena
+        widziana PRICE_JUMP_CONFIRM_SCANS razy z rzędu → True (przyjmujemy zmianę).
+        Inna cena niż oczekiwana → licznik startuje od nowa (to nie potwierdzenie,
+        tylko kolejny wyskok). Powrót do starej ceny czyści wpis — patrz
+        `_update_existing`.
+        """
+        price_info = existing['price']
+        pending = price_info.get('pending_change')
+        if not pending or pending.get('price') != new_price:
+            price_info['pending_change'] = {
+                'price': new_price, 'seen': 1, 'first_seen': now,
+            }
+            return False
+        pending['seen'] = pending.get('seen', 1) + 1
+        pending['last_seen'] = now
+        return pending['seen'] >= PRICE_JUMP_CONFIRM_SCANS
+
     def _add_new(self, new: Dict):
         now = datetime.now(self.tz).isoformat()
         price = new.pop('price')
@@ -216,15 +255,20 @@ class SonarSprzedazy:
         dates.append(today)
         return True
 
-    def _mark_inactive(self, scraped_by_source: Dict[str, List[Dict]]) -> int:
+    def _mark_inactive(self, scraped_by_source: Dict[str, List[Dict]],
+                       incomplete_sources: set = None) -> int:
         """Dezaktywuje oferty nieobecne w skanie — per źródło, z ochroną
         przed masową dezaktywacją przy blokadzie portalu.
+
+        `incomplete_sources`: źródła z niepełnym listingiem (pominięte strony) —
+        dezaktywację pomijamy w całości, patrz FIX 2026-09-06 w run_scan.
 
         Returns: łączna liczba dezaktywowanych ofert (do statystyk API).
         """
         now_dt = datetime.now(self.tz)
         now = now_dt.isoformat()
         grace_cutoff = now_dt - timedelta(days=DEACTIVATE_GRACE_DAYS)
+        incomplete_sources = incomplete_sources or set()
         total_deactivated = 0
         for source, scraped in scraped_by_source.items():
             scraped_ids = {o['id'] for o in scraped}
@@ -232,6 +276,10 @@ class SonarSprzedazy:
                             if o.get('source') == source and o.get('active')]
 
             if not active_in_db:
+                continue
+            if source in incomplete_sources:
+                print(f"   ⚠️ OCHRONA [{source}]: listing niekompletny "
+                      f"(pominięte strony) — pomijam dezaktywację")
                 continue
             if len(scraped) == 0:
                 print(f"   ⚠️ OCHRONA [{source}]: scraper zwrócił 0 ofert, "
@@ -451,8 +499,9 @@ class SonarSprzedazy:
         # 1. Scraping obu źródeł RÓWNOLEGLE (różne domeny, własne rate limity).
         # Awaria/blokada jednego źródła nie przerywa drugiego; szczegóły ofert
         # Otodom i tak pobierane są TYLKO dla nowych (known_offers, z limitem).
+        olx_scraper = OLXMieszkaniaScraper()
         scrape_tasks = {
-            'olx': lambda: OLXMieszkaniaScraper().scrape(max_pages=max_pages),
+            'olx': lambda: olx_scraper.scrape(max_pages=max_pages),
             'otodom': lambda: OtodomMieszkaniaScraper().scrape(
                 max_pages=max_pages, known_offers=self._known_otodom_offers()),
         }
@@ -467,6 +516,13 @@ class SonarSprzedazy:
                 except Exception as e:
                     print(f"❌ [{key}]: scraping nieudany: {e}")
                     scraped_by_source[key] = []
+
+        # FIX 2026-09-06: źródła, których listingu NIE dociągnęliśmy w całości
+        # (pominięte strony po nieudanych ponowieniach). Dla nich brak oferty
+        # w skanie nic nie znaczy — mogła leżeć na stronie, której nie pobraliśmy.
+        # Ochrona ilościowa (MIN_SCRAPE_RATIO) tego nie łapie: jedna strona to
+        # ~40 ofert z ~1000, czyli grubo powyżej progu.
+        incomplete_sources = {'olx'} if olx_scraper.failed_pages else set()
 
         # 2. Aktualizacja bazy
         print("💾 Aktualizacja bazy danych...")
@@ -577,7 +633,7 @@ class SonarSprzedazy:
             print(f"   📭 {stripped_coords} ofert bez wiarygodnej lokalizacji → sekcja 'bez GPS'")
 
         # 4. Dezaktywacja + porządki
-        deactivated_count = self._mark_inactive(scraped_by_source)
+        deactivated_count = self._mark_inactive(scraped_by_source, incomplete_sources)
         self._update_days_active()
         self._tag_cross_portal_duplicates()
         self._cleanup_old()
@@ -594,7 +650,7 @@ class SonarSprzedazy:
         promoted = sum(1 for o in self.database['offers']
                        if o.get('active') and o.get('promoted'))
         duration = time.time() - start
-        self._log_scan({
+        scan_stats = {
             'timestamp': now.isoformat(),
             'status': 'completed',
             'duration_s': round(duration, 1),
@@ -608,7 +664,12 @@ class SonarSprzedazy:
             'with_coords': with_coords,
             'promoted': promoted,
             'total_in_db': len(self.database['offers']),
-        })
+        }
+        # ślad niekompletnego listingu w historii skanów (dashboard/monitoring)
+        if incomplete_sources:
+            scan_stats['incomplete_sources'] = sorted(incomplete_sources)
+            scan_stats['failed_pages'] = list(olx_scraper.failed_pages)
+        self._log_scan(scan_stats)
 
         print("\n" + "=" * 60)
         print("📊 PODSUMOWANIE SCANU")
