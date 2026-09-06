@@ -64,6 +64,21 @@ HEADERS = {
 _STATE_RE = re.compile(r'window\.__PRERENDERED_STATE__\s*=\s*"(.*)";')
 _TAG_RE = re.compile(r'<[^>]+>')
 
+# FIX 2026-09-06: pojedynczy timeout strony potrafił skasować resztę listingu.
+# `_fetch` nie miał retry, a `_scrape_city` na `None` robiło `break` — czyli
+# jeden `curl: (28)` na stronie 9 ucinał strony 9–24. W logach: 2026-09-02
+# (407 ofert zamiast ~1000) i 2026-09-04 (486). Teraz: 3 próby na stronę
+# z narastającą przerwą, a nieudana strona jest POMIJANA, nie kończy paginacji;
+# dopiero 3 nieudane strony z rzędu (= realna blokada, nie chwilowy timeout)
+# przerywają listing miasta.
+REQUEST_TIMEOUT_S = 20
+FETCH_ATTEMPTS = 3
+FETCH_BACKOFF_S = (3, 8)          # przerwa po 1. i 2. nieudanej próbie
+MAX_CONSECUTIVE_PAGE_FAILURES = 3
+# Bezpiecznik czasu: nieudana strona kosztuje ~70 s (3 próby × timeout + przerwy),
+# więc rwący się listing bez tego limitu rozciągnąłby skan z ~2 na ~20 minut.
+MAX_PAGE_FAILURES_PER_CITY = 6
+
 # Mapowanie rynku OLX (param `market`) na wspólne nazwy
 MARKET_MAP = {
     'primary': 'pierwotny',
@@ -156,6 +171,40 @@ def _is_promoted_href(url: str) -> bool:
     return any('promoted' in r.lower() for r in reasons)
 
 
+# FIX 2026-09-06: od wdrożenia metryki (2026-09-03) ŻADNA oferta nie miała
+# `search_reason` — kanarek `cards>0 && attributed==0` alarmował w każdym skanie,
+# a szereg „⭐ wyróżnienia" na trend.html rysował płaskie zero. W listingu OLX
+# obok URL-a bywa jednak własny obiekt `promotion` (`top_ad` = wypchnięcie na
+# górę, `highlighted` = podświetlenie karty — oba płatne). Czytamy go jako
+# ZAPASOWE źródło flagi: gdy OLX przestał doszywać atrybucję do URL-a, metryka
+# wraca; gdy pola nie ma, `_promotion_flags` zwraca pustkę i nic się nie zmienia.
+# Diagnostyka w `scrape()` dopisuje do logu, co OLX faktycznie zwraca, więc
+# następny skan rozstrzyga jednoznacznie.
+PROMOTION_PAID_KEYS = ('top_ad', 'highlighted', 'urgent', 'premium_ad_page')
+
+
+def _promotion_flags(ad: dict) -> Optional[bool]:
+    """Płatne wyróżnienie z obiektu `promotion` listingu OLX.
+
+    Zwraca None, gdy ogłoszenie w ogóle nie niesie takiego obiektu (nie wiemy
+    nic — decyduje `search_reason`), True/False gdy niesie.
+    """
+    promotion = ad.get('promotion')
+    if not isinstance(promotion, dict):
+        return None
+    flags = [bool(promotion.get(k)) for k in PROMOTION_PAID_KEYS if k in promotion]
+    if not flags:
+        return None
+    return any(flags)
+
+
+def is_promoted_ad(ad: dict) -> bool:
+    """Flaga płatnego wyróżnienia: parametr atrybucji LUB obiekt `promotion`."""
+    if _is_promoted_href(ad.get('url') or ''):
+        return True
+    return _promotion_flags(ad) is True
+
+
 def normalize_ad(ad: dict) -> Optional[Dict]:
     """Normalizuje ogłoszenie OLX do wspólnego schematu SONARA SPRZEDAŻY MIESZKAŃ."""
     url = ad.get('url') or ''
@@ -207,9 +256,10 @@ def normalize_ad(ad: dict) -> Optional[Dict]:
         'id': olx_offer_id(url),
         'source': 'olx',
         'url': url.split('?')[0],
-        # płatne wyróżnienie z parametru atrybucji (czytane z PEŁNEGO url powyżej,
-        # zanim przytniemy query string do zapisu) — patrz _is_promoted_href
-        'promoted': _is_promoted_href(url),
+        # płatne wyróżnienie: parametr atrybucji (czytany z PEŁNEGO url powyżej,
+        # zanim przytniemy query string do zapisu) LUB obiekt `promotion`
+        # z listingu — patrz _is_promoted_href / _promotion_flags
+        'promoted': is_promoted_ad(ad),
         'title': ad.get('title', '').strip(),
         'price': price,
         'area_m2': area,
@@ -243,7 +293,15 @@ class OLXMieszkaniaScraper:
         # niosło w ogóle parametr `search_reason`. attributed == 0 przy niepustym
         # listingu znaczy, że OLX zmienił format atrybucji i metryka promowanych
         # po cichu spadłaby do zera — o tym alarmuje `scrape()`.
-        self.promoted_stats = {'cards': 0, 'attributed': 0, 'promoted': 0}
+        self.promoted_stats = {'cards': 0, 'attributed': 0, 'promoted': 0,
+                               'promotion_field': 0}
+        # próbka pierwszego ogłoszenia — zasila diagnostykę wyróżnień w logu
+        self._promotion_sample: Optional[dict] = None
+        # FIX 2026-09-06: strony listingu, których nie udało się pobrać mimo
+        # ponowień. Niepusta lista = skan OLX jest NIEKOMPLETNY; main.py
+        # pomija wtedy dezaktywację tego źródła (brak oferty w skanie może
+        # znaczyć „nie doczytaliśmy strony", a nie „oferta zniknęła").
+        self.failed_pages: List[str] = []
         # FIX 2026-08-22: preferuj curl_cffi (impersonacja TLS Chrome) — OLX
         # blokuje „pythonowy" fingerprint requests. Fallback do requests, gdy
         # curl_cffi niedostępne.
@@ -261,13 +319,27 @@ class OLXMieszkaniaScraper:
               + ("" if _HAS_CFFI else " (curl_cffi niedostępne — możliwa blokada WAF)"))
 
     def _fetch(self, url: str) -> Optional[str]:
-        try:
-            r = self.session.get(url, timeout=20)
-            r.raise_for_status()
-            return r.text
-        except Exception as e:  # curl_cffi rzuca własne wyjątki; łapiemy szeroko
-            print(f"❌ OLX: błąd pobierania {url}: {e}")
-            return None
+        """Pobiera stronę z ponowieniami — patrz FIX 2026-09-06 na górze pliku.
+
+        Timeout OLX-a bywa chwilowy (jedna strona listingu na kilkaset), więc
+        ponawiamy zamiast od razu odpuszczać. Zwraca None dopiero po wyczerpaniu
+        wszystkich prób.
+        """
+        last_error = None
+        for attempt in range(1, FETCH_ATTEMPTS + 1):
+            try:
+                r = self.session.get(url, timeout=REQUEST_TIMEOUT_S)
+                r.raise_for_status()
+                return r.text
+            except Exception as e:  # curl_cffi rzuca własne wyjątki; łapiemy szeroko
+                last_error = e
+                if attempt < FETCH_ATTEMPTS:
+                    wait = FETCH_BACKOFF_S[min(attempt - 1, len(FETCH_BACKOFF_S) - 1)]
+                    print(f"   ⚠️ OLX: próba {attempt}/{FETCH_ATTEMPTS} nieudana "
+                          f"({type(e).__name__}) — ponawiam za {wait}s: {url}")
+                    time.sleep(wait)
+        print(f"❌ OLX: błąd pobierania {url} po {FETCH_ATTEMPTS} próbach: {last_error}")
+        return None
 
     def scrape(self, max_pages: int = 25) -> List[Dict]:
         """Pobiera listingi wszystkich obsługiwanych miast i zwraca oferty.
@@ -282,10 +354,50 @@ class OLXMieszkaniaScraper:
         ps = self.promoted_stats
         print(f"✅ OLX: zebrano {len(offers)} ofert "
               f"(⭐ wyróżnionych: {ps['promoted']})\n")
-        if ps['cards'] and not ps['attributed']:
-            print("🚨 OLX: żadna oferta nie miała parametru search_reason — "
-                  "OLX zmienił atrybucję, detekcja wyróżnień może nie działać!\n")
+        # FIX 2026-09-06: skan z pominiętymi stronami jest NIEKOMPLETNY —
+        # trzeba to widzieć w logu i przekazać dalej (main pomija dezaktywację).
+        if self.failed_pages:
+            print(f"⚠️ OLX: skan NIEKOMPLETNY — nie pobrano stron: "
+                  f"{', '.join(self.failed_pages)}\n")
+        self._report_promotion_health()
         return offers
+
+    def _report_promotion_health(self) -> None:
+        """Alarm + diagnostyka detekcji płatnych wyróżnień (FIX 2026-09-06).
+
+        Kanarek z propagacji (SONAR-POKOJOWY) alarmował „brak search_reason", ale
+        nie mówił, CO OLX zwraca zamiast tego — przez co przez kilka dni nie dało
+        się rozstrzygnąć, czy to zmiana po stronie portalu, czy nasz błąd odczytu.
+        Teraz log niesie próbkę: klucze ogłoszenia i kształt pola `promotion`.
+        """
+        ps = self.promoted_stats
+        if not ps['cards']:
+            return
+        if ps['attributed']:
+            return  # atrybucja w URL-u działa — nic do zgłaszania
+
+        if ps['promotion_field'] and ps['promoted']:
+            print(f"ℹ️ OLX: brak parametru search_reason, ale {ps['promotion_field']} "
+                  f"ofert niesie pole `promotion` — wyróżnienia liczone z niego\n")
+            return
+
+        if ps['promotion_field']:
+            # pole jest, ale ZERO wyróżnionych w całym listingu — na tysiącu
+            # ogłoszeń to nieprawdopodobne, więc traktujemy jak zepsuty odczyt,
+            # a nie „nikt nie płaci za wyróżnienie"
+            print(f"🚨 OLX: pole `promotion` niesie {ps['promotion_field']} ofert, "
+                  f"ale ŻADNA nie jest wyróżniona — podejrzany odczyt "
+                  f"(sprawdź klucze {PROMOTION_PAID_KEYS})\n")
+            return
+
+        print("🚨 OLX: żadna oferta nie miała ani parametru search_reason, ani pola "
+              "`promotion` — detekcja wyróżnień NIE DZIAŁA!")
+        sample = self._promotion_sample or {}
+        if sample:
+            print(f"   🔬 diagnostyka: url z query stringiem = {sample.get('has_query')}, "
+                  f"url = {sample.get('url')}")
+            print(f"   🔬 klucze ogłoszenia: {sample.get('keys')}")
+        print()
 
     def _scrape_city(self, city: str, listing_url: str, max_pages: int,
                      offers: List[Dict], seen_ids: set) -> None:
@@ -293,16 +405,35 @@ class OLXMieszkaniaScraper:
         print(f"🔍 OLX: scraping mieszkań na sprzedaż ({city.capitalize()})...")
         before = len(offers)
 
+        consecutive_failures = city_failures = 0
+
         for page in range(1, max_pages + 1):
             url = listing_url if page == 1 else f"{listing_url}?page={page}"
             html = self._fetch(url)
-            if not html:
-                break
+            state = decode_prerendered_state(html) if html else None
 
-            state = decode_prerendered_state(html)
+            # FIX 2026-09-06: nieudana strona NIE kończy listingu miasta —
+            # pomijamy ją i lecimy dalej. Paginację przerywa dopiero seria
+            # MAX_CONSECUTIVE_PAGE_FAILURES błędów (wtedy to nie chwilowy
+            # timeout, tylko blokada i dalsze dobijanie się nie ma sensu).
             if not state:
-                print(f"⚠️ OLX: brak stanu JSON na stronie {page}")
-                break
+                if html:
+                    print(f"⚠️ OLX: brak stanu JSON na stronie {page}")
+                consecutive_failures += 1
+                city_failures += 1
+                self.failed_pages.append(f"{city}/{page}")
+                if consecutive_failures >= MAX_CONSECUTIVE_PAGE_FAILURES:
+                    print(f"⛔ OLX {city}: {consecutive_failures} nieudanych stron "
+                          f"z rzędu — przerywam paginację (możliwa blokada portalu)")
+                    break
+                if city_failures >= MAX_PAGE_FAILURES_PER_CITY:
+                    print(f"⛔ OLX {city}: {city_failures} nieudanych stron w tym "
+                          f"listingu — przerywam paginację (bezpiecznik czasu)")
+                    break
+                print(f"   ⏭️ OLX {city}: pomijam stronę {page}, przechodzę do kolejnej")
+                time.sleep(random.uniform(self.delay_min, self.delay_max))
+                continue
+            consecutive_failures = 0
 
             listing = (state.get('listing') or {}).get('listing') or {}
             ads = listing.get('ads') or []
@@ -325,8 +456,18 @@ class OLXMieszkaniaScraper:
                 self.promoted_stats['cards'] += 1
                 if 'search_reason=' in (ad.get('url') or ''):
                     self.promoted_stats['attributed'] += 1
+                if _promotion_flags(ad) is not None:
+                    self.promoted_stats['promotion_field'] += 1
                 if offer.get('promoted'):
                     self.promoted_stats['promoted'] += 1
+                if self._promotion_sample is None:
+                    # próbka dla diagnostyki — patrz _report_promotion_health
+                    raw_url = ad.get('url') or ''
+                    self._promotion_sample = {
+                        'has_query': '?' in raw_url,
+                        'url': raw_url[:160],
+                        'keys': sorted(ad.keys()),
+                    }
                 offers.append(offer)
                 new_on_page += 1
 

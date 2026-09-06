@@ -34,6 +34,16 @@ HEADERS = {'User-Agent': 'SONAR-SPRZEDAZY/1.0 (github.com/Bonaventura-EW/Sprzeda
 CACHE_FILE = Path(paths.DATA_DIR) / "geocoding_cache.json"
 NEGATIVE_TTL_S = 7 * 24 * 3600  # nieudane zapytania ponawiamy po tygodniu
 
+# typy wyników Nominatim uznawane za „jednostka w mieście" (bbox dzielnicy).
+# Nominatim na zapytanie o nieistniejącą dzielnicę zwraca całe miasto —
+# taki wynik odrzucamy, bo bbox miasta przepuściłby dowolną pinezkę.
+DISTRICT_PLACE_TYPES = ('suburb', 'quarter', 'neighbourhood', 'city_district',
+                        'borough', 'residential')
+# Zapas przy sprawdzaniu, czy pinezka leży w dzielnicy — bbox to prostokąt na
+# nieregularnym wielokącie, a ulica graniczna bywa tuż za jego krawędzią.
+# ~0.004° to w Lublinie ok. 450 m w pionie i 280 m w poziomie.
+DISTRICT_BBOX_PAD_DEG = 0.004
+
 # FIX 2026-08-27: obszar zbierania rozszerzony o Świdnik (Lublin + miasto
 # Świdnik). Zamiast zaszytego wszędzie „Lublin" mamy rejestr miast — dodanie
 # kolejnego to jeden wpis tutaj, a nie polowanie na literały w trzech plikach.
@@ -176,7 +186,8 @@ def nominative_variants(street: str) -> List[str]:
 
 class StreetGeocoder:
     def __init__(self, cache_file: str = str(CACHE_FILE), delay_s: float = 1.1,
-                 max_live: Optional[int] = None, max_reverse: Optional[int] = None):
+                 max_live: Optional[int] = None, max_reverse: Optional[int] = None,
+                 max_district: Optional[int] = None):
         self.cache_file = Path(cache_file)
         self.delay_s = delay_s
         self._last_request = 0.0
@@ -188,6 +199,10 @@ class StreetGeocoder:
         self.max_live = max_live
         # osobny budżet na reverse geocoding (weryfikacja pinezek Otodom)
         self.max_reverse = max_reverse
+        # osobny, mały budżet na bboxy dzielnic (kilkadziesiąt zapytań RAZ,
+        # potem wszystko z cache — granice dzielnic się nie przesuwają)
+        self.district_requests = 0
+        self.max_district = max_district
 
     def _load_cache(self) -> Dict:
         if self.cache_file.exists():
@@ -321,6 +336,58 @@ class StreetGeocoder:
         addr = self.reverse_address(lat, lon)
         return (addr or {}).get('road')
 
+    def district_bbox(self, district: str, city: Optional[str] = None):
+        """Prostokąt otaczający dzielnicę: (lat_min, lat_max, lon_min, lon_max).
+
+        FIX 2026-09-06: potrzebne, żeby odróżnić „pinezka w sąsiedniej dzielnicy,
+        bo ulica biegnie po granicy" od „pinezka na drugim końcu miasta" —
+        patrz district_matches / district_consistent.
+
+        Zapytań jest tyle, ile dzielnic (Lublin ma ich ~28), a granice się nie
+        przesuwają, więc po pierwszym skanie wszystko siedzi w cache na stałe.
+        Dlatego dostają własny, mały budżet zamiast konkurować z 100 zapytaniami
+        na ulice.
+        """
+        if not district:
+            return None
+        ck = city_key(city) or DEFAULT_CITY
+        city_name = CITIES[ck]['name']
+        key = f"dbx:{ck}:{district.lower()}"
+        if key in self.cache:
+            entry = self.cache[key]
+            if entry.get('result'):
+                return tuple(entry['result'])
+            if time.time() - entry.get('ts', 0) < NEGATIVE_TTL_S:
+                return None
+        if self.max_district is not None and self.district_requests >= self.max_district:
+            return None  # budżet wyczerpany — dobierze się w kolejnym skanie
+
+        wait = self.delay_s - (time.time() - self._last_request)
+        if wait > 0:
+            time.sleep(wait)
+        result = None
+        try:
+            r = requests.get(NOMINATIM_URL, params={
+                'q': f'{district}, {city_name}, Polska',
+                'format': 'json', 'limit': 1, 'addressdetails': 1,
+            }, headers=HEADERS, timeout=15)
+            self._last_request = time.time()
+            self.district_requests += 1
+            r.raise_for_status()
+            hits = r.json() or []
+            # tylko wynik będący FAKTYCZNIE jednostką w mieście — zapytanie
+            # o nieistniejącą dzielnicę Nominatim „ratuje" zwracając całe miasto,
+            # a bbox miasta przepuściłby dowolną pinezkę
+            if hits and hits[0].get('addresstype') in DISTRICT_PLACE_TYPES:
+                bb = hits[0].get('boundingbox') or []
+                if len(bb) == 4:
+                    result = [float(bb[0]), float(bb[1]), float(bb[2]), float(bb[3])]
+        except (requests.RequestException, ValueError, KeyError) as e:
+            print(f"      ⚠️ Nominatim (dzielnica {district}) błąd: {e}")
+            return None
+        self.cache[key] = {'result': result, 'ts': time.time()}
+        return tuple(result) if result else None
+
 
 # ── pomocnicze: porównywanie nazw ulic i dystans ─────────────────────────────
 
@@ -398,6 +465,37 @@ def district_matches(stated: str, found: str) -> bool:
     return bool(set(a.split()) & set(b.split()))
 
 
+def pin_in_declared_district(offer: Dict, geocoder: StreetGeocoder) -> bool:
+    """Czy pinezka leży w prostokącie deklarowanej dzielnicy (FIX 2026-09-06).
+
+    Rozstrzyga sytuację, w której reverse geocoding zwraca INNĄ nazwę dzielnicy
+    niż ogłoszenie, choć pinezka stoi dobrze. Dzieje się to non stop, bo
+    geokoder daje jeden punkt reprezentatywny na całą ulicę, a długie ulice
+    przecinają dzielnice albo biegną po ich granicy. Zmierzone na naszej bazie
+    (247 odrzuconych pinezek): 117 z nich to właśnie taki przypadek —
+    ul. Zemborzycka (ogłoszenie: Wrotków, reverse: Dziesiąta), Nałęczowska
+    (Konstantynów/Sławinek), Lubartowska (Śródmieście/Stare Miasto).
+
+    Nie da się tego rozstrzygnąć nazwą ulicy: pinezkę POSTAWIŁ nasz geokoder na
+    tej właśnie ulicy, więc reverse zawsze ją potwierdzi — również dla pinezek
+    fałszywych (ul. Zalewskiego wyłuskana ze stopki agencji w ofercie ze Sławina).
+    Rozstrzyga dopiero geografia: czy punkt leży w granicach deklarowanej
+    dzielnicy.
+    """
+    loc = offer.get('location') or {}
+    coords = loc.get('coords')
+    district = loc.get('district')
+    if not coords or not district:
+        return False
+    bbox = geocoder.district_bbox(district, loc.get('city'))
+    if not bbox:
+        return False  # nie znamy granic (budżet/nieznana dzielnica) — nie ratujemy
+    lat_min, lat_max, lon_min, lon_max = bbox
+    pad = DISTRICT_BBOX_PAD_DEG
+    return (lat_min - pad <= coords['lat'] <= lat_max + pad
+            and lon_min - pad <= coords['lon'] <= lon_max + pad)
+
+
 def otodom_coords_plausible(offer: Dict, geocoder: StreetGeocoder) -> bool:
     """Czy współrzędne Otodom są na tyle wiarygodne, by użyć ich na mapie.
 
@@ -419,8 +517,11 @@ def otodom_coords_plausible(offer: Dict, geocoder: StreetGeocoder) -> bool:
     if not city_consistent(loc.get('city'), addr.get('city')):
         return False
     if not district_matches(loc.get('district'), addr.get('district')):
-        loc['district_mismatch'] = True
-        return False  # pinezka w innej dzielnicy niż podana → nie używamy
+        # nazwy się nie zgadzają — rozstrzyga geografia, patrz
+        # pin_in_declared_district (dzielnice sąsiadują, granice bywają umowne)
+        if not pin_in_declared_district(offer, geocoder):
+            loc['district_mismatch'] = True
+            return False  # pinezka w innej dzielnicy niż podana → nie używamy
     loc.pop('district_mismatch', None)
     return True
 
@@ -458,8 +559,10 @@ def district_consistent(offer: Dict, geocoder: StreetGeocoder) -> bool:
     if not city_consistent(loc.get('city'), addr.get('city')):
         return False  # pinezka w innym mieście niż ogłoszenie
     if not district_matches(loc.get('district'), addr.get('district')):
-        loc['district_mismatch'] = True
-        return False
+        # jak wyżej: różnica nazw nie przesądza, granica dzielnicy tak
+        if not pin_in_declared_district(offer, geocoder):
+            loc['district_mismatch'] = True
+            return False
     loc.pop('district_mismatch', None)
     return True
 

@@ -8,6 +8,8 @@ mapę, z podziałem na powód (wzorowane na skipped_debug.html z SONAR-POKOJOWY)
 - zla_dzielnica      — coords Otodom odrzucone (pinezka w innej dzielnicy/poza Lublinem)
 - otodom_bez_detali  — oferta Otodom czeka na pobranie strony szczegółów (coords/rynek)
 - duplikat           — to samo mieszkanie na drugim portalu (ukryte na mapie)
+- cena_nieporownywalna — cena nie jest ceną sprzedaży mieszkania (zamiana,
+                       partycypacja TBS/SIM, cesja najmu, udział, licytacja)
 
 Strona diagnostyczna — pomaga widzieć, czego parser/geokoder nie ogarnął.
 """
@@ -20,13 +22,14 @@ import pytz
 
 import paths
 from location_refiner import street_candidates
+from offer_kind import label as non_comparable_label
 
 SAMPLE_LIMIT = 400          # ile próbek na kategorię trzymać w JSON (liczniki są pełne)
 DESC_PREVIEW = 300
 
 
 CATEGORIES = ('brak_adresu', 'geokoder_pusty', 'zla_dzielnica',
-              'otodom_bez_detali', 'duplikat')
+              'otodom_bez_detali', 'duplikat', 'cena_nieporownywalna')
 
 
 def _classify(offer: dict, active_ids: set) -> str:
@@ -35,6 +38,9 @@ def _classify(offer: dict, active_ids: set) -> str:
     dup = offer.get('duplicate_of')
     if dup and dup in active_ids:
         return 'duplikat'
+    # FIX 2026-09-06: chowana przez map_generator/api_generator — patrz offer_kind
+    if offer.get('price_not_comparable'):
+        return 'cena_nieporownywalna'
     if loc.get('coords'):
         return None  # ma pinezkę — jest na mapie
     if loc.get('district_mismatch'):
@@ -64,6 +70,8 @@ def _sample(offer: dict, category: str) -> dict:
         'address_parsed': cands[0] if cands else None,
         'description_preview': (offer.get('description') or '')[:DESC_PREVIEW],
         'also_at': offer.get('also_at'),
+        # dlaczego cena nie jest porównywalna (tylko dla tej kategorii)
+        'reason': non_comparable_label(offer.get('price_not_comparable')),
     }
 
 

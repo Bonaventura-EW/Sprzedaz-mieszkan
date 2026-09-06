@@ -3,16 +3,24 @@
 from location_refiner import (
     extract_street_candidates, nominative_variants, refine_offer_location,
     district_consistent, StreetGeocoder, city_key, city_consistent,
-    offer_city_key, otodom_coords_plausible,
+    offer_city_key, otodom_coords_plausible, pin_in_declared_district,
 )
 
 
 class ReverseGeocoder:
-    """Atrapa geokodera do walidacji dzielnicy — reverse zwraca zadany adres."""
-    def __init__(self, addr):
+    """Atrapa geokodera do walidacji dzielnicy — reverse zwraca zadany adres.
+
+    `bbox` (FIX 2026-09-06) to prostokąt deklarowanej dzielnicy; None = granic
+    nie znamy, więc niezgodność nazw nie ma czym się obronić (zachowanie
+    sprzed dołożenia bboxów).
+    """
+    def __init__(self, addr, bbox=None):
         self._addr = addr
+        self._bbox = bbox
     def reverse_address(self, lat, lon):
         return self._addr
+    def district_bbox(self, district, city=None):
+        return self._bbox
 
 
 def test_district_consistent_rejects_wrong_district():
@@ -31,6 +39,54 @@ def test_district_consistent_accepts_matching_district():
         'district': 'Sławin'}}
     geo = ReverseGeocoder({'road': 'X', 'district': 'Sławin', 'city': 'Lublin'})
     assert district_consistent(offer, geo) is True
+
+
+# ── bbox dzielnicy rozstrzyga niezgodność nazw (FIX 2026-09-06) ──────
+# Prawdziwy przypadek z bazy: ul. Zemborzycka, ogłoszenie mówi „Wrotków",
+# reverse zwraca „Dziesiąta" — bo geokoder daje JEDEN punkt na całą, długą
+# ulicę. Pinezka stoi dobrze i musi zostać.
+WROTKOW_BBOX = (51.1942480, 51.2249786, 22.5365090, 22.5716719)
+
+
+def test_district_mismatch_accepted_when_pin_inside_declared_district():
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 51.2100, 'lon': 22.5500}, 'coords_precision': 'street',
+        'district': 'Wrotków', 'city': 'Lublin'}}
+    geo = ReverseGeocoder({'road': 'Zemborzycka', 'district': 'Dziesiąta',
+                           'city': 'Lublin'}, bbox=WROTKOW_BBOX)
+    assert district_consistent(offer, geo) is True
+    assert 'district_mismatch' not in offer['location']
+
+
+def test_district_mismatch_still_rejected_when_pin_far_outside():
+    # ul. Zalewskiego wyłuskana ze stopki agencji w ofercie „ze Sławina" —
+    # pinezka ląduje kilka km od deklarowanej dzielnicy i ma zostać odrzucona
+    offer = {'source': 'otodom', 'location': {
+        'coords': {'lat': 51.2100, 'lon': 22.5500}, 'coords_precision': 'street',
+        'district': 'Sławin', 'city': 'Lublin'}}
+    slawin_bbox = (51.2750, 51.2950, 22.4900, 22.5400)
+    geo = ReverseGeocoder({'road': 'Zalewskiego', 'district': 'Wrotków',
+                           'city': 'Lublin'}, bbox=slawin_bbox)
+    assert district_consistent(offer, geo) is False
+    assert offer['location'].get('district_mismatch') is True
+
+
+def test_pin_in_declared_district_tolerates_boundary():
+    """Ulica biegnąca po granicy wypada tuż za prostokątem — zapas ją ratuje."""
+    offer = {'location': {'coords': {'lat': 51.2270, 'lon': 22.5500},
+                          'district': 'Wrotków', 'city': 'Lublin'}}
+    geo = ReverseGeocoder(None, bbox=WROTKOW_BBOX)   # 0.002° nad krawędzią (~220 m)
+    assert pin_in_declared_district(offer, geo) is True
+    far = {'location': {'coords': {'lat': 51.2600, 'lon': 22.5500},
+                        'district': 'Wrotków', 'city': 'Lublin'}}
+    assert pin_in_declared_district(far, geo) is False
+
+
+def test_pin_in_declared_district_without_bbox_is_no_rescue():
+    # nie znamy granic (budżet/nieznana dzielnica) → nie ratujemy pinezki
+    offer = {'location': {'coords': {'lat': 51.24, 'lon': 22.55},
+                          'district': 'Rury', 'city': 'Lublin'}}
+    assert pin_in_declared_district(offer, ReverseGeocoder(None, bbox=None)) is False
 
 
 def test_district_consistent_lenient_without_district():

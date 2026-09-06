@@ -16,6 +16,7 @@
 .stat-card.zla_dzielnica{border-left-color:#f59e0b}
 .stat-card.otodom_bez_detali{border-left-color:#0284c7}
 .stat-card.duplikat{border-left-color:#06b6d4}
+.stat-card.cena_nieporownywalna{border-left-color:#db2777}
 .stat-card .label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .stat-card .value{font-size:26px;font-weight:800;color:var(--ink);line-height:1.1;margin-top:3px}
 .stat-card .sub{font-size:11px;color:#94a3b8;margin-top:3px}
@@ -34,6 +35,7 @@
 .badge.zla_dzielnica{background:#fef3c7;color:#92400e}
 .badge.otodom_bez_detali{background:#e0f2fe;color:#075985}
 .badge.duplikat{background:#cffafe;color:#155e75}
+.badge.cena_nieporownywalna{background:#fce7f3;color:#9d174d}
 .b-src{background:#f1f5f9;color:#475569}
 .offer-title{font-weight:700;font-size:14px;flex:1;min-width:0}
 .offer-link{color:var(--green-600);text-decoration:none;font-size:12px;font-weight:700;white-space:nowrap}
@@ -90,8 +92,9 @@ const META={
   zla_dzielnica:{label:'Zła dzielnica (Otodom)',sub:'pinezka w innej dzielnicy / poza miastem oferty'},
   otodom_bez_detali:{label:'Otodom — bez detali',sub:'czeka na stronę szczegółów (coords/rynek)'},
   duplikat:{label:'Duplikat',sub:'to samo mieszkanie na drugim portalu'},
+  cena_nieporownywalna:{label:'Cena nieporównywalna',sub:'zamiana / TBS / udział / licytacja — to nie cena sprzedaży mieszkania'},
 };
-const ORDER=['brak_adresu','geokoder_pusty','zla_dzielnica','otodom_bez_detali','duplikat'];
+const ORDER=['brak_adresu','geokoder_pusty','zla_dzielnica','otodom_bez_detali','duplikat','cena_nieporownywalna'];
 const SRC={olx:'OLX',otodom:'Otodom'};
 let ALL=[];
 
@@ -142,6 +145,7 @@ function card(o){
   meta.push(`📐 ${AREA(o.area_m2)}`);
   if(o.rooms!=null) meta.push(`🚪 ${o.rooms} pok.`);
   if(cat==='duplikat'&&o.also_at) meta.push(`🔗 kanoniczna: <a class="offer-link" href="${esc(o.also_at)}" target="_blank" rel="noopener">↗</a>`);
+  if(cat==='cena_nieporownywalna'&&o.reason) meta.push(`🏷️ ${esc(o.reason)}`);
   const desc=o.description_preview?`<div class="offer-desc" onclick="this.classList.toggle('expanded')">${esc(o.description_preview)}</div>`:'';
   return `<div class="offer" data-cat="${cat}" data-s="${esc(((o.title||'')+' '+(o.description_preview||'')+' '+(o.street||'')+' '+(o.district||'')).toLowerCase())}">
     <div class="offer-header">

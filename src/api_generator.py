@@ -33,7 +33,11 @@ def generate():
     active_ids = {o['id'] for o in all_offers if o.get('active')}
     active = [o for o in all_offers
               if o.get('active')
-              and not (o.get('duplicate_of') and o['duplicate_of'] in active_ids)]
+              and not (o.get('duplicate_of') and o['duplicate_of'] in active_ids)
+              # FIX 2026-09-06: cena nieporównywalna (zamiana/TBS/udział/
+              # licytacja) — poza API tak samo jak poza mapą, żeby konsument
+              # API nie liczył z tego mediany. Patrz offer_kind.py.
+              and not o.get('price_not_comparable')]
 
     per_m2 = sorted(o.get('price_per_m2') for o in active if o.get('price_per_m2'))
     by_source = {}
@@ -189,9 +193,15 @@ def generate():
     print(f"🔌 Wygenerowano API: {API_DIR} (status, offers[{len(active)}], history, health)")
     if source_alerts:
         for a in source_alerts:
-            print(f"   🚨 ALERT: źródło '{a['source']}' oddaje 0 ofert "
-                  f"({a['consecutive_zero_scans']} skanów z rzędu, "
-                  f"{a['active_in_db']} aktywnych wciąż w bazie)")
+            if a.get('kind') == 'partial':
+                # FIX 2026-09-06: niekompletny listing (np. timeout strony OLX)
+                print(f"   🚨 ALERT: źródło '{a['source']}' oddało tylko "
+                      f"{a['last_scraped']} ofert vs {a['recent_max_scraped']} "
+                      f"zwykle — listing niekompletny")
+            else:
+                print(f"   🚨 ALERT: źródło '{a['source']}' oddaje 0 ofert "
+                      f"({a['consecutive_zero_scans']} skanów z rzędu, "
+                      f"{a['active_in_db']} aktywnych wciąż w bazie)")
 
 
 if __name__ == "__main__":

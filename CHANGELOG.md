@@ -2,6 +2,147 @@
 
 ## [Niewydane]
 
+### Naprawione — 117 poprawnych pinezek odrzucanych jako „zła dzielnica"
+Walidacja pinezek `street` wyrzucała z mapy 248 ofert na skan (`zla_dzielnica`
+w Debugu). Przegląd wszystkich 247 aktywnych przypadków pokazał, że **prawie
+połowa to pinezki poprawne**: geokoder zwraca JEDEN punkt reprezentatywny na
+całą ulicę, a długie ulice przecinają dzielnice albo biegną po ich granicy —
+więc reverse geocoding pokazywał sąsiednią dzielnicę niż ta z ogłoszenia:
+
+| ulica | ogłoszenie mówi | reverse mówi | ofert |
+|-------|-----------------|--------------|-------|
+| Zemborzycka | Wrotków | Dziesiąta | 20 |
+| Nałęczowska | Konstantynów | Sławinek | 19 |
+| Bohaterów Monte Cassino | Konstantynów | Rury | 10 |
+| Lubartowska | Śródmieście | Stare Miasto | 6 |
+
+Nazwą ulicy tego nie rozstrzygniemy: pinezkę POSTAWIŁ nasz geokoder na tej
+właśnie ulicy, więc reverse zawsze ją potwierdzi — również dla pinezek
+fałszywych. Rozstrzyga dopiero geografia.
+- `src/location_refiner.py` — `StreetGeocoder.district_bbox()` pobiera z
+  Nominatima prostokąt otaczający dzielnicę (zapytanie `"<dzielnica>, <miasto>,
+  Polska"`, akceptowane tylko wyniki typu `suburb`/`quarter`/… — na nieistniejącą
+  dzielnicę Nominatim „ratuje" zapytanie zwracając całe miasto, a bbox miasta
+  przepuściłby dowolną pinezkę). Nowa funkcja `pin_in_declared_district()`
+  sprawdza, czy punkt leży w tym prostokącie (zapas `DISTRICT_BBOX_PAD_DEG`
+  ≈ 450 m — bbox to prostokąt na nieregularnym wielokącie).
+- `district_consistent()` i `otodom_coords_plausible()` — przy niezgodności
+  NAZW pytają jeszcze o granice; pinezka w granicach deklarowanej dzielnicy
+  zostaje na mapie.
+- `src/main.py` — `MAX_DISTRICT_LOOKUPS = 40`, osobny mały budżet. Lublin ma
+  ~28 dzielnic, granice się nie przesuwają, więc po pierwszym skanie komplet
+  siedzi w cache (w pomiarze: 22 zapytania i koniec) — nie konkuruje ze 100
+  geokodowaniami ulic.
+
+**Zmierzone na prawdziwej bazie, prawdziwym kodem** (247 odrzuconych ofert):
+**117 wraca na mapę, 123 nadal odrzucone.** Odrzucone zostają dokładnie te
+fałszywe — na czele `ul. Księdza Ludwika Zalewskiego` (61 ofert; nazwa wyłuskana
+ze stopki agencji, ogłoszenia deklarują Sławin, Śródmieście, Za Cukrownią).
+Nałęczowska dzieli się poprawnie: 19 pinezek wraca dla Konstantynowa (ulica
+biegnie po granicy), 6 zostaje odrzuconych dla Szerokiego (tam nie dochodzi).
+Pomiar dotyczy ścieżki `street`, na którą przypadają praktycznie wszystkie
+odrzucenia (log skanu: „🚫 248 pinezek 'street' w złej dzielnicy").
+
+### Naprawione — śmieci na szczycie rankingu okazji
+`okazje.html` pokazywał jako najlepsze okazje oferty, które w ogóle nie są
+sprzedażą mieszkania: „ZAMIENIĘ mieszkanie" za 450 zł (**9 zł/m²**),
+partycypację TBS/SIM (1121 zł/m²), cesję najmu (3128 zł/m²), „1/2 udziału"
+(4697 zł/m²) i cenę wywoławczą z licytacji. Zaniżały też medianę i decyle
+kolorujące pinezki.
+- `src/offer_kind.py` (nowy) — rozpoznaje pięć klas: `zamiana`, `tbs_sim`,
+  `cesja_najmu`, `udzial`, `licytacja`.
+- **Sam tekst to za mało** i to jest sedno tej zmiany: sprawdzone na bazie —
+  wzorzec „zamiana" łapie też zwykłe sprzedaże („0% prowizji, możliwa zamiana",
+  „Sprzedam/zamienię"), gdzie zamiana jest tylko opcją, a cena najzwyklejsza.
+  Dlatego ofertę odsuwamy dopiero, gdy **oba sygnały zgadzają się naraz**:
+  tekst mówi „to nie zwykła sprzedaż" ORAZ cena za m² jest niższa niż
+  `NON_COMPARABLE_MAX_RATIO = 0.5` mediany. Próg wyszedł z pomiaru: przy 0.5
+  i 0.6 wynik jest identyczny (7 ofert), więc leży na płaskowyżu, nie na ostrzu.
+- Mediana liczona **per miasto** (pkt 6b w CLAUDE.md) i tylko gdy miasto ma
+  ≥ `MIN_CITY_SAMPLE = 30` ofert — inaczej tańszy Świdnik wypadałby cały jako
+  „cena odstająca".
+- `main.py` oznacza je w skanie (`price_not_comparable`, obok deduplikacji),
+  `map_generator`/`api_generator` chowają je jak duplikaty, a `debug_generator`
+  + `docs/debug.html` pokazują z powodem w nowej kategorii „Cena nieporównywalna".
+  Znacznik jest zdejmowany, gdy oferta przestaje spełniać warunek — poprawiona
+  cena wraca na mapę sama.
+- Efekt na danych: 7 ofert oznaczonych, 6 zniknęło z mapy (siódma była już
+  ukryta jako duplikat), 2300 zamiast 2306 aktywnych. Żadna normalnie wyceniona
+  oferta nie została ukryta — 10 ogłoszeń z „zamianą"/„udziałami" w tytule, ale
+  ceną rynkową, zostaje na mapie.
+
+`tests/test_offer_kind.py` (10 testów) i 4 nowe w `test_location_refiner.py`;
+cała suita: 103 przechodzą.
+
+### Naprawione — trzy awarie skanu widoczne tylko w logach (audyt przebiegów)
+Workflow `scanner.yml` świecił się na zielono w 171 przebiegach z rzędu, ale
+w logach siedziały trzy realne awarie. Każdy krok skanu ma `|| echo
+"::warning::..."`, więc nawet padnięty generator nie zapala runa na czerwono —
+awarie trzeba było wyłuskać z treści logu.
+
+**1. Jeden timeout strony OLX ucinał resztę listingu miasta.**
+`_fetch` nie miał ponowień, a `_scrape_city` na `None` robiło `break` — więc
+`curl: (28) Operation timed out` na jednej stronie kasował wszystkie następne.
+W logach: **2026-09-02** (padła strona 9 → 407 ofert zamiast ~1000)
+i **2026-09-04** (strona 11 → 486). Ochrona przed masową dezaktywacją
+(`MIN_SCRAPE_RATIO`) zadziałała, więc dane ocalały, ale OLX się nie odświeżał.
+- `src/olx_scraper.py` — `_fetch` robi `FETCH_ATTEMPTS = 3` próby z narastającą
+  przerwą (`FETCH_BACKOFF_S`); nieudana strona jest **pomijana**, a nie kończy
+  paginacji. Listing miasta przerywa dopiero `MAX_CONSECUTIVE_PAGE_FAILURES = 3`
+  błędy z rzędu (realna blokada) albo bezpiecznik czasu
+  `MAX_PAGE_FAILURES_PER_CITY = 6` (rwący się listing nie może rozciągnąć skanu
+  z ~2 na ~20 minut — jedna nieudana strona kosztuje ~70 s).
+- `src/main.py` — źródło z pominiętymi stronami trafia do `incomplete_sources`
+  i **nie jest dezaktywowane w ogóle**: brak oferty w skanie może znaczyć „nie
+  doczytaliśmy strony". Ochrona ilościowa tego nie łapie — jedna strona to
+  ~40 ofert z ~1000, grubo powyżej progu. Ślad (`incomplete_sources`,
+  `failed_pages`) ląduje we wpisie `scan_history`.
+
+**2. Detekcja płatnych wyróżnień OLX nie działała od dnia wdrożenia.**
+Kanarek `cards > 0 && attributed == 0` alarmował w **każdym** skanie od
+2026-09-03, `promoted = 0` we wszystkich, a karta „⭐ Płatne wyróżnienia" na
+`trend.html` rysowała płaskie zero. Alarm nie mówił jednak, co OLX zwraca
+zamiast `search_reason`, więc nie dało się rozstrzygnąć: zmiana portalu czy nasz
+błąd odczytu.
+- `src/olx_scraper.py` — zapasowe źródło flagi: obiekt `promotion` z listingu
+  (`top_ad`, `highlighted`, `urgent`, `premium_ad_page`). Gdy pola nie ma,
+  `_promotion_flags` zwraca `None` i nic się nie zmienia; gdy jest — metryka
+  wraca bez czekania na powrót atrybucji w URL-u.
+- Diagnostyka w logu (`_report_promotion_health`): przy braku obu sygnałów
+  wypisuje próbkę — czy URL ma query string i jakie klucze niesie ogłoszenie.
+  Następny skan rozstrzyga jednoznacznie. **Nie zweryfikowane na żywo**: OLX
+  oddaje 403 na gołe `requests`, a impersonacja TLS `curl_cffi` rozbija się
+  o proxy środowiska agenta.
+
+**3. „PODEJRZANA zmiana ceny" zamrażała ofertę na złej cenie bezterminowo.**
+Bramka `MAX_PRICE_CHANGE_PERCENT = 70` odrzucała skok, ale nigdy go nie
+potwierdzała — jeśli portal naprawdę zmienił cenę, oferta zostawała ze starą
+**na zawsze**. Te same 4–5 ID powtarzało się w każdym skanie. Najgorszy przypadek:
+`otodom:68193431` wisiał na 78 900 zł przy 759 000 zł na Otodom, czyli
+**1201 zł/m²** — wieczna „okazja" na szczycie `okazje.html` (sprzedający zamaskował
+cenę w opisie jako `7..8..9..0..0..0 PLN`).
+- `src/main.py` — skok wymaga potwierdzenia: ta sama nowa cena w
+  `PRICE_JUMP_CONFIRM_SCANS = 2` skanach z rzędu zostaje przyjęta (wpis
+  w `price_changes` dostaje `jump: true`). Oczekujący skok siedzi w
+  `price.pending_change`; inna cena zeruje licznik, powrót do starej ceny czyści
+  wpis — jednorazowy błąd parsowania nie może się „uzbierać" przez tygodnie.
+  Sprawdzone na feralnej ofercie: leczy się w 2 skanach do 11 554 zł/m².
+
+**Dodatkowo — częściowe załamanie źródła zapala teraz alert.**
+`source_health` znał tylko „0 ofert", więc oba skany z pkt 1 przeszły dla
+dashboardu jako zdrowe i awarię widać było wyłącznie w logu przebiegu.
+- `src/source_health.py` — alerty mają `kind` (`dead` / `partial`); `partial`
+  leci, gdy ostatni skan oddał mniej niż `PARTIAL_SCRAPE_RATIO = 0.6` maksimum
+  z okna. Odtworzone na historii: alarm zapala się dokładnie na 2026-09-02
+  (41%) i 2026-09-04 (48%), a milczy na zdrowych skanach.
+- `src/api_generator.py` (`health.json` + log) i `docs/monitoring.html` (baner)
+  rozróżniają oba rodzaje alertu.
+
+`tests/test_scan_resilience.py` — 16 nowych testów: paginacja mimo nieudanej
+strony, oba bezpieczniki przerwania, ponowienia `_fetch`, odczyt `promotion`,
+potwierdzanie/zerowanie skoku ceny, pominięcie dezaktywacji przy niekompletnym
+listingu, alert `partial` na prawdziwych liczbach z 2026-09-04.
+
 ### Dodane — checklista „Zanim zaczniesz pracę" w `CLAUDE.md`
 Nowa sekcja na samej górze pliku: przed rozpoczęciem zadania sprawdź otwarte
 issues (zwłaszcza `propagation`), otwarte PR-y i gałęzie `claude/*`, sekcję
