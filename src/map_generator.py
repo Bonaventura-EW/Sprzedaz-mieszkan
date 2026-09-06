@@ -72,6 +72,19 @@ def generate():
     if hidden:
         print(f"🔗 Ukryto {hidden} duplikatów (to samo mieszkanie na obu portalach)")
 
+    # FIX 2026-09-06: oferty, których cena nie jest ceną sprzedaży mieszkania
+    # (zamiana za 450 zł, partycypacja TBS/SIM, 1/2 udziału, cena wywoławcza
+    # z licytacji) — na mapie i w rankingu okazji udawały najlepsze okazje,
+    # a w dodatku zaniżały medianę i decyle kolorujące pinezki. Oznacza je
+    # `main.py` (offer_kind.tag_non_comparable), tu tylko chowamy — powód
+    # widać na debug.html.
+    before = len(deduped)
+    deduped = [o for o in deduped if not o.get('price_not_comparable')]
+    not_comparable = before - len(deduped)
+    if not_comparable:
+        print(f"🏷️ Ukryto {not_comparable} ofert z ceną nieporównywalną "
+              f"(zamiana/TBS/udział/licytacja)")
+
     offers = [build_map_offer(o) for o in deduped]
     active = [o for o in offers if o['active']]
     per_m2_values = sorted(o['price_per_m2'] for o in active if o['price_per_m2'])

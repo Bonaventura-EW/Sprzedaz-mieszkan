@@ -23,6 +23,7 @@ import pytz
 import paths
 from olx_scraper import OLXMieszkaniaScraper
 from otodom_scraper import OtodomMieszkaniaScraper
+from offer_kind import tag_non_comparable
 from location_refiner import (
     StreetGeocoder, refine_offer_location, verify_otodom_coords,
     otodom_coords_plausible, district_consistent)
@@ -50,6 +51,11 @@ DEACTIVATE_GRACE_DAYS = 2
 MAX_LIVE_GEOCODES = 100
 # Limit reverse geocodingu na skan (weryfikacja pinezek Otodom) — patrz niżej
 MAX_REVERSE_GEOCODES = 100
+# FIX 2026-09-06: bboxy dzielnic (rozstrzygają „ulica po granicy" vs „pinezka na
+# drugim końcu miasta" — patrz location_refiner.pin_in_declared_district).
+# Lublin ma ~28 dzielnic, Świdnik kilka; granice się nie przesuwają, więc po
+# 1-2 skanach komplet siedzi w cache i ten budżet przestaje być używany.
+MAX_DISTRICT_LOOKUPS = 40
 
 
 class SonarSprzedazy:
@@ -554,7 +560,8 @@ class SonarSprzedazy:
         # budżetu live — naprawia przypadek, gdy oferta z ulicą w tytule (np.
         # „ul. Mełgiewska") wypadała za limitem i nigdy nie była zaznaczana.
         geocoder = StreetGeocoder(max_live=MAX_LIVE_GEOCODES,
-                                  max_reverse=MAX_REVERSE_GEOCODES)
+                                  max_reverse=MAX_REVERSE_GEOCODES,
+                                  max_district=MAX_DISTRICT_LOOKUPS)
         refined_count = 0
         for offer in self.database['offers']:
             if not offer.get('active'):
@@ -636,6 +643,13 @@ class SonarSprzedazy:
         deactivated_count = self._mark_inactive(scraped_by_source, incomplete_sources)
         self._update_days_active()
         self._tag_cross_portal_duplicates()
+        # FIX 2026-09-06: oferty, których cena nie jest ceną sprzedaży mieszkania
+        # (zamiana, partycypacja TBS/SIM, cesja najmu, udział, licytacja) —
+        # zaniżały ranking okazji i decyle ceny za m². Patrz offer_kind.py.
+        not_comparable = tag_non_comparable(self.database['offers'])
+        if not_comparable:
+            print(f"   🏷️ {not_comparable} ofert z ceną nieporównywalną "
+                  f"(zamiana/TBS/udział/licytacja) — poza mapą i rankingiem")
         self._cleanup_old()
 
         # 5. Metadane + zapis

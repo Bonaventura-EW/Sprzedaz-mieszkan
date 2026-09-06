@@ -33,7 +33,11 @@ def generate():
     active_ids = {o['id'] for o in all_offers if o.get('active')}
     active = [o for o in all_offers
               if o.get('active')
-              and not (o.get('duplicate_of') and o['duplicate_of'] in active_ids)]
+              and not (o.get('duplicate_of') and o['duplicate_of'] in active_ids)
+              # FIX 2026-09-06: cena nieporównywalna (zamiana/TBS/udział/
+              # licytacja) — poza API tak samo jak poza mapą, żeby konsument
+              # API nie liczył z tego mediany. Patrz offer_kind.py.
+              and not o.get('price_not_comparable')]
 
     per_m2 = sorted(o.get('price_per_m2') for o in active if o.get('price_per_m2'))
     by_source = {}
