@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1788117790.7084527
+  "ts": 1788785022.2281475
  },
  "mełgiewskiej": {
   "result": {
@@ -10077,7 +10077,7 @@
  },
  "aleja spódzielczości pracy": {
   "result": null,
-  "ts": 1788117795.3589907
+  "ts": 1788785024.852658
  },
  "rva:51.2658,22.5762": {
   "result": {
@@ -14876,5 +14876,65 @@
    22.5937683
   ],
   "ts": 1788719111.2045236
+ },
+ "sławinkowskiej": {
+  "result": {
+   "lat": 51.2809598,
+   "lon": 22.5032416,
+   "name": "Sławinkowska"
+  },
+  "ts": 1788785027.5127256
+ },
+ "jana": {
+  "result": {
+   "lat": 51.2019566,
+   "lon": 22.5833838,
+   "name": "Jana Pocka"
+  },
+  "ts": 1788785029.3882644
+ },
+ "jana samsonowicza 65": {
+  "result": null,
+  "ts": 1788785030.8467548
+ },
+ "sławinkowska": {
+  "result": {
+   "lat": 51.2809598,
+   "lon": 22.5032416,
+   "name": "Sławinkowska"
+  },
+  "ts": 1788785031.986472
+ },
+ "rva:51.2252,22.5069": {
+  "result": {
+   "road": "Perłowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1788785033.6107037
+ },
+ "rva:51.2241,22.5035": {
+  "result": {
+   "road": "Agatowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1788785035.1083467
+ },
+ "rva:51.2601,22.5847": {
+  "result": {
+   "road": null,
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1788785036.5773883
+ },
+ "rva:51.2810,22.5032": {
+  "result": {
+   "road": "Sławinkowska",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1788785038.1345587
  }
 }
