@@ -13281,7 +13281,7 @@
  },
  "skierki 7": {
   "result": null,
-  "ts": 1788290866.5048575
+  "ts": 1788895788.559963
  },
  "rva:51.2524,22.5702": {
   "result": {
@@ -14381,7 +14381,7 @@
  },
  "tadeusza szeligowskiego 15": {
   "result": null,
-  "ts": 1788290872.020049
+  "ts": 1788895790.1677544
  },
  "rva:51.2697,22.5163": {
   "result": {
@@ -14988,5 +14988,21 @@
    "city": "Lublin"
   },
   "ts": 1788866854.8660438
+ },
+ "rva:51.2764,22.4979": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1788895791.973098
+ },
+ "rva:51.2303,22.5755": {
+  "result": {
+   "road": "Wspólna",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1788895793.676733
  }
 }
