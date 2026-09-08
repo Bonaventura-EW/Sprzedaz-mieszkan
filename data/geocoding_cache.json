@@ -14940,5 +14940,53 @@
  "harnasie 10": {
   "result": null,
   "ts": 1788811317.5372791
+ },
+ "limbowa i sławin": {
+  "result": {
+   "lat": 51.2683529,
+   "lon": 22.5177493,
+   "name": "Limbowa"
+  },
+  "ts": 1788866844.0525112
+ },
+ "faraona lublin lsm": {
+  "result": null,
+  "ts": 1788866845.298297
+ },
+ "jemiołuszki węglinek": {
+  "result": null,
+  "ts": 1788866846.89973
+ },
+ "nowomiejskiej": {
+  "result": {
+   "lat": 51.2363585,
+   "lon": 22.5426288,
+   "name": "Nowomiejska"
+  },
+  "ts": 1788866850.0838833
+ },
+ "rva:51.2611,22.5533": {
+  "result": {
+   "road": "Feliksa Nowowiejskiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788866851.7388368
+ },
+ "rva:51.2542,22.5633": {
+  "result": {
+   "road": "Bolesława Prusa",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1788866853.0001123
+ },
+ "rva:51.2366,22.5261": {
+  "result": {
+   "road": "Pana Balcera",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1788866854.8660438
  }
 }
