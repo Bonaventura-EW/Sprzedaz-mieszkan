@@ -42,6 +42,12 @@ categories: {}
 
 # Reguły destylowane z Twoich decyzji — dopisuje je skill `distill-policy`
 # przez PR, który zatwierdzasz. Ręcznie też możesz.
-learned_rules: []
+#
+# 2026-09-09: żadna kategoria nie ma jeszcze ≥8 rozstrzygniętych decyzji,
+# więc nie proponujemy awansu autonomii (patrz PR "Distill policy
+# 2026-09-09" — scorecard w opisie). Poniższa reguła to jedyny wzorzec
+# poparty ≥2 wpisami w decisions.jsonl.
+learned_rules:
+  - "Bugfixy dotyczące architektury rekonstrukcji aktywności ofert w trend_generator.py (liczenie 'ile ofert aktywnych dnia D' z first_seen/last_seen/deactivated_at, w tym dryf z DEACTIVATE_GRACE_DAYS) są konsekwentnie akceptowane po weryfikacji na rodzeństwie (2/2: 2026-09-03-measured-index-history → issue#11, 2026-09-04-trend-charts-audit → issue#14) — priorytetyzuj takie propozycje z rodziny sonary."
   #  - "Nie propaguj niczego, co rusza moduł auth (dotąd 0/6 przyjętych)."
   #  - "Zmiany typu css-refactor przyjmowane w 11/12 → kandydat do awansu na 'draft'."
