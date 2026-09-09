@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1788348472.5066118
+  "ts": 1788953500.966425
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1788348484.4327283
+  "ts": 1788953510.9785814
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1788348473.7731469
+  "ts": 1788953502.36893
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1788348477.4980032
+  "ts": 1788953506.6919358
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1788348480.802437
+  "ts": 1788953508.1366835
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1788348482.4665022
+  "ts": 1788953509.499234
  },
  "krasińskiego": {
   "result": {
@@ -9369,7 +9369,7 @@
  },
  "samosnowicza": {
   "result": null,
-  "ts": 1787677211.496791
+  "ts": 1788953512.3993075
  },
  "wrońska 3d": {
   "result": null,
@@ -15004,5 +15004,9 @@
    "city": "Lublin"
   },
   "ts": 1788895793.676733
+ },
+ "niecała 11": {
+  "result": null,
+  "ts": 1788953513.8037615
  }
 }
