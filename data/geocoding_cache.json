@@ -15008,5 +15008,17 @@
  "niecała 11": {
   "result": null,
   "ts": 1788953513.8037615
+ },
+ "turkuso": {
+  "result": null,
+  "ts": 1788981660.8420823
+ },
+ "rva:51.2326,22.4924": {
+  "result": {
+   "road": "Roztocze",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1788981662.497985
  }
 }
