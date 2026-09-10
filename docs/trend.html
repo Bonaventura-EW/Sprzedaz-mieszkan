@@ -321,6 +321,7 @@ let viewMeasured = [];
 // sparse bez tego dnia front zerowo-wypełnia, czyli fałszywy dołek byłby jeszcze
 // głębszy. Punktu nie rysujemy, do średniej 7 dni nie wchodzi, rekordu nie ustala.
 let INCOMPLETE = new Set();
+let GAP_REASON = {};   // 'YYYY-MM-DD' → powód luki (niepelny_skan | brak_zrodla)
 let FLOWS = [];   // instancje wykresów przepływu (odpływ / napływ / reaktywacje / wyróżnienia)
 
 function toggleTheme(){
@@ -340,6 +341,28 @@ function toggleTheme(){
   if (saved) document.documentElement.setAttribute('data-theme', saved);
   const b = document.getElementById('btnTheme'); if (b) b.textContent = eff === 'dark' ? '🌙' : '☀️';
 })();
+// FIX 2026-09-10: pas „brak pomiaru". Ciągły ciąg takich dni rysujemy JEDNYM
+// pasem — 10-dniowa blokada portalu jako dziesięć osobnych kresek wyglądałaby
+// jak płot, a nie jak dziura w danych.
+function gapBands(ctx, tsSet, t0, t1, xOf, padT, plotH, color){
+  const days = [...tsSet].filter(ts => ts >= t0 && ts <= t1).sort((a,b) => a-b);
+  if (!days.length) return;
+  ctx.save();
+  ctx.fillStyle = color; ctx.globalAlpha = 0.13;
+  let runStart = days[0], prev = days[0];
+  const flush = () => {
+    const x1 = xOf(Math.max(runStart - DAY_MS/2, t0));
+    const x2 = xOf(Math.min(prev + DAY_MS/2, t1));
+    ctx.fillRect(x1, padT, Math.max(x2 - x1, 3), plotH);
+  };
+  for (const ts of days.slice(1)){
+    if (ts - prev > DAY_MS){ flush(); runStart = ts; }
+    prev = ts;
+  }
+  flush();
+  ctx.restore();
+}
+
 function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 
 async function loadAndRender(){
@@ -368,6 +391,7 @@ async function loadAndRender(){
     if (!isNaN(d)) scanTime = String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
   }
   INCOMPLETE = new Set(((trend.coverage || {}).incomplete || []).map(toTs));
+  GAP_REASON = (trend.coverage || {}).reasons || {};
   PROFILES = {};
   for (const [key, arr] of Object.entries(trend.profiles || {})){
     PROFILES[key] = {
@@ -428,7 +452,7 @@ function buildUI(generated){
         <span><span class="dot" style="border-top-color:var(--green)"></span>Minimum w oknie</span>
         <span><span class="dot" style="border-top-color:var(--accent)"></span>Wartość bieżąca</span>
         <span id="legendMeasured" style="display:none"><span class="dot" style="border-top-color:var(--orange)"></span>Zmierzone (po dedup, od wdrożenia pomiaru)</span>
-        <span id="legendGap" style="display:none"><span class="dot gap"></span>Brak pomiaru (niepełny skan doby)</span>
+        <span id="legendGap" style="display:none"><span class="dot gap"></span>Brak pomiaru</span>
       </div>
     </div>
 
@@ -629,9 +653,7 @@ function draw(){
   // (rekonstrukcja z połowy doby jest zaniżona), więc linia przechodzi nad nimi.
   // Ten sam pas co na wykresach przepływu mówi, że to luka w pomiarze — inaczej
   // interpolacja wygląda jak dane, których nie mamy.
-  ctx.fillStyle = col.muted; ctx.globalAlpha = 0.13;
-  for (const ts of INCOMPLETE) if (ts >= t0 && ts <= t1) ctx.fillRect(xOf(ts) - 2, padT, 4, plotH);
-  ctx.globalAlpha = 1;
+  gapBands(ctx, INCOMPLETE, t0, t1, xOf, padT, plotH, col.muted);
   const grad = ctx.createLinearGradient(0, padT, 0, H-padB);
   grad.addColorStop(0, hexA(acc, 0.38));
   grad.addColorStop(1, hexA(acc, 0.02));
@@ -854,7 +876,7 @@ function flowCardHTML(cfg){
       <div class="chart-legend">
         <span><span class="dot" style="border-top-color:${cfg.line};border-top-style:solid;border-top-width:2px"></span>${cfg.legendDaily}</span>
         <span><span class="dot" style="border-top-color:${cfg.ma};border-top-style:solid;border-top-width:3px"></span>Średnia 7 dni</span>
-        <span id="legendGap-${cfg.id}" style="display:none"><span class="dot gap"></span>Brak pomiaru (niepełny skan doby)</span>
+        <span id="legendGap-${cfg.id}" style="display:none"><span class="dot gap"></span>Brak pomiaru</span>
       </div>
       <div class="chart-hint">${cfg.hint}</div>
     </div>`;
@@ -976,9 +998,7 @@ function makeFlowChart(cfg){
     grad.addColorStop(1, hexA(LINE, 0.01));
     // pas w miejscu dnia bez pełnego pomiaru — czytelny sygnał, że to luka,
     // a nie zero (bez niego linia „przeskakuje" bez wyjaśnienia)
-    ctx.fillStyle = col.muted; ctx.globalAlpha = 0.13;
-    for (const q of view) if (q[1] === null) ctx.fillRect(xOf(q[0]) - 2, padT, 4, plotH);
-    ctx.globalAlpha = 1;
+    gapBands(ctx, INCOMPLETE, t0, t1, xOf, padT, plotH, col.muted);
     for (const s of segments){
       const sFirst = xOf(s[0][0]), sLast = xOf(s[s.length-1][0]);
       ctx.beginPath();
@@ -1023,9 +1043,13 @@ function makeFlowChart(cfg){
     const p = state.view[best];
     const tt = document.getElementById('tip-' + cfg.id);
     if (p[1] === null){
+      const iso = new Date(p[0]).toISOString().slice(0,10);
+      const why = GAP_REASON[iso] === 'brak_zrodla'
+        ? 'tego dnia żaden przebieg nie zobaczył jednego ze źródeł'
+        : 'tego dnia skaner nie domknął wszystkich przebiegów';
       tt.innerHTML = `<div class="tt-date">${fmtDateLong(p[0])}</div>` +
         `<div class="tt-val" style="color:var(--text-muted)">brak pomiaru</div>` +
-        `<div class="tt-ma">tego dnia skaner nie domknął wszystkich przebiegów</div>`;
+        `<div class="tt-ma">${why}</div>`;
       tt.style.left = g.xOf(p[0]) + 'px';
       tt.style.top  = (g.padT + g.plotH/2) + 'px';
       tt.style.opacity = '1';

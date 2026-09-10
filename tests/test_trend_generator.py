@@ -43,9 +43,10 @@ def test_deactivated_offer_stops_being_counted_and_shows_in_outflow():
     ]}
     payload = build_trend(db, today=date(2026, 6, 4))
     m = _profile_map(payload, 'wszystkie')
-    # obecna 01 i 02 (dzień dezaktywacji włącznie), zniknęła 03–04
-    assert m == {'2026-06-01': 1, '2026-06-02': 1, '2026-06-03': 0, '2026-06-04': 0}
-    # odpływ zliczony w dniu dezaktywacji
+    # FIX 2026-09-10 (bug #4 z #14): obecna do dnia OSTATNIEGO WIDZENIA (01),
+    # nie do dnia potwierdzenia dezaktywacji — 02 to już pierwszy dzień bez niej
+    assert m == {'2026-06-01': 1, '2026-06-02': 0, '2026-06-03': 0, '2026-06-04': 0}
+    # odpływ w pierwszym dniu bez oferty (last_seen + 1)
     outflow = {o['date']: o['count'] for o in payload['outflow']['wszystkie']}
     assert outflow == {'2026-06-02': 1}
 
@@ -141,11 +142,6 @@ def test_reactivated_at_scalar_fallback():
 
 # ── Maska pokrycia skanami (FIX 2026-09-10, propagacja issue #14) ──────────
 
-def _counts(*days_and_n):
-    """{date: liczba skanów} z par (date, n) — wejście dla `_scan_coverage`."""
-    return {d: n for d, n in days_and_n}
-
-
 def _history(*days_and_n):
     """Dziennik skanów: n ZAKOŃCZONYCH przebiegów w każdym z podanych dni."""
     return [{'timestamp': f'{d.isoformat()}T{8 + 4 * i:02d}:00:00+02:00',
@@ -155,9 +151,9 @@ def _history(*days_and_n):
 
 def test_scan_coverage_marks_incomplete_and_last_complete():
     # pierwszy dzień dziennika pomijamy (bywa ucięty), dni sprzed niego = pełne
-    counts = _counts((date(2026, 6, 1), 2), (date(2026, 6, 2), 2),
-                     (date(2026, 6, 3), 1), (date(2026, 6, 4), 2))
-    incomplete, last_complete = _scan_coverage(counts, today=date(2026, 6, 5))
+    history = _history((date(2026, 6, 1), 2), (date(2026, 6, 2), 2),
+                       (date(2026, 6, 3), 1), (date(2026, 6, 4), 2))
+    incomplete, last_complete = _scan_coverage(history, today=date(2026, 6, 5))
     # 03 miał 1 skan z 2 → niepełny; 05 nie ma w dzienniku (0 skanów) → niepełny
     assert incomplete == {date(2026, 6, 3), date(2026, 6, 5)}
     # ostatni pełny dzień to 04 (05 niepełny)
@@ -166,7 +162,7 @@ def test_scan_coverage_marks_incomplete_and_last_complete():
 
 def test_scan_coverage_empty_log_assumes_full():
     # brak dziennika → nie maskujemy, seria idzie do „dziś"
-    assert _scan_coverage({}, today=date(2026, 6, 5)) == (set(), date(2026, 6, 5))
+    assert _scan_coverage([], today=date(2026, 6, 5)) == (set(), date(2026, 6, 5))
 
 
 def test_incomplete_day_omitted_and_series_ends_on_last_complete():
@@ -311,7 +307,8 @@ def test_flow_series_keep_values_on_incomplete_days():
     # …ale w przepływie wartość ZOSTAJE: front dostaje ją razem z maską i rysuje
     # lukę sam. Usunięcie dnia z szeregu sparse czytałoby się jako zero.
     db = {'offers': [_offer('olx:1', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00',
-                            active=False, deactivated_at='2026-06-03T10:00:00+02:00')]}
+                            active=False, last_seen='2026-06-02T18:00:00+02:00',
+                            deactivated_at='2026-06-05T10:00:00+02:00')]}
     history = _history((date(2026, 6, 1), SCANS_PER_DAY), (date(2026, 6, 2), SCANS_PER_DAY),
                        (date(2026, 6, 3), 1), (date(2026, 6, 4), SCANS_PER_DAY))
     payload = build_trend(db, today=date(2026, 6, 4), scan_history=history)
@@ -322,4 +319,79 @@ def test_flow_series_keep_values_on_incomplete_days():
 def test_coverage_present_without_scan_history():
     payload = build_trend({'offers': []}, today=date(2026, 6, 1))
     assert payload['coverage'] == {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
-                                   'incomplete': []}
+                                   'incomplete': [], 'reasons': {}}
+
+
+# ── Odpływ w dniu realnego zniknięcia + maska awarii źródła ────────────────
+# (FIX 2026-09-10, bug #3/#4 z issue #14)
+
+def test_outflow_dated_by_last_seen_not_by_late_confirmation():
+    """Potwierdzenie dezaktywacji bywa spóźnione o dni (grace) albo tygodnie
+    (ochrona przed masową dezaktywacją przy blokadzie portalu). Odpływ ma
+    przypadać na pierwszy dzień BEZ oferty, inaczej cała zaległość zlepia się
+    w jeden fałszywy rekord w dniu powrotu źródła."""
+    db = {'offers': [
+        # trzy oferty zniknęły w różnych dniach, wszystkie potwierdzone 20.06
+        _offer('olx:1', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00', active=False,
+               last_seen='2026-06-10T18:00:00+02:00', deactivated_at='2026-06-20T09:00:00+02:00'),
+        _offer('olx:2', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00', active=False,
+               last_seen='2026-06-12T18:00:00+02:00', deactivated_at='2026-06-20T09:00:00+02:00'),
+        _offer('olx:3', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00', active=False,
+               last_seen='2026-06-12T18:00:00+02:00', deactivated_at='2026-06-20T09:00:00+02:00'),
+    ]}
+    payload = build_trend(db, today=date(2026, 6, 21))
+    # nie jeden skok 3 sztuk w dniu potwierdzenia, tylko rozkład wg zniknięcia
+    assert _sparse_map(payload, 'outflow', 'wszystkie') == {'2026-06-11': 1, '2026-06-13': 2}
+
+
+def test_source_outage_day_is_masked():
+    """Dzień, w którym źródło nie oddało listingu (blokada portalu), jest
+    maskowany tak samo jak dzień z niepełną liczbą przebiegów."""
+    history = _history((date(2026, 6, 1), SCANS_PER_DAY), (date(2026, 6, 2), SCANS_PER_DAY),
+                       (date(2026, 6, 3), SCANS_PER_DAY), (date(2026, 6, 4), SCANS_PER_DAY))
+    for scan in history:
+        scan['scraped_olx'] = 900
+        scan['scraped_otodom'] = 1800
+    for scan in history:                      # 03.06: OLX zwraca pustkę
+        if scan['timestamp'].startswith('2026-06-03'):
+            scan['scraped_olx'] = 0
+    incomplete, last_complete = _scan_coverage(history, today=date(2026, 6, 4))
+    assert date(2026, 6, 3) in incomplete
+    assert last_complete == date(2026, 6, 4)
+    # ten sam skutek daje ślad częściowego listingu
+    for scan in history:
+        if scan['timestamp'].startswith('2026-06-04'):
+            scan['scraped_olx'] = 900
+            scan['incomplete_sources'] = ['olx']
+    incomplete, last_complete = _scan_coverage(history, today=date(2026, 6, 4))
+    assert {date(2026, 6, 3), date(2026, 6, 4)} <= incomplete
+    assert last_complete == date(2026, 6, 2)
+
+
+def test_single_failed_scrape_does_not_mask_the_day():
+    """Jeden nieudany scrape obok udanych nie unieważnia doby — liczy się
+    najlepszy przebieg (u nas np. 22.06, 15.07, 24.07: OLX padł raz, reszta OK)."""
+    history = _history((date(2026, 6, 1), SCANS_PER_DAY), (date(2026, 6, 2), SCANS_PER_DAY),
+                       (date(2026, 6, 3), SCANS_PER_DAY))
+    for scan in history:
+        scan['scraped_olx'] = 900
+        scan['scraped_otodom'] = 1800
+    history[-1]['scraped_olx'] = 0          # ostatni przebieg 03.06 padł
+    incomplete, last_complete = _scan_coverage(history, today=date(2026, 6, 3))
+    assert date(2026, 6, 3) not in incomplete
+    assert last_complete == date(2026, 6, 3)
+
+
+def test_coverage_reasons_distinguish_gap_causes():
+    """Front tłumaczy lukę użytkownikowi, a to dwie różne historie: niedomknięta
+    doba skanowania vs źródło, którego nie zobaczyliśmy ani razu."""
+    db = {'offers': [_offer('olx:1', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00')]}
+    history = _history((date(2026, 6, 1), SCANS_PER_DAY), (date(2026, 6, 2), SCANS_PER_DAY),
+                       (date(2026, 6, 3), 1),                    # niedomknięta doba
+                       (date(2026, 6, 4), SCANS_PER_DAY))        # blokada źródła
+    for scan in history:
+        scan['scraped_olx'] = 0 if scan['timestamp'].startswith('2026-06-04') else 900
+        scan['scraped_otodom'] = 1800
+    payload = build_trend(db, today=date(2026, 6, 4), scan_history=history)
+    assert payload['coverage']['reasons'] == {'2026-06-03': 'niepelny_skan',
+                                              '2026-06-04': 'brak_zrodla'}

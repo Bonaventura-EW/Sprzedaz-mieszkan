@@ -50,7 +50,8 @@ Format wyjścia (kontrakt dla docs/trend.html):
   "coverage": {                        # maska pokrycia doby przebiegami skanera
     "scans_per_day": int,
     "last_complete": "YYYY-MM-DD" | null,
-    "incomplete": ["YYYY-MM-DD", ...]  # dni, w których zakończyło się mniej skanów
+    "incomplete": ["YYYY-MM-DD", ...],       # dni bez pełnego pomiaru
+    "reasons": {"YYYY-MM-DD": "niepelny_skan" | "brak_zrodla"}
   }
 }
 
@@ -159,13 +160,50 @@ def _scan_counts(scan_history):
     return counts
 
 
-def _scan_coverage(scan_counts, today):
+def _source_outage_days(scan_history):
+    """Dni, w których KTÓREŚ ŹRÓDŁO nie oddało listingu ANI RAZU (blokada portalu)
+    — czyli dni, w których przepływu tego źródła po prostu nie dało się zmierzyć.
+
+    Sygnał z dziennika skanów: `scraped_<źródło>` oraz `incomplete_sources` (ślad
+    częściowego listingu). Liczy się NAJLEPSZY przebieg doby: jeden nieudany scrape
+    obok udanych niczego nie psuje (`last_seen` odświeży ten udany, a ochrona
+    z main._mark_inactive i tak nie pozwoli wtedy dezaktywować). Dopiero doba, w
+    której źródła nie zobaczyliśmy w ogóle, jest dziurą w pomiarze.
+
+    Bez tego blokada portalu daje najgorszy możliwy artefakt: przez cały czas
+    blokady ochrona (słusznie) wstrzymuje dezaktywację, a przy powrocie źródła
+    cała zaległość ląduje w JEDNYM dniu jako gigantyczny „rekord odpływu"
+    (u nas 10 dni bez OLX, 12–21.08, i 231 ofert jednego dnia po powrocie).
+    Sama zmiana atrybucji na `last_seen` tu nie wystarcza — przesuwa tylko skok
+    na pierwszy dzień blokady, gdzie równie mocno kłamie.
+    """
+    seen_ok = {}          # (dzień, źródło) -> czy któryś przebieg dał pełny listing
+    days_with_data = set()
+    for scan in scan_history or []:
+        day = _parse_date(scan.get('timestamp'))
+        if day is None:
+            continue
+        partial = set(scan.get('incomplete_sources') or ())
+        for key, value in scan.items():
+            if not key.startswith('scraped_'):
+                continue
+            source = key[len('scraped_'):]
+            ok = bool(value) and source not in partial
+            seen_ok[(day, source)] = seen_ok.get((day, source), False) or ok
+            days_with_data.add(day)
+    sources = {source for _, source in seen_ok}
+    return {day for day in days_with_data
+            if any(not seen_ok.get((day, source), False) for source in sources)}
+
+
+def _scan_coverage(scan_history, today):
     """(dni_niepełne, ostatni_pełny_dzień) wg dziennika skanów.
 
     Dzień jest PEŁNY, gdy zakończyły się w nim wszystkie zaplanowane przebiegi
-    (`SCANS_PER_DAY`). Niepełny — zero skanów (awaria Actions / blokada) albo
-    jeden z dwóch (doba jeszcze trwa) — pokazuje wycinek listingu i wypada z
-    serii Indeksu, zamiast udawać załamanie rynku.
+    (`SCANS_PER_DAY`) I każde źródło oddało listing. Niepełny — zero skanów
+    (awaria Actions), jeden z dwóch (doba jeszcze trwa) albo źródło zwracające
+    pustkę (blokada portalu, patrz `_source_outage_days`) — pokazuje wycinek
+    listingu i wypada z serii Indeksu, zamiast udawać załamanie rynku.
 
     Pierwszy dzień dziennika pomijamy (historia bywa ucięta w połowie doby),
     a dni SPRZED dziennika zakładamy pełne — inaczej cała stara historia
@@ -173,14 +211,16 @@ def _scan_coverage(scan_counts, today):
     (np. dziennik akurat pusty), zostawiamy zakres do „dziś" — awaria dziennika
     nie może skasować całego wykresu.
     """
+    scan_counts = _scan_counts(scan_history)
     if not scan_counts:
         return set(), today
+    outages = _source_outage_days(scan_history)
     logged = sorted(scan_counts)
     coverage_start = logged[0] + timedelta(days=1)
     incomplete = set()
     d = coverage_start
     while d <= today:
-        if scan_counts.get(d, 0) < SCANS_PER_DAY:
+        if scan_counts.get(d, 0) < SCANS_PER_DAY or d in outages:
             incomplete.add(d)
         d += timedelta(days=1)
     last_complete = None
@@ -228,7 +268,8 @@ def build_trend(db, today=None, scan_history=None):
     # issue #14). Seria kończy się na ostatnim PEŁNYM dniu, a dni z niepełną
     # liczbą przebiegów wypadają z Indeksu. Bez `scan_history` (testy jednostkowe)
     # zachowujemy stare zachowanie: pełne pokrycie, seria do „dziś".
-    incomplete, end_day = _scan_coverage(_scan_counts(scan_history), today)
+    incomplete, end_day = _scan_coverage(scan_history, today)
+    outages = _source_outage_days(scan_history)   # do rozróżnienia powodu luki
 
     # Pomijamy duplikaty (kanoniczna zostaje) — jak mapa/api chowają duplikaty.
     offers = [o for o in db.get('offers', []) if not o.get('duplicate_of')]
@@ -246,6 +287,15 @@ def build_trend(db, today=None, scan_history=None):
             # zamkniętej doby, więc dzień bieżący nie jest zaniżany (bug #1)
             end = end_day
             deact = None
+        elif _parse_date(o.get('last_seen')):
+            # FIX 2026-09-10 (bug #4 z issue #14): odcinek życia kończy się w dniu,
+            # w którym ofertę OSTATNI RAZ WIDZIELIŚMY, a odpływ przypada nazajutrz
+            # (pierwszy dzień bez niej). `deactivated_at` to dzień POTWIERDZENIA —
+            # opóźniony o DEACTIVATE_GRACE_DAYS, a przy blokadzie portalu nawet
+            # o tygodnie, bo ochrona przed masową dezaktywacją wstrzymuje kasowanie.
+            # Trzymanie się potwierdzenia zlepiało zaległość w jeden fałszywy skok.
+            end = _parse_date(o.get('last_seen'))
+            deact = end + timedelta(days=1)
         elif deact:
             end = deact
         else:
@@ -266,7 +316,7 @@ def build_trend(db, today=None, scan_history=None):
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
                 'promoted': {}, 'measured': {},
                 'coverage': {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
-                             'incomplete': []}}
+                             'incomplete': [], 'reasons': {}}}
 
     # Oś czasu: dzień po dniu od pierwszej archiwizacji do ostatniego PEŁNEGO
     # dnia (trwająca doba / dzień bez skanu nie wchodzi — bug #1).
@@ -283,7 +333,7 @@ def build_trend(db, today=None, scan_history=None):
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
                 'promoted': {}, 'measured': {},
                 'coverage': {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
-                             'incomplete': []}}
+                             'incomplete': [], 'reasons': {}}}
 
     labels = {}
     profiles = {}
@@ -369,6 +419,10 @@ def build_trend(db, today=None, scan_history=None):
             'scans_per_day': SCANS_PER_DAY,
             'last_complete': end_day.isoformat(),
             'incomplete': [d.isoformat() for d in sorted(incomplete)],
+            # powód luki — front tłumaczy ją użytkownikowi, a to dwie różne
+            # historie: „nie domknęliśmy doby" vs „portal nas zablokował"
+            'reasons': {d.isoformat(): ('brak_zrodla' if d in outages else 'niepelny_skan')
+                        for d in sorted(incomplete)},
         },
     }
 
