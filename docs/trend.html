@@ -190,6 +190,10 @@ body {
   font-family: var(--font-display); font-size: 11px; color: var(--text-muted); }
 .chart-legend .dot { display: inline-block; width: 18px; height: 0; border-top-width: 2px; border-top-style: dashed;
   vertical-align: middle; margin-right: 6px; }
+/* FIX 2026-09-10: znacznik dnia bez pomiaru — ten sam pas co na wykresie,
+   tylko mocniej krytej, żeby był widoczny w skali swatcha legendy */
+.chart-legend .dot.gap { width: 5px; height: 12px; border: none; border-radius: 1px;
+  background: var(--text-muted); opacity: 0.42; }
 
 .loading { text-align: center; padding: 80px 20px; color: var(--text-muted);
   font-family: var(--font-display); font-size: 13px; }
@@ -424,6 +428,7 @@ function buildUI(generated){
         <span><span class="dot" style="border-top-color:var(--green)"></span>Minimum w oknie</span>
         <span><span class="dot" style="border-top-color:var(--accent)"></span>Wartość bieżąca</span>
         <span id="legendMeasured" style="display:none"><span class="dot" style="border-top-color:var(--orange)"></span>Zmierzone (po dedup, od wdrożenia pomiaru)</span>
+        <span id="legendGap" style="display:none"><span class="dot gap"></span>Brak pomiaru (niepełny skan doby)</span>
       </div>
     </div>
 
@@ -531,6 +536,10 @@ function render(){
   viewMeasured = mAll.filter(p => p[0] >= winMin && p[0] <= winMax);
   const legM = document.getElementById('legendMeasured');
   if (legM) legM.style.display = viewMeasured.length ? '' : 'none';
+  // podpis pasa „brak pomiaru" tylko wtedy, gdy taki dzień jest w oknie
+  const gapsInWin = [...INCOMPLETE].some(ts => ts >= winMin && ts <= winMax);
+  const legG = document.getElementById('legendGap');
+  if (legG) legG.style.display = gapsInWin ? '' : 'none';
   const curTs = pts[pts.length-1][0], cur = pts[pts.length-1][1];
   document.getElementById('cTitle').textContent = (prof.is_category ? '' : 'Sonar · ') + prof.label;
   const timePart = scanTime ? `, ${scanTime}` : '';
@@ -845,6 +854,7 @@ function flowCardHTML(cfg){
       <div class="chart-legend">
         <span><span class="dot" style="border-top-color:${cfg.line};border-top-style:solid;border-top-width:2px"></span>${cfg.legendDaily}</span>
         <span><span class="dot" style="border-top-color:${cfg.ma};border-top-style:solid;border-top-width:3px"></span>Średnia 7 dni</span>
+        <span id="legendGap-${cfg.id}" style="display:none"><span class="dot gap"></span>Brak pomiaru (niepełny skan doby)</span>
       </div>
       <div class="chart-hint">${cfg.hint}</div>
     </div>`;
@@ -884,6 +894,8 @@ function makeFlowChart(cfg){
       stats.innerHTML = ''; state.view = []; state.geom = null;
       return;
     }
+    const legG = document.getElementById('legendGap-' + cfg.id);
+    if (legG) legG.style.display = valid.length < pts.length ? '' : 'none';
     const total = valid.reduce((s,p) => s + p[1], 0);
     const rate = total/valid.length;
     let maxP = valid[0];
@@ -1012,7 +1024,7 @@ function makeFlowChart(cfg){
     const tt = document.getElementById('tip-' + cfg.id);
     if (p[1] === null){
       tt.innerHTML = `<div class="tt-date">${fmtDateLong(p[0])}</div>` +
-        `<div class="tt-val" style="color:var(--text-muted)">brak pełnego pomiaru</div>` +
+        `<div class="tt-val" style="color:var(--text-muted)">brak pomiaru</div>` +
         `<div class="tt-ma">tego dnia skaner nie domknął wszystkich przebiegów</div>`;
       tt.style.left = g.xOf(p[0]) + 'px';
       tt.style.top  = (g.padT + g.plotH/2) + 'px';

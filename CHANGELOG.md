@@ -19,9 +19,12 @@ nie mniejszy. Dlatego:
 - `docs/trend.html` — `expandDaily` zamienia dni z maski na `null` (LUKA, nie
   zero), `outflowWithMA` pomija je w oknie średniej 7-dniowej, wykres rysuje się
   segmentami z przerwą, dzień-luka nie ustala „Rekordu" ani nie rozcieńcza
-  „Śr. odpływu/dzień", a najechanie kursorem mówi wprost: „brak pełnego pomiaru".
+  „Śr. odpływu/dzień", a najechanie kursorem mówi wprost: „brak pomiaru".
   Ten sam delikatny pas znaczy lukę na wykresie Indeksu, gdzie linia dotąd
-  interpolowała nad usuniętym dniem bez żadnego wyjaśnienia.
+  interpolowała nad usuniętym dniem bez żadnego wyjaśnienia. Pas ma podpis
+  „Brak pomiaru (niepełny skan doby)" w legendzie obu rodzajów wykresów —
+  pokazywany tylko wtedy, gdy taki dzień faktycznie jest w oknie, żeby nie
+  tłumaczyć czegoś, czego nie widać.
 - `tests/test_trend_generator.py` — testy sekcji `coverage` i tego, że wartości
   przepływu ZOSTAJĄ w payloadzie (116 testów).
 
