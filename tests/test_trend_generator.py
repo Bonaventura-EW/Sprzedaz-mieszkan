@@ -136,3 +136,64 @@ def test_reactivated_at_scalar_fallback():
     payload = build_trend(db, today=date(2026, 6, 4))
     react = _sparse_map(payload, 'reactivations', 'wszystkie')
     assert react == {'2026-06-03': 1}
+
+
+# ── Seria „measured" (propagacja z SONAR-POKOJOWY, issue #11) ──────────────
+# Zmierzony (nie rekonstruowany) dzienny stan bazy po dedup, z data/scan_history.json.
+
+def _measured_map(payload):
+    return {p['date']: p['count'] for p in payload['measured'].get('wszystkie', [])}
+
+
+def test_measured_series_max_per_day_and_gaps():
+    db = {'offers': [_offer('a', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00')]}
+    scan_history = [
+        {'timestamp': '2026-06-01T08:00:00+02:00', 'active_dedup': 100},
+        {'timestamp': '2026-06-01T18:00:00+02:00', 'active_dedup': 130},  # ten sam dzień → max
+        # 2026-06-02: brak skanu → LUKA (nie zero)
+        {'timestamp': '2026-06-03T08:00:00+02:00', 'active_dedup': 120},
+        {'timestamp': '2026-06-04T08:00:00+02:00', 'status': 'failed'},   # bez active_dedup → pominięty
+        {'timestamp': '2026-06-05T08:00:00+02:00', 'active': 200},        # stary skan bez pola → pominięty
+    ]
+    payload = build_trend(db, today=date(2026, 6, 5), scan_history=scan_history)
+    assert _measured_map(payload) == {'2026-06-01': 130, '2026-06-03': 120}
+
+
+def test_measured_absent_without_scan_history():
+    db = {'offers': [_offer('a', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00')]}
+    assert build_trend(db, today=date(2026, 6, 1)).get('measured') == {}
+    assert build_trend(db, today=date(2026, 6, 1), scan_history=[]).get('measured') == {}
+    # skany sprzed wdrożenia (bez active_dedup) nie tworzą serii
+    old = [{'timestamp': '2026-06-01T08:00:00+02:00', 'active': 100}]
+    assert build_trend(db, today=date(2026, 6, 1), scan_history=old).get('measured') == {}
+
+
+def test_empty_db_has_measured_key():
+    payload = build_trend({'offers': []}, today=date(2026, 6, 1))
+    assert payload['measured'] == {}
+
+
+def _monotonic_drift_ratio(recon_map, measured_map):
+    """Detektor błędu z manifestu brata (issue #11): porównaj rekonstrukcję z
+    niezależnym pomiarem tego samego dnia. Jeśli |różnica| maleje monotonicznie
+    w stronę dziś — to ten sam błąd (prawy koniec odwraca kierunek trendu).
+    Zwraca udział par dzień-po-dniu, w których |dryf| maleje: ~1.0 =
+    monotoniczny dryf (podejrzany), ~0.5 = zdrowy szum wokół zera."""
+    days = sorted(set(recon_map) & set(measured_map))
+    diffs = [recon_map[d] - measured_map[d] for d in days]
+    if len(diffs) < 2:
+        return 0.0
+    decreasing = sum(1 for a, b in zip(diffs, diffs[1:]) if abs(b) < abs(a))
+    return decreasing / (len(diffs) - 1)
+
+
+def test_reconstruction_drift_detector():
+    # rekonstrukcja systematycznie zawyża przeszłość, błąd maleje do dziś → ten sam błąd
+    recon = {'2026-06-01': 130, '2026-06-02': 124, '2026-06-03': 118,
+             '2026-06-04': 112, '2026-06-05': 106}
+    measured = {d: 100 for d in recon}
+    assert _monotonic_drift_ratio(recon, measured) == 1.0
+    # zdrowa rekonstrukcja: szum wokół zera, brak monotonicznego dryfu
+    healthy = {'2026-06-01': 101, '2026-06-02': 99, '2026-06-03': 102,
+               '2026-06-04': 98, '2026-06-05': 100}
+    assert _monotonic_drift_ratio(healthy, measured) < 1.0

@@ -659,6 +659,12 @@ class SonarSprzedazy:
 
         # 6. Statystyki
         active = sum(1 for o in self.database['offers'] if o.get('active'))
+        # FIX 2026-09-10: zmierzona (nie rekonstruowana) liczba aktywnych ofert
+        # po deduplikacji OLX↔Otodom — spójna z tym, co pokazuje mapa/api/trend
+        # (chowają duplikaty). trend_generator używa jej jako serii „zmierzone",
+        # zamiast liczyć stan wstecz z first_seen/last_seen (patrz issue #11).
+        active_dedup = sum(1 for o in self.database['offers']
+                           if o.get('active') and not o.get('duplicate_of'))
         with_coords = sum(1 for o in self.database['offers']
                           if o.get('active') and (o.get('location') or {}).get('coords'))
         promoted = sum(1 for o in self.database['offers']
@@ -675,6 +681,7 @@ class SonarSprzedazy:
             'updated': updated_count,
             'skipped_removed': skipped_removed,
             'active': active,
+            'active_dedup': active_dedup,
             'with_coords': with_coords,
             'promoted': promoted,
             'total_in_db': len(self.database['offers']),

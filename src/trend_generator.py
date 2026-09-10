@@ -22,8 +22,23 @@ Format wyjścia (kontrakt dla docs/trend.html):
   "outflow":  { key: [{"date": "YYYY-MM-DD", "count": int}, ...] },  # sparse: dni z odpływem
   "inflow":   { key: [...] },  # sparse: napływ dnia = nowe + reaktywacje
   "reactivations": { key: [...] },  # sparse: reaktywacje danego dnia
-  "promoted": { key: [...] }  # sparse: liczba płatnie wyróżnionych ofert (OLX) danego dnia
+  "promoted": { key: [...] },  # sparse: liczba płatnie wyróżnionych ofert (OLX) danego dnia
+  "measured": { "wszystkie": [...] }  # sparse: ZMIERZONA dzienna liczba aktywnych po dedup
 }
+
+Zmierzona seria „measured" (propagacja z SONAR-POKOJOWY, issue #11):
+- Rekonstrukcja liczby aktywnych ofert wstecz z pól first_seen/last_seen zawyża
+  środek osi i zaniża prawy koniec (oferta z przerwą w życiu jest liczona jako
+  ciągle obecna; korpus jest przycinany wstecz), przez co widoczny kierunek
+  trendu na prawym końcu — tam, gdzie ludzie patrzą — bywa odwrócony.
+- Zamiast tego zapisujemy przy KAŻDYM skanie zmierzony stan bazy
+  (`active_dedup` w data/scan_history.json, main._run_scan) i podajemy go jako
+  osobną, nakładaną serię odniesienia. Wartość dnia to MAKSIMUM z odczytów
+  (przebieg częściowy nie obniża historii), dzień bez skanu to LUKA, nie zero.
+- Zgodnie z wzorcem brata NIE mieszamy metod w jednej linii: „measured" jest
+  DEDUPLIKOWANA (jak `profiles['wszystkie']`) i zaczyna się tam, gdzie zaczyna
+  się pomiar (od wdrożenia `active_dedup`) — dedupu nie da się odtworzyć wstecz,
+  bo zależy od pełnego korpusu z danej chwili.
 
 Płatne wyróżnienia OLX (propagacja z SONAR-POKOJOWY):
 - wyróżnienie danego dnia D = liczba ofert z datą == D w `promoted_dates`
@@ -72,7 +87,29 @@ def _parse_date(value):
         return None
 
 
-def build_trend(db, today=None):
+def _measured_daily(scan_history):
+    """Zmierzona dzienna liczba aktywnych ofert po dedup z data/scan_history.json.
+
+    Wartość dnia = maksimum z odczytów `active_dedup` tego dnia (przebieg
+    częściowy nie obniża historii); dzień bez pomiaru zostaje LUKĄ (nie zero).
+    Zwraca sparse listę [{'date', 'count'}] posortowaną rosnąco. Skany sprzed
+    wdrożenia `active_dedup` nie mają tego pola i są pomijane — seria zaczyna się
+    tam, gdzie zaczyna się pomiar."""
+    if not scan_history:
+        return []
+    by_day = {}
+    for scan in scan_history:
+        val = scan.get('active_dedup')
+        if val is None:
+            continue
+        day = _parse_date(scan.get('timestamp'))
+        if day is None:
+            continue
+        by_day[day] = max(by_day.get(day, val), val)
+    return [{'date': d.isoformat(), 'count': c} for d, c in sorted(by_day.items())]
+
+
+def build_trend(db, today=None, scan_history=None):
     tz = pytz.timezone('Europe/Warsaw')
     today = today or datetime.now(tz).date()
 
@@ -108,7 +145,7 @@ def build_trend(db, today=None):
     if global_start is None:
         return {'generated': datetime.now(tz).isoformat(), 'labels': {},
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
-                'promoted': {}}
+                'promoted': {}, 'measured': {}}
 
     # Oś czasu: dzień po dniu od pierwszej archiwizacji do dziś.
     days = []
@@ -172,6 +209,13 @@ def build_trend(db, today=None):
         reactivations[key] = _sparse(react_map)
         promoted[key] = _sparse(promoted_map)
 
+    # Zmierzona seria (nie rekonstruowana) — tylko dla „wszystkie": scan_history
+    # trzyma zdeduplikowany łączny stan bazy, bez rozbicia na kategorie.
+    measured = {}
+    measured_series = _measured_daily(scan_history)
+    if measured_series:
+        measured['wszystkie'] = measured_series
+
     return {
         'generated': datetime.now(tz).isoformat(),
         'labels': labels,
@@ -180,13 +224,19 @@ def build_trend(db, today=None):
         'inflow': inflow,
         'reactivations': reactivations,
         'promoted': promoted,
+        'measured': measured,
     }
 
 
 def generate():
     with open(paths.OFFERS_JSON, 'r', encoding='utf-8') as f:
         db = json.load(f)
-    payload = build_trend(db)
+    scan_history = None
+    sh_path = Path(paths.SCAN_HISTORY_JSON)
+    if sh_path.exists():
+        with open(sh_path, 'r', encoding='utf-8') as f:
+            scan_history = (json.load(f) or {}).get('scans')
+    payload = build_trend(db, scan_history=scan_history)
     API_DIR.mkdir(parents=True, exist_ok=True)
     with open(API_DIR / 'trend.json', 'w', encoding='utf-8') as f:
         json.dump(payload, f, ensure_ascii=False, separators=(',', ':'))

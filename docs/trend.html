@@ -302,6 +302,8 @@ let OUTFLOW = {};
 let INFLOW = {};
 let REACT = {};
 let PROMOTED = {};
+let MEASURED = {};   // seria „zmierzone" (nie rekonstruowana) — tylko dla „wszystkie"
+let viewMeasured = [];
 let FLOWS = [];   // instancje wykresów przepływu (odpływ / napływ / reaktywacje / wyróżnienia)
 
 function toggleTheme(){
@@ -371,6 +373,9 @@ async function loadAndRender(){
     REACT[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
   for (const [key, arr] of Object.entries(trend.promoted || {}))
     PROMOTED[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
+  MEASURED = {};
+  for (const [key, arr] of Object.entries(trend.measured || {}))
+    MEASURED[key] = (arr || []).map(p => [toTs(p.date), p.count]).sort((a,b)=>a[0]-b[0]);
   buildUI(trend.generated);
 }
 
@@ -404,6 +409,7 @@ function buildUI(generated){
         <span><span class="dot" style="border-top-color:var(--red)"></span>Maksimum w oknie</span>
         <span><span class="dot" style="border-top-color:var(--green)"></span>Minimum w oknie</span>
         <span><span class="dot" style="border-top-color:var(--accent)"></span>Wartość bieżąca</span>
+        <span id="legendMeasured" style="display:none"><span class="dot" style="border-top-color:var(--orange)"></span>Zmierzone (po dedup, od wdrożenia pomiaru)</span>
       </div>
     </div>
 
@@ -500,6 +506,12 @@ function render(){
     if (pts.length < 2) pts = all;
   } else { pts = all; }
   viewPts = pts;
+  // Seria „zmierzone" (tylko „wszystkie") w tym samym oknie co linia główna.
+  const mAll = MEASURED[currentProfile] || [];
+  const winMin = pts[0][0], winMax = pts[pts.length-1][0];
+  viewMeasured = mAll.filter(p => p[0] >= winMin && p[0] <= winMax);
+  const legM = document.getElementById('legendMeasured');
+  if (legM) legM.style.display = viewMeasured.length ? '' : 'none';
   const curTs = pts[pts.length-1][0], cur = pts[pts.length-1][1];
   document.getElementById('cTitle').textContent = (prof.is_category ? '' : 'Sonar · ') + prof.label;
   const timePart = scanTime ? `, ${scanTime}` : '';
@@ -534,7 +546,7 @@ function draw(){
   const col = {
     text: cssVar('--text-secondary'), muted: cssVar('--text-muted'),
     grid: cssVar('--border'), accent: cssVar('--accent'),
-    green: cssVar('--green'), red: cssVar('--red'),
+    green: cssVar('--green'), red: cssVar('--red'), orange: cssVar('--orange'),
     card: cssVar('--bg-card'), primary: cssVar('--text-primary'),
   };
   const padL = 52, padR = 18, padT = 34, padB = 30;
@@ -542,6 +554,8 @@ function draw(){
   const counts = viewPts.map(p => p[1]);
   const cMax = Math.max(...counts), cMin = Math.min(...counts);
   let maxV = cMax, minV = cMin;
+  // seria „zmierzone" musi zmieścić się w skali osi Y (bywa wyżej/niżej niż rekonstrukcja)
+  for (const p of viewMeasured){ if (p[1] > maxV) maxV = p[1]; if (p[1] < minV) minV = p[1]; }
   if (maxV === minV){ maxV += 1; minV = Math.max(0, minV-1); }
   const span = maxV - minV;
   let yMin = Math.max(0, minV - span*0.18);
@@ -595,6 +609,19 @@ function draw(){
   ctx.moveTo(xOf(viewPts[0][0]), yOf(viewPts[0][1]));
   for (const p of viewPts) ctx.lineTo(xOf(p[0]), yOf(p[1]));
   ctx.strokeStyle = acc; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+  // Linia odniesienia „zmierzone" (nie rekonstruowana) — przerywana, sparse.
+  // Rozjazd z linią główną = skala błędu rekonstrukcji (issue #11).
+  if (viewMeasured.length){
+    ctx.save();
+    ctx.strokeStyle = col.orange; ctx.lineWidth = 2; ctx.lineJoin = 'round';
+    ctx.setLineDash([6,4]);
+    ctx.beginPath();
+    viewMeasured.forEach((p,i) => { const x = xOf(p[0]), y = yOf(p[1]); i ? ctx.lineTo(x,y) : ctx.moveTo(x,y); });
+    ctx.stroke();
+    ctx.setLineDash([]);
+    for (const p of viewMeasured) drawDot(ctx, xOf(p[0]), yOf(p[1]), col.orange, 3);
+    ctx.restore();
+  }
   const maxP = viewPts.find(p => p[1] === cMax);
   const minP = viewPts.slice().reverse().find(p => p[1] === cMin);
   const last = viewPts[viewPts.length-1];
@@ -686,7 +713,9 @@ function onMove(e){
   hoverIndex = best; draw();
   const p = viewPts[best];
   const tt = tipEl();
-  tt.innerHTML = `<div class="tt-date">${fmtDateLong(p[0])}</div><div class="tt-val">${p[1]} ${plForm(p[1])}</div>`;
+  const mp = viewMeasured.find(q => q[0] === p[0]);
+  const mExtra = mp ? `<div class="tt-ma" style="color:var(--orange)">zmierzone: ${mp[1]}</div>` : '';
+  tt.innerHTML = `<div class="tt-date">${fmtDateLong(p[0])}</div><div class="tt-val">${p[1]} ${plForm(p[1])}</div>${mExtra}`;
   tt.style.left = geom.xOf(p[0]) + 'px';
   tt.style.top  = geom.yOf(p[1]) + 'px';
   tt.style.opacity = '1';

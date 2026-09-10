@@ -2,6 +2,33 @@
 
 ## [Niewydane]
 
+### Dodane — zmierzona linia „aktywnych" na wykresie trendu (propagacja, issue #11)
+Wykres trendu (`docs/trend.html`) liczył dzienną liczbę aktywnych ofert
+**rekonstrukcją wstecz** z pól `first_seen`/`last_seen`/`deactivated_at`. Taka
+rekonstrukcja zawyża środek osi (oferta z przerwą w życiu jest liczona jako
+ciągle obecna, a korpus jest przycinany wstecz) i domyka się nisko na prawym
+końcu — przez co **widoczny kierunek trendu bywa odwrócony dokładnie tam, gdzie
+ludzie patrzą**. Pomiar na naszej bazie (rekonstrukcja vs zapisany `active` w
+`data/scan_history.json`) potwierdził rozjazd: apples-to-apples garb ~+13% w
+środku, ~+1% dziś — czyli sztuczny spadek na końcu, podczas gdy zmierzony stan
+rósł do rekordu (3180).
+
+Adaptacja wzorca brata (SONAR-POKOJOWY, manifest `2026-09-03-measured-index-history`)
+do naszych realiów — **bez** nowego pliku `index_history.json` i **bez** backfillu
+z historii gita, bo zmierzony sygnał już commitujemy w `data/scan_history.json`:
+- `src/main.py` — każdy skan zapisuje `active_dedup`: zmierzoną liczbę aktywnych
+  ofert **po deduplikacji** OLX↔Otodom (spójną z mapą/api/trendem, które chowają
+  duplikaty).
+- `src/trend_generator.py` — nowa sparse seria `measured` w `docs/api/trend.json`
+  (per dzień MAKSIMUM z `active_dedup`; dzień bez skanu to LUKA, nie zero).
+  Rekonstrukcja `profiles` zostaje nietknięta — `measured` jest osobną linią
+  odniesienia. Seria zaczyna się tam, gdzie zaczyna się pomiar (dedupu nie da się
+  odtworzyć wstecz), więc naliczy się od pierwszego skanu po wdrożeniu.
+- `docs/trend.html` — na głównym wykresie „Wszystkie oferty" pomarańczowa
+  przerywana linia „Zmierzone (po dedup)” + wpis w legendzie i wartość w tooltipie.
+- `tests/test_trend_generator.py` — testy serii `measured` (max/dzień, luki,
+  pomijanie skanów bez pola) oraz detektor monotonicznego dryfu z manifestu brata.
+
 ### Naprawione — 117 poprawnych pinezek odrzucanych jako „zła dzielnica"
 Walidacja pinezek `street` wyrzucała z mapy 248 ofert na skan (`zla_dzielnica`
 w Debugu). Przegląd wszystkich 247 aktywnych przypadków pokazał, że **prawie
