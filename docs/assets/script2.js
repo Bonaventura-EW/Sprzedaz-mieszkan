@@ -301,13 +301,10 @@ function focusOfferFromHash() {
         map.setView([o.coords.lat, o.coords.lon], 16, { animate: true });
         const mk = markerById[o.id];
         if (mk) setTimeout(() => {
+            // FIX 2026-09-10: deep-link do oferty w stosie → otwórz od razu jej
+            // pełną kartę (ustaw _detailId przed openPopup), a nie płaską listę.
+            if (mk._stackOffers) mk._detailId = o.id;
             mk.openPopup();
-            // FIX 2026-09-01: deep-link do oferty w stosie → przewiń do jej wiersza
-            const row = document.querySelector(`.stack-row[data-offer-id="${o.id}"]`);
-            if (row) {
-                row.classList.add('stack-row-focus');
-                row.scrollIntoView({ block: 'nearest' });
-            }
         }, 250);
     }
 }
@@ -571,9 +568,17 @@ function render() {
         });
         if (stack) {
             mk._st = computeStackStyle(offers);
-            mk.bindPopup(() => stackPopupHtml(offers), {
+            // FIX 2026-09-10: dymek stosu ma dwa widoki — lista + pełna karta
+            // oferty (propagacja z SONAR---DZIA-KOWY, stos-pelne-szczegoly).
+            // Stan (`_detailId`) i posortowana grupa żyją NA markerze, bo
+            // render() przebudowuje markery przy każdej zmianie filtrów.
+            mk._stackOffers = offers.slice().sort((a, b) =>
+                (a.price == null ? Infinity : a.price) - (b.price == null ? Infinity : b.price));
+            mk._detailId = null;
+            mk.bindPopup(() => stackPopupHtml(mk), {
                 maxWidth: 340, offset: pin ? [0, -44] : [0, -16],
             });
+            mk.on('popupopen', wireStackPopup);
         } else {
             mk._st = computeStyle(rep);
             mk.bindPopup(() => popupHtml(rep), {
@@ -626,12 +631,23 @@ function popupHtml(o) {
 }
 
 // FIX 2026-09-01: popup pinezki-stosu — nagłówek z liczbą ofert + przewijalna
-// płaska lista (posortowana od najtańszej). Każdy wiersz to link do ogłoszenia;
-// nie ma tu panelu kart jak u brata, więc podświetlanie zastępujemy linkiem.
+// płaska lista (posortowana od najtańszej).
+// FIX 2026-09-10: dymek stosu dostał drugi widok — pełną kartę oferty (tę samą
+// co pojedyncza pinezka), zamiast kończyć się na płaskiej liście
+// (propagacja z SONAR---DZIA-KOWY, stos-pelne-szczegoly). Treść dymka jest
+// funkcją markera → przełączenie widoku to `popup.update()` (bez render() mapy).
 // Skala u nas bywa duża (rekord 252 oferty na jednej ulicy) → lista scrolluje się.
-function stackPopupHtml(offers) {
-    const sorted = offers.slice().sort((a, b) =>
-        (a.price == null ? Infinity : a.price) - (b.price == null ? Infinity : b.price));
+function stackPopupHtml(mk) {
+    const sorted = mk._stackOffers;
+    if (mk._detailId != null) {
+        const idx = sorted.findIndex(o => o.id === mk._detailId);
+        if (idx >= 0) return stackDetailHtml(sorted, idx);
+        mk._detailId = null;  // oferta zniknęła po zmianie filtrów → wróć do listy
+    }
+    return stackListHtml(sorted);
+}
+
+function stackListHtml(sorted) {
     const rep = sorted[0];
     const where = [rep.street, rep.district].filter(Boolean).join(', ');
     const precision = rep.coords_precision === 'exact' ? 'dokładny adres'
@@ -647,20 +663,78 @@ function stackPopupHtml(offers) {
             o.price_per_m2 ? fmtPrice(o.price_per_m2) + '/m²' : null,
             o.rooms ? fmtRooms(o.rooms) : null, fmtFloor(o.floor)]
             .filter(Boolean).join(' • ');
-        return `<a class="stack-row" data-offer-id="${escapeHtml(o.id)}" ` +
-            `href="${safeUrl(o.url)}" target="_blank" rel="noopener">` +
+        // Wiersz = <button> (klawiatura, focus-visible) otwierający pełną kartę,
+        // + osobny link „↗" prosto do ogłoszenia (master-detail nie zabiera
+        // bezpośredniego wyjścia na portal — uwaga z manifestu brata).
+        return `<div class="stack-row" data-offer-id="${escapeHtml(o.id)}">` +
+            `<button type="button" class="stack-row-btn" data-stack-open="${escapeHtml(o.id)}">` +
             `<div class="stack-row-top"><span class="stack-price">${fmtPrice(o.price)}</span>` +
             `${trend}${newB}${inact}</div>` +
             `<div class="stack-row-meta">${escapeHtml(meta)} • ${escapeHtml((o.source || '').toUpperCase())}` +
             `${o.is_private_owner ? ' • właściciel' : ''}</div>` +
-            `<div class="stack-row-title">${escapeHtml(o.title || '')}</div></a>`;
+            `<div class="stack-row-title">${escapeHtml(o.title || '')}</div></button>` +
+            `<a class="stack-row-ext" href="${safeUrl(o.url)}" target="_blank" rel="noopener" ` +
+            `title="Otwórz ogłoszenie" aria-label="Otwórz ogłoszenie w nowej karcie">↗</a></div>`;
     }).join('');
-    return `<div class="stack-head">${offers.length} ofert pod tym adresem</div>` +
+    return `<div class="stack-head">${sorted.length} ofert pod tym adresem</div>` +
         (where || precision
             ? `<div class="stack-where">📍 ${escapeHtml(where)}${where && precision ? ' ' : ''}` +
               `${precision ? '(' + precision + ')' : ''}</div>`
             : '') +
         `<div class="stack-list">${rows}</div>`;
+}
+
+// Widok szczegółów = nagłówek (powrót + strzałki + „i / N") sklejony z
+// NIEZMIENIONYM popupHtml(o) — karta stosu i karta pojedynczej pinezki nie
+// mogą się rozjechać (nie duplikujemy pól; uwaga z manifestu brata).
+function stackDetailHtml(sorted, idx) {
+    const o = sorted[idx];
+    const nav = sorted.length > 1
+        ? `<span class="stack-nav">` +
+          `<button type="button" data-stack-nav="prev" aria-label="Poprzednia oferta">‹</button>` +
+          `<span class="stack-nav-count">${idx + 1} / ${sorted.length}</span>` +
+          `<button type="button" data-stack-nav="next" aria-label="Następna oferta">›</button></span>`
+        : '';
+    return `<div class="stack-detail-head">` +
+        `<button type="button" class="stack-back" data-stack-back>‹ powrót do listy</button>${nav}</div>` +
+        popupHtml(o);
+}
+
+// Klik w treści dymka stosu przełącza widok przez popup.update().
+// PUŁAPKA 1 (z manifestu brata): update() podmienia innerHTML, więc kliknięty
+// węzeł znika z DOM zanim zdarzenie dobąbelkuje — Leaflet uznaje to za klik
+// w mapę i przy closePopupOnClick zamyka dymek. Lekarstwo: stopPropagation().
+// PUŁAPKA 2 (FIX 2026-09-10): _contentNode przeżywa nie tylko update(), ale i
+// zamknięcie dymka — Leaflet woła _initLayout() tylko `if (!this._container)`,
+// a onRemove kontenera NIE zeruje (leaflet 1.9.4, DivOverlay). Instancja popupu
+// z bindPopup() też żyje na markerze, więc każde ponowne otwarcie stosu wieszało
+// KOLEJNY listener na tym samym węźle i strzałki ‹ › przeskakiwały o tyle ofert,
+// ile razy dymek był otwierany. Podpinamy się więc raz na węzeł (znacznik
+// _stackWired); nowy węzeł powstaje dopiero z nowym markerem, czyli przy render().
+function wireStackPopup(e) {
+    const mk = e.target;
+    const node = e.popup._contentNode;
+    if (node._stackWired) return;
+    node._stackWired = true;
+    node.addEventListener('click', ev => {
+        const openBtn = ev.target.closest('[data-stack-open]');
+        const backBtn = ev.target.closest('[data-stack-back]');
+        const navBtn = ev.target.closest('[data-stack-nav]');
+        if (!openBtn && !backBtn && !navBtn) return;  // linki „↗" itp. działają normalnie
+        ev.preventDefault();
+        ev.stopPropagation();
+        if (openBtn) {
+            mk._detailId = openBtn.getAttribute('data-stack-open');
+        } else if (backBtn) {
+            mk._detailId = null;
+        } else if (navBtn) {
+            const dir = navBtn.getAttribute('data-stack-nav') === 'next' ? 1 : -1;
+            const arr = mk._stackOffers;
+            const i = arr.findIndex(o => o.id === mk._detailId);
+            mk._detailId = arr[(i + dir + arr.length) % arr.length].id;
+        }
+        mk.getPopup().update();
+    });
 }
 
 // href tylko http(s) — treść pochodzi z zewnętrznych portali (uwaga z manifestu brata).

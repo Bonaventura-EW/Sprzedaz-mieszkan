@@ -15020,5 +15020,25 @@
    "city": "Lublin"
   },
   "ts": 1788981662.497985
+ },
+ "jacka przybylskiego.mieszkanie": {
+  "result": null,
+  "ts": 1789039735.493613
+ },
+ "rva:51.2123,22.6939": {
+  "result": {
+   "road": "Stanisława Kamińskiego",
+   "district": "Osiedle Polesie",
+   "city": "Świdnik"
+  },
+  "ts": 1789039736.741385
+ },
+ "rva:51.2512,22.5295": {
+  "result": {
+   "road": "Aleje Racławickie",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1789039738.3982859
  }
 }
