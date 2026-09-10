@@ -2,6 +2,35 @@
 
 ## [Niewydane]
 
+### Dodane — dymek stosu pinezek ma pełną kartę oferty (propagacja)
+Dymek „stosu" (pinezka z liczbą, kilka ofert pod jednym adresem) kończył się na
+płaskiej liście — bez zdjęcia, trendu ceny, opisu i daty w bazie, które ma
+dymek pojedynczej pinezki. Kliknięcie wiersza otwiera teraz **pełną kartę
+oferty** (tę samą `popupHtml(o)`, żeby karty się nie rozjechały) z nagłówkiem
+„‹ powrót do listy", licznikiem „i / N" i strzałkami ‹ ›. Treść dymka to funkcja
+markera, więc przełączenie widoku to `popup.update()` (bez przerysowania mapy),
+a stan (`_detailId`, posortowana grupa) żyje NA markerze. Wiersz listy to
+`<button>` (klawiatura, focus-visible) z osobnym linkiem „↗" prosto na portal.
+Deep-link `#offer=<id>` w stosie otwiera od razu kartę tej oferty.
+Pułapka rozwiązana za manifestem brata: `stopPropagation()` w handlerze wiersza,
+inaczej Leaflet (podmieniony `innerHTML`) bierze klik za klik w mapę i zamyka
+dymek. Propagacja z `Bonaventura-EW/SONAR---DZIA-KOWY`
+(manifest `2026-09-02-stos-pelne-szczegoly`, commit c482c3c); u nas mapa to
+markery Leaflet z rendererem canvas, więc `bindPopup`/`popup.update()` przenoszą
+się 1:1. `docs/assets/script2.js`, `docs/assets/style.css`, `docs/index.html`
+(bump `?v=10`).
+
+Druga pułapka, znaleziona przy przeglądzie (poza manifestem brata, bo brat użył
+inline `onclick`): `_contentNode` popupu przeżywa nie tylko `update()`, ale i
+ZAMKNIĘCIE dymka — Leaflet 1.9.4 woła `_initLayout()` tylko `if (!this._container)`,
+a `onRemove` kontenera nie zeruje, zaś instancja popupu z `bindPopup()` żyje na
+markerze. Delegacja wieszana w `popupopen` dokładała więc kolejny listener przy
+każdym ponownym otwarciu stosu i strzałki ‹ › przeskakiwały o tyle ofert, ile razy
+dymek był otwierany (sprawdzone w Chromium: 3 otwarcia → jeden klik „›" skakał
+a→d). Podpinamy się raz na węzeł (znacznik `_stackWired`). Przy okazji usunięty
+martwy `.stack-row-focus` w `style.css` — podświetlenia wiersza nic już nie nadaje,
+odkąd deep-link otwiera kartę oferty zamiast przewijać do wiersza.
+
 ### Naprawione — 117 poprawnych pinezek odrzucanych jako „zła dzielnica"
 Walidacja pinezek `street` wyrzucała z mapy 248 ofert na skan (`zla_dzielnica`
 w Debugu). Przegląd wszystkich 247 aktywnych przypadków pokazał, że **prawie
