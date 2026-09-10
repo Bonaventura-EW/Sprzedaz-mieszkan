@@ -2,6 +2,66 @@
 
 ## [Niewydane]
 
+### Naprawione — wykres Indeksu (Trend): trwająca doba i dni z niepełnym skanem
+Propagacja z SONAR-MIESZKANIOWY (manifest `2026-09-04-trend-charts-audit`,
+issue #14). Wykres liczby aktywnych ofert na `trend.html` rysował dzień bieżący
+jak zamknięty, choć skan poranny to dopiero połowa doby (`scanner.yml` chodzi
+2×/dzień, 8:17 i 18:17 PL) — dawało to fałszywy zjazd na prawej krawędzi.
+Zmierzone na naszej bazie: ostatni punkt szedł 2388 (09.09, dzień pełny) → 2361
+(10.09, dzień bez skanu), a nagłówek „1D" pokazywał sztuczny spadek. Dodatkowo
+dni z jednym skanem z dwóch (u nas 06.08 i 28.08) w ogóle nie były maskowane —
+rekonstrukcja z nich jest zaniżona.
+- `src/trend_generator.py` — `build_trend` czyta `data/scan_history.json`
+  (`load_scan_counts`) i przez `_scan_coverage` ustala ostatni PEŁNY dzień oraz
+  zbiór dni niepełnych. Seria Indeksu kończy się na ostatnim pełnym dniu (bug #1),
+  a dni o niepełnym pokryciu wypadają z serii (bug #2). Dni sprzed dziennika
+  skanów zakładamy pełne (stara historia nie znika), pierwszy dzień dziennika
+  pomijamy (bywa ucięty). Nasz wariant CANVAS interpoluje linię nad brakującym
+  dniem — brat na ApexCharts rysuje jawną przerwę (`null`), efekt ten sam:
+  koniec fałszywego zjazdu.
+- Bez `scan_counts` (testy jednostkowe) zachowujemy stare zachowanie: pełne
+  pokrycie, seria do „dziś".
+- `tests/test_trend_generator.py` — testy maski pokrycia (`_scan_coverage`),
+  pomijania dni niepełnych i zakończenia serii na ostatnim pełnym dniu.
+- ŚWIADOMIE NIE ruszamy odpływu liczonego z opóźnieniem `DEACTIVATE_GRACE_DAYS`
+  (bug #3/#4 manifestu): naprawa wymaga zmiany definicji końca odcinka życia
+  (`last_seen` zamiast `deactivated_at`), co pokrywa się z otwartym issue #11 —
+  nie mieszamy dwóch przebudów rekonstrukcji naraz.
+
+### Dodane — zmierzona linia „aktywnych" na wykresie trendu (propagacja, issue #11)
+Wykres trendu (`docs/trend.html`) liczył dzienną liczbę aktywnych ofert
+**rekonstrukcją wstecz** z pól `first_seen`/`last_seen`/`deactivated_at`. Taka
+rekonstrukcja zawyża środek osi (oferta z przerwą w życiu jest liczona jako
+ciągle obecna, a korpus jest przycinany wstecz) i domyka się nisko na prawym
+końcu — przez co **widoczny kierunek trendu bywa odwrócony dokładnie tam, gdzie
+ludzie patrzą**. Pomiar na naszej bazie (rekonstrukcja vs zapisany `active` w
+`data/scan_history.json`) potwierdził rozjazd: apples-to-apples garb ~+13% w
+środku, ~+1% dziś — czyli sztuczny spadek na końcu, podczas gdy zmierzony stan
+rósł do rekordu (3180).
+
+Adaptacja wzorca brata (SONAR-POKOJOWY, manifest `2026-09-03-measured-index-history`)
+do naszych realiów — **bez** nowego pliku `index_history.json` i **bez** backfillu
+z historii gita, bo zmierzony sygnał już commitujemy w `data/scan_history.json`:
+- `src/main.py` — każdy skan zapisuje `active_dedup`: zmierzoną liczbę aktywnych
+  ofert **po deduplikacji** OLX↔Otodom (spójną z mapą/api/trendem, które chowają
+  duplikaty).
+- `src/trend_generator.py` — nowa sparse seria `measured` w `docs/api/trend.json`
+  (per dzień MAKSIMUM z `active_dedup`; dzień bez skanu to LUKA, nie zero).
+  Rekonstrukcja `profiles` zostaje nietknięta — `measured` jest osobną linią
+  odniesienia. Seria zaczyna się tam, gdzie zaczyna się pomiar (dedupu nie da się
+  odtworzyć wstecz), więc naliczy się od pierwszego skanu po wdrożeniu.
+- `docs/trend.html` — na głównym wykresie „Wszystkie oferty" pomarańczowa
+  przerywana linia „Zmierzone (po dedup)” + wpis w legendzie i wartość w tooltipie.
+- `tests/test_trend_generator.py` — testy serii `measured` (max/dzień, luki,
+  pomijanie skanów bez pola) oraz detektor monotonicznego dryfu z manifestu brata.
+
+Obie zmiany dotyczą tej samej funkcji, więc `trend_generator` czyta dziennik
+skanów RAZ (`load_scan_history`) i przekazuje go jednym parametrem
+`build_trend(..., scan_history=)`; maska pokrycia liczy się z niego przez
+`_scan_counts`. Maska nie tyka serii `measured` — pomiar jest migawką stanu bazy,
+nie agregatem doby, więc dzień odsiany z Indeksu jako niepełny może mieć poprawny
+punkt pomiaru (test `test_measured_survives_incomplete_day`).
+
 ### Dodane — dymek stosu pinezek ma pełną kartę oferty (propagacja)
 Dymek „stosu" (pinezka z liczbą, kilka ofert pod jednym adresem) kończył się na
 płaskiej liście — bez zdjęcia, trendu ceny, opisu i daty w bazie, które ma
@@ -30,7 +90,6 @@ dymek był otwierany (sprawdzone w Chromium: 3 otwarcia → jeden klik „›" s
 a→d). Podpinamy się raz na węzeł (znacznik `_stackWired`). Przy okazji usunięty
 martwy `.stack-row-focus` w `style.css` — podświetlenia wiersza nic już nie nadaje,
 odkąd deep-link otwiera kartę oferty zamiast przewijać do wiersza.
-
 ### Naprawione — 117 poprawnych pinezek odrzucanych jako „zła dzielnica"
 Walidacja pinezek `street` wyrzucała z mapy 248 ofert na skan (`zla_dzielnica`
 w Debugu). Przegląd wszystkich 247 aktywnych przypadków pokazał, że **prawie
