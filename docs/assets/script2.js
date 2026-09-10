@@ -701,14 +701,21 @@ function stackDetailHtml(sorted, idx) {
 }
 
 // Klik w treści dymka stosu przełącza widok przez popup.update().
-// PUŁAPKA (z manifestu brata): update() podmienia innerHTML, więc kliknięty
+// PUŁAPKA 1 (z manifestu brata): update() podmienia innerHTML, więc kliknięty
 // węzeł znika z DOM zanim zdarzenie dobąbelkuje — Leaflet uznaje to za klik
 // w mapę i przy closePopupOnClick zamyka dymek. Lekarstwo: stopPropagation().
-// Listener wieszamy na stabilnym _contentNode (przeżywa update()); nowy węzeł
-// powstaje przy każdym otwarciu popupu, więc bez ryzyka duplikatu.
+// PUŁAPKA 2 (FIX 2026-09-10): _contentNode przeżywa nie tylko update(), ale i
+// zamknięcie dymka — Leaflet woła _initLayout() tylko `if (!this._container)`,
+// a onRemove kontenera NIE zeruje (leaflet 1.9.4, DivOverlay). Instancja popupu
+// z bindPopup() też żyje na markerze, więc każde ponowne otwarcie stosu wieszało
+// KOLEJNY listener na tym samym węźle i strzałki ‹ › przeskakiwały o tyle ofert,
+// ile razy dymek był otwierany. Podpinamy się więc raz na węzeł (znacznik
+// _stackWired); nowy węzeł powstaje dopiero z nowym markerem, czyli przy render().
 function wireStackPopup(e) {
     const mk = e.target;
     const node = e.popup._contentNode;
+    if (node._stackWired) return;
+    node._stackWired = true;
     node.addEventListener('click', ev => {
         const openBtn = ev.target.closest('[data-stack-open]');
         const backBtn = ev.target.closest('[data-stack-back]');

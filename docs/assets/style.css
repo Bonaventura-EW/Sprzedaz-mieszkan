@@ -202,7 +202,6 @@ body {
 }
 .stack-row:first-child { border-top: none; }
 .stack-row:hover { background: #f1f5f9; }
-.stack-row-focus { background: #fef9c3; box-shadow: inset 0 0 0 2px #eab308; }
 .stack-row-btn {
     flex: 1 1 auto; min-width: 0; text-align: left; cursor: pointer;
     background: none; border: none; padding: 6px 8px; border-radius: 8px; color: inherit; font: inherit;

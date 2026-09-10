@@ -20,6 +20,17 @@ markery Leaflet z rendererem canvas, więc `bindPopup`/`popup.update()` przenosz
 się 1:1. `docs/assets/script2.js`, `docs/assets/style.css`, `docs/index.html`
 (bump `?v=10`).
 
+Druga pułapka, znaleziona przy przeglądzie (poza manifestem brata, bo brat użył
+inline `onclick`): `_contentNode` popupu przeżywa nie tylko `update()`, ale i
+ZAMKNIĘCIE dymka — Leaflet 1.9.4 woła `_initLayout()` tylko `if (!this._container)`,
+a `onRemove` kontenera nie zeruje, zaś instancja popupu z `bindPopup()` żyje na
+markerze. Delegacja wieszana w `popupopen` dokładała więc kolejny listener przy
+każdym ponownym otwarciu stosu i strzałki ‹ › przeskakiwały o tyle ofert, ile razy
+dymek był otwierany (sprawdzone w Chromium: 3 otwarcia → jeden klik „›" skakał
+a→d). Podpinamy się raz na węzeł (znacznik `_stackWired`). Przy okazji usunięty
+martwy `.stack-row-focus` w `style.css` — podświetlenia wiersza nic już nie nadaje,
+odkąd deep-link otwiera kartę oferty zamiast przewijać do wiersza.
+
 ### Naprawione — 117 poprawnych pinezek odrzucanych jako „zła dzielnica"
 Walidacja pinezek `street` wyrzucała z mapy 248 ofert na skan (`zla_dzielnica`
 w Debugu). Przegląd wszystkich 247 aktywnych przypadków pokazał, że **prawie
