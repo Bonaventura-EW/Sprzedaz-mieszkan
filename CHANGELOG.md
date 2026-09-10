@@ -2,6 +2,74 @@
 
 ## [Niewydane]
 
+### Naprawione — fałszywy rekord odpływu po blokadzie portalu (bug #3/#4 z #14)
+Wykres odpływu pokazywał 22.08 skok do **231 ofert** — ponad trzy razy więcej niż
+zwykły dzień, przez co reszta wykresu spłaszczała się przy dolnej krawędzi.
+Diagnoza z dziennika skanów: **OLX zwracał 0 ofert od 11.08 wieczorem do 22.08**
+(10 pełnych dób blokady). Ochrona przed masową dezaktywacją (`_mark_inactive`,
+pkt 8 CLAUDE.md) słusznie wstrzymała wtedy kasowanie ofert, a gdy źródło wróciło
+o 22:40, cała zaległość została potwierdzona jednego dnia: 373 dezaktywacje,
+z czego 171 ofert ostatni raz widziano **11 dni wcześniej**. Ten sam mechanizm
+w mniejszej skali dawał `deactivated_at` spóźnione o `DEACTIVATE_GRACE_DAYS`.
+
+Dwie przyczyny, dwie naprawy — obie w `src/trend_generator.py`:
+- **Odpływ liczony od realnego zniknięcia, nie od potwierdzenia.** Odcinek życia
+  oferty kończy się na `last_seen` (ostatni dzień, w którym ją WIDZIELIŚMY), a
+  odpływ przypada nazajutrz — pierwszego dnia bez niej. Wcześniej kluczem był
+  `deactivated_at`, czyli dzień potwierdzenia. Konsekwencja dla Indeksu: linia
+  jest teraz niżej (nie liczy ofert „w karencji", których już nie widać) i przez
+  to rozjeżdża się z licznikiem `active` w API — ten liczy wszystko, co baza
+  uważa za aktywne, łącznie z karencją. Zamierzone: to dwie różne definicje,
+  a od #11 mamy do tego zmierzoną linię odniesienia.
+- **Maska „brak pomiaru" obejmuje też blokadę źródła.** Doba, w której ŻADEN
+  przebieg nie zobaczył któregoś źródła (`scraped_<źródło> == 0` albo ślad
+  `incomplete_sources`), jest maskowana jak doba z niedomkniętymi skanami.
+  Liczy się najlepszy przebieg doby — jeden nieudany scrape obok udanych niczego
+  nie unieważnia (u nas 22.06, 15.07, 24.07). Sama zmiana atrybucji nie
+  wystarczyłaby: przesunęłaby skok na 12.08, gdzie kłamałby tak samo, bo tamte
+  oferty nie zniknęły — to my przestaliśmy widzieć OLX.
+
+Efekt na naszych danych: rekord odpływu to teraz **82 (25.06)** zamiast 231,
+22.08 pokazuje normalne 35, a Indeks nie ma już urwiska 2401 → 2286. Zamaskowane
+13 dni z 82. `docs/trend.html` rysuje ciągły ciąg luk JEDNYM pasem (10-dniowa
+blokada jako dziesięć kresek wyglądałaby jak płot), a dymek podaje powód —
+`coverage.reasons` rozróżnia „niepełny skan doby" od „blokady źródła".
+
+
+### Naprawione — wykresy przepływu też maskują dni z niepełnym skanem (dokończenie bug #2 z #14)
+Maska pokrycia skanami obowiązywała dotąd tylko na Indeksie. Odpływ, napływ,
+reaktywacje i wyróżnienia dalej pokazywały zaniżoną wartość dnia, w którym
+skaner nie domknął obu przebiegów — u nas `2026-08-06` (odpływ 13 / napływ 25,
+przy 66 / 87 dnia następnego) i `2026-08-28`. Ten sam fałszywy dołek, tylko
+piętro niżej niż ten naprawiony w #19.
+
+Pułapka, przez którą naprawa nie jest symetryczna do Indeksu: szeregi przepływu
+są **sparse i zerowo-wypełniane** przez front (`expandDaily`), więc zwykłe
+usunięcie dnia z serii czytałoby się jako „0 odpływu" — dołek byłby GŁĘBSZY,
+nie mniejszy. Dlatego:
+- `src/trend_generator.py` — wartości w API zostają nietknięte (surowy pomiar),
+  a maska jedzie osobno jako nowa sekcja `coverage` w `docs/api/trend.json`
+  (`scans_per_day`, `last_complete`, `incomplete`).
+- `docs/trend.html` — `expandDaily` zamienia dni z maski na `null` (LUKA, nie
+  zero), `outflowWithMA` pomija je w oknie średniej 7-dniowej, wykres rysuje się
+  segmentami z przerwą, dzień-luka nie ustala „Rekordu" ani nie rozcieńcza
+  „Śr. odpływu/dzień", a najechanie kursorem mówi wprost: „brak pomiaru".
+  Ten sam delikatny pas znaczy lukę na wykresie Indeksu, gdzie linia dotąd
+  interpolowała nad usuniętym dniem bez żadnego wyjaśnienia. Pas ma podpis
+  „Brak pomiaru (niepełny skan doby)" w legendzie obu rodzajów wykresów —
+  pokazywany tylko wtedy, gdy taki dzień faktycznie jest w oknie, żeby nie
+  tłumaczyć czegoś, czego nie widać.
+- `tests/test_trend_generator.py` — testy sekcji `coverage` i tego, że wartości
+  przepływu ZOSTAJĄ w payloadzie (116 testów).
+
+Skok NASTĘPNEGO dnia (nadrobione potwierdzenia dezaktywacji) to nadal bug #3/#4
+z #14 — wymaga zmiany definicji końca odcinka życia (`last_seen` zamiast
+`deactivated_at`), świadomie nieruszany.
+
+Front jest odporny na starszy artefakt: `trend.json` bez sekcji `coverage`
+(taki leży w repo do najbliższego skanu) daje pustą maskę i zachowanie sprzed
+tej zmiany.
+
 ### Naprawione — wykres Indeksu (Trend): trwająca doba i dni z niepełnym skanem
 Propagacja z SONAR-MIESZKANIOWY (manifest `2026-09-04-trend-charts-audit`,
 issue #14). Wykres liczby aktywnych ofert na `trend.html` rysował dzień bieżący

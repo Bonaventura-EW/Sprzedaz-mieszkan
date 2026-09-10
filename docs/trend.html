@@ -190,6 +190,10 @@ body {
   font-family: var(--font-display); font-size: 11px; color: var(--text-muted); }
 .chart-legend .dot { display: inline-block; width: 18px; height: 0; border-top-width: 2px; border-top-style: dashed;
   vertical-align: middle; margin-right: 6px; }
+/* FIX 2026-09-10: znacznik dnia bez pomiaru — ten sam pas co na wykresie,
+   tylko mocniej krytej, żeby był widoczny w skali swatcha legendy */
+.chart-legend .dot.gap { width: 5px; height: 12px; border: none; border-radius: 1px;
+  background: var(--text-muted); opacity: 0.42; }
 
 .loading { text-align: center; padding: 80px 20px; color: var(--text-muted);
   font-family: var(--font-display); font-size: 13px; }
@@ -276,14 +280,21 @@ function expandDaily(arr, endTs){
   const startTs = toTs(arr[0].date);
   const lastTs  = Math.max(toTs(arr[arr.length-1].date), endTs || 0);
   const out = [];
-  for (let t = startTs; t <= lastTs; t += DAY_MS) out.push([t, map[t] || 0]);
+  // dzień bez pełnego pokrycia skanami = null (LUKA), nie zero — inaczej niepełna
+  // doba udawałaby „zero odpływu" i rysowała zjazd, którego nie było
+  for (let t = startTs; t <= lastTs; t += DAY_MS)
+    out.push([t, INCOMPLETE.has(t) ? null : (map[t] || 0)]);
   return out;
 }
 function outflowWithMA(series, win){
   const out = [];
   for (let i = 0; i < series.length; i++){
+    if (series[i][1] === null){ out.push([series[i][0], null, null]); continue; }
     let s = 0, n = 0;
-    for (let j = Math.max(0, i-win+1); j <= i; j++){ s += series[j][1]; n++; }
+    for (let j = Math.max(0, i-win+1); j <= i; j++){
+      if (series[j][1] === null) continue;   // luka nie zaniża średniej kroczącej
+      s += series[j][1]; n++;
+    }
     out.push([series[i][0], series[i][1], n ? s/n : 0]);
   }
   return out;
@@ -304,6 +315,13 @@ let REACT = {};
 let PROMOTED = {};
 let MEASURED = {};   // seria „zmierzone" (nie rekonstruowana) — tylko dla „wszystkie"
 let viewMeasured = [];
+// FIX 2026-09-10: dni, w których skaner nie domknął wszystkich zaplanowanych
+// przebiegów (`coverage.incomplete` z trend.json). Rekonstrukcja Indeksu takich
+// dni w ogóle nie emituje, a szeregi przepływu podają je jako null — bo szereg
+// sparse bez tego dnia front zerowo-wypełnia, czyli fałszywy dołek byłby jeszcze
+// głębszy. Punktu nie rysujemy, do średniej 7 dni nie wchodzi, rekordu nie ustala.
+let INCOMPLETE = new Set();
+let GAP_REASON = {};   // 'YYYY-MM-DD' → powód luki (niepelny_skan | brak_zrodla)
 let FLOWS = [];   // instancje wykresów przepływu (odpływ / napływ / reaktywacje / wyróżnienia)
 
 function toggleTheme(){
@@ -323,6 +341,28 @@ function toggleTheme(){
   if (saved) document.documentElement.setAttribute('data-theme', saved);
   const b = document.getElementById('btnTheme'); if (b) b.textContent = eff === 'dark' ? '🌙' : '☀️';
 })();
+// FIX 2026-09-10: pas „brak pomiaru". Ciągły ciąg takich dni rysujemy JEDNYM
+// pasem — 10-dniowa blokada portalu jako dziesięć osobnych kresek wyglądałaby
+// jak płot, a nie jak dziura w danych.
+function gapBands(ctx, tsSet, t0, t1, xOf, padT, plotH, color){
+  const days = [...tsSet].filter(ts => ts >= t0 && ts <= t1).sort((a,b) => a-b);
+  if (!days.length) return;
+  ctx.save();
+  ctx.fillStyle = color; ctx.globalAlpha = 0.13;
+  let runStart = days[0], prev = days[0];
+  const flush = () => {
+    const x1 = xOf(Math.max(runStart - DAY_MS/2, t0));
+    const x2 = xOf(Math.min(prev + DAY_MS/2, t1));
+    ctx.fillRect(x1, padT, Math.max(x2 - x1, 3), plotH);
+  };
+  for (const ts of days.slice(1)){
+    if (ts - prev > DAY_MS){ flush(); runStart = ts; }
+    prev = ts;
+  }
+  flush();
+  ctx.restore();
+}
+
 function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
 
 async function loadAndRender(){
@@ -350,6 +390,8 @@ async function loadAndRender(){
     if (el && !isNaN(d)) el.textContent = d.toLocaleString('pl-PL', { dateStyle: 'short', timeStyle: 'short' });
     if (!isNaN(d)) scanTime = String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
   }
+  INCOMPLETE = new Set(((trend.coverage || {}).incomplete || []).map(toTs));
+  GAP_REASON = (trend.coverage || {}).reasons || {};
   PROFILES = {};
   for (const [key, arr] of Object.entries(trend.profiles || {})){
     PROFILES[key] = {
@@ -410,6 +452,7 @@ function buildUI(generated){
         <span><span class="dot" style="border-top-color:var(--green)"></span>Minimum w oknie</span>
         <span><span class="dot" style="border-top-color:var(--accent)"></span>Wartość bieżąca</span>
         <span id="legendMeasured" style="display:none"><span class="dot" style="border-top-color:var(--orange)"></span>Zmierzone (po dedup, od wdrożenia pomiaru)</span>
+        <span id="legendGap" style="display:none"><span class="dot gap"></span>Brak pomiaru</span>
       </div>
     </div>
 
@@ -517,6 +560,10 @@ function render(){
   viewMeasured = mAll.filter(p => p[0] >= winMin && p[0] <= winMax);
   const legM = document.getElementById('legendMeasured');
   if (legM) legM.style.display = viewMeasured.length ? '' : 'none';
+  // podpis pasa „brak pomiaru" tylko wtedy, gdy taki dzień jest w oknie
+  const gapsInWin = [...INCOMPLETE].some(ts => ts >= winMin && ts <= winMax);
+  const legG = document.getElementById('legendGap');
+  if (legG) legG.style.display = gapsInWin ? '' : 'none';
   const curTs = pts[pts.length-1][0], cur = pts[pts.length-1][1];
   document.getElementById('cTitle').textContent = (prof.is_category ? '' : 'Sonar · ') + prof.label;
   const timePart = scanTime ? `, ${scanTime}` : '';
@@ -602,6 +649,11 @@ function draw(){
     mm++; if (mm>11){mm=0;my++;} curM = Date.UTC(my, mm, 1);
   }
   const acc = col.accent;
+  // FIX 2026-09-10: dni bez pełnego pokrycia skanami są w Indeksie POMIJANE
+  // (rekonstrukcja z połowy doby jest zaniżona), więc linia przechodzi nad nimi.
+  // Ten sam pas co na wykresach przepływu mówi, że to luka w pomiarze — inaczej
+  // interpolacja wygląda jak dane, których nie mamy.
+  gapBands(ctx, INCOMPLETE, t0, t1, xOf, padT, plotH, col.muted);
   const grad = ctx.createLinearGradient(0, padT, 0, H-padB);
   grad.addColorStop(0, hexA(acc, 0.38));
   grad.addColorStop(1, hexA(acc, 0.02));
@@ -779,6 +831,27 @@ const FLOW_CONFIGS = [
       + 'dla każdego dnia liczba ofert widzianych tego dnia jako wyróżnione' },
 ];
 
+// Średnia krocząca jednego CIĄGŁEGO segmentu (wygładzenie kwadratowe jak dotąd).
+// Wyjęte z draw(), bo od FIX 2026-09-10 serie przepływu mają luki i rysują się
+// segment po segmencie, a nie jedną ścieżką przez całe okno.
+function strokeMA(ctx, pts, xOf, yOf, color){
+  const n = pts.length;
+  ctx.beginPath();
+  ctx.moveTo(xOf(pts[0][0]), yOf(pts[0][2]));
+  if (n < 3){
+    for (const p of pts) ctx.lineTo(xOf(p[0]), yOf(p[2]));
+  } else {
+    for (let i = 1; i < n-1; i++){
+      const xc = (xOf(pts[i][0]) + xOf(pts[i+1][0])) / 2;
+      const yc = (yOf(pts[i][2]) + yOf(pts[i+1][2])) / 2;
+      ctx.quadraticCurveTo(xOf(pts[i][0]), yOf(pts[i][2]), xc, yc);
+    }
+    ctx.quadraticCurveTo(xOf(pts[n-2][0]), yOf(pts[n-2][2]),
+                         xOf(pts[n-1][0]), yOf(pts[n-1][2]));
+  }
+  ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
+}
+
 function flowCardHTML(cfg){
   return `
     <div class="chart-card flow ${cfg.cls}" id="card-${cfg.id}">
@@ -803,6 +876,7 @@ function flowCardHTML(cfg){
       <div class="chart-legend">
         <span><span class="dot" style="border-top-color:${cfg.line};border-top-style:solid;border-top-width:2px"></span>${cfg.legendDaily}</span>
         <span><span class="dot" style="border-top-color:${cfg.ma};border-top-style:solid;border-top-width:3px"></span>Średnia 7 dni</span>
+        <span id="legendGap-${cfg.id}" style="display:none"><span class="dot gap"></span>Brak pomiaru</span>
       </div>
       <div class="chart-hint">${cfg.hint}</div>
     </div>`;
@@ -833,10 +907,21 @@ function makeFlowChart(cfg){
     let pts = series.filter(p => p[0] >= winMin && p[0] <= winMax);
     if (pts.length < 1) pts = series;
     state.view = pts;
-    const total = pts.reduce((s,p) => s + p[1], 0);
-    const rate = pts.length ? total/pts.length : 0;
-    let maxP = pts[0];
-    for (const p of pts) if (p[1] > maxP[1]) maxP = p;
+    // FIX 2026-09-10: dni bez pełnego pokrycia (null) wypadają ze statystyk —
+    // zaniżony pomiar nie może rozcieńczać tempa ani ustanawiać „rekordu"
+    const valid = pts.filter(p => p[1] !== null);
+    if (!valid.length){
+      row.style.display = 'none';
+      empty.style.display = 'block'; empty.textContent = cfg.empty;
+      stats.innerHTML = ''; state.view = []; state.geom = null;
+      return;
+    }
+    const legG = document.getElementById('legendGap-' + cfg.id);
+    if (legG) legG.style.display = valid.length < pts.length ? '' : 'none';
+    const total = valid.reduce((s,p) => s + p[1], 0);
+    const rate = total/valid.length;
+    let maxP = valid[0];
+    for (const p of valid) if (p[1] > maxP[1]) maxP = p;
     stats.innerHTML =
       `<span><span class="lab">${cfg.statLabel}:</span><span class="${cfg.statCls}">${rate.toFixed(1).replace('.',',')}</span></span>` +
       `<span><span class="lab">Rekord:</span><span class="${cfg.statCls}">${maxP[1]}</span>` +
@@ -861,7 +946,15 @@ function makeFlowChart(cfg){
     const col = { muted: cssVar('--text-muted'), grid: cssVar('--border') };
     const padL = 52, padR = 18, padT = 34, padB = 30;
     const plotW = W - padL - padR, plotH = H - padT - padB;
-    const counts = view.map(p => p[1]);
+    // segmenty ciągłe (przerwane na dniach null) — luka nie może być zerem
+    const segments = [];
+    let seg = [];
+    for (const q of view){
+      if (q[1] === null){ if (seg.length) segments.push(seg); seg = []; }
+      else seg.push(q);
+    }
+    if (seg.length) segments.push(seg);
+    const counts = view.filter(p => p[1] !== null).map(p => p[1]);
     const maxV = Math.max(...counts, 1);
     const step = niceStep(maxV * 1.15, 5);
     let yMax = Math.ceil((maxV * 1.12) / step) * step;
@@ -903,33 +996,25 @@ function makeFlowChart(cfg){
     const grad = ctx.createLinearGradient(0, padT, 0, H-padB);
     grad.addColorStop(0, hexA(LINE, 0.16));
     grad.addColorStop(1, hexA(LINE, 0.01));
-    ctx.beginPath();
-    ctx.moveTo(xOf(view[0][0]), yOf(view[0][1]));
-    for (const p of view) ctx.lineTo(xOf(p[0]), yOf(p[1]));
-    ctx.lineTo(xOf(t1), H-padB); ctx.lineTo(xOf(t0), H-padB); ctx.closePath();
-    ctx.fillStyle = grad; ctx.fill();
-    ctx.beginPath();
-    ctx.moveTo(xOf(view[0][0]), yOf(view[0][1]));
-    for (const p of view) ctx.lineTo(xOf(p[0]), yOf(p[1]));
-    ctx.strokeStyle = hexA(LINE, 0.92); ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
-    const n = view.length;
-    ctx.beginPath();
-    ctx.moveTo(xOf(view[0][0]), yOf(view[0][2]));
-    if (n < 3){
-      for (const p of view) ctx.lineTo(xOf(p[0]), yOf(p[2]));
-    } else {
-      for (let i = 1; i < n-1; i++){
-        const xc = (xOf(view[i][0]) + xOf(view[i+1][0])) / 2;
-        const yc = (yOf(view[i][2]) + yOf(view[i+1][2])) / 2;
-        ctx.quadraticCurveTo(xOf(view[i][0]), yOf(view[i][2]), xc, yc);
-      }
-      ctx.quadraticCurveTo(xOf(view[n-2][0]), yOf(view[n-2][2]),
-                           xOf(view[n-1][0]), yOf(view[n-1][2]));
+    // pas w miejscu dnia bez pełnego pomiaru — czytelny sygnał, że to luka,
+    // a nie zero (bez niego linia „przeskakuje" bez wyjaśnienia)
+    gapBands(ctx, INCOMPLETE, t0, t1, xOf, padT, plotH, col.muted);
+    for (const s of segments){
+      const sFirst = xOf(s[0][0]), sLast = xOf(s[s.length-1][0]);
+      ctx.beginPath();
+      ctx.moveTo(sFirst, yOf(s[0][1]));
+      for (const p of s) ctx.lineTo(xOf(p[0]), yOf(p[1]));
+      ctx.lineTo(sLast, H-padB); ctx.lineTo(sFirst, H-padB); ctx.closePath();
+      ctx.fillStyle = grad; ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(sFirst, yOf(s[0][1]));
+      for (const p of s) ctx.lineTo(xOf(p[0]), yOf(p[1]));
+      ctx.strokeStyle = hexA(LINE, 0.92); ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+      strokeMA(ctx, s, xOf, yOf, MA);
     }
-    ctx.strokeStyle = MA; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round'; ctx.stroke();
-    let maxP = view[0];
-    for (const p of view) if (p[1] > maxP[1]) maxP = p;
-    if (maxP[1] > 0){
+    let maxP = null;
+    for (const p of view) if (p[1] !== null && (!maxP || p[1] > maxP[1])) maxP = p;
+    if (maxP && maxP[1] > 0){
       drawDot(ctx, xOf(maxP[0]), yOf(maxP[1]), LINE);
       drawTag(ctx, `MAX: ${maxP[1]}`, xOf(maxP[0]), yOf(maxP[1]) - 16, LINE, '#fff', 'center', W);
     }
@@ -938,8 +1023,10 @@ function makeFlowChart(cfg){
       ctx.strokeStyle = col.muted; ctx.globalAlpha = 0.6; ctx.setLineDash([3,3]);
       ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, H-padB); ctx.stroke();
       ctx.setLineDash([]); ctx.globalAlpha = 1;
-      drawDot(ctx, x, yOf(p[2]), MA, 4, true);
-      drawDot(ctx, x, yOf(p[1]), LINE, 4, true);
+      if (p[1] !== null){   // dzień-luka: sama linia kursora, bez kropek z wartością
+        drawDot(ctx, x, yOf(p[2]), MA, 4, true);
+        drawDot(ctx, x, yOf(p[1]), LINE, 4, true);
+      }
     }
     state.geom = { padL, padR, padT, padB, plotW, plotH, t0, t1, tSpan, xOf, yOf, W, H };
   }
@@ -955,6 +1042,19 @@ function makeFlowChart(cfg){
     state.hover = best; draw();
     const p = state.view[best];
     const tt = document.getElementById('tip-' + cfg.id);
+    if (p[1] === null){
+      const iso = new Date(p[0]).toISOString().slice(0,10);
+      const why = GAP_REASON[iso] === 'brak_zrodla'
+        ? 'tego dnia żaden przebieg nie zobaczył jednego ze źródeł'
+        : 'tego dnia skaner nie domknął wszystkich przebiegów';
+      tt.innerHTML = `<div class="tt-date">${fmtDateLong(p[0])}</div>` +
+        `<div class="tt-val" style="color:var(--text-muted)">brak pomiaru</div>` +
+        `<div class="tt-ma">${why}</div>`;
+      tt.style.left = g.xOf(p[0]) + 'px';
+      tt.style.top  = (g.padT + g.plotH/2) + 'px';
+      tt.style.opacity = '1';
+      return;
+    }
     tt.innerHTML = `<div class="tt-date">${fmtDateLong(p[0])}</div>` +
       `<div class="tt-val">${p[1]} ${plForm(p[1])}</div>` +
       `<div class="tt-ma">śr. 7 dni: ${p[2].toFixed(1).replace('.',',')}</div>`;
