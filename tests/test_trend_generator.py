@@ -285,3 +285,41 @@ def test_measured_survives_incomplete_day():
     payload = build_trend(db, today=date(2026, 6, 4), scan_history=history)
     assert '2026-06-04' not in _profile_map(payload, 'wszystkie')   # niepełny → bez rekonstrukcji
     assert _measured_map(payload)['2026-06-04'] == 42               # ale pomiar zostaje
+
+
+# ── Maska pokrycia w payloadzie (FIX 2026-09-10, dokończenie bug #2 z #14) ──
+# Wykresy przepływu zachowują surowe wartości (szereg sparse jest zerowo-wypełniany
+# przez front, więc usunięcie dnia dałoby fałszywe „0"), a maska jedzie osobno.
+
+def test_coverage_published_for_front():
+    db = {'offers': [_offer('olx:1', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00',
+                            active=False, deactivated_at='2026-06-05T10:00:00+02:00')]}
+    history = _history((date(2026, 6, 1), SCANS_PER_DAY), (date(2026, 6, 2), SCANS_PER_DAY),
+                       (date(2026, 6, 3), 1),              # niepełny
+                       (date(2026, 6, 4), SCANS_PER_DAY))
+    payload = build_trend(db, today=date(2026, 6, 5), scan_history=history)
+    cov = payload['coverage']
+    assert cov['scans_per_day'] == SCANS_PER_DAY
+    assert cov['last_complete'] == '2026-06-04'
+    # 03.06 miał 1 skan z 2, a 05.06 (dziś) żadnego — oba niepełne
+    assert cov['incomplete'] == ['2026-06-03', '2026-06-05']
+    # dzień niepełny wypada z Indeksu…
+    assert '2026-06-03' not in _profile_map(payload, 'wszystkie')
+
+
+def test_flow_series_keep_values_on_incomplete_days():
+    # …ale w przepływie wartość ZOSTAJE: front dostaje ją razem z maską i rysuje
+    # lukę sam. Usunięcie dnia z szeregu sparse czytałoby się jako zero.
+    db = {'offers': [_offer('olx:1', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00',
+                            active=False, deactivated_at='2026-06-03T10:00:00+02:00')]}
+    history = _history((date(2026, 6, 1), SCANS_PER_DAY), (date(2026, 6, 2), SCANS_PER_DAY),
+                       (date(2026, 6, 3), 1), (date(2026, 6, 4), SCANS_PER_DAY))
+    payload = build_trend(db, today=date(2026, 6, 4), scan_history=history)
+    assert '2026-06-03' in payload['coverage']['incomplete']
+    assert _sparse_map(payload, 'outflow', 'wszystkie') == {'2026-06-03': 1}
+
+
+def test_coverage_present_without_scan_history():
+    payload = build_trend({'offers': []}, today=date(2026, 6, 1))
+    assert payload['coverage'] == {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
+                                   'incomplete': []}

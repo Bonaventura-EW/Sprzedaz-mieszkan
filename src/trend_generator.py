@@ -22,6 +22,14 @@ manifest 2026-09-04-trend-charts-audit → issue #14):
   i udawała „rekord odpływu" (bug #2). Nasz wariant CANVAS nie rysuje przerwy
   (jak ApexCharts u brata) — po prostu nie emitujemy punktu, więc linia przechodzi
   nad brakującym dniem zamiast nurkować.
+- FIX 2026-09-10: ta sama maska obowiązuje na wykresach PRZEPŁYWU (odpływ, napływ,
+  reaktywacje, wyróżnienia) — tam jednak NIE wolno usuwać dnia z serii, bo szeregi
+  sparse są zerowo-wypełniane przez front (`expandDaily`), więc brak dnia czytałby
+  się jako „0 odpływu", czyli ten sam fałszywy dołek, tylko głębszy. Dlatego
+  wartości zostają w API (surowy pomiar), a maskę podajemy OSOBNO w `coverage`
+  i `trend.html` rysuje te dni jako lukę: bez punktu, bez wkładu do średniej 7 dni
+  i bez prawa do rekordu. Skok NASTĘPNEGO dnia (nadrobione potwierdzenia) to już
+  bug #3/#4 — opóźnienie `DEACTIVATE_GRACE_DAYS`, świadomie nieruszane.
 Odpływ liczony z opóźnieniem `DEACTIVATE_GRACE_DAYS` (bug #3/#4 manifestu) NIE jest
 tu ruszany — naprawa wymaga zmiany definicji końca odcinka życia (last_seen zamiast
 deactivated_at), co pokrywa się z otwartym issue #11; celowo nie mieszamy.
@@ -38,7 +46,12 @@ Format wyjścia (kontrakt dla docs/trend.html):
   "inflow":   { key: [...] },  # sparse: napływ dnia = nowe + reaktywacje
   "reactivations": { key: [...] },  # sparse: reaktywacje danego dnia
   "promoted": { key: [...] },  # sparse: liczba płatnie wyróżnionych ofert (OLX) danego dnia
-  "measured": { "wszystkie": [...] }  # sparse: ZMIERZONA dzienna liczba aktywnych po dedup
+  "measured": { "wszystkie": [...] },  # sparse: ZMIERZONA dzienna liczba aktywnych po dedup
+  "coverage": {                        # maska pokrycia doby przebiegami skanera
+    "scans_per_day": int,
+    "last_complete": "YYYY-MM-DD" | null,
+    "incomplete": ["YYYY-MM-DD", ...]  # dni, w których zakończyło się mniej skanów
+  }
 }
 
 Zmierzona seria „measured" (propagacja z SONAR-POKOJOWY, issue #11):
@@ -251,7 +264,9 @@ def build_trend(db, today=None, scan_history=None):
     if global_start is None:
         return {'generated': datetime.now(tz).isoformat(), 'labels': {},
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
-                'promoted': {}, 'measured': {}}
+                'promoted': {}, 'measured': {},
+                'coverage': {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
+                             'incomplete': []}}
 
     # Oś czasu: dzień po dniu od pierwszej archiwizacji do ostatniego PEŁNEGO
     # dnia (trwająca doba / dzień bez skanu nie wchodzi — bug #1).
@@ -266,7 +281,9 @@ def build_trend(db, today=None, scan_history=None):
     if not days:
         return {'generated': datetime.now(tz).isoformat(), 'labels': {},
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
-                'promoted': {}, 'measured': {}}
+                'promoted': {}, 'measured': {},
+                'coverage': {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
+                             'incomplete': []}}
 
     labels = {}
     profiles = {}
@@ -345,6 +362,14 @@ def build_trend(db, today=None, scan_history=None):
         'reactivations': reactivations,
         'promoted': promoted,
         'measured': measured,
+        # FIX 2026-09-10: maska pokrycia doby jawnie w payloadzie — wykresy
+        # przepływu zachowują surowe wartości, ale front rysuje te dni jako lukę
+        # (bez punktu, bez wkładu do średniej, bez prawa do rekordu).
+        'coverage': {
+            'scans_per_day': SCANS_PER_DAY,
+            'last_complete': end_day.isoformat(),
+            'incomplete': [d.isoformat() for d in sorted(incomplete)],
+        },
     }
 
 
