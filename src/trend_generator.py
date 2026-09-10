@@ -7,9 +7,24 @@ naturalnych dla tego sonaru.
 
 Rekonstrukcja z pól oferty:
 - obecna danego dnia D, gdy first_seen.date() <= D <= end.date(),
-  gdzie end = deactivated_at (jeśli nieaktywna) albo dziś (jeśli aktywna),
-  albo last_seen (nieaktywna bez daty dezaktywacji),
+  gdzie end = deactivated_at (jeśli nieaktywna) albo ostatni PEŁNY dzień
+  (jeśli aktywna), albo last_seen (nieaktywna bez daty dezaktywacji),
 - odpływ danego dnia D = liczba ofert z deactivated_at.date() == D.
+
+Maska pokrycia skanami (FIX 2026-09-10, propagacja z SONAR-MIESZKANIOWY,
+manifest 2026-09-04-trend-charts-audit → issue #14):
+- seria kończy się na ostatnim PEŁNYM dniu (wszystkie zaplanowane przebiegi
+  `scanner.yml` zakończone), a nie na „dziś" — inaczej trwająca doba (albo dzień
+  bez skanu) rysowała się jak zamknięta i dawała fałszywy zjazd na prawej
+  krawędzi wykresu (bug #1);
+- dni z niepełną liczbą skanów (`scan_history.json`) są POMIJANE w serii Indeksu —
+  skan widzi tylko wycinek listingu, więc rekonstrukcja takiego dnia jest zaniżona
+  i udawała „rekord odpływu" (bug #2). Nasz wariant CANVAS nie rysuje przerwy
+  (jak ApexCharts u brata) — po prostu nie emitujemy punktu, więc linia przechodzi
+  nad brakującym dniem zamiast nurkować.
+Odpływ liczony z opóźnieniem `DEACTIVATE_GRACE_DAYS` (bug #3/#4 manifestu) NIE jest
+tu ruszany — naprawa wymaga zmiany definicji końca odcinka życia (last_seen zamiast
+deactivated_at), co pokrywa się z otwartym issue #11; celowo nie mieszamy.
 
 Duplikaty OLX↔Otodom (`duplicate_of`) są pomijane, by nie liczyć podwójnie
 (jak mapa i api_generator chowają duplikaty).
@@ -39,6 +54,10 @@ Zmierzona seria „measured" (propagacja z SONAR-POKOJOWY, issue #11):
   DEDUPLIKOWANA (jak `profiles['wszystkie']`) i zaczyna się tam, gdzie zaczyna
   się pomiar (od wdrożenia `active_dedup`) — dedupu nie da się odtworzyć wstecz,
   bo zależy od pełnego korpusu z danej chwili.
+- Maska pokrycia doby (wyżej) tej serii NIE dotyczy: pomiar jest MIGAWKĄ stanu
+  bazy, nie agregatem doby, więc dzień odsiany z Indeksu jako niepełny może mieć
+  tu poprawny punkt. Oba szeregi czyta jedno wczytanie dziennika
+  (`load_scan_history`), przekazywane do `build_trend(..., scan_history=)`.
 
 Płatne wyróżnienia OLX (propagacja z SONAR-POKOJOWY):
 - wyróżnienie danego dnia D = liczba ofert z datą == D w `promoted_dates`
@@ -64,6 +83,11 @@ import paths
 
 API_DIR = Path(paths.DOCS_DIR) / "api"
 
+# Ile skanów planujemy na dobę. scanner.yml: cron '17 6,16 * * *' (UTC) =
+# 8:17 i 18:17 czasu PL. Dzień, w którym zakończyło się MNIEJ przebiegów,
+# widział tylko wycinek listingu — rekonstrukcja jest z niego zaniżona.
+SCANS_PER_DAY = 2
+
 # Definicje kategorii: (klucz, etykieta, is_category, predykat na ofercie)
 CATEGORIES = [
     ('wszystkie', 'Wszystkie oferty', True, lambda o: True),
@@ -87,14 +111,88 @@ def _parse_date(value):
         return None
 
 
+def load_scan_history():
+    """Lista skanów z data/scan_history.json (albo [] przy braku/uszkodzeniu pliku).
+
+    JEDNO wczytanie dziennika dla obu rzeczy, które z niego czerpią: maski
+    pokrycia doby (`_scan_counts` → `_scan_coverage`, issue #14) i zmierzonej
+    serii aktywnych (`_measured_daily`, issue #11). Awaria pliku nie może
+    wywalić generatora — trend działa dalej, tylko bez maski i bez pomiaru.
+    """
+    try:
+        with open(paths.SCAN_HISTORY_JSON, 'r', encoding='utf-8') as f:
+            history = json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return []
+    if isinstance(history, dict):
+        history = history.get('scans', [])
+    return history or []
+
+
+def _scan_counts(scan_history):
+    """{date: liczba ZAKOŃCZONYCH skanów danego dnia} z dziennika skanów.
+
+    Źródło prawdy o pokryciu doby przebiegami — na nim stoi maska dni niepełnych
+    (patrz `_scan_coverage`). Historia trzyma ostatnie ~200 skanów; o dniach
+    spoza tego okna nie wie nic i tam zakładamy pełne pokrycie.
+    """
+    counts = {}
+    for scan in scan_history or []:
+        if scan.get('status') not in ('completed', 'warning'):
+            continue
+        d = _parse_date(scan.get('timestamp'))
+        if d:
+            counts[d] = counts.get(d, 0) + 1
+    return counts
+
+
+def _scan_coverage(scan_counts, today):
+    """(dni_niepełne, ostatni_pełny_dzień) wg dziennika skanów.
+
+    Dzień jest PEŁNY, gdy zakończyły się w nim wszystkie zaplanowane przebiegi
+    (`SCANS_PER_DAY`). Niepełny — zero skanów (awaria Actions / blokada) albo
+    jeden z dwóch (doba jeszcze trwa) — pokazuje wycinek listingu i wypada z
+    serii Indeksu, zamiast udawać załamanie rynku.
+
+    Pierwszy dzień dziennika pomijamy (historia bywa ucięta w połowie doby),
+    a dni SPRZED dziennika zakładamy pełne — inaczej cała stara historia
+    wyparowałaby jako „niepełna". Gdy w oknie nie ma ani jednego pełnego dnia
+    (np. dziennik akurat pusty), zostawiamy zakres do „dziś" — awaria dziennika
+    nie może skasować całego wykresu.
+    """
+    if not scan_counts:
+        return set(), today
+    logged = sorted(scan_counts)
+    coverage_start = logged[0] + timedelta(days=1)
+    incomplete = set()
+    d = coverage_start
+    while d <= today:
+        if scan_counts.get(d, 0) < SCANS_PER_DAY:
+            incomplete.add(d)
+        d += timedelta(days=1)
+    last_complete = None
+    d = today
+    while d >= coverage_start:
+        if d not in incomplete:
+            last_complete = d
+            break
+        d -= timedelta(days=1)
+    return incomplete, last_complete or today
+
+
 def _measured_daily(scan_history):
-    """Zmierzona dzienna liczba aktywnych ofert po dedup z data/scan_history.json.
+    """Zmierzona dzienna liczba aktywnych ofert po dedup z dziennika skanów.
 
     Wartość dnia = maksimum z odczytów `active_dedup` tego dnia (przebieg
     częściowy nie obniża historii); dzień bez pomiaru zostaje LUKĄ (nie zero).
     Zwraca sparse listę [{'date', 'count'}] posortowaną rosnąco. Skany sprzed
     wdrożenia `active_dedup` nie mają tego pola i są pomijane — seria zaczyna się
-    tam, gdzie zaczyna się pomiar."""
+    tam, gdzie zaczyna się pomiar.
+
+    Uwaga: pomiar to MIGAWKA stanu bazy, więc — inaczej niż rekonstrukcja — nie
+    psuje go niepełna doba. Dlatego maska pokrycia (`_scan_coverage`) tej serii
+    NIE dotyczy; dzień odsiany z Indeksu może mieć tu poprawny punkt.
+    """
     if not scan_history:
         return []
     by_day = {}
@@ -113,6 +211,12 @@ def build_trend(db, today=None, scan_history=None):
     tz = pytz.timezone('Europe/Warsaw')
     today = today or datetime.now(tz).date()
 
+    # FIX 2026-09-10: maska pokrycia skanami (propagacja z SONAR-MIESZKANIOWY,
+    # issue #14). Seria kończy się na ostatnim PEŁNYM dniu, a dni z niepełną
+    # liczbą przebiegów wypadają z Indeksu. Bez `scan_history` (testy jednostkowe)
+    # zachowujemy stare zachowanie: pełne pokrycie, seria do „dziś".
+    incomplete, end_day = _scan_coverage(_scan_counts(scan_history), today)
+
     # Pomijamy duplikaty (kanoniczna zostaje) — jak mapa/api chowają duplikaty.
     offers = [o for o in db.get('offers', []) if not o.get('duplicate_of')]
 
@@ -125,7 +229,9 @@ def build_trend(db, today=None, scan_history=None):
             continue
         deact = _parse_date(o.get('deactivated_at'))
         if o.get('active'):
-            end = today
+            # aktywne ciągną się tylko do ostatniego PEŁNEGO dnia — dalej brak
+            # zamkniętej doby, więc dzień bieżący nie jest zaniżany (bug #1)
+            end = end_day
             deact = None
         elif deact:
             end = deact
@@ -147,14 +253,20 @@ def build_trend(db, today=None, scan_history=None):
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
                 'promoted': {}, 'measured': {}}
 
-    # Oś czasu: dzień po dniu od pierwszej archiwizacji do dziś.
+    # Oś czasu: dzień po dniu od pierwszej archiwizacji do ostatniego PEŁNEGO
+    # dnia (trwająca doba / dzień bez skanu nie wchodzi — bug #1).
     days = []
     d = global_start
-    while d <= today:
+    while d <= end_day:
         days.append(d)
         d += timedelta(days=1)
     day_index = {d: i for i, d in enumerate(days)}
     n_days = len(days)
+
+    if not days:
+        return {'generated': datetime.now(tz).isoformat(), 'labels': {},
+                'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
+                'promoted': {}, 'measured': {}}
 
     labels = {}
     profiles = {}
@@ -175,7 +287,12 @@ def build_trend(db, today=None, scan_history=None):
         for start, end, deact, react_dates, o in spans:
             if not pred(o):
                 continue
-            si = day_index.get(start, 0)
+            si = day_index.get(start)
+            if si is None:
+                # oferta pojawiła się dopiero w dniach uciętych (po end_day) —
+                # nie liczymy jej, dopóki nie trafi na dzień z pełnym pokryciem;
+                # jej deact/reakt./promo też są poza osią, więc pomijamy całość
+                continue
             ei = day_index.get(end, n_days - 1)
             for i in range(si, ei + 1):
                 active_daily[i] += 1
@@ -202,8 +319,11 @@ def build_trend(db, today=None, scan_history=None):
             inflow_map[dd] = inflow_map.get(dd, 0) + c
 
         labels[key] = {'label': label, 'is_category': is_category}
+        # Dni o niepełnym pokryciu skanami POMIJAMY (bug #2): rekonstrukcja z nich
+        # jest zaniżona. Wariant CANVAS interpoluje linię nad brakującym dniem
+        # (brat na ApexCharts rysuje w tym miejscu jawną przerwę przez `null`).
         profiles[key] = [{'date': days[i].isoformat(), 'count': active_daily[i]}
-                         for i in range(n_days)]
+                         for i in range(n_days) if days[i] not in incomplete]
         outflow[key] = _sparse(outflow_map)
         inflow[key] = _sparse(inflow_map)
         reactivations[key] = _sparse(react_map)
@@ -231,12 +351,7 @@ def build_trend(db, today=None, scan_history=None):
 def generate():
     with open(paths.OFFERS_JSON, 'r', encoding='utf-8') as f:
         db = json.load(f)
-    scan_history = None
-    sh_path = Path(paths.SCAN_HISTORY_JSON)
-    if sh_path.exists():
-        with open(sh_path, 'r', encoding='utf-8') as f:
-            scan_history = (json.load(f) or {}).get('scans')
-    payload = build_trend(db, scan_history=scan_history)
+    payload = build_trend(db, scan_history=load_scan_history())
     API_DIR.mkdir(parents=True, exist_ok=True)
     with open(API_DIR / 'trend.json', 'w', encoding='utf-8') as f:
         json.dump(payload, f, ensure_ascii=False, separators=(',', ':'))

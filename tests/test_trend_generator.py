@@ -6,7 +6,8 @@ danego dnia), pomijanie duplikatów OLX↔Otodom oraz predykaty kategorii.
 
 from datetime import date
 
-from trend_generator import build_trend
+import trend_generator as tg
+from trend_generator import SCANS_PER_DAY, _scan_coverage, build_trend
 
 
 def _offer(id_, source, market, rooms, first_seen, active=True,
@@ -138,6 +139,70 @@ def test_reactivated_at_scalar_fallback():
     assert react == {'2026-06-03': 1}
 
 
+# ── Maska pokrycia skanami (FIX 2026-09-10, propagacja issue #14) ──────────
+
+def _counts(*days_and_n):
+    """{date: liczba skanów} z par (date, n) — wejście dla `_scan_coverage`."""
+    return {d: n for d, n in days_and_n}
+
+
+def _history(*days_and_n):
+    """Dziennik skanów: n ZAKOŃCZONYCH przebiegów w każdym z podanych dni."""
+    return [{'timestamp': f'{d.isoformat()}T{8 + 4 * i:02d}:00:00+02:00',
+             'status': 'completed', 'active': 100}
+            for d, n in days_and_n for i in range(n)]
+
+
+def test_scan_coverage_marks_incomplete_and_last_complete():
+    # pierwszy dzień dziennika pomijamy (bywa ucięty), dni sprzed niego = pełne
+    counts = _counts((date(2026, 6, 1), 2), (date(2026, 6, 2), 2),
+                     (date(2026, 6, 3), 1), (date(2026, 6, 4), 2))
+    incomplete, last_complete = _scan_coverage(counts, today=date(2026, 6, 5))
+    # 03 miał 1 skan z 2 → niepełny; 05 nie ma w dzienniku (0 skanów) → niepełny
+    assert incomplete == {date(2026, 6, 3), date(2026, 6, 5)}
+    # ostatni pełny dzień to 04 (05 niepełny)
+    assert last_complete == date(2026, 6, 4)
+
+
+def test_scan_coverage_empty_log_assumes_full():
+    # brak dziennika → nie maskujemy, seria idzie do „dziś"
+    assert _scan_coverage({}, today=date(2026, 6, 5)) == (set(), date(2026, 6, 5))
+
+
+def test_incomplete_day_omitted_and_series_ends_on_last_complete():
+    # oferta żyje przez cały czerwiec; 05 ma 1 skan (niepełny), 06 = dziś bez skanu
+    db = {'offers': [
+        _offer('olx:1', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00', active=True),
+    ]}
+    scan_history = _history((date(2026, 6, 1), SCANS_PER_DAY),
+                          (date(2026, 6, 2), SCANS_PER_DAY),
+                          (date(2026, 6, 3), SCANS_PER_DAY),
+                          (date(2026, 6, 4), SCANS_PER_DAY),
+                          (date(2026, 6, 5), 1))   # niepełny
+    payload = build_trend(db, today=date(2026, 6, 6), scan_history=scan_history)
+    m = _profile_map(payload, 'wszystkie')
+    # 05 (niepełny) i 06 (dziś, brak skanu) wypadają; seria kończy się na 04
+    assert '2026-06-05' not in m
+    assert '2026-06-06' not in m
+    assert max(m) == '2026-06-04'
+    assert m['2026-06-04'] == 1
+
+
+def test_days_before_scan_log_assumed_complete():
+    # oferta z maja, dziennik skanów rusza dopiero w czerwcu — stara historia
+    # nie może zniknąć jako „niepełna"
+    db = {'offers': [
+        _offer('olx:1', 'olx', 'wtorny', 2, '2026-05-20T10:00:00+02:00', active=True),
+    ]}
+    scan_history = _history((date(2026, 6, 1), SCANS_PER_DAY),
+                          (date(2026, 6, 2), SCANS_PER_DAY))
+    payload = build_trend(db, today=date(2026, 6, 3), scan_history=scan_history)
+    m = _profile_map(payload, 'wszystkie')
+    # 20.05 (sprzed dziennika) obecny; 03.06 (dziś, brak skanu) ucięty
+    assert '2026-05-20' in m
+    assert '2026-06-03' not in m
+    assert max(m) == '2026-06-02'
+
 # ── Seria „measured" (propagacja z SONAR-POKOJOWY, issue #11) ──────────────
 # Zmierzony (nie rekonstruowany) dzienny stan bazy po dedup, z data/scan_history.json.
 
@@ -197,3 +262,26 @@ def test_reconstruction_drift_detector():
     healthy = {'2026-06-01': 101, '2026-06-02': 99, '2026-06-03': 102,
                '2026-06-04': 98, '2026-06-05': 100}
     assert _monotonic_drift_ratio(healthy, measured) < 1.0
+
+
+def test_scan_counts_only_completed_runs():
+    # nieudany skan nie zalicza się do pokrycia doby (dzień zostaje niepełny)
+    history = [{'timestamp': '2026-06-01T08:00:00+02:00', 'status': 'completed'},
+               {'timestamp': '2026-06-01T18:00:00+02:00', 'status': 'failed'},
+               {'timestamp': '2026-06-02T08:00:00+02:00', 'status': 'completed'},
+               {'timestamp': '2026-06-02T18:00:00+02:00', 'status': 'warning'}]
+    assert tg._scan_counts(history) == {date(2026, 6, 1): 1, date(2026, 6, 2): 2}
+    assert tg._scan_counts(None) == {}
+
+
+def test_measured_survives_incomplete_day():
+    # Styk dwóch zmian (#14 + #11): dzień niepełny wypada z REKONSTRUKCJI, ale
+    # pomiar jest migawką stanu bazy, więc jego punkt zostaje.
+    db = {'offers': [_offer('olx:1', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00')]}
+    history = _history((date(2026, 6, 1), SCANS_PER_DAY), (date(2026, 6, 2), SCANS_PER_DAY),
+                       (date(2026, 6, 3), SCANS_PER_DAY), (date(2026, 6, 4), 1))
+    for scan in history:
+        scan['active_dedup'] = 42
+    payload = build_trend(db, today=date(2026, 6, 4), scan_history=history)
+    assert '2026-06-04' not in _profile_map(payload, 'wszystkie')   # niepełny → bez rekonstrukcji
+    assert _measured_map(payload)['2026-06-04'] == 42               # ale pomiar zostaje

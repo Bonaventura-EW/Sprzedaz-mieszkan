@@ -507,6 +507,11 @@ function render(){
   } else { pts = all; }
   viewPts = pts;
   // Seria „zmierzone" (tylko „wszystkie") w tym samym oknie co linia główna.
+  // Przycięcie do okna jest zamierzone: skala X liczy się z linii głównej, a ta
+  // kończy się na ostatniej PEŁNEJ dobie (maska pokrycia skanami). Dzisiejszy
+  // punkt pomiaru dołączy więc do wykresu, gdy doba się domknie — nic nie ginie.
+  // Dni odsiane ze ŚRODKA osi jako niepełne mają tu punkt normalnie (to tylko
+  // filtr min/max okna) — i to dobrze, bo pomiar takiej doby jest poprawny.
   const mAll = MEASURED[currentProfile] || [];
   const winMin = pts[0][0], winMax = pts[pts.length-1][0];
   viewMeasured = mAll.filter(p => p[0] >= winMin && p[0] <= winMax);

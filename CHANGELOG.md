@@ -2,6 +2,32 @@
 
 ## [Niewydane]
 
+### Naprawione — wykres Indeksu (Trend): trwająca doba i dni z niepełnym skanem
+Propagacja z SONAR-MIESZKANIOWY (manifest `2026-09-04-trend-charts-audit`,
+issue #14). Wykres liczby aktywnych ofert na `trend.html` rysował dzień bieżący
+jak zamknięty, choć skan poranny to dopiero połowa doby (`scanner.yml` chodzi
+2×/dzień, 8:17 i 18:17 PL) — dawało to fałszywy zjazd na prawej krawędzi.
+Zmierzone na naszej bazie: ostatni punkt szedł 2388 (09.09, dzień pełny) → 2361
+(10.09, dzień bez skanu), a nagłówek „1D" pokazywał sztuczny spadek. Dodatkowo
+dni z jednym skanem z dwóch (u nas 06.08 i 28.08) w ogóle nie były maskowane —
+rekonstrukcja z nich jest zaniżona.
+- `src/trend_generator.py` — `build_trend` czyta `data/scan_history.json`
+  (`load_scan_counts`) i przez `_scan_coverage` ustala ostatni PEŁNY dzień oraz
+  zbiór dni niepełnych. Seria Indeksu kończy się na ostatnim pełnym dniu (bug #1),
+  a dni o niepełnym pokryciu wypadają z serii (bug #2). Dni sprzed dziennika
+  skanów zakładamy pełne (stara historia nie znika), pierwszy dzień dziennika
+  pomijamy (bywa ucięty). Nasz wariant CANVAS interpoluje linię nad brakującym
+  dniem — brat na ApexCharts rysuje jawną przerwę (`null`), efekt ten sam:
+  koniec fałszywego zjazdu.
+- Bez `scan_counts` (testy jednostkowe) zachowujemy stare zachowanie: pełne
+  pokrycie, seria do „dziś".
+- `tests/test_trend_generator.py` — testy maski pokrycia (`_scan_coverage`),
+  pomijania dni niepełnych i zakończenia serii na ostatnim pełnym dniu.
+- ŚWIADOMIE NIE ruszamy odpływu liczonego z opóźnieniem `DEACTIVATE_GRACE_DAYS`
+  (bug #3/#4 manifestu): naprawa wymaga zmiany definicji końca odcinka życia
+  (`last_seen` zamiast `deactivated_at`), co pokrywa się z otwartym issue #11 —
+  nie mieszamy dwóch przebudów rekonstrukcji naraz.
+
 ### Dodane — zmierzona linia „aktywnych" na wykresie trendu (propagacja, issue #11)
 Wykres trendu (`docs/trend.html`) liczył dzienną liczbę aktywnych ofert
 **rekonstrukcją wstecz** z pól `first_seen`/`last_seen`/`deactivated_at`. Taka
@@ -28,6 +54,13 @@ z historii gita, bo zmierzony sygnał już commitujemy w `data/scan_history.json
   przerywana linia „Zmierzone (po dedup)” + wpis w legendzie i wartość w tooltipie.
 - `tests/test_trend_generator.py` — testy serii `measured` (max/dzień, luki,
   pomijanie skanów bez pola) oraz detektor monotonicznego dryfu z manifestu brata.
+
+Obie zmiany dotyczą tej samej funkcji, więc `trend_generator` czyta dziennik
+skanów RAZ (`load_scan_history`) i przekazuje go jednym parametrem
+`build_trend(..., scan_history=)`; maska pokrycia liczy się z niego przez
+`_scan_counts`. Maska nie tyka serii `measured` — pomiar jest migawką stanu bazy,
+nie agregatem doby, więc dzień odsiany z Indeksu jako niepełny może mieć poprawny
+punkt pomiaru (test `test_measured_survives_incomplete_day`).
 
 ### Naprawione — 117 poprawnych pinezek odrzucanych jako „zła dzielnica"
 Walidacja pinezek `street` wyrzucała z mapy 248 ofert na skan (`zla_dzielnica`
