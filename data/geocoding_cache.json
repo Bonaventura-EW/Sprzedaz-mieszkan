@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1788463275.289159
+  "ts": 1789126249.522153
  },
  "grażyny": {
   "result": {
@@ -3521,7 +3521,7 @@
  },
  "pogodna 50e": {
   "result": null,
-  "ts": 1788463276.65983
+  "ts": 1789126251.0370948
  },
  "sympatyczna": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1788463283.5018477
+  "ts": 1789126258.440526
  },
  "cyruliczej": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1788463279.3974984
+  "ts": 1789126253.8809953
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1788463280.7718823
+  "ts": 1789126255.3760858
  },
  "organowej": {
   "result": {
@@ -6653,7 +6653,7 @@
  },
  "józefa śliwińskiego 3a": {
   "result": null,
-  "ts": 1782143306.5955756
+  "ts": 1789126268.786288
  },
  "kielecka": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1788463277.92723
+  "ts": 1789126252.3928444
  },
  "kredowa": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1788463282.2035446
+  "ts": 1789126256.8657916
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1788463284.9964359
+  "ts": 1789126260.0396547
  },
  "różanej": {
   "result": {
@@ -13409,7 +13409,7 @@
  },
  "swidnik|gen. j. hallera": {
   "result": null,
-  "ts": 1788463290.5647972
+  "ts": 1789126266.099107
  },
  "swidnik|cisowa": {
   "result": {
@@ -13609,7 +13609,7 @@
  },
  "swidnik|gen. s. roweckiego": {
   "result": null,
-  "ts": 1788463287.7810333
+  "ts": 1789126262.9239647
  },
  "swidnik|spadochroniarzy": {
   "result": {
@@ -13661,7 +13661,7 @@
  },
  "swidnik|głowackiego 9": {
   "result": null,
-  "ts": 1788463289.0779133
+  "ts": 1789126264.4953372
  },
  "swidnik|wincentego witosa": {
   "result": {
@@ -13797,7 +13797,7 @@
  },
  "swidnik|krótka": {
   "result": null,
-  "ts": 1788463293.1607916
+  "ts": 1789126267.4007778
  },
  "swidnik|niepodległości 18": {
   "result": null,
@@ -15048,5 +15048,29 @@
    "city": "Lublin"
   },
   "ts": 1789067481.816377
+ },
+ "dolna": {
+  "result": {
+   "lat": 51.2517388,
+   "lon": 22.5597018,
+   "name": "Dolna 3 Maja"
+  },
+  "ts": 1789126261.558216
+ },
+ "rva:51.2489,22.5989": {
+  "result": {
+   "road": "Montażowa",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1789126270.1379128
+ },
+ "rva:51.2757,22.5800": {
+  "result": {
+   "road": "Cynamonowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1789126271.4557264
  }
 }
