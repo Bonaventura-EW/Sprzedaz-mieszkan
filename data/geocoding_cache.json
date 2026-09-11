@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1788548567.5970302
+  "ts": 1789153988.4787023
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -14133,7 +14133,7 @@
  },
  "koncertowa 18": {
   "result": null,
-  "ts": 1788548570.1829407
+  "ts": 1789153991.8777792
  },
  "rva:51.2816,22.5850": {
   "result": {
@@ -15072,5 +15072,37 @@
    "city": "Lublin"
   },
   "ts": 1789126271.4557264
+ },
+ "aleje racławickie 38": {
+  "result": null,
+  "ts": 1789153990.6471782
+ },
+ "montażowej": {
+  "result": {
+   "lat": 51.2489872,
+   "lon": 22.59803,
+   "name": "Montażowa"
+  },
+  "ts": 1789153995.147867
+ },
+ "nadbystrzycka 85": {
+  "result": null,
+  "ts": 1789153996.4081554
+ },
+ "łęczyńskiej": {
+  "result": {
+   "lat": 51.2393594,
+   "lon": 22.5846415,
+   "name": "Boczna Łęczyńskiej"
+  },
+  "ts": 1789153997.6540015
+ },
+ "rva:51.2394,22.5846": {
+  "result": {
+   "road": "Żytnia",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1789153999.4400787
  }
 }
