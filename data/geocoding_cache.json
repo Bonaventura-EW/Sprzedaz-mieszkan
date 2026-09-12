@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1788632615.855919
+  "ts": 1789237761.5918288
  },
  "pozytywistów": {
   "result": {
@@ -10029,7 +10029,7 @@
  },
  "jana sawy 9": {
   "result": null,
-  "ts": 1788632617.1314034
+  "ts": 1789237763.0410066
  },
  "iwaszkiewicza": {
   "result": {
@@ -15104,5 +15104,13 @@
    "city": "Lublin"
   },
   "ts": 1789153999.4400787
+ },
+ "rva:51.2472,22.5073": {
+  "result": {
+   "road": "Wojciechowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1789237764.5364075
  }
 }
