@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1788719073.561837
+  "ts": 1789325487.560512
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -10353,7 +10353,7 @@
  },
  "wareńczyka": {
   "result": null,
-  "ts": 1788719077.7515566
+  "ts": 1789325489.350923
  },
  "jezuickiej": {
   "result": {
@@ -11181,7 +11181,7 @@
  },
  "osiedle b. prusa": {
   "result": null,
-  "ts": 1788719079.1916666
+  "ts": 1789325490.7936347
  },
  "rva:51.2525,22.5546": {
   "result": {
@@ -15112,5 +15112,13 @@
    "city": "Lublin"
   },
   "ts": 1789237764.5364075
+ },
+ "rva:51.2609,22.5657": {
+  "result": {
+   "road": "Doktora Witolda Chodźki",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1789325492.1436143
  }
 }
