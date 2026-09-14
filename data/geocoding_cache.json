@@ -15172,5 +15172,41 @@
    "city": "Lublin"
   },
   "ts": 1789390752.0509918
+ },
+ "pana tadeusza 4": {
+  "result": null,
+  "ts": 1789417324.095501
+ },
+ "swidnik|kalinowej": {
+  "result": {
+   "lat": 51.2142484,
+   "lon": 22.7052487,
+   "name": "Kalinowa"
+  },
+  "ts": 1789417326.930802
+ },
+ "jana chęcińskiego": {
+  "result": {
+   "lat": 51.2583402,
+   "lon": 22.5434091,
+   "name": "Jana Chęcińskiego"
+  },
+  "ts": 1789417328.1945858
+ },
+ "rva:51.2566,22.4934": {
+  "result": {
+   "road": "Lędzian",
+   "district": "Szerokie",
+   "city": "Lublin"
+  },
+  "ts": 1789417329.5088198
+ },
+ "rva:51.2535,22.5869": {
+  "result": {
+   "road": "Wojciecha Kiwerskiego",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1789417330.8324466
  }
 }
