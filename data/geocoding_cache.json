@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1788785022.2281475
+  "ts": 1789390740.7409925
  },
  "mełgiewskiej": {
   "result": {
@@ -15120,5 +15120,57 @@
    "city": "Lublin"
   },
   "ts": 1789325492.1436143
+ },
+ "kowalska": {
+  "result": {
+   "lat": 51.249815,
+   "lon": 22.5677811,
+   "name": "Kowalska"
+  },
+  "ts": 1789390742.1705272
+ },
+ "bajkowej": {
+  "result": {
+   "lat": 51.2519561,
+   "lon": 22.5218032,
+   "name": "Bajkowa"
+  },
+  "ts": 1789390744.8956
+ },
+ "szarych szeregów 4": {
+  "result": null,
+  "ts": 1789390746.373357
+ },
+ "rva:51.2132,22.5833": {
+  "result": {
+   "road": "Władysława Kunickiego",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1789390747.8868487
+ },
+ "rva:51.2252,22.5720": {
+  "result": {
+   "road": "Czeska",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1789390749.2503116
+ },
+ "rva:51.2732,22.5487": {
+  "result": {
+   "road": "Króla Rogera",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1789390750.5465825
+ },
+ "rva:51.2026,22.5445": {
+  "result": {
+   "road": "Bernarda Wapowskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1789390752.0509918
  }
 }
