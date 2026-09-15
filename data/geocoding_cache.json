@@ -2673,7 +2673,7 @@
  },
  "dr k. jaczewskiego": {
   "result": null,
-  "ts": 1788211940.456178
+  "ts": 1789501552.998676
  },
  "ogrodowa śródmieście": {
   "result": null,
@@ -13281,7 +13281,7 @@
  },
  "skierki 7": {
   "result": null,
-  "ts": 1788895788.559963
+  "ts": 1789501551.6983564
  },
  "rva:51.2524,22.5702": {
   "result": {
@@ -15224,5 +15224,37 @@
    "city": "Lublin"
   },
   "ts": 1789473173.462952
+ },
+ "swidnik|stanisława kamińskiego": {
+  "result": {
+   "lat": 51.2119359,
+   "lon": 22.6951721,
+   "name": "Stanisława Kamińskiego"
+  },
+  "ts": 1789501554.401661
+ },
+ "sieroca": {
+  "result": {
+   "lat": 51.256416,
+   "lon": 22.5687062,
+   "name": "Sieroca"
+  },
+  "ts": 1789501555.959032
+ },
+ "rva:51.2345,22.5431": {
+  "result": {
+   "road": "Nadbystrzycka",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1789501557.5182643
+ },
+ "rva:51.2204,22.7022": {
+  "result": {
+   "road": "Niepodległości",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1789501558.86006
  }
 }
