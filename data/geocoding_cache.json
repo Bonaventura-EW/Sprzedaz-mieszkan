@@ -15208,5 +15208,21 @@
    "city": "Lublin"
   },
   "ts": 1789417330.8324466
+ },
+ "rva:51.2634,22.5035": {
+  "result": {
+   "road": "Aleja Warszawska",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1789473171.6808832
+ },
+ "rva:51.2713,22.5894": {
+  "result": {
+   "road": "Nagietkowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1789473173.462952
  }
 }
