@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1788953500.966425
+  "ts": 1789559114.3459778
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1788953510.9785814
+  "ts": 1789559124.8741727
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1788953502.36893
+  "ts": 1789559115.8038607
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1788953506.6919358
+  "ts": 1789559120.0507402
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1788953508.1366835
+  "ts": 1789559121.5142605
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1788953509.499234
+  "ts": 1789559122.8018887
  },
  "krasińskiego": {
   "result": {
@@ -9369,7 +9369,7 @@
  },
  "samosnowicza": {
   "result": null,
-  "ts": 1788953512.3993075
+  "ts": 1789559126.293857
  },
  "wrońska 3d": {
   "result": null,
@@ -15256,5 +15256,53 @@
    "city": "Świdnik"
   },
   "ts": 1789501558.86006
+ },
+ "raclawickie": {
+  "result": {
+   "lat": 51.2482685,
+   "lon": 22.5455956,
+   "name": "Aleje Racławickie"
+  },
+  "ts": 1789559127.5599942
+ },
+ "aleje raclawickie": {
+  "result": {
+   "lat": 51.2496661,
+   "lon": 22.5369743,
+   "name": "Aleje Racławickie"
+  },
+  "ts": 1789559129.015625
+ },
+ "rva:51.2217,22.6309": {
+  "result": {
+   "road": "Królowej Jadwigi",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1789559130.5079365
+ },
+ "rva:51.2140,22.5692": {
+  "result": {
+   "road": "Błękitna",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1789559131.9964805
+ },
+ "róży wiatrów": {
+  "result": {
+   "lat": 51.2132995,
+   "lon": 22.5706727,
+   "name": "Róży Wiatrów"
+  },
+  "ts": 1789559133.3913016
+ },
+ "rva:51.2346,22.5380": {
+  "result": {
+   "road": "Tomasza Zana",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1789559134.8825772
  }
 }
