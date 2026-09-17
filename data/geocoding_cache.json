@@ -15364,5 +15364,13 @@
    "city": "Lublin"
   },
   "ts": 1789645811.1973236
+ },
+ "rva:51.2286,22.5144": {
+  "result": {
+   "road": "Rondo Błogosławionego Księdza Emiliana Kowcza",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1789674418.991071
  }
 }
