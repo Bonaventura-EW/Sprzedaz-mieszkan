@@ -15023,7 +15023,7 @@
  },
  "jacka przybylskiego.mieszkanie": {
   "result": null,
-  "ts": 1789039735.493613
+  "ts": 1789645800.6510472
  },
  "rva:51.2123,22.6939": {
   "result": {
@@ -15312,5 +15312,57 @@
    "city": "Lublin"
   },
   "ts": 1789587431.7677717
+ },
+ "rva:51.2326,22.5140": {
+  "result": {
+   "road": "Stokrotki",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1789645802.4039373
+ },
+ "rva:51.2649,22.5643": {
+  "result": {
+   "road": "Aleja Mieczysława Smorawińskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1789645803.8892996
+ },
+ "rtm. witolda pileckiego": {
+  "result": null,
+  "ts": 1789645805.339304
+ },
+ "rva:51.2260,22.7019": {
+  "result": {
+   "road": "Fabryczna",
+   "district": null,
+   "city": "Świdnik"
+  },
+  "ts": 1789645806.683588
+ },
+ "rva:51.2411,22.5495": {
+  "result": {
+   "road": "Henryka Wiercieńskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1789645808.2659178
+ },
+ "rva:51.2590,22.5321": {
+  "result": {
+   "road": "Rondo Rotmistrza Witolda Pileckiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1789645809.7119293
+ },
+ "rva:51.2609,22.5483": {
+  "result": {
+   "road": "Aleja Mieczysława Smorawińskiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1789645811.1973236
  }
 }
