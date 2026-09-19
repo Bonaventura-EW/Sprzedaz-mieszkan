@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1789237761.5918288
+  "ts": 1789843202.8701937
  },
  "pozytywistów": {
   "result": {
@@ -15412,5 +15412,13 @@
    "city": "Lublin"
   },
   "ts": 1789816136.7248225
+ },
+ "rva:51.2742,22.5923": {
+  "result": {
+   "road": "Narcyzowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1789843204.6390674
  }
 }
