@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1789153988.4787023
+  "ts": 1789816130.879512
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -14133,7 +14133,7 @@
  },
  "koncertowa 18": {
   "result": null,
-  "ts": 1789153991.8777792
+  "ts": 1789816133.8459074
  },
  "rva:51.2816,22.5850": {
   "result": {
@@ -15075,7 +15075,7 @@
  },
  "aleje racławickie 38": {
   "result": null,
-  "ts": 1789153990.6471782
+  "ts": 1789816132.3717656
  },
  "montażowej": {
   "result": {
@@ -15396,5 +15396,21 @@
    "city": "Świdnik"
   },
   "ts": 1789758350.3252997
+ },
+ "strzembosza i": {
+  "result": {
+   "lat": 51.2720243,
+   "lon": 22.5823449,
+   "name": "Tomasza Strzembosza"
+  },
+  "ts": 1789816135.3739598
+ },
+ "rva:51.2371,22.5901": {
+  "result": {
+   "road": "Emila Plagego i Teofila Laskiewicza",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1789816136.7248225
  }
 }
