@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1789390740.7409925
+  "ts": 1790022543.3537493
  },
  "mełgiewskiej": {
   "result": {
@@ -15444,5 +15444,37 @@
    "city": "Lublin"
   },
   "ts": 1789995505.227108
+ },
+ "łabedzia": {
+  "result": {
+   "lat": 51.2315687,
+   "lon": 22.5943484,
+   "name": "Łabędzia"
+  },
+  "ts": 1790022545.1285498
+ },
+ "morwowa": {
+  "result": {
+   "lat": 51.2493812,
+   "lon": 22.5138979,
+   "name": "Morwowa"
+  },
+  "ts": 1790022546.4263875
+ },
+ "rva:51.2369,22.5897": {
+  "result": {
+   "road": "Emila Plagego i Teofila Laskiewicza",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1790022548.2883809
+ },
+ "rva:51.2494,22.5139": {
+  "result": {
+   "road": "Morwowa",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1790022549.6510086
  }
 }
