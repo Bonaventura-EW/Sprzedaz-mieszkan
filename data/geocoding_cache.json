@@ -973,7 +973,7 @@
  },
  "wojciechowska 40": {
   "result": null,
-  "ts": 1789300827.7581055
+  "ts": 1789995502.3620296
  },
  "wojciechowskiej": {
   "result": {
@@ -15420,5 +15420,29 @@
    "city": "Lublin"
   },
   "ts": 1789843204.6390674
+ },
+ "lipowej": {
+  "result": {
+   "lat": 51.2426521,
+   "lon": 22.5533446,
+   "name": "Lipowa"
+  },
+  "ts": 1789995500.997994
+ },
+ "swidnik|bolesława stachonia": {
+  "result": {
+   "lat": 51.211358,
+   "lon": 22.6920093,
+   "name": "Bolesława Stachonia"
+  },
+  "ts": 1789995503.9750178
+ },
+ "rva:51.2362,22.6029": {
+  "result": {
+   "road": "Władysława Grabskiego",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1789995505.227108
  }
 }
