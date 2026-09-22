@@ -130,6 +130,35 @@ def test_reactivations_counted_and_folded_into_inflow():
     assert inflow.get('2026-06-04') == 1
 
 
+def test_outflow_counts_every_cycle_not_just_last():
+    """FIX 2026-09-22 (issue #25): oferta, która umarła, wróciła i umarła
+    znowu, musi wnieść OBA zniknięcia do odpływu — deactivated_at trzymałby
+    tylko drugie, gubiąc pierwsze (propagacja z SONAR-POKOJOWY)."""
+    offer = _offer('otodom:1', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00',
+                    active=False, deactivated_at='2026-06-10T09:00:00+02:00')
+    offer['reactivation_dates'] = ['2026-06-05T08:00:00+02:00']
+    offer['deactivation_dates'] = ['2026-06-03T12:00:00+02:00', '2026-06-10T09:00:00+02:00']
+    db = {'offers': [offer]}
+    payload = build_trend(db, today=date(2026, 6, 12))
+    outflow = _sparse_map(payload, 'outflow', 'wszystkie')
+    # obie śmierci policzone — pierwsza (03.06) nie została nadpisana drugą
+    assert outflow.get('2026-06-03') == 1
+    # ostatnia śmierć: last_seen == first_seen (domyślnie w _offer) → 06-01 + 1
+    assert outflow.get('2026-06-02') == 1
+
+
+def test_outflow_falls_back_to_deactivated_at_for_old_records():
+    """Rekordy sprzed wdrożenia deactivation_dates (brak pola) nie tracą
+    odpływu — fallback na skalarne deactivated_at, jak dotychczas."""
+    db = {'offers': [
+        _offer('otodom:1', 'otodom', 'pierwotny', 3, '2026-06-01T10:00:00+02:00',
+               active=False, deactivated_at='2026-06-02T12:00:00+02:00'),
+    ]}
+    payload = build_trend(db, today=date(2026, 6, 4))
+    outflow = _sparse_map(payload, 'outflow', 'wszystkie')
+    assert outflow == {'2026-06-02': 1}
+
+
 def test_reactivated_at_scalar_fallback():
     # brak listy reactivation_dates → używamy skalarnego reactivated_at
     offer = _offer('otodom:2', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00')

@@ -2,6 +2,30 @@
 
 ## [Niewydane]
 
+### Naprawione — odpływ gubił pierwszą śmierć wielokrotnie reaktywowanych ofert (#25, propagacja z SONAR-POKOJOWY)
+`deactivated_at` trzyma tylko OSTATNIĄ dezaktywację oferty — dla oferty, która
+umarła, wróciła (reaktywacja) i umarła znowu, poprzednie zniknięcie było
+bezpowrotnie nadpisywane i nigdy nie trafiało do serii odpływu na
+`trend.html`, mimo że jej reaktywacja jest poprawnie liczona w napływie.
+Zmierzone na `data/offers.json`: 448 ofert (5,5%) miało już utracone w ten
+sposób zniknięcia, łącznie 841 wpisów — skala nieznikoma, więc naprawa jak
+u brata.
+
+`main.py::_mark_inactive` prowadzi teraz PEŁNĄ listę `deactivation_dates`
+(wzorem istniejącego `reactivation_dates`), z fallbackiem na skalarne
+`deactivated_at` dla starych rekordów sprzed wdrożenia. `trend_generator.py`
+liczy odpływ ze WSZYSTKICH wpisów tej listy, nie tylko z ostatniego —
+ostatni wpis dalej dostaje korektę `last_seen+1` (bug #4/#14), starsze
+zostają bez niej (ich `last_seen` sprzed kolejnej reaktywacji jest już
+nadpisany, nie da się go odtworzyć). Na realnych danych: **+397 zdarzeń
+odpływu** w widocznym oknie wykresu (3506 → 3903).
+
+Węższy zakres niż u brata (manifest `2026-09-12-gone-day-definition-alignment`):
+u niego rozjazd dotyczył też mapowego trybu „zniknęło danego dnia"
+(`last_seen` na mapie vs `deactivation_dates` na wykresie) — u nas taki tryb
+na mapie nie istnieje (`docs/assets/script2.js` sprawdzone grepem), więc
+`map_generator.py`/`script.js` nie były ruszane.
+
 ### Naprawione — fałszywy rekord odpływu po blokadzie portalu (bug #3/#4 z #14)
 Wykres odpływu pokazywał 22.08 skok do **231 ofert** — ponad trzy razy więcej niż
 zwykły dzień, przez co reszta wykresu spłaszczała się przy dolnej krawędzi.

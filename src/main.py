@@ -315,7 +315,18 @@ class SonarSprzedazy:
                     skipped_grace += 1
                     continue  # widziana niedawno w innym skanie — daj jej czas
                 offer['active'] = False
+                # FIX 2026-09-22: prowadzimy PEŁNĄ listę dat dezaktywacji
+                # (deactivation_dates, wzorem reactivation_dates) — oferta,
+                # która umarła, wróciła i umarła znowu, inaczej gubi w odpływie
+                # (trend_generator.py) wszystkie zniknięcia poza ostatnim, bo
+                # deactivated_at trzyma tylko jedną wartość (patrz issue #25,
+                # propagacja z SONAR-POKOJOWY).
+                dates = offer.get('deactivation_dates')
+                if dates is None:
+                    dates = [offer['deactivated_at']] if offer.get('deactivated_at') else []
+                    offer['deactivation_dates'] = dates
                 offer['deactivated_at'] = now
+                dates.append(now)
                 deactivated += 1
             total_deactivated += deactivated
             if deactivated or skipped_grace:
