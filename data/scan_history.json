@@ -1,20 +1,6 @@
 {
  "scans": [
   {
-   "timestamp": "2026-06-21T22:17:45.354834+02:00",
-   "status": "completed",
-   "duration_s": 317.1,
-   "deactivated": 36,
-   "scraped_olx": 926,
-   "scraped_otodom": 1827,
-   "new": 40,
-   "updated": 2713,
-   "skipped_removed": 0,
-   "active": 2753,
-   "with_coords": 1193,
-   "total_in_db": 2794
-  },
-  {
    "timestamp": "2026-06-22T07:31:35.806012+02:00",
    "status": "completed",
    "duration_s": 399.6,
@@ -2871,6 +2857,22 @@
     "swidnik/2",
     "swidnik/3"
    ]
+  },
+  {
+   "timestamp": "2026-09-22T13:45:39.321854+02:00",
+   "status": "completed",
+   "duration_s": 122.8,
+   "deactivated": 38,
+   "scraped_olx": 1040,
+   "scraped_otodom": 1872,
+   "new": 37,
+   "updated": 2875,
+   "skipped_removed": 0,
+   "active": 3147,
+   "active_dedup": 2363,
+   "with_coords": 2669,
+   "promoted": 39,
+   "total_in_db": 8061
   }
  ]
 }

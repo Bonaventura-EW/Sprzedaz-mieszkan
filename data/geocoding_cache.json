@@ -15476,5 +15476,37 @@
    "city": "Lublin"
   },
   "ts": 1790022549.6510086
+ },
+ "piłkarskiej": {
+  "result": null,
+  "ts": 1790077652.3363113
+ },
+ "muzycznej": {
+  "result": {
+   "lat": 51.2387655,
+   "lon": 22.5531851,
+   "name": "Muzyczna"
+  },
+  "ts": 1790077655.219415
+ },
+ "wolińskiego 35": {
+  "result": null,
+  "ts": 1790077656.7212355
+ },
+ "rva:51.2489,22.5343": {
+  "result": {
+   "road": null,
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1790077658.2690356
+ },
+ "rva:51.2411,22.5563": {
+  "result": {
+   "road": "Aleja Józefa Piłsudskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1790077659.6619954
  }
 }
