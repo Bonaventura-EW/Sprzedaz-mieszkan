@@ -155,6 +155,8 @@ body {
 .chart-card.flow-inflow::before  { background: linear-gradient(90deg, #2fa66f, #7fd8ac); }
 .chart-card.flow-react::before   { background: linear-gradient(90deg, #7c6cf0, #b4a9f5); }
 .chart-card.flow-promoted::before { background: linear-gradient(90deg, #e0a020, #f4cf6a); }
+.chart-card.flow-pricedrops::before { background: linear-gradient(90deg, #d1495b, #f0919e); }
+.chart-card.flow-priceincreases::before { background: linear-gradient(90deg, #3f9c5c, #8ecf9f); }
 .c-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
 .c-sub { margin-top: 6px; font-family: var(--font-display); font-size: 13px; color: var(--text-secondary); }
 .c-stats { margin-top: 14px; display: flex; gap: 22px; flex-wrap: wrap;
@@ -313,6 +315,8 @@ let OUTFLOW = {};
 let INFLOW = {};
 let REACT = {};
 let PROMOTED = {};
+let PRICE_DROPS = {};
+let PRICE_INCREASES = {};
 let MEASURED = {};   // seria „zmierzone" (nie rekonstruowana) — tylko dla „wszystkie"
 let viewMeasured = [];
 // FIX 2026-09-10: dni, w których skaner nie domknął wszystkich zaplanowanych
@@ -406,7 +410,7 @@ async function loadAndRender(){
   }
   const endTsOf = key => (PROFILES[key] && PROFILES[key].points.length)
     ? PROFILES[key].points[PROFILES[key].points.length-1][0] : null;
-  OUTFLOW = {}; INFLOW = {}; REACT = {}; PROMOTED = {};
+  OUTFLOW = {}; INFLOW = {}; REACT = {}; PROMOTED = {}; PRICE_DROPS = {}; PRICE_INCREASES = {};
   for (const [key, arr] of Object.entries(trend.outflow || {}))
     OUTFLOW[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
   for (const [key, arr] of Object.entries(trend.inflow || {}))
@@ -415,6 +419,10 @@ async function loadAndRender(){
     REACT[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
   for (const [key, arr] of Object.entries(trend.promoted || {}))
     PROMOTED[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
+  for (const [key, arr] of Object.entries(trend.price_drops || {}))
+    PRICE_DROPS[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
+  for (const [key, arr] of Object.entries(trend.price_increases || {}))
+    PRICE_INCREASES[key] = outflowWithMA(expandDaily(arr, endTsOf(key)), 7);
   MEASURED = {};
   for (const [key, arr] of Object.entries(trend.measured || {}))
     MEASURED[key] = (arr || []).map(p => [toTs(p.date), p.count]).sort((a,b)=>a[0]-b[0]);
@@ -829,6 +837,20 @@ const FLOW_CONFIGS = [
       + '(Otodom nie ma tej atrybucji) i zbiera się od wdrożenia — wyróżnień nie da się odtworzyć wstecz.',
     hint: 'Źródło: parametr search_reason w URL-u oferty OLX (płatne promowanie listingu); '
       + 'dla każdego dnia liczba ofert widzianych tego dnia jako wyróżnione' },
+  { id: 'pricedrops', cls: 'flow-pricedrops', title: '💲↓ Obniżki cen',
+    sub: 'Ile razy dziennie ogłoszeniodawcy obniżyli cenę — zdarzenia + średnia 7-dniowa',
+    data: () => PRICE_DROPS, line: '#d1495b', ma: '#f0919e',
+    legendDaily: 'Obniżek danego dnia', statLabel: 'Śr. obniżek/dzień', statCls: 'down',
+    empty: 'Brak zarejestrowanych obniżek cen dla tego profilu.',
+    hint: 'Źródło: historia zmian ceny każdej oferty (price.price_changes); liczymy ZDARZENIA, '
+      + 'nie oferty — dwie obniżki jednej oferty w jednym dniu to dwa punkty' },
+  { id: 'priceincreases', cls: 'flow-priceincreases', title: '💲↑ Podwyżki cen',
+    sub: 'Ile razy dziennie ogłoszeniodawcy podnieśli cenę — zdarzenia + średnia 7-dniowa',
+    data: () => PRICE_INCREASES, line: '#3f9c5c', ma: '#8ecf9f',
+    legendDaily: 'Podwyżek danego dnia', statLabel: 'Śr. podwyżek/dzień', statCls: 'up',
+    empty: 'Brak zarejestrowanych podwyżek cen dla tego profilu.',
+    hint: 'Źródło: historia zmian ceny każdej oferty (price.price_changes); liczymy ZDARZENIA, '
+      + 'nie oferty — dwie podwyżki jednej oferty w jednym dniu to dwa punkty' },
 ];
 
 // Średnia krocząca jednego CIĄGŁEGO segmentu (wygładzenie kwadratowe jak dotąd).

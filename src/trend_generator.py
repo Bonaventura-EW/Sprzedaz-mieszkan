@@ -46,6 +46,8 @@ Format wyjścia (kontrakt dla docs/trend.html):
   "inflow":   { key: [...] },  # sparse: napływ dnia = nowe + reaktywacje
   "reactivations": { key: [...] },  # sparse: reaktywacje danego dnia
   "promoted": { key: [...] },  # sparse: liczba płatnie wyróżnionych ofert (OLX) danego dnia
+  "price_drops": { key: [...] },      # sparse: liczba OBNIŻEK ceny (zdarzeń) danego dnia
+  "price_increases": { key: [...] },  # sparse: liczba PODWYŻEK ceny (zdarzeń) danego dnia
   "measured": { "wszystkie": [...] },  # sparse: ZMIERZONA dzienna liczba aktywnych po dedup
   "coverage": {                        # maska pokrycia doby przebiegami skanera
     "scans_per_day": int,
@@ -85,6 +87,23 @@ Napływ i reaktywacje (FIX 2026-08-22, wzór SONAR-POKOJOWY):
 - reaktywacja danego dnia D = liczba wpisów w `reactivation_dates` (fallback:
   skalarne `reactivated_at`) z datą == D,
 - napływ danego dnia D = nowe (first_seen == D) + reaktywacje tego dnia.
+
+Częstotliwość zmian ceny (FIX 2026-09-22, propagacja z SONAR-POKOJOWY,
+manifest 2026-09-15-price-change-series → issue #24):
+- `price_drops`/`price_increases` danego dnia D = liczba ZDARZEŃ zmiany ceny
+  (nie ofert!) z `changed_at.date() == D`, osobno wg `trend` ('down'/'up').
+  Dwie obniżki jednej oferty w jednym dniu to dwa punkty — świadoma decyzja
+  projektowa przejęta z manifestu brata (inaczej niż odpływ, gdzie dedup
+  po (oferta, dzień) jest konieczny, bo tam jedna oferta to jeden marker
+  na mapie). Źródło: `price.price_changes`, dopisywane przy każdej
+  potwierdzonej zmianie ceny w `main.py::_update_existing`.
+- U brata historia cen bywa rozbita na dwa rozłączne źródła (`price.history_full`
+  bieżącej wersji oferty i `versions[].price_history` sprzed zmiany adresu) —
+  u nas oferta nie ma wersjonowania (jedna oferta = jedna nieprzerwana historia
+  cen), więc `price.price_changes` wystarcza jako jedyne źródło.
+- Część manifestu o `partial.now` (dobie w toku pokazującej stan po ostatnim
+  skanie zamiast maksimum doby) wymaga najpierw #22 (doba w toku jako
+  przerywana linia) — świadomie pominięta w tym PR, do dociągnięcia po #22.
 """
 
 import json
@@ -314,7 +333,7 @@ def build_trend(db, today=None, scan_history=None):
     if global_start is None:
         return {'generated': datetime.now(tz).isoformat(), 'labels': {},
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
-                'promoted': {}, 'measured': {},
+                'promoted': {}, 'price_drops': {}, 'price_increases': {}, 'measured': {},
                 'coverage': {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
                              'incomplete': [], 'reasons': {}}}
 
@@ -331,7 +350,7 @@ def build_trend(db, today=None, scan_history=None):
     if not days:
         return {'generated': datetime.now(tz).isoformat(), 'labels': {},
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
-                'promoted': {}, 'measured': {},
+                'promoted': {}, 'price_drops': {}, 'price_increases': {}, 'measured': {},
                 'coverage': {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
                              'incomplete': [], 'reasons': {}}}
 
@@ -341,6 +360,8 @@ def build_trend(db, today=None, scan_history=None):
     inflow = {}
     reactivations = {}
     promoted = {}
+    price_drops = {}
+    price_increases = {}
 
     def _sparse(m):
         return [{'date': dd.isoformat(), 'count': c} for dd, c in sorted(m.items())]
@@ -351,6 +372,8 @@ def build_trend(db, today=None, scan_history=None):
         new_map = {}                  # date -> nowe oferty (first_seen)
         react_map = {}                # date -> reaktywacje
         promoted_map = {}             # date -> liczba ofert wyróżnionych tego dnia
+        drops_map = {}                # date -> liczba ZDARZEŃ obniżki ceny tego dnia
+        increases_map = {}            # date -> liczba ZDARZEŃ podwyżki ceny tego dnia
         for start, end, deact, react_dates, o in spans:
             if not pred(o):
                 continue
@@ -379,6 +402,17 @@ def build_trend(db, today=None, scan_history=None):
                 pdd = _parse_date(pd)
                 if pdd and pdd in day_index:
                     promoted_map[pdd] = promoted_map.get(pdd, 0) + 1
+            # częstotliwość zmian ceny: liczymy ZDARZENIA, nie oferty (decyzja
+            # projektowa przejęta z manifestu propagacji, issue #24) — dwie
+            # obniżki jednej oferty w jednym dniu to dwa punkty, bez dedupu
+            for change in (o.get('price', {}).get('price_changes') or []):
+                cd = _parse_date(change.get('changed_at'))
+                if not cd or cd not in day_index:
+                    continue
+                if change.get('trend') == 'down':
+                    drops_map[cd] = drops_map.get(cd, 0) + 1
+                elif change.get('trend') == 'up':
+                    increases_map[cd] = increases_map.get(cd, 0) + 1
 
         # napływ = nowe + reaktywacje (dzień po dniu)
         inflow_map = dict(new_map)
@@ -395,6 +429,8 @@ def build_trend(db, today=None, scan_history=None):
         inflow[key] = _sparse(inflow_map)
         reactivations[key] = _sparse(react_map)
         promoted[key] = _sparse(promoted_map)
+        price_drops[key] = _sparse(drops_map)
+        price_increases[key] = _sparse(increases_map)
 
     # Zmierzona seria (nie rekonstruowana) — tylko dla „wszystkie": scan_history
     # trzyma zdeduplikowany łączny stan bazy, bez rozbicia na kategorie.
@@ -411,6 +447,8 @@ def build_trend(db, today=None, scan_history=None):
         'inflow': inflow,
         'reactivations': reactivations,
         'promoted': promoted,
+        'price_drops': price_drops,
+        'price_increases': price_increases,
         'measured': measured,
         # FIX 2026-09-10: maska pokrycia doby jawnie w payloadzie — wykresy
         # przepływu zachowują surowe wartości, ale front rysuje te dni jako lukę
