@@ -82,3 +82,33 @@ def test_mass_deactivation_protection(tmp_path):
     deactivated = sonar._mark_inactive({'otodom': []})
     assert deactivated == 0
     assert all(o['active'] for o in sonar.database['offers'])
+
+
+def test_mark_inactive_accumulates_deactivation_dates(tmp_path):
+    """FIX 2026-09-22 (issue #25): `deactivated_at` trzyma tylko ostatnią
+    dezaktywację — oferta, która umarła, wróciła i umarła znowu, musi mieć
+    obie daty w `deactivation_dates`, inaczej odpływ na trend.html gubi
+    pierwsze zniknięcie (propagacja z SONAR-POKOJOWY)."""
+    sonar = _sonar(tmp_path)
+    offer = _offer('otodom:1', 'otodom', 100000, 40, active=True)
+    # symuluj starą ofertę, która umarła RAZ przed wdrożeniem tego pola
+    offer['deactivated_at'] = '2026-05-01T10:00:00+02:00'
+    sonar.database['offers'] = [offer]
+
+    # scraped niepusty, ale bez tej oferty — inaczej trafiamy w ochronę
+    # "scraper zwrócił 0 ofert" (test_mass_deactivation_protection) i nic się
+    # nie dezaktywuje
+    scraped = {'otodom': [{'id': 'otodom:other'}]}
+
+    # pierwsza dezaktywacja PO wdrożeniu — brak deactivation_dates,
+    # więc zasiewamy je z historycznego (skalarnego) deactivated_at
+    sonar._mark_inactive(scraped)
+    assert offer['deactivation_dates'][0] == '2026-05-01T10:00:00+02:00'
+    assert offer['deactivated_at'] == offer['deactivation_dates'][-1]
+    assert len(offer['deactivation_dates']) == 2
+
+    # reaktywacja, potem druga dezaktywacja PO wdrożeniu — dopisujemy kolejny wpis
+    offer['active'] = True
+    sonar._mark_inactive(scraped)
+    assert len(offer['deactivation_dates']) == 3
+    assert offer['deactivation_dates'][-1] == offer['deactivated_at']

@@ -9,7 +9,8 @@ Rekonstrukcja z pól oferty:
 - obecna danego dnia D, gdy first_seen.date() <= D <= end.date(),
   gdzie end = deactivated_at (jeśli nieaktywna) albo ostatni PEŁNY dzień
   (jeśli aktywna), albo last_seen (nieaktywna bez daty dezaktywacji),
-- odpływ danego dnia D = liczba ofert z deactivated_at.date() == D.
+- odpływ danego dnia D = liczba WPISÓW w `deactivation_dates` z datą == D
+  (fallback: skalarne `deactivated_at`) — patrz FIX 2026-09-22 niżej.
 
 Maska pokrycia skanami (FIX 2026-09-10, propagacja z SONAR-MIESZKANIOWY,
 manifest 2026-09-04-trend-charts-audit → issue #14):
@@ -85,6 +86,21 @@ Napływ i reaktywacje (FIX 2026-08-22, wzór SONAR-POKOJOWY):
 - reaktywacja danego dnia D = liczba wpisów w `reactivation_dates` (fallback:
   skalarne `reactivated_at`) z datą == D,
 - napływ danego dnia D = nowe (first_seen == D) + reaktywacje tego dnia.
+
+Wielokrotne zniknięcia (FIX 2026-09-22, issue #25, propagacja z SONAR-POKOJOWY,
+manifest 2026-09-12-gone-day-definition-alignment — węższy zakres niż u brata,
+patrz uwaga w issue: bez mapowego trybu "zniknęło danego dnia", którego tu nie
+ma):
+- `deactivated_at` trzyma tylko OSTATNIĄ dezaktywację — oferta, która umarła,
+  wróciła (reaktywacja) i umarła znowu, gubi w odpływie każde zniknięcie poza
+  ostatnim, mimo że jej reaktywacje są poprawnie liczone w `inflow`/`reactivations`.
+  `deactivation_dates` (main._mark_inactive) to PEŁNA lista, analogicznie do
+  już posiadanego `reactivation_dates`; stare rekordy sprzed wdrożenia mają
+  fallback na skalarne `deactivated_at`.
+- Ostatni wpis listy zastępujemy już wyliczonym wyżej `deact` (korekta
+  last_seen+1, bug #4/issue #14) — wcześniejsze zniknięcia w liście zostają BEZ
+  tej korekty, bo `last_seen` sprzed kolejnej reaktywacji jest dawno nadpisany
+  (nie da się go odtworzyć wstecz).
 """
 
 import json
@@ -275,7 +291,7 @@ def build_trend(db, today=None, scan_history=None):
     offers = [o for o in db.get('offers', []) if not o.get('duplicate_of')]
 
     # Dla każdej oferty: dzień pojawienia i dzień zniknięcia (końca obecności).
-    spans = []  # (start_date, end_date, deact_date|None, react_dates, offer)
+    spans = []  # (start_date, end_date, deact_dates, react_dates, offer)
     global_start = None
     for o in offers:
         start = _parse_date(o.get('first_seen')) or _parse_date(o.get('created_at'))
@@ -307,7 +323,16 @@ def build_trend(db, today=None, scan_history=None):
         if raw_react is None:
             raw_react = [o['reactivated_at']] if o.get('reactivated_at') else []
         react_dates = [d for d in (_parse_date(x) for x in raw_react) if d]
-        spans.append((start, end, deact, react_dates, o))
+        # FIX 2026-09-22 (issue #25): pełna lista zniknięć, nie tylko ostatnie —
+        # patrz uwaga w docstringu modułu. Ostatni wpis zastępujemy skorygowaną
+        # wyżej wartością `deact` (last_seen+1), starsze zostają bez korekty.
+        raw_deact = o.get('deactivation_dates')
+        if raw_deact is None:
+            raw_deact = [o['deactivated_at']] if o.get('deactivated_at') else []
+        deact_dates = [d for d in (_parse_date(x) for x in raw_deact) if d]
+        if not o.get('active') and deact_dates:
+            deact_dates = (deact_dates[:-1] + [deact]) if deact else deact_dates
+        spans.append((start, end, deact_dates, react_dates, o))
         if global_start is None or start < global_start:
             global_start = start
 
@@ -351,7 +376,7 @@ def build_trend(db, today=None, scan_history=None):
         new_map = {}                  # date -> nowe oferty (first_seen)
         react_map = {}                # date -> reaktywacje
         promoted_map = {}             # date -> liczba ofert wyróżnionych tego dnia
-        for start, end, deact, react_dates, o in spans:
+        for start, end, deact_dates, react_dates, o in spans:
             if not pred(o):
                 continue
             si = day_index.get(start)
@@ -363,8 +388,11 @@ def build_trend(db, today=None, scan_history=None):
             ei = day_index.get(end, n_days - 1)
             for i in range(si, ei + 1):
                 active_daily[i] += 1
-            if deact and deact in day_index:
-                outflow_map[deact] = outflow_map.get(deact, 0) + 1
+            # FIX 2026-09-22 (issue #25): WSZYSTKIE zniknięcia oferty, nie tylko
+            # ostatnie — patrz docstring modułu i komentarz przy `deact_dates` wyżej.
+            for dd_ in deact_dates:
+                if dd_ in day_index:
+                    outflow_map[dd_] = outflow_map.get(dd_, 0) + 1
             # pierwszy dzień osi = „zasianie" bazy (cały korpus dostał wtedy
             # first_seen) — to artefakt startu skanera, nie realny napływ; pomijamy
             if start in day_index and start != days[0]:
