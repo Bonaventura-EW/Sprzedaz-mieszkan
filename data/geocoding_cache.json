@@ -4929,7 +4929,7 @@
  },
  "księdza jerzego popiełuszki 28j": {
   "result": null,
-  "ts": 1782131489.0424595
+  "ts": 1790192658.2117436
  },
  "wigilijna": {
   "result": {
@@ -15011,7 +15011,7 @@
  },
  "turkuso": {
   "result": null,
-  "ts": 1789587429.968826
+  "ts": 1790192649.1195414
  },
  "rva:51.2326,22.4924": {
   "result": {
@@ -15596,5 +15596,65 @@
    "city": "Lublin"
   },
   "ts": 1790164089.471401
+ },
+ "cedrowa": {
+  "result": {
+   "lat": 51.2638784,
+   "lon": 22.5764516,
+   "name": "Cedrowa"
+  },
+  "ts": 1790192647.5534623
+ },
+ "nagietkowej": {
+  "result": {
+   "lat": 51.2713335,
+   "lon": 22.5893712,
+   "name": "Nagietkowa"
+  },
+  "ts": 1790192651.9621665
+ },
+ "swidnik|jaworowej": {
+  "result": {
+   "lat": 51.2094304,
+   "lon": 22.7040967,
+   "name": "Jaworowa"
+  },
+  "ts": 1790192654.9740956
+ },
+ "wierzbowa": {
+  "result": {
+   "lat": 51.230856,
+   "lon": 22.5881325,
+   "name": "Wierzbowa"
+  },
+  "ts": 1790192656.5589485
+ },
+ "racławicka": {
+  "result": null,
+  "ts": 1790192659.8927345
+ },
+ "rva:51.2639,22.5765": {
+  "result": {
+   "road": "Cedrowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1790192661.5430307
+ },
+ "rva:51.2309,22.5881": {
+  "result": {
+   "road": "Wierzbowa",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1790192663.5533347
+ },
+ "rva:51.2163,22.7001": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1790192665.2297566
  }
 }
