@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1789559114.3459778
+  "ts": 1790164061.2465699
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1789559124.8741727
+  "ts": 1790164071.0521812
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1789559115.8038607
+  "ts": 1790164062.701067
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1789559120.0507402
+  "ts": 1790164066.8002386
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1789559121.5142605
+  "ts": 1790164068.2457275
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1789559122.8018887
+  "ts": 1790164069.710012
  },
  "krasińskiego": {
   "result": {
@@ -9369,7 +9369,7 @@
  },
  "samosnowicza": {
   "result": null,
-  "ts": 1789559126.293857
+  "ts": 1790164072.5022745
  },
  "wrońska 3d": {
   "result": null,
@@ -15524,5 +15524,77 @@
    "city": "Lublin"
   },
   "ts": 1790106512.3330257
+ },
+ "sierpniowa": {
+  "result": {
+   "lat": 51.2779346,
+   "lon": 22.5567579,
+   "name": "Sierpniowa"
+  },
+  "ts": 1790164073.7614057
+ },
+ "spacerowej": {
+  "result": {
+   "lat": 51.2241406,
+   "lon": 22.5730656,
+   "name": "Spacerowa"
+  },
+  "ts": 1790164076.7311378
+ },
+ "leopolda staffa": {
+  "result": {
+   "lat": 51.2083449,
+   "lon": 22.5805678,
+   "name": "Leopolda Staffa"
+  },
+  "ts": 1790164077.9899004
+ },
+ "sowiej": {
+  "result": {
+   "lat": 51.2343042,
+   "lon": 22.5903759,
+   "name": "Sowia"
+  },
+  "ts": 1790164082.1359496
+ },
+ "rva:51.2282,22.5344": {
+  "result": {
+   "road": "Romantyczna",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1790164083.4480643
+ },
+ "rva:51.2779,22.5568": {
+  "result": {
+   "road": "Sierpniowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1790164084.9356303
+ },
+ "rva:51.2083,22.5806": {
+  "result": {
+   "road": "Leopolda Staffa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1790164086.474825
+ },
+ "rva:51.2441,22.5017": {
+  "result": {
+   "road": "Stanisława Brzóski",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1790164087.981019
+ },
+ "rva:51.2551,22.5816": {
+  "result": {
+   "road": "Lwowska",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1790164089.471401
  }
 }
