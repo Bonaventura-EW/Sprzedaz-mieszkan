@@ -35,6 +35,12 @@ never_touch:
 # MODELE: decyzje = Sonnet (claude-sonnet-5), programowanie = Opus (claude-opus-4-8).
 default_autonomy: ask
 
+# 2026-09-22 distill-policy: bugfix ma 7 rozstrzygniętych wpisów, 100%
+# accepted, 0 odrzuceń bezpieczeństwa — TUŻ pod progiem awansu (≥8).
+# Kolejny zaakceptowany bugfix w tym repo kwalifikuje kategorię do
+# "ask → draft". Feature ma 4 rozstrzygnięcia (100% accepted) — za mało
+# danych. Refactor ma 1 rozstrzygnięcie (rejected) — za mało danych.
+# Żadna kategoria nie awansuje w tym przebiegu. Zobacz PR dla scorecardu.
 categories: {}
   # css-refactor:   draft
   # a11y-fix:       draft
@@ -42,12 +48,9 @@ categories: {}
 
 # Reguły destylowane z Twoich decyzji — dopisuje je skill `distill-policy`
 # przez PR, który zatwierdzasz. Ręcznie też możesz.
-#
-# 2026-09-09: żadna kategoria nie ma jeszcze ≥8 rozstrzygniętych decyzji,
-# więc nie proponujemy awansu autonomii (patrz PR "Distill policy
-# 2026-09-09" — scorecard w opisie). Poniższa reguła to jedyny wzorzec
-# poparty ≥2 wpisami w decisions.jsonl.
 learned_rules:
-  - "Bugfixy dotyczące architektury rekonstrukcji aktywności ofert w trend_generator.py (liczenie 'ile ofert aktywnych dnia D' z first_seen/last_seen/deactivated_at, w tym dryf z DEACTIVATE_GRACE_DAYS) są konsekwentnie akceptowane po weryfikacji na rodzeństwie (2/2: 2026-09-03-measured-index-history → issue#11, 2026-09-04-trend-charts-audit → issue#14) — priorytetyzuj takie propozycje z rodziny sonary."
+  - "Bugfixy poparte bezpośrednią weryfikacją problemu we własnym kodzie tego repo (nie hipotetycznym transferem z brata) są konsekwentnie akceptowane — dowody: issue#8 (coincident-marker-stacks, 884 punktów kolizji), issue#11 (measured-index-history), issue#12 (stos-pelne-szczegoly, regres we własnym świeżym kodzie), issue#14 (trend-charts-audit), issue#21 (address-precision-upgrade), issue#23 (window-balance-symmetry), issue#25 (gone-day-definition-alignment, budowa z pomiarem najpierw). 7/7 accepted, 0 odrzuceń — najbliższa awansu kategoria w repo."
+  - "Feature: propozycje z gotowymi building blockami w tym repo (rozszerzenie, nie budowa od zera) są przyjmowane — dowody: issue#6 (promoted-listings-metric), issue#16 (refresh-from-listing-card, budowa z pomiarem najpierw), issue#22 (partial-day-dashed, spójność UX z resztą rodziny), issue#24 (price-change-series). 4/4 accepted, 0 odrzuceń."
+  - "Refactor bez zidentyfikowanej drugiej kopii algorytmu do zsynchronizowania jest odrzucany/odkładany — dowód: issue#7 (market-ref-wspolny-modul), rejected — sprawdzenie kaskady g5 odłożone jako nie-priorytet. 0/1 accepted."
   #  - "Nie propaguj niczego, co rusza moduł auth (dotąd 0/6 przyjętych)."
   #  - "Zmiany typu css-refactor przyjmowane w 11/12 → kandydat do awansu na 'draft'."
