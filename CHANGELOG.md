@@ -25,6 +25,22 @@ u niego rozjazd dotyczył też mapowego trybu „zniknęło danego dnia"
 (`last_seen` na mapie vs `deactivation_dates` na wykresie) — u nas taki tryb
 na mapie nie istnieje (`docs/assets/script2.js` sprawdzone grepem), więc
 `map_generator.py`/`script.js` nie były ruszane.
+### Dodane — częstotliwość zmian ceny (obniżki/podwyżki) na Indeksie (propagacja z SONAR-POKOJOWY, issue #24)
+Dwa nowe wykresy na `trend.html`: ile razy dziennie ogłoszeniodawcy obniżyli
+cenę i ile razy podnieśli — liczone jako ZDARZENIA, nie oferty (dwie obniżki
+jednej oferty w jednym dniu to dwa punkty, świadoma decyzja przejęta z
+manifestu brata). Źródło danych: `price.price_changes`, które `main.py` i tak
+już dopisuje przy każdej zmianie ceny — u nas port jest węższy niż u brata,
+bo oferta nie ma wersjonowania (`versions[]`), więc jedno źródło historii
+wystarcza. Oba szeregi idą przez istniejący `_sparse()`/`_flow_metric` (dzień
+bez skanu = luka, nie zero), tak jak odpływ/napływ/reaktywacje/wyróżnienia.
+Część manifestu o `partial.now` (doba w toku pokazująca stan po ostatnim
+skanie) świadomie pominięta — ma sens dopiero po #22 (doba w toku jako
+przerywana linia), które jeszcze nie jest zaimplementowane.
+
+Zmiany: `src/trend_generator.py` (`build_trend`: nowe pola `price_drops`/
+`price_increases`), `docs/trend.html` (dwie nowe karty wykresów przez istniejący
+generyczny `FLOW_CONFIGS`), `tests/test_trend_generator.py` (3 nowe testy).
 
 ### Naprawione — fałszywy rekord odpływu po blokadzie portalu (bug #3/#4 z #14)
 Wykres odpływu pokazywał 22.08 skok do **231 ofert** — ponad trzy razy więcej niż

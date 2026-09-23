@@ -411,6 +411,50 @@ def test_single_failed_scrape_does_not_mask_the_day():
     assert last_complete == date(2026, 6, 3)
 
 
+# ── Częstotliwość zmian ceny (propagacja z SONAR-POKOJOWY, issue #24) ──────
+# Liczymy ZDARZENIA zmiany ceny (nie oferty): dwie obniżki jednej oferty
+# w jednym dniu to dwa punkty — świadoma decyzja przejęta z manifestu brata.
+
+def _with_price_changes(offer, *changes):
+    """changes: (old_price, new_price, changed_at, trend)."""
+    offer['price'] = {'current': changes[-1][1] if changes else None,
+                       'price_changes': [
+                           {'old_price': old, 'new_price': new, 'changed_at': at, 'trend': trend}
+                           for old, new, at, trend in changes
+                       ]}
+    return offer
+
+
+def test_price_drops_and_increases_counted_as_events_not_offers():
+    a = _with_price_changes(
+        _offer('a', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00'),
+        (500000, 480000, '2026-06-02T08:00:00+02:00', 'down'),
+        (480000, 460000, '2026-06-02T18:00:00+02:00', 'down'),  # drugi ten sam dzień
+    )
+    b = _offer('b', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00')
+    _with_price_changes(b, (300000, 320000, '2026-06-03T08:00:00+02:00', 'up'))
+    db = {'offers': [a, b]}
+    payload = build_trend(db, today=date(2026, 6, 4))
+    drops = _sparse_map(payload, 'price_drops', 'wszystkie')
+    increases = _sparse_map(payload, 'price_increases', 'wszystkie')
+    # dwie obniżki tej samej oferty w tym samym dniu → dwa zdarzenia, nie jedno
+    assert drops == {'2026-06-02': 2}
+    assert increases == {'2026-06-03': 1}
+
+
+def test_price_changes_absent_when_no_price_changes():
+    db = {'offers': [_offer('a', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00')]}
+    payload = build_trend(db, today=date(2026, 6, 1))
+    assert payload['price_drops']['wszystkie'] == []
+    assert payload['price_increases']['wszystkie'] == []
+
+
+def test_empty_db_has_price_change_keys():
+    payload = build_trend({'offers': []}, today=date(2026, 6, 1))
+    assert payload['price_drops'] == {}
+    assert payload['price_increases'] == {}
+
+
 def test_coverage_reasons_distinguish_gap_causes():
     """Front tłumaczy lukę użytkownikowi, a to dwie różne historie: niedomknięta
     doba skanowania vs źródło, którego nie zobaczyliśmy ani razu."""
