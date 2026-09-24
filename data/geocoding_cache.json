@@ -13493,7 +13493,7 @@
  },
  "swidnik|wolska": {
   "result": null,
-  "ts": 1788463286.467537
+  "ts": 1790280175.599816
  },
  "swidnik|modrzewiowa": {
   "result": {
@@ -15684,5 +15684,89 @@
    "city": "Lublin"
   },
   "ts": 1790250958.264153
+ },
+ "swidnik|klonowa": {
+  "result": {
+   "lat": 51.210874,
+   "lon": 22.6868153,
+   "name": "Klonowa"
+  },
+  "ts": 1790280168.6138525
+ },
+ "obrońców lublin": {
+  "result": null,
+  "ts": 1790280170.215631
+ },
+ "strażacka": {
+  "result": {
+   "lat": 51.2402443,
+   "lon": 22.5547176,
+   "name": "Strażacka"
+  },
+  "ts": 1790280171.4607499
+ },
+ "jaskółczej": {
+  "result": {
+   "lat": 51.2285446,
+   "lon": 22.6021838,
+   "name": "Jaskółcza"
+  },
+  "ts": 1790280174.3791275
+ },
+ "racławickie 40": {
+  "result": null,
+  "ts": 1790280177.266836
+ },
+ "hugo kołłątaja": {
+  "result": null,
+  "ts": 1790280178.6215785
+ },
+ "rva:51.2287,22.6016": {
+  "result": {
+   "road": "Jaskółcza",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1790280179.8351164
+ },
+ "rva:51.2352,22.5745": {
+  "result": {
+   "road": "Wolska",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1790280181.0697658
+ },
+ "rva:51.2514,22.5344": {
+  "result": {
+   "road": "Aleje Racławickie",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1790280182.7276924
+ },
+ "rva:51.2777,22.5813": {
+  "result": {
+   "road": "Cynamonowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1790280184.4914556
+ },
+ "rva:51.2471,22.5581": {
+  "result": {
+   "road": "Hugona Kołłątaja",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1790280186.2634099
+ },
+ "rva:51.2268,22.6895": {
+  "result": {
+   "road": "Jana Matejki",
+   "district": "Osiedle Żwirki i Wigury",
+   "city": "Świdnik"
+  },
+  "ts": 1790280187.7420018
  }
 }
