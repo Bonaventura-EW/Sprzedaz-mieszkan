@@ -15023,7 +15023,7 @@
  },
  "jacka przybylskiego.mieszkanie": {
   "result": null,
-  "ts": 1789645800.6510472
+  "ts": 1790250950.3043184
  },
  "rva:51.2123,22.6939": {
   "result": {
@@ -15656,5 +15656,33 @@
    "city": "Świdnik"
   },
   "ts": 1790192665.2297566
+ },
+ "swidnik|jarzębinowej": {
+  "result": {
+   "lat": 51.2150868,
+   "lon": 22.7007751,
+   "name": "Jarzębinowa"
+  },
+  "ts": 1790250952.8012886
+ },
+ "swidnik|spółdzielczości pracy": {
+  "result": null,
+  "ts": 1790250955.461132
+ },
+ "jarzębinowa": {
+  "result": {
+   "lat": 51.2688158,
+   "lon": 22.5838178,
+   "name": "Jarzębinowa"
+  },
+  "ts": 1790250956.7379503
+ },
+ "rva:51.2390,22.5834": {
+  "result": {
+   "road": "Polna",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1790250958.264153
  }
 }
