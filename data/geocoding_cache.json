@@ -617,7 +617,7 @@
  },
  "nadbystrzycka 87": {
   "result": null,
-  "ts": 1789758348.8279638
+  "ts": 1790366721.567851
  },
  "gabriela narutowicza": {
   "result": null,
@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1789758331.591915
+  "ts": 1790366704.0403347
  },
  "grażyny": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1789758338.553977
+  "ts": 1790366711.985764
  },
  "cyruliczej": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1789758334.3878157
+  "ts": 1790366707.4286788
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1789758335.641841
+  "ts": 1790366709.0249696
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1789758333.0201025
+  "ts": 1790366705.6646574
  },
  "kredowa": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1789758337.0679688
+  "ts": 1790366710.2294428
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1789758340.028264
+  "ts": 1790366713.6098914
  },
  "różanej": {
   "result": {
@@ -13409,7 +13409,7 @@
  },
  "swidnik|gen. j. hallera": {
   "result": null,
-  "ts": 1789758344.5259075
+  "ts": 1790366718.561971
  },
  "swidnik|cisowa": {
   "result": {
@@ -13609,7 +13609,7 @@
  },
  "swidnik|gen. s. roweckiego": {
   "result": null,
-  "ts": 1789758341.5139427
+  "ts": 1790366715.24943
  },
  "swidnik|spadochroniarzy": {
   "result": {
@@ -13661,7 +13661,7 @@
  },
  "swidnik|głowackiego 9": {
   "result": null,
-  "ts": 1789758343.007961
+  "ts": 1790366716.9013386
  },
  "swidnik|wincentego witosa": {
   "result": {
@@ -13797,7 +13797,7 @@
  },
  "swidnik|krótka": {
   "result": null,
-  "ts": 1789758345.8390005
+  "ts": 1790366719.9275093
  },
  "swidnik|niepodległości 18": {
   "result": null,
@@ -15800,5 +15800,29 @@
    "city": "Lublin"
   },
   "ts": 1790337504.0180159
+ },
+ "rva:51.2670,22.5437": {
+  "result": {
+   "road": null,
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1790366723.337019
+ },
+ "rva:51.2433,22.5897": {
+  "result": {
+   "road": "Przyjaźni",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1790366725.1028
+ },
+ "rva:51.2160,22.7023": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Brzeziny I",
+   "city": "Świdnik"
+  },
+  "ts": 1790366726.425994
  }
 }
