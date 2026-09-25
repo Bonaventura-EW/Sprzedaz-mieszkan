@@ -15768,5 +15768,37 @@
    "city": "Świdnik"
   },
   "ts": 1790280187.7420018
+ },
+ "rva:51.2451,22.5269": {
+  "result": {
+   "road": "Wileńska",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1790337499.7458706
+ },
+ "rva:51.2492,22.5530": {
+  "result": {
+   "road": "Jana Karskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1790337500.991846
+ },
+ "rva:51.2775,22.5108": {
+  "result": {
+   "road": "Kameralny Sławin",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1790337502.2663512
+ },
+ "rva:51.2013,22.5546": {
+  "result": {
+   "road": "Henryka Wolińskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1790337504.0180159
  }
 }
