@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1789843202.8701937
+  "ts": 1790450221.6174443
  },
  "pozytywistów": {
   "result": {
@@ -15832,5 +15832,49 @@
    "city": "Lublin"
   },
   "ts": 1790422371.3678744
+ },
+ "swidnik|willowa": {
+  "result": {
+   "lat": 51.225953,
+   "lon": 22.6893126,
+   "name": "Willowa"
+  },
+  "ts": 1790450223.2751088
+ },
+ "bajkowa 13": {
+  "result": null,
+  "ts": 1790450224.938004
+ },
+ "rva:51.2776,22.5150": {
+  "result": {
+   "road": "Kameralny Sławin",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1790450226.5956998
+ },
+ "rva:51.2520,22.5218": {
+  "result": {
+   "road": "Bajkowa",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1790450228.275451
+ },
+ "rva:51.2514,22.5284": {
+  "result": {
+   "road": "Aleje Racławickie",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1790450229.953465
+ },
+ "rva:51.2298,22.5921": {
+  "result": {
+   "road": "Kazimierza Dulęby",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1790450231.7352357
  }
 }
