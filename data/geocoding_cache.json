@@ -9829,7 +9829,7 @@
  },
  "niepodledłości": {
   "result": null,
-  "ts": 1788811316.0373945
+  "ts": 1790511110.1575727
  },
  "rva:51.2389,22.5092": {
   "result": {
@@ -15876,5 +15876,41 @@
    "city": "Lublin"
   },
   "ts": 1790450231.7352357
+ },
+ "al. racławickie": {
+  "result": {
+   "lat": 51.2479836,
+   "lon": 22.5473541,
+   "name": "Aleje Racławickie"
+  },
+  "ts": 1790511111.7987337
+ },
+ "swidnik|jarzębinowa 5": {
+  "result": null,
+  "ts": 1790511113.5620437
+ },
+ "swidnik|armii krajowej i": {
+  "result": {
+   "lat": 51.2197064,
+   "lon": 22.7160892,
+   "name": "Armii Krajowej"
+  },
+  "ts": 1790511114.8852823
+ },
+ "rva:51.2624,22.5694": {
+  "result": {
+   "road": "Ludwika Hirszfelda",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1790511116.3414483
+ },
+ "rva:51.2480,22.5474": {
+  "result": {
+   "road": "Aleje Racławickie",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1790511118.1088712
  }
 }
