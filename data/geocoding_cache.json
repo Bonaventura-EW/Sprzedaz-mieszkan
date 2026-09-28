@@ -15916,5 +15916,45 @@
  "pana balcera 6": {
   "result": null,
   "ts": 1790538569.7851894
+ },
+ "równa": {
+  "result": {
+   "lat": 51.2307083,
+   "lon": 22.5806055,
+   "name": "Równa"
+  },
+  "ts": 1790604402.2638319
+ },
+ "rva:51.2307,22.5806": {
+  "result": {
+   "road": "Równa",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1790604403.6511083
+ },
+ "rva:51.2260,22.6197": {
+  "result": {
+   "road": "Bohdana Dobrzańskiego",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1790604404.907964
+ },
+ "rva:51.2552,22.5850": {
+  "result": {
+   "road": "Stefana Okrzei",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1790604406.6746778
+ },
+ "rva:51.2200,22.5059": {
+  "result": {
+   "road": "Węglinek",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1790604408.428206
  }
 }
