@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1790022543.3537493
+  "ts": 1790633340.3493223
  },
  "mełgiewskiej": {
   "result": {
@@ -15956,5 +15956,21 @@
    "city": "Lublin"
   },
   "ts": 1790604408.428206
+ },
+ "rva:51.2265,22.6110": {
+  "result": {
+   "road": "Grenadierów",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1790633341.9055054
+ },
+ "rva:51.2501,22.5371": {
+  "result": {
+   "road": "Księżycowa",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1790633343.4511595
  }
 }
