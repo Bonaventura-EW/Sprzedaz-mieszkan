@@ -55,6 +55,12 @@ def build_map_offer(offer: dict) -> dict:
         # FIX 2026-06-28: data dezaktywacji — zasila wykres „trwale znikniętych"
         # ofert na statystyki.html (zniknięcia grupowane per dzień/miesiąc).
         'deactivated_at': offer.get('deactivated_at'),
+        # FIX 2026-09-29: czy oferta kiedykolwiek zniknęła z listingu i wróciła
+        # (propagacja z SONAR-POKOJOWY, origin-filter-checkboxes) — zasila
+        # checkboxy „Nowe" / „Reaktywowane" na głównej mapie. `reactivated_at`
+        # liczy `main.py::_update_existing` od dawna, ale dotąd nie docierał
+        # do docs/data.json.
+        'reactivated': bool(offer.get('reactivated_at')),
     }
 
 
