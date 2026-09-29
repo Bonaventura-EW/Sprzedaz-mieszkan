@@ -15479,7 +15479,7 @@
  },
  "piłkarskiej": {
   "result": null,
-  "ts": 1790077652.3363113
+  "ts": 1790686958.7447054
  },
  "muzycznej": {
   "result": {
@@ -15972,5 +15972,53 @@
    "city": "Lublin"
   },
   "ts": 1790633343.4511595
+ },
+ "górnej": {
+  "result": {
+   "lat": 51.244238,
+   "lon": 22.560056,
+   "name": "Górna"
+  },
+  "ts": 1790686961.5716727
+ },
+ "hutnicza 14": {
+  "result": null,
+  "ts": 1790686965.124294
+ },
+ "cicha 4": {
+  "result": null,
+  "ts": 1790686966.9789665
+ },
+ "mieczysławy ćwiklińskiej": {
+  "result": {
+   "lat": 51.255457,
+   "lon": 22.539542,
+   "name": "Mieczysławy Ćwiklińskiej"
+  },
+  "ts": 1790686968.4117353
+ },
+ "rva:51.2555,22.5395": {
+  "result": {
+   "road": "Mieczysławy Ćwiklińskiej",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1790686969.9072895
+ },
+ "rva:51.2542,22.5799": {
+  "result": {
+   "road": "Krzemieniecka",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1790686971.4182076
+ },
+ "rva:51.2439,22.5887": {
+  "result": {
+   "road": "Przyjaźni",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1790686972.6871734
  }
 }
