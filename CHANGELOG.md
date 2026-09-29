@@ -32,6 +32,21 @@ rozwiązany bug #1 z #14. `index_history.py`/`main.py`/`docs/analytics.html`
 z surface brata nie istnieją w tym repo (odpowiednik to
 `trend_generator.py`/`docs/trend.html`) — nie były ruszane.
 
+### Dodane — checkboxy „Nowe" / „Reaktywowane" na głównej mapie (#29, propagacja z SONAR-POKOJOWY)
+Dwa niezależne checkboxy w legendzie sidebaru („🔄 Pochodzenie"), domyślnie
+oba zaznaczone, filtrujące oferty wg tego, czy kiedykolwiek zniknęły
+z listingu i wróciły. W przeciwieństwie do reszty legendy pinezek (filtr OR)
+ten podział jest rozłączny i działa jak AND — każda oferta jest albo „Nowa"
+(nigdy nie reaktywowana), albo „Reaktywowana", więc odznaczenie jednego
+checkboxa pokazuje wyłącznie drugą grupę.
+
+Dane o reaktywacji (`reactivated_at`) liczy `main.py::_update_existing` od
+dawna (zasila wykres napływu na `trend.html`), ale `map_generator.py`
+nigdy nie przepuszczał tego pola do `docs/data.json` — informacja nie
+docierała do mapy. `build_map_offer()` dostał nowe pole `reactivated: bool`;
+`docs/assets/script2.js` dostał `offerOrigin()`/`buildOriginFilters()`
+wzorowane na istniejących `roomsBucket()`/`buildRoomsFilters()`.
+
 ### Naprawione — odpływ gubił pierwszą śmierć wielokrotnie reaktywowanych ofert (#25, propagacja z SONAR-POKOJOWY)
 `deactivated_at` trzyma tylko OSTATNIĄ dezaktywację oferty — dla oferty, która
 umarła, wróciła (reaktywacja) i umarła znowu, poprzednie zniknięcie było
