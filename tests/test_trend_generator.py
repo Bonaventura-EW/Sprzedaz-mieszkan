@@ -133,10 +133,14 @@ def test_reactivations_counted_and_folded_into_inflow():
 def test_outflow_counts_every_cycle_not_just_last():
     """FIX 2026-09-22 (issue #25): oferta, która umarła, wróciła i umarła
     znowu, musi wnieść OBA zniknięcia do odpływu — deactivated_at trzymałby
-    tylko drugie, gubiąc pierwsze (propagacja z SONAR-POKOJOWY)."""
+    tylko drugie, gubiąc pierwsze (propagacja z SONAR-POKOJOWY).
+
+    Reaktywacja 08.06 (gap 5 dni od dezaktywacji 03.06) celowo POZA oknem
+    `FLAP_MAX_DAYS`, żeby nie zderzyć się z FIX 2026-09-29 (#15) niżej —
+    tu testujemy inny mechanizm (liczenie każdego cyklu, nie tylko ostatniego)."""
     offer = _offer('otodom:1', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00',
                     active=False, deactivated_at='2026-06-10T09:00:00+02:00')
-    offer['reactivation_dates'] = ['2026-06-05T08:00:00+02:00']
+    offer['reactivation_dates'] = ['2026-06-08T08:00:00+02:00']
     offer['deactivation_dates'] = ['2026-06-03T12:00:00+02:00', '2026-06-10T09:00:00+02:00']
     db = {'offers': [offer]}
     payload = build_trend(db, today=date(2026, 6, 12))
@@ -157,6 +161,73 @@ def test_outflow_falls_back_to_deactivated_at_for_old_records():
     payload = build_trend(db, today=date(2026, 6, 4))
     outflow = _sparse_map(payload, 'outflow', 'wszystkie')
     assert outflow == {'2026-06-02': 1}
+
+
+# ── Mrugnięcia dezaktywacja→reaktywacja (FIX 2026-09-29, issue #15,
+#    propagacja z SONAR---DZIA-KOWY) ─────────────────────────────────────
+# Para domknięta w ≤3 dniach to artefakt częściowego scrape'u, nie realny
+# powrót oferty — wyrzucana z odpływu i reaktywacji/napływu.
+
+def test_flap_pair_dropped_from_outflow_and_reactivations():
+    offer = _offer('otodom:1', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00')
+    offer['deactivation_dates'] = ['2026-06-05T12:00:00+02:00']
+    offer['reactivation_dates'] = ['2026-06-07T08:00:00+02:00']   # gap 2 dni
+    db = {'offers': [offer]}
+    payload = build_trend(db, today=date(2026, 6, 10))
+    assert _sparse_map(payload, 'outflow', 'wszystkie') == {}
+    assert _sparse_map(payload, 'reactivations', 'wszystkie') == {}
+    assert _sparse_map(payload, 'inflow', 'wszystkie') == {}
+
+
+def test_flap_pair_boundary_exactly_flap_max_days_is_dropped():
+    offer = _offer('otodom:1', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00')
+    offer['deactivation_dates'] = ['2026-06-05T12:00:00+02:00']
+    offer['reactivation_dates'] = ['2026-06-08T08:00:00+02:00']   # gap dokładnie 3 dni
+    db = {'offers': [offer]}
+    payload = build_trend(db, today=date(2026, 6, 10))
+    assert _sparse_map(payload, 'outflow', 'wszystkie') == {}
+    assert _sparse_map(payload, 'reactivations', 'wszystkie') == {}
+
+
+def test_pair_beyond_flap_window_is_kept():
+    offer = _offer('otodom:1', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00')
+    offer['deactivation_dates'] = ['2026-06-05T12:00:00+02:00']
+    offer['reactivation_dates'] = ['2026-06-09T08:00:00+02:00']   # gap 4 dni
+    db = {'offers': [offer]}
+    payload = build_trend(db, today=date(2026, 6, 10))
+    assert _sparse_map(payload, 'outflow', 'wszystkie') == {'2026-06-05': 1}
+    assert _sparse_map(payload, 'reactivations', 'wszystkie') == {'2026-06-09': 1}
+    assert _sparse_map(payload, 'inflow', 'wszystkie') == {'2026-06-09': 1}
+
+
+def test_flap_pairing_is_by_index_not_nearest_date():
+    """Dwa pełne cykle: pierwszy realny (5 dni), drugi mrugnięcie (1 dzień).
+    Parowanie i-ta dezaktywacja ↔ i-ta reaktywacja (chronologicznie się
+    przeplatają), więc tylko drugi cykl znika."""
+    offer = _offer('otodom:1', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00')
+    offer['deactivation_dates'] = ['2026-06-03T12:00:00+02:00', '2026-06-15T12:00:00+02:00']
+    offer['reactivation_dates'] = ['2026-06-08T08:00:00+02:00', '2026-06-16T08:00:00+02:00']
+    db = {'offers': [offer]}
+    payload = build_trend(db, today=date(2026, 6, 20))
+    assert _sparse_map(payload, 'outflow', 'wszystkie') == {'2026-06-03': 1}
+    assert _sparse_map(payload, 'reactivations', 'wszystkie') == {'2026-06-08': 1}
+
+
+def test_flap_filter_leaves_unmatched_trailing_deactivation():
+    """Oferta obecnie nieaktywna po mrugnięciu: dezaktywacja bez pary
+    (brak kolejnej reaktywacji) zostaje — nie ma czego z nią parować."""
+    offer = _offer('otodom:1', 'otodom', 'wtorny', 2, '2026-06-01T10:00:00+02:00',
+                    active=False, deactivated_at='2026-06-15T09:00:00+02:00',
+                    last_seen='2026-06-14T18:00:00+02:00')
+    offer['deactivation_dates'] = ['2026-06-05T12:00:00+02:00', '2026-06-15T09:00:00+02:00']
+    offer['reactivation_dates'] = ['2026-06-07T08:00:00+02:00']   # paruje tylko z pierwszą (gap 2 dni)
+    db = {'offers': [offer]}
+    payload = build_trend(db, today=date(2026, 6, 17))
+    outflow = _sparse_map(payload, 'outflow', 'wszystkie')
+    # pierwsza para (05→07) mrugnięcie, wyrzucona; druga dezaktywacja
+    # (last_seen+1 = 06-15) zostaje, bo nie ma z czym jej sparować
+    assert outflow == {'2026-06-15': 1}
+    assert _sparse_map(payload, 'reactivations', 'wszystkie') == {}
 
 
 def test_reactivated_at_scalar_fallback():

@@ -2,6 +2,36 @@
 
 ## [Niewydane]
 
+### Naprawione — pary dezaktywacja→reaktywacja domknięte w ≤3 dniach fałszowały wykresy przepływu (#15, propagacja z SONAR---DZIA-KOWY)
+Audyt u brata (manifest `2026-09-03-audyt-wykresow-rynku`) wykazał, że para
+zdarzeń „dezaktywacja → kolejna reaktywacja" domknięta w ciągu 2-3 dni to
+niemal zawsze artefakt częściowego scrape'u (Otodom: `detail_limit` na skan +
+strukturalne okno paginacji ~1800/3100 z pkt 5/5a CLAUDE.md; OLX: chwilowa
+blokada), a nie realne wycofanie i powrót mieszkania na rynek — u brata 66%
+par domykało się w tym oknie. Zmierzone na `data/offers.json`: **32,8% par
+(276 z 841)** domyka się w ≤3 dniach — skala potwierdzona, naprawa jak
+u brata.
+
+`trend_generator.py` paruje teraz `deactivation_dates`/`reactivation_dates`
+oferty po indeksie (obie listy zawsze się przeplatają — `main.py` dopisuje
+reaktywację tylko przy przejściu inactive→active, dezaktywację tylko przy
+active→inactive) i wyrzuca pary domknięte w ≤`FLAP_MAX_DAYS` (3) dniach
+z serii odpływu i reaktywacji/napływu PRZED agregacją — inaczej niż maska
+pokrycia doby (`coverage.incomplete`, #14), tu nie ma czego pokazywać jako
+lukę, bo para jest uznana za nie-zdarzenie. Na realnych danych:
+**-886 zdarzeń** w każdej z serii odpływu, reaktywacji i napływu (na oknie
+widocznym na wykresie: odpływ 4373 → 3487, reaktywacje 1656 → 770, napływ
+5777 → 4891).
+
+Węższy zakres niż u brata (mianownik u niego to 6 źródeł, potrzebuje
+`blind_source_days`/`recovery_days` per źródło i wspólnego mechanizmu
+`_flow_metric(uncounted=...)`) — u nas te dwa punkty manifestu (blokada
+źródła, dzień powrotu po blokadzie) pokrywa już istniejący
+`_source_outage_days`/`coverage` z #14, a punkt o dobie w toku to już
+rozwiązany bug #1 z #14. `index_history.py`/`main.py`/`docs/analytics.html`
+z surface brata nie istnieją w tym repo (odpowiednik to
+`trend_generator.py`/`docs/trend.html`) — nie były ruszane.
+
 ### Naprawione — odpływ gubił pierwszą śmierć wielokrotnie reaktywowanych ofert (#25, propagacja z SONAR-POKOJOWY)
 `deactivated_at` trzyma tylko OSTATNIĄ dezaktywację oferty — dla oferty, która
 umarła, wróciła (reaktywacja) i umarła znowu, poprzednie zniknięcie było
