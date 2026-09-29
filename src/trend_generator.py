@@ -104,6 +104,28 @@ ma):
   tej korekty, bo `last_seen` sprzed kolejnej reaktywacji jest dawno nadpisany
   (nie da się go odtworzyć wstecz).
 
+Mrugnięcia dezaktywacja→reaktywacja (FIX 2026-09-29, issue #15, propagacja
+z SONAR---DZIA-KOWY, manifest 2026-09-03-audyt-wykresow-rynku):
+- para (dezaktywacja, kolejna reaktywacja) domknięta w ≤`FLAP_MAX_DAYS` dniach
+  jest niemal zawsze artefaktem częściowego scrape'u (Otodom: `detail_limit`
+  na skan + okno paginacji ~1800/3100, pkt 5/5a CLAUDE.md; OLX: chwilowa
+  blokada), nie realnym wycofaniem i powrotem mieszkania na rynek. Zmierzone
+  na `data/offers.json`: 276 z 841 par (32,8%) domyka się w ≤3 dniach.
+- takie pary są WYRZUCANE z serii odpływu i reaktywacji/napływu (`_drop_flapped`),
+  inaczej niż maska pokrycia doby (`coverage.incomplete`) wyżej — tam wartość
+  zostaje w API i front maskuje ją na wykresie, bo cała doba nie ma sensownego
+  pomiaru. Tu przeciwnie: konkretna para zdarzeń jest uznana za nie-zdarzenie
+  (fałszywy alarm pipeline'u), więc nie wchodzi do agregatu w ogóle — nie ma
+  czego pokazywać jako „lukę".
+- dezaktywacje i reaktywacje oferty ZAWSZE się przeplatają (main.py dopisuje
+  reaktywację tylko przy przejściu inactive→active, dezaktywację tylko przy
+  active→inactive), więc n-ta reaktywacja paruje się z n-tą dezaktywacją —
+  parowanie po indeksie, bez zgadywania najbliższej daty.
+- węższy zakres niż u brata: brakuje tu `blind_source_days`/`recovery_days`
+  (punkty 2/3 manifestu, mianownik 6 źródeł u brata, u nas de facto pokrywa
+  je już `_source_outage_days`/`coverage` z #14) i `provisional_day` (punkt 4,
+  już rozwiązany jako bug #1 w #14 — seria kończy się na ostatnim PEŁNYM dniu).
+
 Częstotliwość zmian ceny (FIX 2026-09-22, propagacja z SONAR-POKOJOWY,
 manifest 2026-09-15-price-change-series → issue #24):
 - `price_drops`/`price_increases` danego dnia D = liczba ZDARZEŃ zmiany ceny
@@ -136,6 +158,11 @@ API_DIR = Path(paths.DOCS_DIR) / "api"
 # 8:17 i 18:17 czasu PL. Dzień, w którym zakończyło się MNIEJ przebiegów,
 # widział tylko wycinek listingu — rekonstrukcja jest z niego zaniżona.
 SCANS_PER_DAY = 2
+
+# Para dezaktywacja→reaktywacja domknięta w tylu dniach lub mniej to
+# „mrugnięcie" pipeline'u (patrz FIX 2026-09-29 w docstringu modułu), nie
+# realny powrót oferty na rynek.
+FLAP_MAX_DAYS = 3
 
 # Definicje kategorii: (klucz, etykieta, is_category, predykat na ofercie)
 CATEGORIES = [
@@ -295,6 +322,21 @@ def _measured_daily(scan_history):
     return [{'date': d.isoformat(), 'count': c} for d, c in sorted(by_day.items())]
 
 
+def _drop_flapped(deact_dates, react_dates):
+    """Wyrzuca z obu list wpisy tworzące parę (dezaktywacja, reaktywacja)
+    domkniętą w ≤`FLAP_MAX_DAYS` dniach — patrz FIX 2026-09-29 w docstringu
+    modułu. Listy się przeplatają (i-ta dezaktywacja ↔ i-ta reaktywacja),
+    więc parowanie po indeksie wystarcza; nadmiarowy ogon (oferta obecnie
+    nieaktywna, więc ma o jedną dezaktywację więcej niż reaktywacji) zostaje
+    bez zmian — brak kolejnej reaktywacji, więc nie ma czego parować.
+    """
+    kept_deact = [d for i, d in enumerate(deact_dates)
+                  if i >= len(react_dates) or (react_dates[i] - d).days > FLAP_MAX_DAYS]
+    kept_react = [r for i, r in enumerate(react_dates)
+                  if i >= len(deact_dates) or (r - deact_dates[i]).days > FLAP_MAX_DAYS]
+    return kept_deact, kept_react
+
+
 def build_trend(db, today=None, scan_history=None):
     tz = pytz.timezone('Europe/Warsaw')
     today = today or datetime.now(tz).date()
@@ -351,6 +393,10 @@ def build_trend(db, today=None, scan_history=None):
         deact_dates = [d for d in (_parse_date(x) for x in raw_deact) if d]
         if not o.get('active') and deact_dates:
             deact_dates = (deact_dates[:-1] + [deact]) if deact else deact_dates
+        # FIX 2026-09-29 (issue #15): pary dezaktywacja→reaktywacja domknięte
+        # w ≤FLAP_MAX_DAYS dniach to mrugnięcia pipeline'u, nie realne zdarzenia
+        # rynkowe — wyrzucamy je z obu list PRZED agregacją (patrz docstring).
+        deact_dates, react_dates = _drop_flapped(deact_dates, react_dates)
         spans.append((start, end, deact_dates, react_dates, o))
         if global_start is None or start < global_start:
             global_start = start
