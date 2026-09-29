@@ -41,6 +41,8 @@ let quantiles = [];
 let marketFilterState = {};
 let roomsFilterState = {};
 let quantileBucketState = {};
+let originFilterState = {};
+const ORIGIN_LABELS = { new: '🆕 Nowe', reactivated: '🔄 Reaktywowane' };
 
 /* ===== Własne kształty rysowane na canvasie ===== */
 // Bazują na L.CircleMarker (dziedziczą _project / _point / _empty / kółkowe
@@ -261,6 +263,7 @@ async function init() {
 
     buildMarketFilters();
     buildRoomsFilters();
+    buildOriginFilters();
     buildLegend();
     bindFilterEvents();
     render();
@@ -293,6 +296,8 @@ function focusOfferFromHash() {
     if (mcb) mcb.checked = true;
     Object.keys(roomsFilterState).forEach(k => roomsFilterState[k] = true);
     document.querySelectorAll('#rooms-filters input').forEach(cb => cb.checked = true);
+    Object.keys(originFilterState).forEach(k => originFilterState[k] = true);
+    document.querySelectorAll('#origin-filters input').forEach(cb => cb.checked = true);
     if (colorMode() === 'price') quantileBucketState[quantileIndex(o)] = true;
     document.getElementById('time-filter').value = 'all';
     render();
@@ -336,6 +341,13 @@ function isNew(offer) {
 
 function isApprox(offer) {
     return offer.coords_precision !== 'exact';
+}
+
+// Rozłączny podział: KAŻDA oferta jest albo świeża (nigdy nie zniknęła
+// z listingu), albo reaktywowana (wróciła po zniknięciu) — patrz
+// checkboxy „Nowe" / „Reaktywowane" (propagacja z SONAR-POKOJOWY).
+function offerOrigin(offer) {
+    return offer.reactivated ? 'reactivated' : 'new';
 }
 
 function roomsBucket(offer) {
@@ -404,6 +416,26 @@ function buildRoomsFilters() {
         label.innerHTML = `<input type="checkbox" checked data-rooms="${b}"> ${txt} <span class="count">(${buckets[b]})</span>`;
         label.querySelector('input').addEventListener('change', e => {
             roomsFilterState[b] = e.target.checked;
+            render();
+        });
+        container.appendChild(label);
+    });
+}
+
+// AND, nie OR: podział jest rozłączny, więc odznaczenie jednego checkboxa
+// pokazuje wyłącznie drugą grupę (a nie „wszystko z automatu" jak reszta
+// legendy pinezek — patrz manifest SONAR-POKOJOWY, origin-filter-checkboxes).
+function buildOriginFilters() {
+    const counts = { new: 0, reactivated: 0 };
+    allOffers.forEach(o => { counts[offerOrigin(o)]++; });
+    const container = document.getElementById('origin-filters');
+    ['new', 'reactivated'].forEach(key => {
+        originFilterState[key] = true;
+        const label = document.createElement('label');
+        label.innerHTML = `<input type="checkbox" checked data-origin="${key}"> ` +
+            `${ORIGIN_LABELS[key]} <span class="count">(${counts[key]})</span>`;
+        label.querySelector('input').addEventListener('change', e => {
+            originFilterState[key] = e.target.checked;
             render();
         });
         container.appendChild(label);
@@ -505,6 +537,7 @@ function passes(o, c) {
 
     if (!marketFilterState[o.market || 'nieokreslony']) return false;
     if (roomsFilterState[roomsBucket(o)] === false) return false;
+    if (!originFilterState[offerOrigin(o)]) return false;
 
     if (c.colorMode === 'price' && quantileBucketState[quantileIndex(o)] === false) return false;
 
