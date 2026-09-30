@@ -10217,7 +10217,7 @@
  },
  "bursztynowa 30": {
   "result": null,
-  "ts": 1787209872.5407014
+  "ts": 1790801562.7266858
  },
  "wrońska 2f": {
   "result": null,
@@ -15011,7 +15011,7 @@
  },
  "turkuso": {
   "result": null,
-  "ts": 1790192649.1195414
+  "ts": 1790801559.964364
  },
  "rva:51.2326,22.4924": {
   "result": {
@@ -15631,7 +15631,7 @@
  },
  "racławicka": {
   "result": null,
-  "ts": 1790192659.8927345
+  "ts": 1790801561.4114344
  },
  "rva:51.2639,22.5765": {
   "result": {
@@ -16084,5 +16084,33 @@
    "city": "Lublin"
   },
   "ts": 1790772288.9554873
+ },
+ "swidnik|niepodległości 5": {
+  "result": null,
+  "ts": 1790801558.52217
+ },
+ "gorczańskiej": {
+  "result": {
+   "lat": 51.2796658,
+   "lon": 22.5510632,
+   "name": "Gorczańska"
+  },
+  "ts": 1790801565.4152482
+ },
+ "rva:51.2280,22.5096": {
+  "result": {
+   "road": "Tymiankowa",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1790801567.0452752
+ },
+ "rva:51.2797,22.5511": {
+  "result": {
+   "road": "Gorczańska",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1790801568.6015828
  }
 }
