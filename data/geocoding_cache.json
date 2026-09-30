@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1790164061.2465699
+  "ts": 1790772267.5953827
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1790164071.0521812
+  "ts": 1790772279.0202332
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1790164062.701067
+  "ts": 1790772268.8837147
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1790164066.8002386
+  "ts": 1790772273.0721524
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1790164068.2457275
+  "ts": 1790772275.9518309
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1790164069.710012
+  "ts": 1790772277.5783217
  },
  "krasińskiego": {
   "result": {
@@ -9369,7 +9369,7 @@
  },
  "samosnowicza": {
   "result": null,
-  "ts": 1790164072.5022745
+  "ts": 1790772280.6660814
  },
  "wrońska 3d": {
   "result": null,
@@ -16036,5 +16036,53 @@
    "name": "Dożynkowa"
   },
   "ts": 1790715238.4791534
+ },
+ "skrajna": {
+  "result": {
+   "lat": 51.2532569,
+   "lon": 22.5209199,
+   "name": "Skrajna"
+  },
+  "ts": 1790772274.3004277
+ },
+ "karola olszewskiego": {
+  "result": {
+   "lat": 51.2106065,
+   "lon": 22.5512227,
+   "name": "Karola Olszewskiego"
+  },
+  "ts": 1790772282.3113134
+ },
+ "rva:51.2346,22.5787": {
+  "result": {
+   "road": "Droga Męczenników Majdanka",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1790772284.0798538
+ },
+ "rva:51.2533,22.5209": {
+  "result": {
+   "road": "Skrajna",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1790772285.847459
+ },
+ "rva:51.2106,22.5512": {
+  "result": {
+   "road": "Karola Olszewskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1790772287.619919
+ },
+ "rva:51.2693,22.5492": {
+  "result": {
+   "road": "Wojciecha Żywnego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1790772288.9554873
  }
 }
