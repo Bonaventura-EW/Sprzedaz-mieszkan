@@ -5421,7 +5421,7 @@
  },
  "dolnej panny marii": {
   "result": null,
-  "ts": 1784915814.496038
+  "ts": 1790861284.245268
  },
  "dolna marii panny": {
   "result": {
@@ -14955,7 +14955,7 @@
  },
  "jemiołuszki węglinek": {
   "result": null,
-  "ts": 1788866846.89973
+  "ts": 1790861285.7249405
  },
  "nowomiejskiej": {
   "result": {
@@ -15023,7 +15023,7 @@
  },
  "jacka przybylskiego.mieszkanie": {
   "result": null,
-  "ts": 1790250950.3043184
+  "ts": 1790861277.0204117
  },
  "rva:51.2123,22.6939": {
   "result": {
@@ -15667,7 +15667,7 @@
  },
  "swidnik|spółdzielczości pracy": {
   "result": null,
-  "ts": 1790250955.461132
+  "ts": 1790861279.8764777
  },
  "jarzębinowa": {
   "result": {
@@ -16112,5 +16112,41 @@
    "city": "Lublin"
   },
   "ts": 1790801568.6015828
+ },
+ "krochmalna": {
+  "result": {
+   "lat": 51.225081,
+   "lon": 22.5499637,
+   "name": "Krochmalna"
+  },
+  "ts": 1790861281.258218
+ },
+ "koncertowan 19": {
+  "result": null,
+  "ts": 1790861282.7309575
+ },
+ "rva:51.2178,22.6375": {
+  "result": {
+   "road": "Zygmunta Augusta",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1790861287.2760181
+ },
+ "rva:51.2251,22.5500": {
+  "result": {
+   "road": "Krochmalna",
+   "district": "Za Cukrownią",
+   "city": "Lublin"
+  },
+  "ts": 1790861288.9127738
+ },
+ "rva:51.2191,22.6966": {
+  "result": {
+   "road": "Stanisława Wyspiańskiego",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1790861290.774861
  }
 }
