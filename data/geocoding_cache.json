@@ -617,7 +617,7 @@
  },
  "nadbystrzycka 87": {
   "result": null,
-  "ts": 1790366721.567851
+  "ts": 1790974203.162979
  },
  "gabriela narutowicza": {
   "result": null,
@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1790366704.0403347
+  "ts": 1790974188.9100928
  },
  "grażyny": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1790366711.985764
+  "ts": 1790974195.5914447
  },
  "cyruliczej": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1790366707.4286788
+  "ts": 1790974191.6301107
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1790366709.0249696
+  "ts": 1790974192.8789473
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1790366705.6646574
+  "ts": 1790974190.2021239
  },
  "kredowa": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1790366710.2294428
+  "ts": 1790974194.2580671
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1790366713.6098914
+  "ts": 1790974197.0691621
  },
  "różanej": {
   "result": {
@@ -13409,7 +13409,7 @@
  },
  "swidnik|gen. j. hallera": {
   "result": null,
-  "ts": 1790366718.561971
+  "ts": 1790974200.1368015
  },
  "swidnik|cisowa": {
   "result": {
@@ -13609,7 +13609,7 @@
  },
  "swidnik|gen. s. roweckiego": {
   "result": null,
-  "ts": 1790366715.24943
+  "ts": 1790974198.401842
  },
  "swidnik|spadochroniarzy": {
   "result": {
@@ -13797,7 +13797,7 @@
  },
  "swidnik|krótka": {
   "result": null,
-  "ts": 1790366719.9275093
+  "ts": 1790974201.5830255
  },
  "swidnik|niepodległości 18": {
   "result": null,
@@ -16201,5 +16201,25 @@
  "paderwskiego": {
   "result": null,
   "ts": 1790945187.6537824
+ },
+ "granata7": {
+  "result": null,
+  "ts": 1790974204.607156
+ },
+ "rva:51.2667,22.5278": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1790974206.1024306
+ },
+ "rva:51.2392,22.5189": {
+  "result": {
+   "road": "Juranda",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1790974207.4625976
  }
 }
