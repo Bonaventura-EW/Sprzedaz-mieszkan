@@ -16189,5 +16189,17 @@
    22.5320147
   ],
   "ts": 1790888787.0102103
+ },
+ "rva:51.2693,22.5550": {
+  "result": {
+   "road": "Józefa Elsnera",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1790945186.4063206
+ },
+ "paderwskiego": {
+  "result": null,
+  "ts": 1790945187.6537824
  }
 }
