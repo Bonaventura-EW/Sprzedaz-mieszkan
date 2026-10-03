@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1790450221.6174443
+  "ts": 1791055085.1480565
  },
  "pozytywistów": {
   "result": {
@@ -16221,5 +16221,13 @@
    "city": "Lublin"
   },
   "ts": 1790974207.4625976
+ },
+ "rva:51.2462,22.5211": {
+  "result": {
+   "road": "Balladyny",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1791055086.8105326
  }
 }
