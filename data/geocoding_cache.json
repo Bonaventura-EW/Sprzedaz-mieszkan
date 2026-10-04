@@ -9829,7 +9829,7 @@
  },
  "niepodledłości": {
   "result": null,
-  "ts": 1790511110.1575727
+  "ts": 1791116990.794861
  },
  "rva:51.2389,22.5092": {
   "result": {
@@ -16229,5 +16229,13 @@
    "city": "Lublin"
   },
   "ts": 1791055086.8105326
+ },
+ "tadeusza kościuszki": {
+  "result": {
+   "lat": 51.2470484,
+   "lon": 22.559938,
+   "name": "Tadeusza Kościuszki"
+  },
+  "ts": 1791116992.116602
  }
 }
