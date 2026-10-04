@@ -16237,5 +16237,21 @@
    "name": "Tadeusza Kościuszki"
   },
   "ts": 1791116992.116602
+ },
+ "wileńska-lsm": {
+  "result": null,
+  "ts": 1791142994.8463345
+ },
+ "wileńskiej-lsm": {
+  "result": null,
+  "ts": 1791142996.2036304
+ },
+ "radzyńskiej": {
+  "result": {
+   "lat": 51.2597193,
+   "lon": 22.549837,
+   "name": "Radzyńska"
+  },
+  "ts": 1791142999.2131689
  }
 }
