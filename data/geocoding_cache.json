@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1790633340.3493223
+  "ts": 1791240274.6506033
  },
  "mełgiewskiej": {
   "result": {
@@ -16313,5 +16313,25 @@
    "city": "Lublin"
   },
   "ts": 1791211936.7131767
+ },
+ "rubinowa 2": {
+  "result": null,
+  "ts": 1791240276.4261816
+ },
+ "rva:51.2835,22.5463": {
+  "result": {
+   "road": "Cedrowa",
+   "district": null,
+   "city": "gmina Niemce"
+  },
+  "ts": 1791240278.2962966
+ },
+ "rva:51.2402,22.5547": {
+  "result": {
+   "road": "Strażacka",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1791240280.166806
  }
 }
