@@ -2673,7 +2673,7 @@
  },
  "dr k. jaczewskiego": {
   "result": null,
-  "ts": 1789501552.998676
+  "ts": 1791211924.181666
  },
  "ogrodowa śródmieście": {
   "result": null,
@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1790538568.4556053
+  "ts": 1791211922.8163717
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -16253,5 +16253,65 @@
    "name": "Radzyńska"
   },
   "ts": 1791142999.2131689
+ },
+ "składowa": {
+  "result": {
+   "lat": 51.2391571,
+   "lon": 22.5805572,
+   "name": "Składowa"
+  },
+  "ts": 1791211925.4647467
+ },
+ "boczna siewnej": {
+  "result": {
+   "lat": 51.2400112,
+   "lon": 22.5461199,
+   "name": "Boczna Siewnej"
+  },
+  "ts": 1791211926.8506358
+ },
+ "gospodarcza 22": {
+  "result": null,
+  "ts": 1791211928.486889
+ },
+ "rva:51.2161,22.6935": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1791211930.1685452
+ },
+ "rva:51.2392,22.5806": {
+  "result": {
+   "road": "Składowa",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1791211931.6152506
+ },
+ "rva:51.2400,22.5461": {
+  "result": {
+   "road": "Boczna Siewnej",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1791211933.3060088
+ },
+ "rva:51.2449,22.5605": {
+  "result": {
+   "road": "Prezydenta Gabriela Narutowicza",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1791211934.803885
+ },
+ "rva:51.2287,22.5852": {
+  "result": {
+   "road": "Olchowa",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1791211936.7131767
  }
 }
