@@ -16381,5 +16381,21 @@
    "city": "Świdnik"
   },
   "ts": 1791293119.6956964
+ },
+ "mikołaja kopernika": {
+  "result": {
+   "lat": 51.2182288,
+   "lon": 22.5746457,
+   "name": "Mikołaja Kopernika"
+  },
+  "ts": 1791320600.8258297
+ },
+ "rva:51.2414,22.5209": {
+  "result": {
+   "road": "Wajdeloty",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1791320602.500759
  }
 }
