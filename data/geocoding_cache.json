@@ -10353,7 +10353,7 @@
  },
  "wareńczyka": {
   "result": null,
-  "ts": 1789930428.2699168
+  "ts": 1791293100.9102736
  },
  "jezuickiej": {
   "result": {
@@ -15479,7 +15479,7 @@
  },
  "piłkarskiej": {
   "result": null,
-  "ts": 1790686958.7447054
+  "ts": 1791293105.298379
  },
  "muzycznej": {
   "result": {
@@ -15983,7 +15983,7 @@
  },
  "hutnicza 14": {
   "result": null,
-  "ts": 1790686965.124294
+  "ts": 1791293106.6948032
  },
  "cicha 4": {
   "result": null,
@@ -16333,5 +16333,53 @@
    "city": "Lublin"
   },
   "ts": 1791240280.166806
+ },
+ "kwarcowa kawalerka": {
+  "result": null,
+  "ts": 1791293108.1999779
+ },
+ "racławickiej": {
+  "result": null,
+  "ts": 1791293112.382425
+ },
+ "juliusza słowackiego": {
+  "result": {
+   "lat": 51.2192634,
+   "lon": 22.5771918,
+   "name": "Juliusza Słowackiego"
+  },
+  "ts": 1791293113.9253411
+ },
+ "rva:51.2648,22.5423": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1791293115.4762053
+ },
+ "rva:51.2545,22.5860": {
+  "result": {
+   "road": "Wołyńska",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1791293116.8655393
+ },
+ "rva:51.2680,22.5483": {
+  "result": {
+   "road": "Wojciecha Żywnego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1791293118.2896345
+ },
+ "rva:51.2159,22.6989": {
+  "result": {
+   "road": "Rondo Honorowych Dawców Krwi",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1791293119.6956964
  }
 }
