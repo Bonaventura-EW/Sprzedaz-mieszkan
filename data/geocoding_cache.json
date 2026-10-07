@@ -15011,7 +15011,7 @@
  },
  "turkuso": {
   "result": null,
-  "ts": 1790801559.964364
+  "ts": 1791408157.0311184
  },
  "rva:51.2326,22.4924": {
   "result": {
@@ -15631,7 +15631,7 @@
  },
  "racławicka": {
   "result": null,
-  "ts": 1790801561.4114344
+  "ts": 1791408158.5067651
  },
  "rva:51.2639,22.5765": {
   "result": {
@@ -16087,7 +16087,7 @@
  },
  "swidnik|niepodległości 5": {
   "result": null,
-  "ts": 1790801558.52217
+  "ts": 1791408155.5628133
  },
  "gorczańskiej": {
   "result": {
@@ -16445,5 +16445,41 @@
    "city": "Świdnik"
   },
   "ts": 1791380045.3521025
+ },
+ "kaprysowej": {
+  "result": {
+   "lat": 51.2632611,
+   "lon": 22.5461976,
+   "name": "Kaprysowa"
+  },
+  "ts": 1791408161.475849
+ },
+ "klebeerga": {
+  "result": null,
+  "ts": 1791408162.9812744
+ },
+ "kopernika": {
+  "result": {
+   "lat": 51.2182288,
+   "lon": 22.5746457,
+   "name": "Mikołaja Kopernika"
+  },
+  "ts": 1791408164.5130856
+ },
+ "rva:51.2633,22.5462": {
+  "result": {
+   "road": "Kaprysowa",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1791408165.8112278
+ },
+ "rva:51.2437,22.5886": {
+  "result": {
+   "road": "Przyjaźni",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1791408167.3704402
  }
 }
