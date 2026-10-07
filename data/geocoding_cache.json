@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1790772267.5953827
+  "ts": 1791380022.4464836
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1790772279.0202332
+  "ts": 1791380030.845361
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3225,7 +3225,7 @@
  },
  "tarasowa 4": {
   "result": null,
-  "ts": 1790772268.8837147
+  "ts": 1791380024.0628366
  },
  "cypriana godebskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1790772273.0721524
+  "ts": 1791380028.2213132
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1790772275.9518309
+  "ts": 1791380034.0673978
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1790772277.5783217
+  "ts": 1791380029.5407922
  },
  "krasińskiego": {
   "result": {
@@ -9369,7 +9369,7 @@
  },
  "samosnowicza": {
   "result": null,
-  "ts": 1790772280.6660814
+  "ts": 1791380032.4522662
  },
  "wrońska 3d": {
   "result": null,
@@ -16397,5 +16397,53 @@
    "city": "Lublin"
   },
   "ts": 1791320602.500759
+ },
+ "daliowa 16": {
+  "result": null,
+  "ts": 1791380035.7019284
+ },
+ "relaksowa 12": {
+  "result": null,
+  "ts": 1791380037.0421417
+ },
+ "rva:51.1962,22.5420": {
+  "result": {
+   "road": "Antoniego Słomkowskiego",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1791380038.2774749
+ },
+ "rva:51.2233,22.5652": {
+  "result": {
+   "road": "Wyścigowa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1791380040.0436645
+ },
+ "rva:51.2406,22.5151": {
+  "result": {
+   "road": null,
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1791380041.7073927
+ },
+ "rva:51.2621,22.5496": {
+  "result": {
+   "road": "Aleja Mieczysława Smorawińskiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1791380043.5676434
+ },
+ "rva:51.2176,22.7081": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1791380045.3521025
  }
 }
