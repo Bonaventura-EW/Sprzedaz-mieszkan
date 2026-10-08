@@ -15023,7 +15023,7 @@
  },
  "jacka przybylskiego.mieszkanie": {
   "result": null,
-  "ts": 1790861277.0204117
+  "ts": 1791466782.507914
  },
  "rva:51.2123,22.6939": {
   "result": {
@@ -15667,7 +15667,7 @@
  },
  "swidnik|spółdzielczości pracy": {
   "result": null,
-  "ts": 1790861279.8764777
+  "ts": 1791466785.2500815
  },
  "jarzębinowa": {
   "result": {
@@ -16481,5 +16481,17 @@
    "city": "Lublin"
   },
   "ts": 1791408167.3704402
+ },
+ "niepodległości 27": {
+  "result": null,
+  "ts": 1791466787.1110148
+ },
+ "rva:51.2498,22.5678": {
+  "result": {
+   "road": "Kowalska",
+   "district": "Stare Miasto",
+   "city": "Lublin"
+  },
+  "ts": 1791466788.6865103
  }
 }
