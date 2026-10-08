@@ -13493,7 +13493,7 @@
  },
  "swidnik|wolska": {
   "result": null,
-  "ts": 1790888772.499443
+  "ts": 1791494628.5730977
  },
  "swidnik|modrzewiowa": {
   "result": {
@@ -15695,7 +15695,7 @@
  },
  "obrońców lublin": {
   "result": null,
-  "ts": 1790888771.1875596
+  "ts": 1791494627.319328
  },
  "strażacka": {
   "result": {
@@ -15715,11 +15715,11 @@
  },
  "racławickie 40": {
   "result": null,
-  "ts": 1790888773.7965696
+  "ts": 1791494629.9569106
  },
  "hugo kołłątaja": {
   "result": null,
-  "ts": 1790888775.285792
+  "ts": 1791494631.468198
  },
  "rva:51.2287,22.6016": {
   "result": {
@@ -16493,5 +16493,29 @@
    "city": "Lublin"
   },
   "ts": 1791466788.6865103
+ },
+ "rva:51.2354,22.5338": {
+  "result": {
+   "road": "Emancypantek",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1791494632.958302
+ },
+ "rva:51.2355,22.5852": {
+  "result": {
+   "road": null,
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1791494634.405741
+ },
+ "rva:51.2155,22.7061": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Brzeziny I",
+   "city": "Świdnik"
+  },
+  "ts": 1791494635.8330634
  }
 }
