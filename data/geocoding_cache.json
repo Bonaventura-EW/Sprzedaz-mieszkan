@@ -6393,7 +6393,7 @@
  },
  "fabryczna 7": {
   "result": null,
-  "ts": 1788117792.4666135
+  "ts": 1791552349.2361953
  },
  "feliksa nowowiejskiego": {
   "result": {
@@ -16200,7 +16200,7 @@
  },
  "paderwskiego": {
   "result": null,
-  "ts": 1790945187.6537824
+  "ts": 1791552352.1362693
  },
  "granata7": {
   "result": null,
@@ -16517,5 +16517,25 @@
    "city": "Świdnik"
   },
   "ts": 1791494635.8330634
+ },
+ "śnieżyńskiego": {
+  "result": {
+   "lat": 51.2454485,
+   "lon": 22.5112804,
+   "name": "Jana Śnieżyńskiego"
+  },
+  "ts": 1791552347.4757242
+ },
+ "przyjaźni 5": {
+  "result": null,
+  "ts": 1791552350.479601
+ },
+ "rva:51.2454,22.5109": {
+  "result": {
+   "road": "Jana Śnieżyńskiego",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1791552353.9098082
  }
 }
