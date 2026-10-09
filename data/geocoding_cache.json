@@ -617,7 +617,7 @@
  },
  "nadbystrzycka 87": {
   "result": null,
-  "ts": 1790974203.162979
+  "ts": 1791579593.8218462
  },
  "gabriela narutowicza": {
   "result": null,
@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1790974188.9100928
+  "ts": 1791579596.6781054
  },
  "grażyny": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1790974195.5914447
+  "ts": 1791579586.788185
  },
  "cyruliczej": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1790974191.6301107
+  "ts": 1791579582.5796432
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1790974192.8789473
+  "ts": 1791579583.852945
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1790974190.2021239
+  "ts": 1791579581.2637675
  },
  "kredowa": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1790974194.2580671
+  "ts": 1791579585.3187075
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1790974197.0691621
+  "ts": 1791579588.2896323
  },
  "różanej": {
   "result": {
@@ -13409,7 +13409,7 @@
  },
  "swidnik|gen. j. hallera": {
   "result": null,
-  "ts": 1790974200.1368015
+  "ts": 1791579591.0517585
  },
  "swidnik|cisowa": {
   "result": {
@@ -13609,7 +13609,7 @@
  },
  "swidnik|gen. s. roweckiego": {
   "result": null,
-  "ts": 1790974198.401842
+  "ts": 1791579589.5807588
  },
  "swidnik|spadochroniarzy": {
   "result": {
@@ -13797,7 +13797,7 @@
  },
  "swidnik|krótka": {
   "result": null,
-  "ts": 1790974201.5830255
+  "ts": 1791579592.350517
  },
  "swidnik|niepodległości 18": {
   "result": null,
@@ -16204,7 +16204,7 @@
  },
  "granata7": {
   "result": null,
-  "ts": 1790974204.607156
+  "ts": 1791579595.191485
  },
  "rva:51.2667,22.5278": {
   "result": {
@@ -16537,5 +16537,21 @@
    "city": "Lublin"
   },
   "ts": 1791552353.9098082
+ },
+ "koncertowa i": {
+  "result": {
+   "lat": 51.2682973,
+   "lon": 22.5429444,
+   "name": "Koncertowa"
+  },
+  "ts": 1791579597.9699786
+ },
+ "rva:51.2683,22.5429": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1791579599.466824
  }
 }
