@@ -685,7 +685,7 @@
  },
  "wolińskiego 1": {
   "result": null,
-  "ts": 1785489656.638706
+  "ts": 1791662933.0152442
  },
  "boczna lubomelskiej": {
   "result": {
@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1791055085.1480565
+  "ts": 1791662928.9310534
  },
  "pozytywistów": {
   "result": {
@@ -16553,5 +16553,13 @@
    "city": "Lublin"
   },
   "ts": 1791579599.466824
+ },
+ "sympatyczna 1": {
+  "result": null,
+  "ts": 1791662930.2048483
+ },
+ "sympatyczna czuby lsm": {
+  "result": null,
+  "ts": 1791662931.4063358
  }
 }
