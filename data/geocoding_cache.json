@@ -9829,7 +9829,7 @@
  },
  "niepodledłości": {
   "result": null,
-  "ts": 1791116990.794861
+  "ts": 1791723646.038223
  },
  "rva:51.2389,22.5092": {
   "result": {
@@ -16561,5 +16561,17 @@
  "sympatyczna czuby lsm": {
   "result": null,
   "ts": 1791662931.4063358
+ },
+ "żelaznej": {
+  "result": {
+   "lat": 51.2307394,
+   "lon": 22.5778835,
+   "name": "Żelazna"
+  },
+  "ts": 1791723648.904556
+ },
+ "różnej": {
+  "result": null,
+  "ts": 1791723652.0380058
  }
 }
