@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1791240274.6506033
+  "ts": 1791846244.716806
  },
  "mełgiewskiej": {
   "result": {
@@ -16597,5 +16597,17 @@
    "city": "Lublin"
   },
   "ts": 1791819503.3150492
+ },
+ "wincentego witosa": {
+  "result": null,
+  "ts": 1791846246.1249561
+ },
+ "rva:51.2363,22.5463": {
+  "result": {
+   "road": "Nowomiejska",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1791846247.7647665
  }
 }
