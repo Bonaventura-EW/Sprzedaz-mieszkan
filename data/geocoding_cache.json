@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1791211922.8163717
+  "ts": 1791819497.477649
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -14537,7 +14537,7 @@
  },
  "zamojska 39": {
   "result": null,
-  "ts": 1788434583.0174685
+  "ts": 1791819501.7710986
  },
  "rva:51.2239,22.4979": {
   "result": {
@@ -16272,7 +16272,7 @@
  },
  "gospodarcza 22": {
   "result": null,
-  "ts": 1791211928.486889
+  "ts": 1791819498.8737068
  },
  "rva:51.2161,22.6935": {
   "result": {
@@ -16581,5 +16581,21 @@
    "name": "Orla"
   },
   "ts": 1791750232.6708786
+ },
+ "nalkowskich": {
+  "result": {
+   "lat": 51.1996769,
+   "lon": 22.5418406,
+   "name": "Wacława i Zofii Nałkowskich"
+  },
+  "ts": 1791819500.3707514
+ },
+ "rva:51.1997,22.5418": {
+  "result": {
+   "road": "Wacława i Zofii Nałkowskich",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1791819503.3150492
  }
 }
