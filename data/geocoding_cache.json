@@ -16653,5 +16653,33 @@
    "city": "Lublin"
   },
   "ts": 1791901262.4644725
+ },
+ "aleja józefa piłsudskiego 18": {
+  "result": null,
+  "ts": 1791926448.346375
+ },
+ "rva:51.2444,22.5987": {
+  "result": {
+   "road": "Gospodarcza",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1791926449.5913155
+ },
+ "rva:51.2266,22.5167": {
+  "result": {
+   "road": "Szmaragdowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1791926451.3663862
+ },
+ "rva:51.2389,22.5300": {
+  "result": {
+   "road": "Filaretów",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1791926453.23154
  }
 }
