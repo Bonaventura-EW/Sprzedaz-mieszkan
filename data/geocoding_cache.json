@@ -10353,7 +10353,7 @@
  },
  "wareńczyka": {
   "result": null,
-  "ts": 1791293100.9102736
+  "ts": 1791901241.9733431
  },
  "jezuickiej": {
   "result": {
@@ -15479,7 +15479,7 @@
  },
  "piłkarskiej": {
   "result": null,
-  "ts": 1791293105.298379
+  "ts": 1791901246.322784
  },
  "muzycznej": {
   "result": {
@@ -15983,7 +15983,7 @@
  },
  "hutnicza 14": {
   "result": null,
-  "ts": 1791293106.6948032
+  "ts": 1791901247.674518
  },
  "cicha 4": {
   "result": null,
@@ -16336,11 +16336,11 @@
  },
  "kwarcowa kawalerka": {
   "result": null,
-  "ts": 1791293108.1999779
+  "ts": 1791901249.0456326
  },
  "racławickiej": {
   "result": null,
-  "ts": 1791293112.382425
+  "ts": 1791901253.5259228
  },
  "juliusza słowackiego": {
   "result": {
@@ -16609,5 +16609,49 @@
    "city": "Lublin"
   },
   "ts": 1791846247.7647665
+ },
+ "hotelowa": {
+  "result": null,
+  "ts": 1791901254.7876933
+ },
+ "krótka": {
+  "result": {
+   "lat": 51.2481447,
+   "lon": 22.5531765,
+   "name": "Krótka"
+  },
+  "ts": 1791901256.3987927
+ },
+ "rva:51.2222,22.5707": {
+  "result": {
+   "road": "Wyścigowa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1791901257.789008
+ },
+ "rva:51.2076,22.5462": {
+  "result": {
+   "road": "Jana Samsonowicza",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1791901259.182598
+ },
+ "rva:51.2481,22.5532": {
+  "result": {
+   "road": "Krótka",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1791901260.8288372
+ },
+ "rva:51.2697,22.5886": {
+  "result": {
+   "road": "Błogosławionego Księdza Ignacego Kłopotowskiego",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1791901262.4644725
  }
 }
