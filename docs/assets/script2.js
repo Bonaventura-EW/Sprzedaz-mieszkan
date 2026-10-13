@@ -629,12 +629,17 @@ function render() {
 
 function popupHtml(o) {
     const newBadge = isNew(o) ? ' <span class="badge-new">NOWA</span>' : '';
+    // FIX 2026-10-06: odznaka „WRÓCIŁA" ma pierwszeństwo przed strzałką trendu
+    // ceny w popupie — 377 ofert ma `reactivated` i `price_trend` naraz, dwie
+    // odznaki na raz przeciążałyby kartę (propagacja z Bonaventura-EW/parkingi-i-garaze,
+    // reactivated-status-filter; `isNew`/`reactivated` są w danych rozłączne).
+    const reactivatedBadge = (!isNew(o) && o.reactivated) ? ' <span class="badge-reactivated">↩ WRÓCIŁA</span>' : '';
     const market = o.market || 'nieokreslony';
     const marketBadge = `<span class="badge-market market-${market}">${MARKET_LABELS[market]}</span>`;
-    const trend = o.price_trend === 'down'
+    const trend = o.reactivated ? '' : (o.price_trend === 'down'
         ? ` <span class="trend-down">↓ było ${fmtPrice(o.previous_price)}</span>`
         : o.price_trend === 'up'
-            ? ` <span class="trend-up">↑ było ${fmtPrice(o.previous_price)}</span>` : '';
+            ? ` <span class="trend-up">↑ było ${fmtPrice(o.previous_price)}</span>` : '');
     const img = o.image ? `<img class="popup-img" src="${o.image}" loading="lazy" alt="">` : '';
     const where = [o.street, o.district].filter(Boolean).join(', ');
     const precision = o.coords_precision === 'exact'
@@ -648,7 +653,7 @@ function popupHtml(o) {
     const status = o.active ? '' : '<div style="color:#dc2626;font-weight:700;font-size:12px;">⏸ OFERTA NIEAKTYWNA</div>';
     return `
         ${img}${status}
-        <div class="popup-title">${escapeHtml(o.title)}${newBadge}</div>
+        <div class="popup-title">${escapeHtml(o.title)}${newBadge}${reactivatedBadge}</div>
         <div class="popup-price">${fmtPrice(o.price)}${trend}</div>
         <div class="popup-meta">
             📐 ${fmtArea(o.area_m2)} • ${o.price_per_m2 ? fmtPrice(o.price_per_m2) + '/m²' : '—'}<br>
@@ -687,10 +692,12 @@ function stackListHtml(sorted) {
         : rep.coords_precision === 'street' ? 'lokalizacja: ulica'
         : rep.coords_precision === 'approx' ? 'przybliżona — Otodom' : '';
     const rows = sorted.map(o => {
-        const trend = o.price_trend === 'down'
+        // Odznaka reaktywacji wygrywa z trendem ceny — patrz popupHtml().
+        const trend = o.reactivated ? '' : (o.price_trend === 'down'
             ? ` <span class="trend-down">↓</span>`
-            : o.price_trend === 'up' ? ` <span class="trend-up">↑</span>` : '';
+            : o.price_trend === 'up' ? ` <span class="trend-up">↑</span>` : '');
         const newB = isNew(o) ? ' <span class="badge-new">NOWA</span>' : '';
+        const reactivatedB = (!isNew(o) && o.reactivated) ? ' <span class="badge-reactivated">↩</span>' : '';
         const inact = o.active ? '' : ' <span class="stack-inactive">⏸ nieaktywna</span>';
         const meta = [fmtArea(o.area_m2),
             o.price_per_m2 ? fmtPrice(o.price_per_m2) + '/m²' : null,
@@ -702,7 +709,7 @@ function stackListHtml(sorted) {
         return `<div class="stack-row" data-offer-id="${escapeHtml(o.id)}">` +
             `<button type="button" class="stack-row-btn" data-stack-open="${escapeHtml(o.id)}">` +
             `<div class="stack-row-top"><span class="stack-price">${fmtPrice(o.price)}</span>` +
-            `${trend}${newB}${inact}</div>` +
+            `${trend}${newB}${reactivatedB}${inact}</div>` +
             `<div class="stack-row-meta">${escapeHtml(meta)} • ${escapeHtml((o.source || '').toUpperCase())}` +
             `${o.is_private_owner ? ' • właściciel' : ''}</div>` +
             `<div class="stack-row-title">${escapeHtml(o.title || '')}</div></button>` +

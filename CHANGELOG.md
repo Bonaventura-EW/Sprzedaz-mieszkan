@@ -2,6 +2,22 @@
 
 ## [Niewydane]
 
+### Dodane — odznaka „↩ WRÓCIŁA" na pinezce/popupie dla ofert reaktywowanych (#34, propagacja z Bonaventura-EW/parkingi-i-garaze)
+Pole `reactivated` w `docs/data.json` istniało od #29 (zasilało tylko checkbox
+filtra „Nowe"/„Reaktywowane"), ale na samej karcie oferty nie było żadnego
+śladu reaktywacji — widać ją było wyłącznie przez zaznaczanie/odznaczanie
+checkboksa w legendzie. Zmierzone: **1231 z 7848 ofert (≈16%)** ma
+`reactivated == true`.
+
+Dodano odznakę `.badge-reactivated` w `popupHtml()` (obok tytułu, jak
+istniejąca `badge-new`) i w `stackListHtml()` (obok ceny w liście stosu);
+`stackDetailHtml()` dostaje ją bez zmian, bo renderuje `popupHtml()`.
+**377 ofert ma `reactivated` i `price_trend` naraz** — jak u brata, reaktywacja
+wygrywa: strzałka trendu ceny (`↓/↑ było X`) jest w takim przypadku chowana,
+żeby popup nie nosił dwóch odznak statusu na raz. `isNew()`/`reactivated` są
+w danych rozłączne (zmierzone: 0 nakładań), ale kod i tak pilnuje pierwszeństwa
+„NOWA" > „WRÓCIŁA" > trend ceny, zgodnie z hierarchią statusu z manifestu brata.
+
 ### Naprawione — pary dezaktywacja→reaktywacja domknięte w ≤3 dniach fałszowały wykresy przepływu (#15, propagacja z SONAR---DZIA-KOWY)
 Audyt u brata (manifest `2026-09-03-audyt-wykresow-rynku`) wykazał, że para
 zdarzeń „dezaktywacja → kolejna reaktywacja" domknięta w ciągu 2-3 dni to
