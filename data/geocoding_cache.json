@@ -16681,5 +16681,25 @@
    "city": "Lublin"
   },
   "ts": 1791926453.23154
+ },
+ "bohaterów monte casino": {
+  "result": null,
+  "ts": 1791979349.1853313
+ },
+ "rva:51.2378,22.5472": {
+  "result": {
+   "road": "Słoneczna",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1791979350.8195965
+ },
+ "rva:51.2203,22.7048": {
+  "result": {
+   "road": "Generała Leopolda Okulickiego",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1791979352.184893
  }
 }
