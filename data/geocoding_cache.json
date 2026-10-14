@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1791380022.4464836
+  "ts": 1792008982.9391117
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1791380030.845361
+  "ts": 1792008990.2676108
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1791380028.2213132
+  "ts": 1792008987.0511627
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1791380034.0673978
+  "ts": 1792008991.7702901
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1791380029.5407922
+  "ts": 1792008988.484951
  },
  "krasińskiego": {
   "result": {
@@ -16701,5 +16701,33 @@
    "city": "Świdnik"
   },
   "ts": 1791979352.184893
+ },
+ "rva:51.2711,22.5594": {
+  "result": {
+   "road": "Marii Walciszewskiej",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1792008993.3920236
+ },
+ "eje racławickie": {
+  "result": null,
+  "ts": 1792008994.6806967
+ },
+ "rva:51.2374,22.5090": {
+  "result": {
+   "road": "Ułanów",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1792008996.0772116
+ },
+ "rva:51.2107,22.6875": {
+  "result": {
+   "road": "Klonowa",
+   "district": "Osiedle Polesie",
+   "city": "Świdnik"
+  },
+  "ts": 1792008997.545099
  }
 }
