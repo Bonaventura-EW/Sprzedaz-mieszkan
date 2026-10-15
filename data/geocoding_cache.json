@@ -15631,7 +15631,7 @@
  },
  "racławicka": {
   "result": null,
-  "ts": 1791408158.5067651
+  "ts": 1792064381.7360985
  },
  "rva:51.2639,22.5765": {
   "result": {
@@ -16729,5 +16729,37 @@
    "city": "Świdnik"
   },
   "ts": 1792008997.545099
+ },
+ "aleje racławickie 10": {
+  "result": null,
+  "ts": 1792064383.0705757
+ },
+ "balladyny 2": {
+  "result": null,
+  "ts": 1792064384.727447
+ },
+ "piaskowa": {
+  "result": {
+   "lat": 51.2282181,
+   "lon": 22.5746201,
+   "name": "Piaskowa"
+  },
+  "ts": 1792064386.3568213
+ },
+ "bolesława stachonia": {
+  "result": null,
+  "ts": 1792064387.967673
+ },
+ "stachonia": {
+  "result": null,
+  "ts": 1792064389.5772781
+ },
+ "rva:51.2282,22.5746": {
+  "result": {
+   "road": "Piaskowa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1792064390.8424041
  }
 }

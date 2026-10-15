@@ -1,20 +1,6 @@
 {
  "scans": [
   {
-   "timestamp": "2026-07-07T12:02:33.933877+02:00",
-   "status": "completed",
-   "duration_s": 127.2,
-   "deactivated": 30,
-   "scraped_olx": 969,
-   "scraped_otodom": 1855,
-   "new": 25,
-   "updated": 2799,
-   "skipped_removed": 0,
-   "active": 2961,
-   "with_coords": 2671,
-   "total_in_db": 3905
-  },
-  {
    "timestamp": "2026-07-07T20:22:37.501049+02:00",
    "status": "completed",
    "duration_s": 160.2,
@@ -2963,6 +2949,22 @@
    "with_coords": 2686,
    "promoted": 28,
    "total_in_db": 9427
+  },
+  {
+   "timestamp": "2026-10-15T13:37:36.307548+02:00",
+   "status": "completed",
+   "duration_s": 136.7,
+   "deactivated": 42,
+   "scraped_olx": 1013,
+   "scraped_otodom": 1907,
+   "new": 26,
+   "updated": 2894,
+   "skipped_removed": 0,
+   "active": 3168,
+   "active_dedup": 2385,
+   "with_coords": 2695,
+   "promoted": 29,
+   "total_in_db": 9453
   }
  ]
 }
