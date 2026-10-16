@@ -4281,7 +4281,7 @@
  },
  "migdałowa 4": {
   "result": null,
-  "ts": 1791028028.9607975
+  "ts": 1792150394.208514
  },
  "bukowa": {
   "result": {
@@ -13493,7 +13493,7 @@
  },
  "swidnik|wolska": {
   "result": null,
-  "ts": 1791494628.5730977
+  "ts": 1792150397.411811
  },
  "swidnik|modrzewiowa": {
   "result": {
@@ -15695,7 +15695,7 @@
  },
  "obrońców lublin": {
   "result": null,
-  "ts": 1791494627.319328
+  "ts": 1792150395.8301747
  },
  "strażacka": {
   "result": {
@@ -15715,11 +15715,11 @@
  },
  "racławickie 40": {
   "result": null,
-  "ts": 1791494629.9569106
+  "ts": 1792150398.6789446
  },
  "hugo kołłątaja": {
   "result": null,
-  "ts": 1791494631.468198
+  "ts": 1792150400.0471961
  },
  "rva:51.2287,22.6016": {
   "result": {
@@ -16761,5 +16761,29 @@
    "city": "Lublin"
   },
   "ts": 1792064390.8424041
+ },
+ "tatarakowej": {
+  "result": {
+   "lat": 51.2311998,
+   "lon": 22.5102586,
+   "name": "Tatarakowa"
+  },
+  "ts": 1792150403.2277482
+ },
+ "rva:51.2657,22.5952": {
+  "result": {
+   "road": "Kminkowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1792150404.9956405
+ },
+ "rva:51.2156,22.5507": {
+  "result": {
+   "road": "Diamentowa",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1792150406.6533942
  }
 }
