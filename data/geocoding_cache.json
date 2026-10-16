@@ -16200,7 +16200,7 @@
  },
  "paderwskiego": {
   "result": null,
-  "ts": 1791552352.1362693
+  "ts": 1792179401.846435
  },
  "granata7": {
   "result": null,
@@ -16528,7 +16528,7 @@
  },
  "przyjaźni 5": {
   "result": null,
-  "ts": 1791552350.479601
+  "ts": 1792179394.2941008
  },
  "rva:51.2454,22.5109": {
   "result": {
@@ -16785,5 +16785,25 @@
    "city": "Lublin"
   },
   "ts": 1792150406.6533942
+ },
+ "północna 27": {
+  "result": null,
+  "ts": 1792179395.7228966
+ },
+ "wajeloty": {
+  "result": null,
+  "ts": 1792179398.6214876
+ },
+ "pawia lublincena": {
+  "result": null,
+  "ts": 1792179400.2254467
+ },
+ "rva:51.2776,22.5830": {
+  "result": {
+   "road": "Laurowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1792179403.4918592
  }
 }
