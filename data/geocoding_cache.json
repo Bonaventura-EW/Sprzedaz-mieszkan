@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1791662928.9310534
+  "ts": 1792322314.1545405
  },
  "pozytywistów": {
   "result": {
@@ -16805,5 +16805,13 @@
    "city": "Lublin"
   },
   "ts": 1792179403.4918592
+ },
+ "rva:51.2710,22.5587": {
+  "result": {
+   "road": "Marii Walciszewskiej",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1792322315.7797337
  }
 }
