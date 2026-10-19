@@ -3145,7 +3145,7 @@
  },
  "marii walciszewskiej 1": {
   "result": null,
-  "ts": 1782111917.7755585
+  "ts": 1792416572.287434
  },
  "józefa kustronia": {
   "result": {
@@ -15987,7 +15987,7 @@
  },
  "cicha 4": {
   "result": null,
-  "ts": 1790686966.9789665
+  "ts": 1792416577.0455978
  },
  "mieczysławy ćwiklińskiej": {
   "result": {
@@ -16240,11 +16240,11 @@
  },
  "wileńska-lsm": {
   "result": null,
-  "ts": 1791750227.7127545
+  "ts": 1792416569.070986
  },
  "wileńskiej-lsm": {
   "result": null,
-  "ts": 1791750229.3768437
+  "ts": 1792416570.6913316
  },
  "radzyńskiej": {
   "result": {
@@ -16813,5 +16813,73 @@
    "city": "Lublin"
   },
   "ts": 1792322315.7797337
+ },
+ "klonowa": {
+  "result": {
+   "lat": 51.255703,
+   "lon": 22.5101067,
+   "name": "Klonowa"
+  },
+  "ts": 1792416573.5765586
+ },
+ "radziszewskiego": {
+  "result": {
+   "lat": 51.2468714,
+   "lon": 22.5451165,
+   "name": "Idziego Radziszewskiego"
+  },
+  "ts": 1792416575.1821117
+ },
+ "kasztelańska 29": {
+  "result": null,
+  "ts": 1792416578.6409998
+ },
+ "brata alberta": {
+  "result": {
+   "lat": 51.210825,
+   "lon": 22.5893932,
+   "name": "Brata Alberta"
+  },
+  "ts": 1792416580.244465
+ },
+ "rva:51.2475,22.5466": {
+  "result": {
+   "road": "Idziego Radziszewskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1792416582.006146
+ },
+ "rva:51.2560,22.5826": {
+  "result": {
+   "road": "Lwowska",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1792416583.869231
+ },
+ "rva:51.2174,22.6333": {
+  "result": {
+   "road": "Zygmunta Augusta",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1792416585.1462805
+ },
+ "rva:51.2496,22.5572": {
+  "result": {
+   "road": "Cicha",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1792416586.426185
+ },
+ "rva:51.2171,22.6998": {
+  "result": {
+   "road": "Kardynała Stefana Wyszyńskiego",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1792416587.830624
  }
 }
