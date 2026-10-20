@@ -10353,7 +10353,7 @@
  },
  "wareńczyka": {
   "result": null,
-  "ts": 1791901241.9733431
+  "ts": 1792526603.0451694
  },
  "jezuickiej": {
   "result": {
@@ -15479,7 +15479,7 @@
  },
  "piłkarskiej": {
   "result": null,
-  "ts": 1791901246.322784
+  "ts": 1792526607.5396013
  },
  "muzycznej": {
   "result": {
@@ -15983,7 +15983,7 @@
  },
  "hutnicza 14": {
   "result": null,
-  "ts": 1791901247.674518
+  "ts": 1792526609.2050643
  },
  "cicha 4": {
   "result": null,
@@ -16336,11 +16336,11 @@
  },
  "kwarcowa kawalerka": {
   "result": null,
-  "ts": 1791901249.0456326
+  "ts": 1792526610.854511
  },
  "racławickiej": {
   "result": null,
-  "ts": 1791901253.5259228
+  "ts": 1792526615.408172
  },
  "juliusza słowackiego": {
   "result": {
@@ -16933,5 +16933,61 @@
    "city": "Lublin"
   },
   "ts": 1792496873.3518643
+ },
+ "swidnik|głęboka": {
+  "result": null,
+  "ts": 1792526616.7574522
+ },
+ "swidnik|głębokiej": {
+  "result": null,
+  "ts": 1792526620.508022
+ },
+ "poturzyńskiej": {
+  "result": {
+   "lat": 51.2698583,
+   "lon": 22.5482043,
+   "name": "Poturzyńska"
+  },
+  "ts": 1792526623.1019714
+ },
+ "zbożowej": {
+  "result": {
+   "lat": 51.2696372,
+   "lon": 22.5053884,
+   "name": "Zbożowa"
+  },
+  "ts": 1792526625.5960548
+ },
+ "rva:51.2355,22.6189": {
+  "result": {
+   "road": "Grenadierów",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1792526627.2592697
+ },
+ "rva:51.2696,22.5054": {
+  "result": {
+   "road": "Zbożowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1792526629.0268145
+ },
+ "rva:51.2716,22.5240": {
+  "result": {
+   "road": "Wędrowna",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1792526630.7944024
+ },
+ "rva:51.2568,22.5524": {
+  "result": {
+   "road": null,
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1792526632.0631363
  }
 }
