@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1791846244.716806
+  "ts": 1792496867.6127317
  },
  "mełgiewskiej": {
   "result": {
@@ -16901,5 +16901,37 @@
    "city": "Lublin"
   },
   "ts": 1792444156.3892777
+ },
+ "swidnik|smorawińskiego": {
+  "result": {
+   "lat": 51.216358,
+   "lon": 22.7105137,
+   "name": "Generała Mieczysława Smorawińskiego"
+  },
+  "ts": 1792496868.9261942
+ },
+ "s. okrzei": {
+  "result": {
+   "lat": 51.2552714,
+   "lon": 22.5829892,
+   "name": "Stefana Okrzei"
+  },
+  "ts": 1792496870.4795847
+ },
+ "rva:51.2197,22.5453": {
+  "result": {
+   "road": "Diamentowa",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1792496871.80347
+ },
+ "rva:51.2493,22.5609": {
+  "result": {
+   "road": "Radziwiłłowska",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1792496873.3518643
  }
 }
