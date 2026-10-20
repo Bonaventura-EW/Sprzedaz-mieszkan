@@ -31,6 +31,32 @@ manifest 2026-09-04-trend-charts-audit → issue #14):
   i `trend.html` rysuje te dni jako lukę: bez punktu, bez wkładu do średniej 7 dni
   i bez prawa do rekordu. Skok NASTĘPNEGO dnia (nadrobione potwierdzenia) to już
   bug #3/#4 — opóźnienie `DEACTIVATE_GRACE_DAYS`, świadomie nieruszane.
+- FIX 2026-10-20 (issue #30, propagacja z SONAR-MIESZKANIOWY, manifest
+  2026-09-27-scan-gap-coverage — zaadaptowana INACZEJ niż u brata, patrz niżej):
+  GitHub Actions bywa tak opóźniony, że drugi z dwóch zaplanowanych przebiegów
+  doby kończy się dopiero tuż po lokalnej północy — kalendarzowo trafia już do
+  NASTĘPNEGO dnia, więc licznik `scan_counts.get(d, 0) < SCANS_PER_DAY` fałszywie
+  zaniża poprzedni dzień do 1 skanu, mimo że doba była obserwowana normalnie,
+  tylko przesuniętym oknem (realny wzorzec w naszej historii: 27→28.09, 4→5.10,
+  11→12.10 — drugi skan dobiegał 6-62 minuty po północy).
+  Brat rozwiązuje to progiem na NAJDŁUŻSZĄ przerwę między skanami w obrębie doby
+  (`MAX_SCAN_GAP_HOURS`), ale u niego rytm to 3 skany/dobę; pierwsza próba
+  prostego portu tego progu na nasz rytm 2 skanów/dobę (zmierzona na
+  `data/scan_history.json`, zob. historia issue #30) pokazała, że ŻADEN
+  pojedynczy próg na przerwę nie rozdziela u nas zdrowych dób od realnie
+  niepełnych — rozkłady przerw nocnych (zdrowe ~14h) i dziennych (zdrowe do
+  ~15h przy typowych opóźnieniach pierwszego skanu) zachodzą na siebie.
+  Zamiast progu na przerwę MIĘDZY skanami przesuwamy więc granicę SAMEJ DOBY:
+  `_scan_counts` liczy skan do dnia, w którym mieściłby się, gdyby odjąć od
+  jego znacznika czasu `MIDNIGHT_GRACE_HOURS` (patrz stała) — skan tuż po
+  północy wraca wtedy do dnia poprzedniego. To węższy, bezpieczniejszy cel niż
+  próg na przerwę: dotyczy tylko spóźnienia względem PÓŁNOCY (rząd minut/godzin
+  w naszych danych), nie całej dużo bardziej zmiennej przerwy nocnej czy
+  dziennej. Zmierzone: każda wartość 2-8h naprawia wszystkie 3 zaobserwowane
+  przypadki bez ANI JEDNEJ nowej rozbieżności na 100-dniowym oknie historii;
+  powyżej ~9h próg zaczyna się łączyć z kolejną dobą i fałszywie „naprawia"
+  dni z realnie tylko jednym skanem (np. 2026-08-06, ~22,6h do następnego
+  przebiegu — prawdziwa przerwa, nie tylko przesunięcie granicy).
 Odpływ liczony z opóźnieniem `DEACTIVATE_GRACE_DAYS` (bug #3/#4 manifestu) NIE jest
 tu ruszany — naprawa wymaga zmiany definicji końca odcinka życia (last_seen zamiast
 deactivated_at), co pokrywa się z otwartym issue #11; celowo nie mieszamy.
@@ -159,6 +185,14 @@ API_DIR = Path(paths.DOCS_DIR) / "api"
 # widział tylko wycinek listingu — rekonstrukcja jest z niego zaniżona.
 SCANS_PER_DAY = 2
 
+# O ile godzin przesuwamy granicę doby przy liczeniu pokrycia skanami (patrz
+# FIX 2026-10-20 w docstringu modułu, issue #30) — skan kończący się w ciągu
+# tylu godzin po lokalnej północy liczy się jeszcze do dnia POPRZEDNIEGO.
+# Zmierzone na data/scan_history.json: 2-8h naprawia wszystkie zaobserwowane
+# przypadki spóźnionego crona bez fałszywego maskowania realnych przerw;
+# powyżej ~9h zaczyna łączyć dni z realnie tylko jednym skanem.
+MIDNIGHT_GRACE_HOURS = 4
+
 # Para dezaktywacja→reaktywacja domknięta w tylu dniach lub mniej to
 # „mrugnięcie" pipeline'u (patrz FIX 2026-09-29 w docstringu modułu), nie
 # realny powrót oferty na rynek.
@@ -187,6 +221,15 @@ def _parse_date(value):
         return None
 
 
+def _parse_datetime(value):
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value)
+    except (ValueError, TypeError):
+        return None
+
+
 def load_scan_history():
     """Lista skanów z data/scan_history.json (albo [] przy braku/uszkodzeniu pliku).
 
@@ -211,14 +254,21 @@ def _scan_counts(scan_history):
     Źródło prawdy o pokryciu doby przebiegami — na nim stoi maska dni niepełnych
     (patrz `_scan_coverage`). Historia trzyma ostatnie ~200 skanów; o dniach
     spoza tego okna nie wie nic i tam zakładamy pełne pokrycie.
+
+    Granica doby jest przesunięta o `MIDNIGHT_GRACE_HOURS` po północy (FIX
+    2026-10-20, issue #30) — skan kończący się w tym oknie tuż po północy
+    liczy się jeszcze do dnia POPRZEDNIEGO, zamiast fałszywie zaniżać jego
+    pokrycie tylko dlatego, że opóźniony cron przeciągnął go przez granicę doby.
     """
     counts = {}
     for scan in scan_history or []:
         if scan.get('status') not in ('completed', 'warning'):
             continue
-        d = _parse_date(scan.get('timestamp'))
-        if d:
-            counts[d] = counts.get(d, 0) + 1
+        ts = _parse_datetime(scan.get('timestamp'))
+        if ts is None:
+            continue
+        d = (ts - timedelta(hours=MIDNIGHT_GRACE_HOURS)).date()
+        counts[d] = counts.get(d, 0) + 1
     return counts
 
 
