@@ -16989,5 +16989,25 @@
    "city": "Lublin"
   },
   "ts": 1792526632.0631363
+ },
+ "rymwida 6": {
+  "result": null,
+  "ts": 1792583979.9649374
+ },
+ "rva:51.2485,22.5992": {
+  "result": {
+   "road": null,
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1792583981.372931
+ },
+ "rva:51.2314,22.5910": {
+  "result": {
+   "road": "Krańcowa",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1792583982.6973014
  }
 }
