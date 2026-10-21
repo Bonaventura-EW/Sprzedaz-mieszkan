@@ -973,7 +973,7 @@
  },
  "wojciechowska 40": {
   "result": null,
-  "ts": 1789995502.3620296
+  "ts": 1792613674.8303373
  },
  "wojciechowskiej": {
   "result": {
@@ -16684,7 +16684,7 @@
  },
  "bohaterów monte casino": {
   "result": null,
-  "ts": 1791979349.1853313
+  "ts": 1792613673.4253407
  },
  "rva:51.2378,22.5472": {
   "result": {
@@ -17009,5 +17009,21 @@
    "city": "Lublin"
   },
   "ts": 1792583982.6973014
+ },
+ "swidnik|rotmistrza witolda pileckiego": {
+  "result": {
+   "lat": 51.2196234,
+   "lon": 22.7213234,
+   "name": "Rotmistrza Witolda Pileckiego"
+  },
+  "ts": 1792613676.4239624
+ },
+ "rva:51.2298,22.5718": {
+  "result": {
+   "road": "Władysława Kunickiego",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1792613678.1038172
  }
 }
