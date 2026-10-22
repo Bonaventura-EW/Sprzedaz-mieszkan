@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1792008982.9391117
+  "ts": 1792670517.4205995
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1792008990.2676108
+  "ts": 1792670524.6318192
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1792008987.0511627
+  "ts": 1792670522.6580513
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1792008991.7702901
+  "ts": 1792670527.2637482
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1792008988.484951
+  "ts": 1792670518.8323383
  },
  "krasińskiego": {
   "result": {
@@ -15631,7 +15631,7 @@
  },
  "racławicka": {
   "result": null,
-  "ts": 1792064381.7360985
+  "ts": 1792670525.8973246
  },
  "rva:51.2639,22.5765": {
   "result": {
@@ -16732,7 +16732,7 @@
  },
  "aleje racławickie 10": {
   "result": null,
-  "ts": 1792064383.0705757
+  "ts": 1792670528.6701117
  },
  "balladyny 2": {
   "result": null,
@@ -17025,5 +17025,65 @@
    "city": "Lublin"
   },
   "ts": 1792613678.1038172
+ },
+ "granatowa": {
+  "result": {
+   "lat": 51.2227768,
+   "lon": 22.4877784,
+   "name": "Granatowa"
+  },
+  "ts": 1792670530.0744777
+ },
+ "nadrzeczna": {
+  "result": {
+   "lat": 51.2132687,
+   "lon": 22.5864284,
+   "name": "Nadrzeczna"
+  },
+  "ts": 1792670531.3254497
+ },
+ "mędzenników majdanka 55": {
+  "result": null,
+  "ts": 1792670532.7274017
+ },
+ "słomkowskiego": {
+  "result": {
+   "lat": 51.1992175,
+   "lon": 22.543521,
+   "name": "Antoniego Słomkowskiego"
+  },
+  "ts": 1792670533.9833765
+ },
+ "cisowa": {
+  "result": {
+   "lat": 51.2509576,
+   "lon": 22.513075,
+   "name": "Cisowa"
+  },
+  "ts": 1792670535.454276
+ },
+ "rva:51.2228,22.4878": {
+  "result": {
+   "road": "Granatowa",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1792670536.7573345
+ },
+ "rva:51.2133,22.5864": {
+  "result": {
+   "road": "Nadrzeczna",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1792670538.448545
+ },
+ "rva:51.2102,22.5889": {
+  "result": {
+   "road": null,
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1792670540.0681093
  }
 }
