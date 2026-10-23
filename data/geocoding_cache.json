@@ -4281,7 +4281,7 @@
  },
  "migdałowa 4": {
   "result": null,
-  "ts": 1792150394.208514
+  "ts": 1792756082.203324
  },
  "bukowa": {
   "result": {
@@ -13493,7 +13493,7 @@
  },
  "swidnik|wolska": {
   "result": null,
-  "ts": 1792150397.411811
+  "ts": 1792756085.1540236
  },
  "swidnik|modrzewiowa": {
   "result": {
@@ -15695,7 +15695,7 @@
  },
  "obrońców lublin": {
   "result": null,
-  "ts": 1792150395.8301747
+  "ts": 1792756083.894514
  },
  "strażacka": {
   "result": {
@@ -15715,11 +15715,11 @@
  },
  "racławickie 40": {
   "result": null,
-  "ts": 1792150398.6789446
+  "ts": 1792756086.4727519
  },
  "hugo kołłątaja": {
   "result": null,
-  "ts": 1792150400.0471961
+  "ts": 1792756087.7563515
  },
  "rva:51.2287,22.6016": {
   "result": {
@@ -17085,5 +17085,21 @@
    "city": "Lublin"
   },
   "ts": 1792670540.0681093
+ },
+ "rva:51.2226,22.4788": {
+  "result": {
+   "road": "Jemiołuszki",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1792756089.4246876
+ },
+ "rva:51.2132,22.6974": {
+  "result": {
+   "road": "Kardynała Stefana Wyszyńskiego",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1792756091.2246132
  }
 }
