@@ -5421,7 +5421,7 @@
  },
  "dolnej panny marii": {
   "result": null,
-  "ts": 1790861284.245268
+  "ts": 1792785621.097984
  },
  "dolna marii panny": {
   "result": {
@@ -16200,7 +16200,7 @@
  },
  "paderwskiego": {
   "result": null,
-  "ts": 1792179401.846435
+  "ts": 1792785626.5844393
  },
  "granata7": {
   "result": null,
@@ -16528,7 +16528,7 @@
  },
  "przyjaźni 5": {
   "result": null,
-  "ts": 1792179394.2941008
+  "ts": 1792785614.3986638
  },
  "rva:51.2454,22.5109": {
   "result": {
@@ -17101,5 +17101,97 @@
    "city": "Świdnik"
   },
   "ts": 1792756091.2246132
+ },
+ "zwycięskiej": {
+  "result": {
+   "lat": 51.2372706,
+   "lon": 22.4965888,
+   "name": "Zwycięska"
+  },
+  "ts": 1792785617.274071
+ },
+ "medalionów": {
+  "result": {
+   "lat": 51.2180461,
+   "lon": 22.5457254,
+   "name": "Medalionów"
+  },
+  "ts": 1792785618.5126407
+ },
+ "włościańska": {
+  "result": {
+   "lat": 51.2266916,
+   "lon": 22.5516947,
+   "name": "Włościańska"
+  },
+  "ts": 1792785619.884843
+ },
+ "zwycięzka": {
+  "result": null,
+  "ts": 1792785622.320303
+ },
+ "kompozytor": {
+  "result": null,
+  "ts": 1792785623.7076557
+ },
+ "kaczyńskiego": {
+  "result": null,
+  "ts": 1792785625.147815
+ },
+ "rva:51.2250,22.4845": {
+  "result": {
+   "road": null,
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1792785628.091292
+ },
+ "rva:51.2267,22.5517": {
+  "result": {
+   "road": "Włościańska",
+   "district": "Za Cukrownią",
+   "city": "Lublin"
+  },
+  "ts": 1792785629.393853
+ },
+ "rva:51.2373,22.4966": {
+  "result": {
+   "road": "Zwycięska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1792785630.8711922
+ },
+ "rva:51.2556,22.5479": {
+  "result": {
+   "road": "Karola Lipińskiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1792785632.3288405
+ },
+ "rva:51.2461,22.5221": {
+  "result": {
+   "road": "Osiedle im. Juliusza Słowackiego",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1792785634.8010175
+ },
+ "rva:51.2164,22.7211": {
+  "result": {
+   "road": "Prezydenta Lecha Kaczyńskiego",
+   "district": "Nowy Krępiec",
+   "city": "Świdnik"
+  },
+  "ts": 1792785636.1621268
+ },
+ "rva:51.2163,22.7217": {
+  "result": {
+   "road": "Prezydenta Lecha Kaczyńskiego",
+   "district": "Nowy Krępiec",
+   "city": "Świdnik"
+  },
+  "ts": 1792785637.5315108
  }
 }
