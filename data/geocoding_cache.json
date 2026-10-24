@@ -617,7 +617,7 @@
  },
  "nadbystrzycka 87": {
   "result": null,
-  "ts": 1792234419.855489
+  "ts": 1792840318.4623706
  },
  "gabriela narutowicza": {
   "result": null,
@@ -641,7 +641,7 @@
  },
  "nałęczowska 18a": {
   "result": null,
-  "ts": 1792234422.7618546
+  "ts": 1792840321.3758264
  },
  "grażyny": {
   "result": {
@@ -4269,7 +4269,7 @@
  },
  "gen. władysława sikorskiego": {
   "result": null,
-  "ts": 1792234414.8883414
+  "ts": 1792840314.2592025
  },
  "cyruliczej": {
   "result": {
@@ -5113,7 +5113,7 @@
  },
  "garbarska 18a": {
   "result": null,
-  "ts": 1792234410.0216823
+  "ts": 1792840309.574771
  },
  "lędzian": {
   "result": {
@@ -5333,7 +5333,7 @@
  },
  "garbraska": {
   "result": null,
-  "ts": 1792234411.6070032
+  "ts": 1792840311.1283243
  },
  "organowej": {
   "result": {
@@ -6853,7 +6853,7 @@
  },
  "kraśnickich": {
   "result": null,
-  "ts": 1792234408.36904
+  "ts": 1792840308.2152722
  },
  "kredowa": {
   "result": {
@@ -7617,7 +7617,7 @@
  },
  "kwitnąca": {
   "result": null,
-  "ts": 1792234413.2173767
+  "ts": 1792840312.669285
  },
  "altanowa": {
   "result": {
@@ -8093,7 +8093,7 @@
  },
  "gen. wł. sikorskiego": {
   "result": null,
-  "ts": 1792234416.5461626
+  "ts": 1792840315.6133094
  },
  "różanej": {
   "result": {
@@ -13609,7 +13609,7 @@
  },
  "swidnik|gen. s. roweckiego": {
   "result": null,
-  "ts": 1792234418.1996958
+  "ts": 1792840316.9766972
  },
  "swidnik|spadochroniarzy": {
   "result": {
@@ -16204,7 +16204,7 @@
  },
  "granata7": {
   "result": null,
-  "ts": 1792234421.1107736
+  "ts": 1792840319.9716341
  },
  "rva:51.2667,22.5278": {
   "result": {
@@ -17193,5 +17193,13 @@
    "city": "Świdnik"
   },
   "ts": 1792785637.5315108
+ },
+ "obywatelskiej": {
+  "result": {
+   "lat": 51.2587634,
+   "lon": 22.5718183,
+   "name": "Obywatelska"
+  },
+  "ts": 1792840324.3233707
  }
 }
