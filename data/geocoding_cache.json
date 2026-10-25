@@ -9829,7 +9829,7 @@
  },
  "niepodledłości": {
   "result": null,
-  "ts": 1792348970.6359506
+  "ts": 1792955273.5912085
  },
  "rva:51.2389,22.5092": {
   "result": {
@@ -16572,7 +16572,7 @@
  },
  "różnej": {
   "result": null,
-  "ts": 1792348973.6528015
+  "ts": 1792955276.438727
  },
  "orlej": {
   "result": {
@@ -17217,5 +17217,25 @@
    "city": "Lublin"
   },
   "ts": 1792928581.0603354
+ },
+ "niepodległości 5": {
+  "result": null,
+  "ts": 1792955277.9337122
+ },
+ "rva:51.2759,22.5907": {
+  "result": {
+   "road": "Daliowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1792955279.3287168
+ },
+ "rva:51.2205,22.6961": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Letnisko",
+   "city": "Świdnik"
+  },
+  "ts": 1792955280.937165
  }
 }
