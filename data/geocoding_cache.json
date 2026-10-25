@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1792322314.1545405
+  "ts": 1792928578.348692
  },
  "pozytywistów": {
   "result": {
@@ -17201,5 +17201,21 @@
    "name": "Obywatelska"
   },
   "ts": 1792840324.3233707
+ },
+ "rva:51.2675,22.5280": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1792928579.7934113
+ },
+ "rva:51.2261,22.4856": {
+  "result": {
+   "road": "Gęsia",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1792928581.0603354
  }
 }
