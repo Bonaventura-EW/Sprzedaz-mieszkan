@@ -17237,5 +17237,21 @@
    "city": "Świdnik"
   },
   "ts": 1792955280.937165
+ },
+ "rva:51.2381,22.5031": {
+  "result": {
+   "road": "Konstantynów",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1793020457.14466
+ },
+ "rva:51.2165,22.6929": {
+  "result": {
+   "road": "Widok",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1793020458.4864867
  }
 }
