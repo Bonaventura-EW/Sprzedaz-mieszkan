@@ -3145,7 +3145,7 @@
  },
  "marii walciszewskiej 1": {
   "result": null,
-  "ts": 1792416572.287434
+  "ts": 1793048690.6864586
  },
  "józefa kustronia": {
   "result": {
@@ -15987,7 +15987,7 @@
  },
  "cicha 4": {
   "result": null,
-  "ts": 1792416577.0455978
+  "ts": 1793048692.178217
  },
  "mieczysławy ćwiklińskiej": {
   "result": {
@@ -16832,7 +16832,7 @@
  },
  "kasztelańska 29": {
   "result": null,
-  "ts": 1792416578.6409998
+  "ts": 1793048693.6562862
  },
  "brata alberta": {
   "result": {
@@ -17253,5 +17253,13 @@
    "city": "Świdnik"
   },
   "ts": 1793020458.4864867
+ },
+ "rva:51.2133,22.5707": {
+  "result": {
+   "road": "Róży Wiatrów",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1793048695.2382898
  }
 }
