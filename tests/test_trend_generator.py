@@ -370,6 +370,51 @@ def test_scan_counts_only_completed_runs():
     assert tg._scan_counts(None) == {}
 
 
+# ── Granica doby przesunięta po północy (FIX 2026-10-20, issue #30,       ──
+# ── propagacja z SONAR-MIESZKANIOWY — zaadaptowana inaczej niż u brata)   ──
+
+def test_scan_just_after_midnight_counts_toward_previous_day():
+    # Realny wzorzec z issue #30: drugi zaplanowany skan doby kończy się
+    # kilkadziesiąt minut po lokalnej północy (opóźniony cron GitHub Actions).
+    # Bez przesunięcia granicy doby liczyłby się do dnia NASTĘPNEGO, zaniżając
+    # pokrycie dnia poprzedniego do 1 skanu.
+    history = [{'timestamp': '2026-06-01T08:17:00+02:00', 'status': 'completed'},
+               {'timestamp': '2026-06-02T00:06:00+02:00', 'status': 'completed'}]  # opóźniony 2. skan 01.06
+    assert tg._scan_counts(history) == {date(2026, 6, 1): 2}
+
+
+def test_midnight_crossing_second_scan_does_not_mark_day_incomplete():
+    # 01.06: oba skany normalne. 02.06: poranny normalny, wieczorny spóźniony
+    # do 00:06 dnia 03.06 — kalendarzowo wygląda jak 1 skan 02.06. 03.06: oba
+    # własne skany normalne.
+    history = [
+        {'timestamp': '2026-06-01T14:09:00+02:00', 'status': 'completed'},
+        {'timestamp': '2026-06-01T21:47:00+02:00', 'status': 'completed'},
+        {'timestamp': '2026-06-02T16:04:00+02:00', 'status': 'completed'},
+        {'timestamp': '2026-06-03T00:06:00+02:00', 'status': 'completed'},  # opóźniony 2. skan 02.06
+        {'timestamp': '2026-06-03T15:00:00+02:00', 'status': 'completed'},
+        {'timestamp': '2026-06-03T22:51:00+02:00', 'status': 'completed'},
+    ]
+    incomplete, last_complete = _scan_coverage(history, today=date(2026, 6, 3))
+    assert date(2026, 6, 2) not in incomplete
+    assert last_complete == date(2026, 6, 3)
+
+
+def test_genuine_multi_hour_gap_still_marks_day_incomplete():
+    # Dla odróżnienia od wyżej: PRAWDZIWA, wielogodzinna przerwa (nie tylko
+    # przesunięcie granicy doby o kilkadziesiąt minut) ma zostać wykryta —
+    # 02.06 ma tylko 1 skan, a następny dobiega dopiero po ~22,6h 03.06.
+    history = [
+        {'timestamp': '2026-06-01T08:17:00+02:00', 'status': 'completed'},
+        {'timestamp': '2026-06-01T18:17:00+02:00', 'status': 'completed'},
+        {'timestamp': '2026-06-02T11:08:00+02:00', 'status': 'completed'},
+        {'timestamp': '2026-06-03T09:44:00+02:00', 'status': 'completed'},
+        {'timestamp': '2026-06-03T19:10:00+02:00', 'status': 'completed'},
+    ]
+    incomplete, last_complete = _scan_coverage(history, today=date(2026, 6, 3))
+    assert date(2026, 6, 2) in incomplete
+
+
 def test_measured_survives_incomplete_day():
     # Styk dwóch zmian (#14 + #11): dzień niepełny wypada z REKONSTRUKCJI, ale
     # pomiar jest migawką stanu bazy, więc jego punkt zostaje.

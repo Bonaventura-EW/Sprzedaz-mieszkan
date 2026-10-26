@@ -2,6 +2,33 @@
 
 ## [Niewydane]
 
+### Naprawione — opóźniony cron przeciągający drugi skan doby po północy fałszywie zaniżał pokrycie Indeksu (#30, propagacja z SONAR-MIESZKANIOWY, zaadaptowana inaczej niż u brata)
+Maska niepełnych dni na wykresach Indeksu (`trend_generator.py::_scan_coverage`)
+liczyła pełność doby wprost jako `scan_counts.get(d, 0) < SCANS_PER_DAY` po
+dniu KALENDARZOWYM. GitHub Actions potrafi opóźnić cron o godziny — drugi
+z dwóch zaplanowanych przebiegów kończy się wtedy tuż po lokalnej północy
+i kalendarzowo trafia już do następnego dnia, mimo że doba była obserwowana
+normalnie, tylko przesuniętym oknem. Zmierzone na `data/scan_history.json`:
+realny wzorzec w naszej historii (27→28.09, 4→5.10, 11→12.10 — drugi skan
+dobiegał 6-62 minuty po północy).
+
+Manifest brata (`2026-09-27-scan-gap-coverage`) rozwiązuje to progiem na
+najdłuższą przerwę między skanami w obrębie doby (`MAX_SCAN_GAP_HOURS`), ale
+u niego rytm to 3 skany/dobę. Pierwsza próba prostego portu tego progu na nasz
+rytm 2 skanów/dobę (zob. wcześniejsza analiza w historii tego issue) wykazała,
+że żaden POJEDYNCZY próg na przerwę nie rozdziela u nas zdrowych dób od
+realnie niepełnych — rozkłady przerw nocnych i dziennych zachodzą na siebie.
+Zamiast progu na przerwę MIĘDZY skanami, `_scan_counts` przesuwa więc granicę
+SAMEJ DOBY o `MIDNIGHT_GRACE_HOURS` (nowa stała, domyślnie 4h): skan liczy się
+do dnia, w którym mieściłby się, gdyby odjąć od jego znacznika czasu tyle
+godzin. To węższy, bezpieczniejszy cel — dotyczy tylko spóźnienia względem
+PÓŁNOCY (rząd minut/godzin w naszych danych), nie całej dużo bardziej zmiennej
+przerwy międzyskanowej. Zmierzone: każda wartość 2-8h naprawia wszystkie
+3 zaobserwowane przypadki bez ani jednej nowej rozbieżności na 100-dniowym
+oknie historii; powyżej ~9h próg zaczyna się łączyć z kolejną dobą i fałszywie
+„naprawia" dni z realnie tylko jednym skanem (np. 2026-08-06, ~22,6h do
+następnego przebiegu — prawdziwa przerwa).
+
 ### Dodane — odznaka „↩ WRÓCIŁA" na pinezce/popupie dla ofert reaktywowanych (#34, propagacja z Bonaventura-EW/parkingi-i-garaze)
 Pole `reactivated` w `docs/data.json` istniało od #29 (zasilało tylko checkbox
 filtra „Nowe"/„Reaktywowane"), ale na samej karcie oferty nie było żadnego
