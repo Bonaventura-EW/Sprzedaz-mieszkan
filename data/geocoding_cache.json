@@ -10353,7 +10353,7 @@
  },
  "wareńczyka": {
   "result": null,
-  "ts": 1792526603.0451694
+  "ts": 1793133999.9042537
  },
  "jezuickiej": {
   "result": {
@@ -15479,7 +15479,7 @@
  },
  "piłkarskiej": {
   "result": null,
-  "ts": 1792526607.5396013
+  "ts": 1793134004.060071
  },
  "muzycznej": {
   "result": {
@@ -15983,7 +15983,7 @@
  },
  "hutnicza 14": {
   "result": null,
-  "ts": 1792526609.2050643
+  "ts": 1793134005.6432264
  },
  "cicha 4": {
   "result": null,
@@ -16336,11 +16336,11 @@
  },
  "kwarcowa kawalerka": {
   "result": null,
-  "ts": 1792526610.854511
+  "ts": 1793134006.895866
  },
  "racławickiej": {
   "result": null,
-  "ts": 1792526615.408172
+  "ts": 1793134011.0692558
  },
  "juliusza słowackiego": {
   "result": {
@@ -16936,11 +16936,11 @@
  },
  "swidnik|głęboka": {
   "result": null,
-  "ts": 1792526616.7574522
+  "ts": 1793134012.5464706
  },
  "swidnik|głębokiej": {
   "result": null,
-  "ts": 1792526620.508022
+  "ts": 1793134016.4153264
  },
  "poturzyńskiej": {
   "result": {
@@ -17269,5 +17269,25 @@
    "name": "Mełgiewska"
   },
   "ts": 1793103744.00148
+ },
+ "sulisławicka": {
+  "result": {
+   "lat": 51.2278227,
+   "lon": 22.5944909,
+   "name": "Sulisławicka"
+  },
+  "ts": 1793134017.9218104
+ },
+ "balladyny zielona okolica": {
+  "result": null,
+  "ts": 1793134019.4016309
+ },
+ "rva:51.2278,22.5945": {
+  "result": {
+   "road": "Sulisławicka",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1793134020.7567866
  }
 }
