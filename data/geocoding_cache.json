@@ -17289,5 +17289,33 @@
    "city": "Lublin"
   },
   "ts": 1793134020.7567866
+ },
+ "weteranów 17": {
+  "result": null,
+  "ts": 1793192779.1604557
+ },
+ "swidnik|słowackiego": {
+  "result": {
+   "lat": 51.220251,
+   "lon": 22.704748,
+   "name": "Juliusza Słowackiego"
+  },
+  "ts": 1793192780.711199
+ },
+ "rva:51.2342,22.5969": {
+  "result": {
+   "road": "Jesienna",
+   "district": "Bronowice",
+   "city": "Lublin"
+  },
+  "ts": 1793192782.2820234
+ },
+ "rva:51.2156,22.7059": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Brzeziny I",
+   "city": "Świdnik"
+  },
+  "ts": 1793192783.8962898
  }
 }
