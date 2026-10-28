@@ -16684,7 +16684,7 @@
  },
  "bohaterów monte casino": {
   "result": null,
-  "ts": 1792613673.4253407
+  "ts": 1793221858.8468485
  },
  "rva:51.2378,22.5472": {
   "result": {
@@ -17317,5 +17317,21 @@
    "city": "Świdnik"
   },
   "ts": 1793192783.8962898
+ },
+ "kminkowa": {
+  "result": {
+   "lat": 51.2659217,
+   "lon": 22.5949459,
+   "name": "Kminkowa"
+  },
+  "ts": 1793221860.3727348
+ },
+ "rva:51.2584,22.5918": {
+  "result": {
+   "road": null,
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1793221862.023851
  }
 }
