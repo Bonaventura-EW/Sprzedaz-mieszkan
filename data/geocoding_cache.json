@@ -15023,7 +15023,7 @@
  },
  "jacka przybylskiego.mieszkanie": {
   "result": null,
-  "ts": 1792699976.5712674
+  "ts": 1793308424.8903673
  },
  "rva:51.2123,22.6939": {
   "result": {
@@ -17357,5 +17357,21 @@
    "city": "Lublin"
   },
   "ts": 1793279570.9873455
+ },
+ "grenadierów": {
+  "result": {
+   "lat": 51.2262278,
+   "lon": 22.6107486,
+   "name": "Grenadierów"
+  },
+  "ts": 1793308426.254915
+ },
+ "okopowej": {
+  "result": {
+   "lat": 51.2454482,
+   "lon": 22.5542674,
+   "name": "Okopowa"
+  },
+  "ts": 1793308429.07719
  }
 }
