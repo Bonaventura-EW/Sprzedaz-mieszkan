@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1792670517.4205995
+  "ts": 1793279554.2911232
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1792670524.6318192
+  "ts": 1793279561.3911684
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1792670522.6580513
+  "ts": 1793279559.7674892
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1792670527.2637482
+  "ts": 1793279562.7817173
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1792670518.8323383
+  "ts": 1793279555.501964
  },
  "krasińskiego": {
   "result": {
@@ -15631,7 +15631,7 @@
  },
  "racławicka": {
   "result": null,
-  "ts": 1792670525.8973246
+  "ts": 1793279564.2355928
  },
  "rva:51.2639,22.5765": {
   "result": {
@@ -16732,7 +16732,7 @@
  },
  "aleje racławickie 10": {
   "result": null,
-  "ts": 1792670528.6701117
+  "ts": 1793279565.6788878
  },
  "balladyny 2": {
   "result": null,
@@ -17044,7 +17044,7 @@
  },
  "mędzenników majdanka 55": {
   "result": null,
-  "ts": 1792670532.7274017
+  "ts": 1793279566.8929276
  },
  "słomkowskiego": {
   "result": {
@@ -17333,5 +17333,29 @@
    "city": "Lublin"
   },
   "ts": 1793221862.023851
+ },
+ "rva:51.2125,22.7192": {
+  "result": {
+   "road": "Krępiecka",
+   "district": "Osiedle Kusocińskiego",
+   "city": "Świdnik"
+  },
+  "ts": 1793279568.306956
+ },
+ "rva:51.2122,22.7203": {
+  "result": {
+   "road": "Gabriela Narutowicza",
+   "district": "Nowy Krępiec",
+   "city": "Świdnik"
+  },
+  "ts": 1793279569.5948029
+ },
+ "rva:51.2049,22.5567": {
+  "result": {
+   "road": "Diamentowa",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1793279570.9873455
  }
 }
