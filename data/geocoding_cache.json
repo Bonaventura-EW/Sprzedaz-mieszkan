@@ -3541,7 +3541,7 @@
  },
  "zbigniewa herberta 6": {
   "result": null,
-  "ts": 1782112006.5984128
+  "ts": 1793365553.5700197
  },
  "montażowa": {
   "result": {
@@ -4281,7 +4281,7 @@
  },
  "migdałowa 4": {
   "result": null,
-  "ts": 1792756082.203324
+  "ts": 1793365545.9072797
  },
  "bukowa": {
   "result": {
@@ -14129,7 +14129,7 @@
  },
  "narutowicza 64": {
   "result": null,
-  "ts": 1787942987.7892246
+  "ts": 1793365552.1990287
  },
  "koncertowa 18": {
   "result": null,
@@ -15695,7 +15695,7 @@
  },
  "obrońców lublin": {
   "result": null,
-  "ts": 1792756083.894514
+  "ts": 1793365547.5238137
  },
  "strażacka": {
   "result": {
@@ -15715,7 +15715,7 @@
  },
  "racławickie 40": {
   "result": null,
-  "ts": 1792756086.4727519
+  "ts": 1793365549.1355116
  },
  "hugo kołłątaja": {
   "result": null,
@@ -17373,5 +17373,13 @@
    "name": "Okopowa"
   },
   "ts": 1793308429.07719
+ },
+ "tysiąclecia": {
+  "result": {
+   "lat": 51.2488787,
+   "lon": 22.5902621,
+   "name": "Aleja Tysiąclecia"
+  },
+  "ts": 1793365550.5440993
  }
 }
