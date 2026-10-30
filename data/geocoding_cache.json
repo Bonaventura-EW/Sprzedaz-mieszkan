@@ -16200,7 +16200,7 @@
  },
  "paderwskiego": {
   "result": null,
-  "ts": 1792785626.5844393
+  "ts": 1793393579.6648147
  },
  "granata7": {
   "result": null,
@@ -16528,7 +16528,7 @@
  },
  "przyjaźni 5": {
   "result": null,
-  "ts": 1792785614.3986638
+  "ts": 1793393575.395658
  },
  "rva:51.2454,22.5109": {
   "result": {
@@ -17132,11 +17132,11 @@
  },
  "kompozytor": {
   "result": null,
-  "ts": 1792785623.7076557
+  "ts": 1793393576.8126433
  },
  "kaczyńskiego": {
   "result": null,
-  "ts": 1792785625.147815
+  "ts": 1793393578.236003
  },
  "rva:51.2250,22.4845": {
   "result": {
@@ -17381,5 +17381,21 @@
    "name": "Aleja Tysiąclecia"
   },
   "ts": 1793365550.5440993
+ },
+ "rva:51.2451,22.5944": {
+  "result": {
+   "road": "Maszynowa",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1793393581.094105
+ },
+ "rva:51.2663,22.5623": {
+  "result": {
+   "road": "Józefa Mackiewicza",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1793393582.525543
  }
 }
