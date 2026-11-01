@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1792928578.348692
+  "ts": 1793540048.9636238
  },
  "pozytywistów": {
   "result": {
@@ -17417,5 +17417,9 @@
    "city": "Lublin"
   },
   "ts": 1793477005.9307415
+ },
+ "daszyńskiego 3": {
+  "result": null,
+  "ts": 1793540051.4852052
  }
 }
