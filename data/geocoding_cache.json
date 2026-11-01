@@ -16572,7 +16572,7 @@
  },
  "różnej": {
   "result": null,
-  "ts": 1792955276.438727
+  "ts": 1793565324.0826488
  },
  "orlej": {
   "result": {
@@ -17220,7 +17220,7 @@
  },
  "niepodległości 5": {
   "result": null,
-  "ts": 1792955277.9337122
+  "ts": 1793565327.1437154
  },
  "rva:51.2759,22.5907": {
   "result": {
@@ -17421,5 +17421,45 @@
  "daszyńskiego 3": {
   "result": null,
   "ts": 1793540051.4852052
+ },
+ "oś. paderewskiego": {
+  "result": null,
+  "ts": 1793565325.471735
+ },
+ "wilenska 11": {
+  "result": null,
+  "ts": 1793565328.6251197
+ },
+ "wilenskiej": {
+  "result": {
+   "lat": 51.2428801,
+   "lon": 22.5200859,
+   "name": "Wileńska"
+  },
+  "ts": 1793565331.47439
+ },
+ "rva:51.2321,22.5359": {
+  "result": {
+   "road": null,
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1793565333.285128
+ },
+ "rva:51.2429,22.5201": {
+  "result": {
+   "road": "Wileńska",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1793565334.9164274
+ },
+ "rva:51.2609,22.5946": {
+  "result": {
+   "road": "Ignacego Daszyńskiego",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1793565336.315975
  }
 }
