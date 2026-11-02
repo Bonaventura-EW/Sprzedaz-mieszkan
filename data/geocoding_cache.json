@@ -3145,7 +3145,7 @@
  },
  "marii walciszewskiej 1": {
   "result": null,
-  "ts": 1793048690.6864586
+  "ts": 1793662647.623452
  },
  "józefa kustronia": {
   "result": {
@@ -15987,7 +15987,7 @@
  },
  "cicha 4": {
   "result": null,
-  "ts": 1793048692.178217
+  "ts": 1793662649.4703517
  },
  "mieczysławy ćwiklińskiej": {
   "result": {
@@ -16832,7 +16832,7 @@
  },
  "kasztelańska 29": {
   "result": null,
-  "ts": 1793048693.6562862
+  "ts": 1793662650.7725067
  },
  "brata alberta": {
   "result": {
@@ -17505,5 +17505,13 @@
    "city": "Lublin"
   },
   "ts": 1793635741.6509142
+ },
+ "rva:51.2462,22.5221": {
+  "result": {
+   "road": "Balladyny",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1793662652.3895664
  }
 }
