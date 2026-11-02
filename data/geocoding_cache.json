@@ -9369,7 +9369,7 @@
  },
  "samosnowicza": {
   "result": null,
-  "ts": 1791380032.4522662
+  "ts": 1793635727.2566497
  },
  "wrońska 3d": {
   "result": null,
@@ -16748,11 +16748,11 @@
  },
  "bolesława stachonia": {
   "result": null,
-  "ts": 1792064387.967673
+  "ts": 1793635735.5697126
  },
  "stachonia": {
   "result": null,
-  "ts": 1792064389.5772781
+  "ts": 1793635736.8796382
  },
  "rva:51.2282,22.5746": {
   "result": {
@@ -17461,5 +17461,49 @@
    "city": "Lublin"
   },
   "ts": 1793565336.315975
+ },
+ "franciszka mireckiego": {
+  "result": {
+   "lat": 51.2211883,
+   "lon": 22.5743205,
+   "name": "Franciszka Mireckiego"
+  },
+  "ts": 1793635728.569451
+ },
+ "kryształowa 10": {
+  "result": null,
+  "ts": 1793635730.1746771
+ },
+ "czeremchowej": {
+  "result": {
+   "lat": 51.2532642,
+   "lon": 22.5175063,
+   "name": "Czeremchowa"
+  },
+  "ts": 1793635732.6895142
+ },
+ "stanisława skarżyńskiego": {
+  "result": null,
+  "ts": 1793635734.301056
+ },
+ "rva:51.2215,22.6525": {
+  "result": {
+   "road": "Felin / Brzegowa",
+   "district": "Kolonia Biskupie",
+   "city": "Świdnik"
+  },
+  "ts": 1793635738.491232
+ },
+ "kard. stefana wyszyńskiego": {
+  "result": null,
+  "ts": 1793635740.248734
+ },
+ "rva:51.2212,22.5743": {
+  "result": {
+   "road": "Franciszka Mireckiego",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1793635741.6509142
  }
 }
