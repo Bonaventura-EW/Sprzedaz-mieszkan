@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1793103736.6961899
+  "ts": 1793715995.7753003
  },
  "mełgiewskiej": {
   "result": {
@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1793103739.600198
+  "ts": 1793715998.6534877
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -14537,7 +14537,7 @@
  },
  "zamojska 39": {
   "result": null,
-  "ts": 1793103742.746319
+  "ts": 1793716001.7195098
  },
  "rva:51.2239,22.4979": {
   "result": {
@@ -16272,7 +16272,7 @@
  },
  "gospodarcza 22": {
   "result": null,
-  "ts": 1793103740.938091
+  "ts": 1793715999.9148693
  },
  "rva:51.2161,22.6935": {
   "result": {
@@ -17513,5 +17513,89 @@
    "city": "Lublin"
   },
   "ts": 1793662652.3895664
+ },
+ "maszynowa": {
+  "result": null,
+  "ts": 1793716017.8767462
+ },
+ "maszynowej": {
+  "result": {
+   "lat": 51.245656,
+   "lon": 22.5947609,
+   "name": "Maszynowa"
+  },
+  "ts": 1793716020.033862
+ },
+ "młyńskiej": {
+  "result": {
+   "lat": 51.2335296,
+   "lon": 22.5678503,
+   "name": "Młyńska"
+  },
+  "ts": 1793716033.5124965
+ },
+ "skowronkowa 61": {
+  "result": null,
+  "ts": 1793716034.8576927
+ },
+ "turniowa": {
+  "result": {
+   "lat": 51.223783,
+   "lon": 22.5296427,
+   "name": "Turniowa"
+  },
+  "ts": 1793716036.216861
+ },
+ "bociania i": {
+  "result": {
+   "lat": 51.2276399,
+   "lon": 22.5110805,
+   "name": "Bociania"
+  },
+  "ts": 1793716037.8240473
+ },
+ "bluszczowa-bez pośredników": {
+  "result": null,
+  "ts": 1793716040.6438074
+ },
+ "rva:51.2457,22.5948": {
+  "result": {
+   "road": "Maszynowa",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1793716042.3599243
+ },
+ "rva:51.2238,22.5296": {
+  "result": {
+   "road": "Turniowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1793716043.7701128
+ },
+ "rva:51.2217,22.5145": {
+  "result": {
+   "road": "Rubinowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1793716045.0233417
+ },
+ "rva:51.2234,22.5231": {
+  "result": {
+   "road": "Rondo Niezależnego Zrzeszenia Studentów",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1793716046.7647395
+ },
+ "rva:51.2258,22.4847": {
+  "result": {
+   "road": "Gęsia",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1793716048.144406
  }
 }
