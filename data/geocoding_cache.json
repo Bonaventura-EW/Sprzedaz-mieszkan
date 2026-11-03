@@ -5461,7 +5461,7 @@
  },
  "skautów 5": {
   "result": null,
-  "ts": 1782131606.423687
+  "ts": 1793742733.538888
  },
  "kameralna3": {
   "result": null,
@@ -10353,7 +10353,7 @@
  },
  "wareńczyka": {
   "result": null,
-  "ts": 1793133999.9042537
+  "ts": 1793742722.1293926
  },
  "jezuickiej": {
   "result": {
@@ -15479,7 +15479,7 @@
  },
  "piłkarskiej": {
   "result": null,
-  "ts": 1793134004.060071
+  "ts": 1793742726.3126771
  },
  "muzycznej": {
   "result": {
@@ -16336,11 +16336,11 @@
  },
  "kwarcowa kawalerka": {
   "result": null,
-  "ts": 1793134006.895866
+  "ts": 1793742727.8246207
  },
  "racławickiej": {
   "result": null,
-  "ts": 1793134011.0692558
+  "ts": 1793742732.0022004
  },
  "juliusza słowackiego": {
   "result": {
@@ -17597,5 +17597,33 @@
    "city": "Lublin"
   },
   "ts": 1793716048.144406
+ },
+ "rowerowa": {
+  "result": {
+   "lat": 51.2413635,
+   "lon": 22.5530162,
+   "name": "Rowerowa"
+  },
+  "ts": 1793742734.9394119
+ },
+ "franczaka": {
+  "result": {
+   "lat": 51.2173978,
+   "lon": 22.6296332,
+   "name": "Józefa Franczaka \"Lalka\""
+  },
+  "ts": 1793742736.3522186
+ },
+ "ułan": {
+  "result": null,
+  "ts": 1793742737.6979883
+ },
+ "rva:51.2414,22.5530": {
+  "result": {
+   "road": "Rowerowa",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1793742739.0653996
  }
 }
