@@ -17625,5 +17625,65 @@
    "city": "Lublin"
   },
   "ts": 1793742739.0653996
+ },
+ "nadrzecznej": {
+  "result": {
+   "lat": 51.2132687,
+   "lon": 22.5864284,
+   "name": "Nadrzeczna"
+  },
+  "ts": 1793803262.7733128
+ },
+ "gen. stanisława skalskiego": {
+  "result": {
+   "lat": 51.2160289,
+   "lon": 22.6286119,
+   "name": "Generała Stanisława Skalskiego"
+  },
+  "ts": 1793803264.0211427
+ },
+ "grażyny 20": {
+  "result": null,
+  "ts": 1793803265.3882735
+ },
+ "rva:51.2661,22.5946": {
+  "result": {
+   "road": "Kminkowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1793803267.0952837
+ },
+ "rva:51.2647,22.5254": {
+  "result": {
+   "road": "Pergolowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1793803268.7733843
+ },
+ "rva:51.2520,22.5096": {
+  "result": {
+   "road": "Nałęczowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1793803270.4498703
+ },
+ "rva:51.1988,22.5497": {
+  "result": {
+   "road": "Księdza Wincentego Granata",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1793803271.819411
+ },
+ "rva:51.2391,22.5298": {
+  "result": {
+   "road": "Filaretów",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1793803273.195721
  }
 }
