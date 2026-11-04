@@ -16684,7 +16684,7 @@
  },
  "bohaterów monte casino": {
   "result": null,
-  "ts": 1793221858.8468485
+  "ts": 1793829466.497643
  },
  "rva:51.2378,22.5472": {
   "result": {
@@ -17685,5 +17685,17 @@
    "city": "Lublin"
   },
   "ts": 1793803273.195721
+ },
+ "swidnik|krasińskiego": {
+  "result": null,
+  "ts": 1793829467.9647496
+ },
+ "rva:51.2056,22.5519": {
+  "result": {
+   "road": "Diamentowa",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1793829469.355852
  }
 }
