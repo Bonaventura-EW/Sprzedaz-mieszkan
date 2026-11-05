@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1793279554.2911232
+  "ts": 1793889954.1810334
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1793279561.3911684
+  "ts": 1793889955.5418618
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1793279559.7674892
+  "ts": 1793889984.6207433
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1793279562.7817173
+  "ts": 1793889984.7943387
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1793279555.501964
+  "ts": 1793889956.9624803
  },
  "krasińskiego": {
   "result": {
@@ -15631,7 +15631,7 @@
  },
  "racławicka": {
   "result": null,
-  "ts": 1793279564.2355928
+  "ts": 1793889986.6849308
  },
  "rva:51.2639,22.5765": {
   "result": {
@@ -16732,7 +16732,7 @@
  },
  "aleje racławickie 10": {
   "result": null,
-  "ts": 1793279565.6788878
+  "ts": 1793890002.832289
  },
  "balladyny 2": {
   "result": null,
@@ -17044,7 +17044,7 @@
  },
  "mędzenników majdanka 55": {
   "result": null,
-  "ts": 1793279566.8929276
+  "ts": 1793890002.9838636
  },
  "słomkowskiego": {
   "result": {
@@ -17697,5 +17697,61 @@
    "city": "Lublin"
   },
   "ts": 1793829469.355852
+ },
+ "rva:51.2655,22.5126": {
+  "result": {
+   "road": "Sławinkowska",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1793890014.1292403
+ },
+ "rva:51.2146,22.5925": {
+  "result": {
+   "road": "Wyzwolenia",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1793890017.1971998
+ },
+ "rva:51.2445,22.5980": {
+  "result": {
+   "road": null,
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1793890018.7215035
+ },
+ "rva:51.2045,22.5576": {
+  "result": {
+   "road": "Diamentowa",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1793890019.9955332
+ },
+ "rva:51.2056,22.5615": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1793890021.3882663
+ },
+ "rva:51.2079,22.5601": {
+  "result": {
+   "road": "Budowlana",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1793890022.9680247
+ },
+ "rva:51.2060,22.5582": {
+  "result": {
+   "road": "Energetyków",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1793890024.2343507
  }
 }
