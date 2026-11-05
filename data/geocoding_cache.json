@@ -725,7 +725,7 @@
  },
  "rumiankowa 3": {
   "result": null,
-  "ts": 1784623829.0057392
+  "ts": 1793916468.5683057
  },
  "rumiankowa": {
   "result": {
@@ -5449,7 +5449,7 @@
  },
  "chabrowa 2": {
   "result": null,
-  "ts": 1785229828.1277766
+  "ts": 1793916467.3209085
  },
  "ignacego daszyńskiego": {
   "result": {
@@ -15023,7 +15023,7 @@
  },
  "jacka przybylskiego.mieszkanie": {
   "result": null,
-  "ts": 1793308424.8903673
+  "ts": 1793916465.9946883
  },
  "rva:51.2123,22.6939": {
   "result": {
@@ -17753,5 +17753,13 @@
    "city": "Lublin"
   },
   "ts": 1793890024.2343507
+ },
+ "rva:51.2659,22.5949": {
+  "result": {
+   "road": "Kminkowa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1793916469.8396893
  }
 }
