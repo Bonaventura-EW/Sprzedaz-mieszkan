@@ -16200,7 +16200,7 @@
  },
  "paderwskiego": {
   "result": null,
-  "ts": 1793393579.6648147
+  "ts": 1794000903.7146447
  },
  "granata7": {
   "result": null,
@@ -16528,7 +16528,7 @@
  },
  "przyjaźni 5": {
   "result": null,
-  "ts": 1793393575.395658
+  "ts": 1794000898.2697892
  },
  "rva:51.2454,22.5109": {
   "result": {
@@ -17132,11 +17132,11 @@
  },
  "kompozytor": {
   "result": null,
-  "ts": 1793393576.8126433
+  "ts": 1794000899.7109423
  },
  "kaczyńskiego": {
   "result": null,
-  "ts": 1793393578.236003
+  "ts": 1794000901.0424693
  },
  "rva:51.2250,22.4845": {
   "result": {
@@ -17773,5 +17773,17 @@
    "city": "Lublin"
   },
   "ts": 1793975050.9908457
+ },
+ "koncertowa 7": {
+  "result": null,
+  "ts": 1794000902.515473
+ },
+ "rva:51.2748,22.5454": {
+  "result": {
+   "road": "Króla Rogera",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1794000905.213016
  }
 }
