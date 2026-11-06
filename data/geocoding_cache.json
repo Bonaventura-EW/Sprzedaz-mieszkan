@@ -4281,7 +4281,7 @@
  },
  "migdałowa 4": {
   "result": null,
-  "ts": 1793365545.9072797
+  "ts": 1793975045.2936778
  },
  "bukowa": {
   "result": {
@@ -15695,7 +15695,7 @@
  },
  "obrońców lublin": {
   "result": null,
-  "ts": 1793365547.5238137
+  "ts": 1793975046.4516103
  },
  "strażacka": {
   "result": {
@@ -15715,7 +15715,7 @@
  },
  "racławickie 40": {
   "result": null,
-  "ts": 1793365549.1355116
+  "ts": 1793975048.043513
  },
  "hugo kołłątaja": {
   "result": null,
@@ -17761,5 +17761,17 @@
    "city": "Lublin"
   },
   "ts": 1793916469.8396893
+ },
+ "hieronima łopacińskiego 5": {
+  "result": null,
+  "ts": 1793975049.674977
+ },
+ "rva:51.2043,22.5611": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1793975050.9908457
  }
 }
