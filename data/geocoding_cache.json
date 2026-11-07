@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1793477002.6659913
+  "ts": 1794082674.528286
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -14133,7 +14133,7 @@
  },
  "koncertowa 18": {
   "result": null,
-  "ts": 1793477004.2946758
+  "ts": 1794082676.148455
  },
  "rva:51.2816,22.5850": {
   "result": {
@@ -17813,5 +17813,13 @@
    "city": "Lublin"
   },
   "ts": 1794057206.6670103
+ },
+ "rva:51.2559,22.5310": {
+  "result": {
+   "road": "Aleja Generała Władysława Sikorskiego",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1794082677.5349166
  }
 }
