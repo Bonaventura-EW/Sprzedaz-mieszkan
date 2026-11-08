@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1793540048.9636238
+  "ts": 1794144896.2074814
  },
  "pozytywistów": {
   "result": {
@@ -17420,7 +17420,7 @@
  },
  "daszyńskiego 3": {
   "result": null,
-  "ts": 1793540051.4852052
+  "ts": 1794144897.5021975
  },
  "oś. paderewskiego": {
   "result": null,
@@ -17821,5 +17821,9 @@
    "city": "Lublin"
   },
   "ts": 1794082677.5349166
+ },
+ "gen. leopolda okulickiego": {
+  "result": null,
+  "ts": 1794144899.1090317
  }
 }
