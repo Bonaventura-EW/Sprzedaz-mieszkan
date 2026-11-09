@@ -9369,7 +9369,7 @@
  },
  "samosnowicza": {
   "result": null,
-  "ts": 1793635727.2566497
+  "ts": 1794241927.1880572
  },
  "wrońska 3d": {
   "result": null,
@@ -16572,7 +16572,7 @@
  },
  "różnej": {
   "result": null,
-  "ts": 1793565324.0826488
+  "ts": 1794241930.016255
  },
  "orlej": {
   "result": {
@@ -17220,7 +17220,7 @@
  },
  "niepodległości 5": {
   "result": null,
-  "ts": 1793565327.1437154
+  "ts": 1794241933.2993078
  },
  "rva:51.2759,22.5907": {
   "result": {
@@ -17424,7 +17424,7 @@
  },
  "oś. paderewskiego": {
   "result": null,
-  "ts": 1793565325.471735
+  "ts": 1794241931.374891
  },
  "wilenska 11": {
   "result": null,
@@ -17496,7 +17496,7 @@
  },
  "kard. stefana wyszyńskiego": {
   "result": null,
-  "ts": 1793635740.248734
+  "ts": 1794241939.0706491
  },
  "rva:51.2212,22.5743": {
   "result": {
@@ -17825,5 +17825,41 @@
  "gen. leopolda okulickiego": {
   "result": null,
   "ts": 1794144899.1090317
+ },
+ "mackiewicza": {
+  "result": {
+   "lat": 51.2662637,
+   "lon": 22.5622527,
+   "name": "Józefa Mackiewicza"
+  },
+  "ts": 1794241934.568832
+ },
+ "lubelskiej": {
+  "result": {
+   "lat": 51.2418942,
+   "lon": 22.5730616,
+   "name": "Aleja Unii Lubelskiej"
+  },
+  "ts": 1794241935.9495697
+ },
+ "lwowska 9": {
+  "result": null,
+  "ts": 1794241937.5926526
+ },
+ "rva:51.2305,22.6405": {
+  "result": {
+   "road": "Macieja Rataja",
+   "district": "Felin",
+   "city": "Lublin"
+  },
+  "ts": 1794241940.5723171
+ },
+ "rva:51.2513,22.5905": {
+  "result": {
+   "road": "Towarowa",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1794241942.0421143
  }
 }
