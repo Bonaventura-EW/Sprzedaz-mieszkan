@@ -3145,7 +3145,7 @@
  },
  "marii walciszewskiej 1": {
   "result": null,
-  "ts": 1793662647.623452
+  "ts": 1794322858.8099566
  },
  "józefa kustronia": {
   "result": {
@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1793715995.7753003
+  "ts": 1794322851.2063076
  },
  "mełgiewskiej": {
   "result": {
@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1793715998.6534877
+  "ts": 1794322853.9908319
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -14537,7 +14537,7 @@
  },
  "zamojska 39": {
   "result": null,
-  "ts": 1793716001.7195098
+  "ts": 1794322857.2155633
  },
  "rva:51.2239,22.4979": {
   "result": {
@@ -15011,7 +15011,7 @@
  },
  "turkuso": {
   "result": null,
-  "ts": 1791408157.0311184
+  "ts": 1794322877.0019486
  },
  "rva:51.2326,22.4924": {
   "result": {
@@ -15987,7 +15987,7 @@
  },
  "cicha 4": {
   "result": null,
-  "ts": 1793662649.4703517
+  "ts": 1794322860.1396315
  },
  "mieczysławy ćwiklińskiej": {
   "result": {
@@ -16272,7 +16272,7 @@
  },
  "gospodarcza 22": {
   "result": null,
-  "ts": 1793715999.9148693
+  "ts": 1794322855.8487673
  },
  "rva:51.2161,22.6935": {
   "result": {
@@ -16832,7 +16832,7 @@
  },
  "kasztelańska 29": {
   "result": null,
-  "ts": 1793662650.7725067
+  "ts": 1794322871.7242086
  },
  "brata alberta": {
   "result": {
@@ -17861,5 +17861,25 @@
    "city": "Lublin"
   },
   "ts": 1794241942.0421143
+ },
+ "wileńskiejprzystanki": {
+  "result": null,
+  "ts": 1794322872.9075317
+ },
+ "ogrodowej": {
+  "result": {
+   "lat": 51.25023,
+   "lon": 22.5561151,
+   "name": "Ogrodowa"
+  },
+  "ts": 1794322875.8489048
+ },
+ "rva:51.1994,22.5523": {
+  "result": {
+   "road": "Osiedle Regaty",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1794322878.641327
  }
 }
