@@ -17515,8 +17515,12 @@
   "ts": 1793662652.3895664
  },
  "maszynowa": {
-  "result": null,
-  "ts": 1793716017.8767462
+  "result": {
+   "lat": 51.245656,
+   "lon": 22.5947609,
+   "name": "Maszynowa"
+  },
+  "ts": 1794347502.1037514
  },
  "maszynowej": {
   "result": {
@@ -17881,5 +17885,29 @@
    "city": "Lublin"
   },
   "ts": 1794322878.641327
+ },
+ "relaksowa 26": {
+  "result": null,
+  "ts": 1794347500.5399206
+ },
+ "garbarska 18": {
+  "result": null,
+  "ts": 1794347503.7153974
+ },
+ "rva:51.2551,22.5509": {
+  "result": {
+   "road": "Niccolo Paganiniego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1794347505.4858916
+ },
+ "rva:51.2184,22.7033": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1794347506.7209864
  }
 }
