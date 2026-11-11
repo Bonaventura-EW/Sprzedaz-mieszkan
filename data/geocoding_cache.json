@@ -15479,7 +15479,7 @@
  },
  "piłkarskiej": {
   "result": null,
-  "ts": 1793742726.3126771
+  "ts": 1794407490.3275883
  },
  "muzycznej": {
   "result": {
@@ -16336,11 +16336,11 @@
  },
  "kwarcowa kawalerka": {
   "result": null,
-  "ts": 1793742727.8246207
+  "ts": 1794407491.6854649
  },
  "racławickiej": {
   "result": null,
-  "ts": 1793742732.0022004
+  "ts": 1794407509.4486125
  },
  "juliusza słowackiego": {
   "result": {
@@ -17909,5 +17909,13 @@
    "city": "Świdnik"
   },
   "ts": 1794347506.7209864
+ },
+ "rva:51.2606,22.5576": {
+  "result": {
+   "road": "Milenijna",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1794407511.076789
  }
 }
