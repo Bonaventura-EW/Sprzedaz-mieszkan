@@ -725,7 +725,7 @@
  },
  "rumiankowa 3": {
   "result": null,
-  "ts": 1793916468.5683057
+  "ts": 1794521899.075118
  },
  "rumiankowa": {
   "result": {
@@ -17945,5 +17945,33 @@
    "city": "Lublin"
   },
   "ts": 1794493278.1905842
+ },
+ "hotelowej": {
+  "result": null,
+  "ts": 1794521901.8899384
+ },
+ "swidnik|hotelowej": {
+  "result": {
+   "lat": 51.2183149,
+   "lon": 22.7044044,
+   "name": "Hotelowa"
+  },
+  "ts": 1794521904.5968962
+ },
+ "rva:51.2329,22.4987": {
+  "result": {
+   "road": "Poznańska",
+   "district": "Czuby Północne",
+   "city": "Lublin"
+  },
+  "ts": 1794521906.1624522
+ },
+ "rva:51.2190,22.7031": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1794521907.6082873
  }
 }
