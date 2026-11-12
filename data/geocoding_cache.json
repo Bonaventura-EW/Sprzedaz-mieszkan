@@ -16612,7 +16612,7 @@
  },
  "hotelowa": {
   "result": null,
-  "ts": 1791901254.7876933
+  "ts": 1794493274.7106178
  },
  "krótka": {
   "result": {
@@ -17921,5 +17921,29 @@
  "niepodległości 18": {
   "result": null,
   "ts": 1794437177.8852425
+ },
+ "swidnik|kilińskiego": {
+  "result": {
+   "lat": 51.2190361,
+   "lon": 22.6974707,
+   "name": "Jana Kilińskiego"
+  },
+  "ts": 1794493273.2901168
+ },
+ "rva:51.2448,22.5478": {
+  "result": {
+   "road": "Obrońców Pokoju",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1794493276.7780852
+ },
+ "rva:51.2138,22.5486": {
+  "result": {
+   "road": "Diamentowa",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1794493278.1905842
  }
 }
