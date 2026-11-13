@@ -16528,7 +16528,7 @@
  },
  "przyjaźni 5": {
   "result": null,
-  "ts": 1794000898.2697892
+  "ts": 1794607321.1439946
  },
  "rva:51.2454,22.5109": {
   "result": {
@@ -16748,7 +16748,7 @@
  },
  "bolesława stachonia": {
   "result": null,
-  "ts": 1793635735.5697126
+  "ts": 1794607326.4160697
  },
  "stachonia": {
   "result": null,
@@ -17132,11 +17132,11 @@
  },
  "kompozytor": {
   "result": null,
-  "ts": 1794000899.7109423
+  "ts": 1794607322.3684037
  },
  "kaczyńskiego": {
   "result": null,
-  "ts": 1794000901.0424693
+  "ts": 1794607323.6332285
  },
  "rva:51.2250,22.4845": {
   "result": {
@@ -17780,7 +17780,7 @@
  },
  "koncertowa 7": {
   "result": null,
-  "ts": 1794000902.515473
+  "ts": 1794607324.9665968
  },
  "rva:51.2748,22.5454": {
   "result": {
@@ -18045,5 +18045,21 @@
    "city": "Lublin"
   },
   "ts": 1794580933.3574874
+ },
+ "rva:51.2472,22.5110": {
+  "result": {
+   "road": "Wojciechowska",
+   "district": "Konstantynów",
+   "city": "Lublin"
+  },
+  "ts": 1794607327.752087
+ },
+ "rva:51.2137,22.6982": {
+  "result": {
+   "road": "Kardynała Stefana Wyszyńskiego",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1794607329.134338
  }
 }
