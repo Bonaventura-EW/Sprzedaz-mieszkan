@@ -4281,7 +4281,7 @@
  },
  "migdałowa 4": {
   "result": null,
-  "ts": 1793975045.2936778
+  "ts": 1794580915.4621944
  },
  "bukowa": {
   "result": {
@@ -15695,7 +15695,7 @@
  },
  "obrońców lublin": {
   "result": null,
-  "ts": 1793975046.4516103
+  "ts": 1794580916.7963977
  },
  "strażacka": {
   "result": {
@@ -15715,7 +15715,7 @@
  },
  "racławickie 40": {
   "result": null,
-  "ts": 1793975048.043513
+  "ts": 1794580918.0502841
  },
  "hugo kołłątaja": {
   "result": null,
@@ -16600,7 +16600,7 @@
  },
  "wincentego witosa": {
   "result": null,
-  "ts": 1791846246.1249561
+  "ts": 1794580924.1556783
  },
  "rva:51.2363,22.5463": {
   "result": {
@@ -17973,5 +17973,77 @@
    "city": "Świdnik"
   },
   "ts": 1794521907.6082873
+ },
+ "curie-skłodowskiej": {
+  "result": {
+   "lat": 51.2460223,
+   "lon": 22.5476756,
+   "name": "Marii Skłodowskiej-Curie"
+  },
+  "ts": 1794580919.6272485
+ },
+ "aleja kompozytorów polskich 3": {
+  "result": {
+   "lat": 51.2669928,
+   "lon": 22.5465211,
+   "name": "Aleja Kompozytorów Polskich"
+  },
+  "ts": 1794580921.2385006
+ },
+ "snopkowska": {
+  "result": {
+   "lat": 51.2523729,
+   "lon": 22.5430792,
+   "name": "Snopkowska"
+  },
+  "ts": 1794580922.5768042
+ },
+ "swidnik|mickiewicza": {
+  "result": {
+   "lat": 51.2203539,
+   "lon": 22.7059999,
+   "name": "Adama Mickiewicza"
+  },
+  "ts": 1794580925.7625635
+ },
+ "rva:51.2395,22.5385": {
+  "result": {
+   "road": "Gliniana",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1794580927.37311
+ },
+ "rva:51.2452,22.5448": {
+  "result": {
+   "road": "Obrońców Pokoju",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1794580928.7475774
+ },
+ "rva:51.2460,22.5477": {
+  "result": {
+   "road": "Marii Skłodowskiej-Curie",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1794580930.3706515
+ },
+ "rva:51.2670,22.5465": {
+  "result": {
+   "road": "Aleja Kompozytorów Polskich",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1794580931.9739656
+ },
+ "rva:51.2524,22.5431": {
+  "result": {
+   "road": "Snopkowska",
+   "district": "Wieniawa",
+   "city": "Lublin"
+  },
+  "ts": 1794580933.3574874
  }
 }
