@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1794082674.528286
+  "ts": 1794689270.3737185
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -14133,7 +14133,7 @@
  },
  "koncertowa 18": {
   "result": null,
-  "ts": 1794082676.148455
+  "ts": 1794689271.9526951
  },
  "rva:51.2816,22.5850": {
   "result": {
@@ -18061,5 +18061,34 @@
    "city": "Świdnik"
   },
   "ts": 1794607329.134338
+ },
+ "koncertowa 9": {
+  "result": null,
+  "ts": 1794689273.5108788
+ },
+ "swidnik|strumińskiego": {
+  "result": {
+   "lat": 51.209916,
+   "lon": 22.6992169,
+   "name": "Henryka Strumińskiego"
+  },
+  "ts": 1794689274.8093052
+ },
+ "dbx:lublin:zemborzyce": {
+  "result": [
+   51.1398098,
+   51.2206561,
+   22.4713773,
+   22.5471641
+  ],
+  "ts": 1794689276.1138477
+ },
+ "rva:51.2450,22.5562": {
+  "result": {
+   "road": "Okopowa",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1794689277.7632825
  }
 }
