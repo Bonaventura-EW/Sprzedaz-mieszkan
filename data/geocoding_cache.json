@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1794144896.2074814
+  "ts": 1794751376.8496501
  },
  "pozytywistów": {
   "result": {
@@ -17420,7 +17420,7 @@
  },
  "daszyńskiego 3": {
   "result": null,
-  "ts": 1794144897.5021975
+  "ts": 1794751378.3076162
  },
  "oś. paderewskiego": {
   "result": null,
@@ -18090,5 +18090,29 @@
    "city": "Lublin"
   },
   "ts": 1794689277.7632825
+ },
+ "fantastycznej": {
+  "result": {
+   "lat": 51.226673,
+   "lon": 22.5278701,
+   "name": "Fantastyczna"
+  },
+  "ts": 1794751381.102785
+ },
+ "rodakiewicza": {
+  "result": {
+   "lat": 51.1996857,
+   "lon": 22.545832,
+   "name": "Łukasza Rodakiewicza"
+  },
+  "ts": 1794751382.5128233
+ },
+ "rva:51.2178,22.7095": {
+  "result": {
+   "road": "Kosynierów",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1794751383.816815
  }
 }
