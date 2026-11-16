@@ -18114,5 +18114,89 @@
    "city": "Świdnik"
   },
   "ts": 1794751383.816815
+ },
+ "topolowa bez prowizji": {
+  "result": null,
+  "ts": 1794844734.2018678
+ },
+ "sympatyczna 3": {
+  "result": null,
+  "ts": 1794844735.470472
+ },
+ "spacerowa": {
+  "result": {
+   "lat": 51.2241406,
+   "lon": 22.5730656,
+   "name": "Spacerowa"
+  },
+  "ts": 1794844737.850461
+ },
+ "urbanowicza 24": {
+  "result": null,
+  "ts": 1794844739.1461468
+ },
+ "rva:51.2216,22.5308": {
+  "result": {
+   "road": "Wyżynna",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1794844740.443342
+ },
+ "rva:51.2736,22.5735": {
+  "result": {
+   "road": "Aleja Spółdzielczości Pracy",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1794844741.7484336
+ },
+ "rva:51.2322,22.5653": {
+  "result": {
+   "road": "Młyńska",
+   "district": "Za Cukrownią",
+   "city": "Lublin"
+  },
+  "ts": 1794844743.0531414
+ },
+ "rva:51.2241,22.5731": {
+  "result": {
+   "road": "Spacerowa",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1794844744.8136346
+ },
+ "rva:51.2230,22.4856": {
+  "result": {
+   "road": "Koralowa",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1794844746.5322483
+ },
+ "rva:51.2040,22.6101": {
+  "result": {
+   "road": "Zorza",
+   "district": "Głusk",
+   "city": "Lublin"
+  },
+  "ts": 1794844747.8352165
+ },
+ "rva:51.2180,22.5694": {
+  "result": {
+   "road": null,
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1794844749.3598602
+ },
+ "rva:51.2151,22.6310": {
+  "result": {
+   "road": "Generała Witolda Urbanowicza",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1794844751.1002057
  }
 }
