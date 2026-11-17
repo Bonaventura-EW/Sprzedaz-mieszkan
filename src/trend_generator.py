@@ -75,6 +75,11 @@ Format wyjścia (kontrakt dla docs/trend.html):
   "promoted": { key: [...] },  # sparse: liczba płatnie wyróżnionych ofert (OLX) danego dnia
   "price_drops": { key: [...] },      # sparse: liczba OBNIŻEK ceny (zdarzeń) danego dnia
   "price_increases": { key: [...] },  # sparse: liczba PODWYŻEK ceny (zdarzeń) danego dnia
+  "velocity": {                        # Wskaźnik Rotacji Rynku, TYLKO dla "wszystkie"
+    "daily": [{"date", "count"}, ...],  # (napływ+odpływ 7 dni) ÷ 2, sparse (luka = okno niepełne)
+    "new7":  [{"date", "count"}, ...],  # suma napływu z tego samego okna 7 dni
+    "out7":  [{"date", "count"}, ...],  # suma odpływu z tego samego okna 7 dni
+  },
   "measured": { "wszystkie": [...] },  # sparse: ZMIERZONA dzienna liczba aktywnych po dedup
   "coverage": {                        # maska pokrycia doby przebiegami skanera
     "scans_per_day": int,
@@ -151,6 +156,28 @@ z SONAR---DZIA-KOWY, manifest 2026-09-03-audyt-wykresow-rynku):
   (punkty 2/3 manifestu, mianownik 6 źródeł u brata, u nas de facto pokrywa
   je już `_source_outage_days`/`coverage` z #14) i `provisional_day` (punkt 4,
   już rozwiązany jako bug #1 w #14 — seria kończy się na ostatnim PEŁNYM dniu).
+
+Wskaźnik Rotacji Rynku / Market Velocity (propagacja z SONAR-POKOJOWY,
+manifest 2026-10-26-velocity-history-chart → issue #39):
+- `velocity.daily[i]` = (napływ + odpływ z 7 dni kończących się tym dniem) ÷ 2,
+  liczone WYŁĄCZNIE dla kategorii `wszystkie` — to jeden wskaźnik całego rynku,
+  nie osobny per kategorię. Składniki to DOKŁADNIE te same mapy, z których
+  powstają `inflow['wszystkie']`/`outflow['wszystkie']` (już po odfiltrowaniu
+  mrugnięć, `_drop_flapped`) — kafelki/rozkład dzienny muszą się zgadzać z tymi
+  wykresami, inaczej rozjazd liczb dla tego samego dnia (pułapka ze starej
+  wersji u brata, gdzie „usunięte” liczyło się inną definicją po `last_seen`).
+- Okno wymaga 7 w PEŁNI pokrytych dni (żaden w `coverage.incomplete`) — dzień
+  bez pomiaru (doba w toku / brak skanu) daje LUKĘ: punkt jest OMIJANY z serii,
+  tak jak `profiles` (nie jak `outflow`/`inflow`, gdzie zero jest poprawną
+  wartością zastępczą przy zero-wypełnianiu na froncie) — zero rotacji w dniu
+  bez pomiaru byłoby fałszywym dołkiem, nie prawdziwym spokojem rynku.
+- Napływ liczy „nowe + reaktywacje” od razu (to już jest `inflow_map` z pętli
+  kategorii), nie same nowe — inaczej odpływ liczyłby każde zniknięcie, a
+  powrót oferty nie miałby przeciwwagi po drugiej stronie, co u brata zawyżało
+  wskaźnik o ~26% (manifest 2026-11-13-velocity-counts-reactivations, patrz
+  komentarz w issue #39).
+- Bez limitu 100 — u brata `Math.min(100, ...)` dawał płaską linię przez 79/90
+  dni, bo rynek go regularnie przekracza. Front rysuje skalę bez górnej granicy.
 
 Częstotliwość zmian ceny (FIX 2026-09-22, propagacja z SONAR-POKOJOWY,
 manifest 2026-09-15-price-change-series → issue #24):
@@ -387,6 +414,30 @@ def _drop_flapped(deact_dates, react_dates):
     return kept_deact, kept_react
 
 
+def build_velocity(days, incomplete, outflow_map, inflow_map):
+    """Wskaźnik Rotacji Rynku / Market Velocity (patrz docstring modułu,
+    FIX 2026-10-26, propagacja z SONAR-POKOJOWY, issue #39): dla każdego dnia
+    (napływ + odpływ z 7 dni kończących się tym dniem) ÷ 2.
+
+    `outflow_map`/`inflow_map` to te same mapy {date: count}, z których
+    `build_trend` tworzy `outflow['wszystkie']`/`inflow['wszystkie']` — już
+    po odfiltrowaniu mrugnięć i z reaktywacjami w napływie. Dzień, dla którego
+    okno 7 dni NIE jest w pełni pokryte (żaden z nich w `incomplete`), jest
+    OMIJANY — luka, nie zero.
+    """
+    daily, new7, out7 = [], [], []
+    for i, d in enumerate(days):
+        if i < 6 or any(days[j] in incomplete for j in range(i - 6, i + 1)):
+            continue
+        window = days[i - 6:i + 1]
+        n = sum(inflow_map.get(w, 0) for w in window)
+        r = sum(outflow_map.get(w, 0) for w in window)
+        daily.append({'date': d.isoformat(), 'count': round((n + r) / 2)})
+        new7.append({'date': d.isoformat(), 'count': n})
+        out7.append({'date': d.isoformat(), 'count': r})
+    return {'daily': daily, 'new7': new7, 'out7': out7}
+
+
 def build_trend(db, today=None, scan_history=None):
     tz = pytz.timezone('Europe/Warsaw')
     today = today or datetime.now(tz).date()
@@ -454,7 +505,8 @@ def build_trend(db, today=None, scan_history=None):
     if global_start is None:
         return {'generated': datetime.now(tz).isoformat(), 'labels': {},
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
-                'promoted': {}, 'price_drops': {}, 'price_increases': {}, 'measured': {},
+                'promoted': {}, 'price_drops': {}, 'price_increases': {},
+                'velocity': {'daily': [], 'new7': [], 'out7': []}, 'measured': {},
                 'coverage': {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
                              'incomplete': [], 'reasons': {}}}
 
@@ -471,7 +523,8 @@ def build_trend(db, today=None, scan_history=None):
     if not days:
         return {'generated': datetime.now(tz).isoformat(), 'labels': {},
                 'profiles': {}, 'outflow': {}, 'inflow': {}, 'reactivations': {},
-                'promoted': {}, 'price_drops': {}, 'price_increases': {}, 'measured': {},
+                'promoted': {}, 'price_drops': {}, 'price_increases': {},
+                'velocity': {'daily': [], 'new7': [], 'out7': []}, 'measured': {},
                 'coverage': {'scans_per_day': SCANS_PER_DAY, 'last_complete': None,
                              'incomplete': [], 'reasons': {}}}
 
@@ -555,6 +608,14 @@ def build_trend(db, today=None, scan_history=None):
         promoted[key] = _sparse(promoted_map)
         price_drops[key] = _sparse(drops_map)
         price_increases[key] = _sparse(increases_map)
+        if key == 'wszystkie':
+            # Wskaźnik Rotacji Rynku (FIX 2026-10-26, issue #39) liczy się
+            # TYLKO dla całego rynku — te same mapy, z których powstaje
+            # outflow['wszystkie']/inflow['wszystkie'] wyżej, zanim trafiły do
+            # _sparse (potrzebujemy dict {date: count}, nie listy).
+            velocity_outflow_map, velocity_inflow_map = outflow_map, inflow_map
+
+    velocity = build_velocity(days, incomplete, velocity_outflow_map, velocity_inflow_map)
 
     # Zmierzona seria (nie rekonstruowana) — tylko dla „wszystkie": scan_history
     # trzyma zdeduplikowany łączny stan bazy, bez rozbicia na kategorie.
@@ -573,6 +634,7 @@ def build_trend(db, today=None, scan_history=None):
         'promoted': promoted,
         'price_drops': price_drops,
         'price_increases': price_increases,
+        'velocity': velocity,
         'measured': measured,
         # FIX 2026-09-10: maska pokrycia doby jawnie w payloadzie — wykresy
         # przepływu zachowują surowe wartości, ale front rysuje te dni jako lukę
