@@ -18218,5 +18218,17 @@
    "city": "Lublin"
   },
   "ts": 1794931868.7501605
+ },
+ "żołnierska 8": {
+  "result": null,
+  "ts": 1794958430.5907147
+ },
+ "rva:51.2550,22.5724": {
+  "result": {
+   "road": "Czwartek",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1794958431.9565349
  }
 }
