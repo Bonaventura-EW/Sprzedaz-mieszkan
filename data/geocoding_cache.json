@@ -16556,7 +16556,7 @@
  },
  "sympatyczna 1": {
   "result": null,
-  "ts": 1791662930.2048483
+  "ts": 1795042787.1246126
  },
  "sympatyczna czuby lsm": {
   "result": null,
@@ -17692,7 +17692,7 @@
  },
  "swidnik|krasińskiego": {
   "result": null,
-  "ts": 1794437176.1399837
+  "ts": 1795042785.8504093
  },
  "rva:51.2056,22.5519": {
   "result": {
@@ -18250,5 +18250,49 @@
    "city": "Lublin"
   },
   "ts": 1795016867.7289078
+ },
+ "kminkowa 18": {
+  "result": {
+   "lat": 51.2659217,
+   "lon": 22.5949459,
+   "name": "Kminkowa"
+  },
+  "ts": 1795042788.7629251
+ },
+ "gen. stefana roweckiego \"grota\"": {
+  "result": null,
+  "ts": 1795042790.3731275
+ },
+ "rva:51.2535,22.5784": {
+  "result": {
+   "road": "Kalinowszczyzna",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1795042791.677643
+ },
+ "rva:51.2824,22.5447": {
+  "result": {
+   "road": "Koncertowa",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1795042793.1126888
+ },
+ "rva:51.2486,22.5595": {
+  "result": {
+   "road": "Plac Litewski",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1795042794.3514736
+ },
+ "rva:51.2259,22.4794": {
+  "result": {
+   "road": "Jana Pawła II",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1795042796.0204413
  }
 }
