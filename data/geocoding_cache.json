@@ -15479,7 +15479,7 @@
  },
  "piłkarskiej": {
   "result": null,
-  "ts": 1794407490.3275883
+  "ts": 1795016857.7998478
  },
  "muzycznej": {
   "result": {
@@ -16336,11 +16336,11 @@
  },
  "kwarcowa kawalerka": {
   "result": null,
-  "ts": 1794407491.6854649
+  "ts": 1795016859.2755709
  },
  "racławickiej": {
   "result": null,
-  "ts": 1794407509.4486125
+  "ts": 1795016863.419397
  },
  "juliusza słowackiego": {
   "result": {
@@ -17892,7 +17892,7 @@
  },
  "garbarska 18": {
   "result": null,
-  "ts": 1794347503.7153974
+  "ts": 1795016866.3016906
  },
  "rva:51.2551,22.5509": {
   "result": {
@@ -18230,5 +18230,25 @@
    "city": "Lublin"
   },
   "ts": 1794958431.9565349
+ },
+ "boczna łęczyńskiej": {
+  "result": {
+   "lat": 51.2393594,
+   "lon": 22.5846415,
+   "name": "Boczna Łęczyńskiej"
+  },
+  "ts": 1795016852.5235195
+ },
+ "choiny 1": {
+  "result": null,
+  "ts": 1795016864.862389
+ },
+ "rva:51.2232,22.6125": {
+  "result": {
+   "road": "Droga Męczenników Majdanka",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1795016867.7289078
  }
 }
