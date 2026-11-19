@@ -17948,7 +17948,7 @@
  },
  "hotelowej": {
   "result": null,
-  "ts": 1794521901.8899384
+  "ts": 1795129622.05534
  },
  "swidnik|hotelowej": {
   "result": {
@@ -18302,5 +18302,29 @@
    "city": "Lublin"
   },
   "ts": 1795103595.1556437
+ },
+ "sielankowa": {
+  "result": {
+   "lat": 51.251358,
+   "lon": 22.5199859,
+   "name": "Sielankowa"
+  },
+  "ts": 1795129623.459877
+ },
+ "rva:51.2514,22.5200": {
+  "result": {
+   "road": "Sielankowa",
+   "district": "Sławinek",
+   "city": "Lublin"
+  },
+  "ts": 1795129625.109432
+ },
+ "rva:51.2716,22.5259": {
+  "result": {
+   "road": "Wędrowna",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1795129626.6403356
  }
 }
