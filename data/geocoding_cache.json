@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1794497019.2120442
+  "ts": 1795103580.6328537
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1794497021.1607018
+  "ts": 1795103582.4084837
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1794497041.1894438
+  "ts": 1795103588.0403843
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1794497042.5403397
+  "ts": 1795103589.396627
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1794497022.5655303
+  "ts": 1795103583.8750846
  },
  "krasińskiego": {
   "result": {
@@ -15631,7 +15631,7 @@
  },
  "racławicka": {
   "result": null,
-  "ts": 1794497044.7844002
+  "ts": 1795103590.7989757
  },
  "rva:51.2639,22.5765": {
   "result": {
@@ -16732,7 +16732,7 @@
  },
  "aleje racławickie 10": {
   "result": null,
-  "ts": 1794497046.2152934
+  "ts": 1795103592.3398085
  },
  "balladyny 2": {
   "result": null,
@@ -17044,7 +17044,7 @@
  },
  "mędzenników majdanka 55": {
   "result": null,
-  "ts": 1794497047.600138
+  "ts": 1795103593.7929368
  },
  "słomkowskiego": {
   "result": {
@@ -18294,5 +18294,13 @@
    "city": "Lublin"
   },
   "ts": 1795042796.0204413
+ },
+ "rva:51.2767,22.4989": {
+  "result": {
+   "road": null,
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1795103595.1556437
  }
 }
