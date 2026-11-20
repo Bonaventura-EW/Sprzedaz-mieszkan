@@ -4281,7 +4281,7 @@
  },
  "migdałowa 4": {
   "result": null,
-  "ts": 1794580915.4621944
+  "ts": 1795188907.8059402
  },
  "bukowa": {
   "result": {
@@ -15695,7 +15695,7 @@
  },
  "obrońców lublin": {
   "result": null,
-  "ts": 1794580916.7963977
+  "ts": 1795188909.3677964
  },
  "strażacka": {
   "result": {
@@ -15715,7 +15715,7 @@
  },
  "racławickie 40": {
   "result": null,
-  "ts": 1794580918.0502841
+  "ts": 1795188910.589396
  },
  "hugo kołłątaja": {
   "result": null,
@@ -18326,5 +18326,41 @@
    "city": "Lublin"
   },
   "ts": 1795129626.6403356
+ },
+ "nowy swiat": {
+  "result": {
+   "lat": 51.2253194,
+   "lon": 22.5616557,
+   "name": "Nowy Świat"
+  },
+  "ts": 1795188912.1839461
+ },
+ "zbożowa": {
+  "result": {
+   "lat": 51.2696372,
+   "lon": 22.5053884,
+   "name": "Zbożowa"
+  },
+  "ts": 1795188913.7660127
+ },
+ "herberta 18": {
+  "result": null,
+  "ts": 1795188915.3508885
+ },
+ "olimpijczyków": {
+  "result": {
+   "lat": 51.2295607,
+   "lon": 22.5581175,
+   "name": "Lubelskich Olimpijczyków"
+  },
+  "ts": 1795188916.5234976
+ },
+ "rva:51.2174,22.5482": {
+  "result": {
+   "road": null,
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1795188917.7879179
  }
 }
