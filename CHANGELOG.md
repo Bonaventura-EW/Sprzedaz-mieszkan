@@ -2,6 +2,35 @@
 
 ## [Niewydane]
 
+### Dodane — Wskaźnik Rotacji Rynku (Market Velocity) z historią dzień po dniu na stronie Trendu (#39, propagacja z Bonaventura-EW/SONAR-POKOJOWY)
+Nowa karta na `docs/trend.html`, tuż pod głównym wykresem Indeksu: tiles
+„Nowe i wróciły / Zeszły z rynku / Saldo" (okno 7 ostatnich pełnych dni), pasek
+Market Velocity, rozkład dzienny 7 dni i historia wskaźnika (przełącznik
+6 miesięcy / cała historia, hover z rozbiciem na napływ/odpływ). Wcześniej
+żadnego wskaźnika rotacji tu nie było (grep po `velocity`/`rotacj` dawał zero
+wyników).
+
+Backend: `trend_generator.build_velocity(days, incomplete, outflow_map,
+inflow_map)` liczy dla każdego dnia (napływ „nowe + reaktywacje" + odpływ
+z 7 dni kończących się tym dniem) ÷ 2, TYLKO dla kategorii `wszystkie` (jeden
+wskaźnik całego rynku). Składniki to dosłownie te same mapy `outflow_map`/
+`inflow_map`, z których w tej samej pętli powstają `outflow['wszystkie']`/
+`inflow['wszystkie']` — już po odfiltrowaniu mrugnięć (`_drop_flapped`), więc
+kafelki i rozkład dzienny zgadzają się z wykresami Napływu/Odpływu niżej na
+stronie. Napływ liczy reaktywacje OD RAZU (nie same nowe) — u brata osobna
+poprawka (manifest `2026-11-13-velocity-counts-reactivations`) musiała to
+łatać drugim przebiegiem, bo odpływ liczył każde zniknięcie bez przeciwwagi
+po stronie powrotów, co zawyżało wskaźnik o ~26%; tu wzięte od razu z linka
+w issue #39. Okno 7 dni wymaga 7 w PEŁNI pokrytych dni (maska `coverage`,
+FIX 2026-09-10) — dzień bez pomiaru daje LUKĘ (punkt pominięty), nie
+zaniżoną wartość. Bez limitu 100 (`Math.min(100, ...)` u brata dawał płaską
+historię przez 79/90 dni, bo rynek go regularnie przekracza) — u nas
+zmierzone wartości sięgają 200-420.
+
+Front nie używa ApexCharts (brat) — własny wariant na `<canvas>`, spójny
+z resztą `trend.html` (ten sam font/paleta/motyw jasny-ciemny), ze strefami
+aktywności jako tła wykresu historii i tooltipem 7-dniowego rozbicia na hover.
+
 ### Naprawione — opóźniony cron przeciągający drugi skan doby po północy fałszywie zaniżał pokrycie Indeksu (#30, propagacja z SONAR-MIESZKANIOWY, zaadaptowana inaczej niż u brata)
 Maska niepełnych dni na wykresach Indeksu (`trend_generator.py::_scan_coverage`)
 liczyła pełność doby wprost jako `scan_counts.get(d, 0) < SCANS_PER_DAY` po

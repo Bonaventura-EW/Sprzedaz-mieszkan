@@ -215,6 +215,39 @@ body {
   .chart-host { height: 300px; }
   .c-stats { gap: 14px; font-size: 13px; }
 }
+
+/* Wskaźnik Rotacji Rynku / Market Velocity (propagacja z SONAR-POKOJOWY,
+   manifest 2026-10-26-velocity-history-chart → issue #39). Lokalne klasy, nie
+   .kpi-card globalnego style.css — ta karta żyje w palecie trend.html
+   (DM Sans, --bg-card/--accent), nie w fioletowo-bursztynowej palecie innych
+   podstron, więc gotowy komponent kpi-card wyglądałby tu jak ciało obce. */
+.chart-card.velocity::before { background: linear-gradient(90deg, #6c7bf2, #a78bfa); }
+.vel-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px; margin-top: 16px; }
+.vel-tile { background: var(--bg-accent); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 12px 14px; }
+.vel-tile .l { font-family: var(--font-display); font-size: 11px; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-bottom: 5px; }
+.vel-tile .v { font-family: var(--font-display); font-size: 24px; font-weight: 700; }
+.vel-h3 { font-family: var(--font-display); font-size: 14px; font-weight: 700; margin: 20px 0 10px; color: var(--text-primary); }
+.vel-bar { height: 32px; background: var(--bg-accent); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.vel-fill { height: 100%; border-radius: 16px; background: linear-gradient(90deg, var(--green), var(--orange), var(--red));
+  display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 13px;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35); transition: width .5s ease; white-space: nowrap; min-width: 36px; }
+.vel-zones { margin: 8px 0 4px; font-family: var(--font-display); font-size: 11.5px; color: var(--text-muted); }
+.vel-days { display: flex; gap: 8px; }
+.vel-day { flex: 1; text-align: center; min-width: 0; }
+.vel-day .d { font-family: var(--font-display); font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
+.vel-day .bars { display: flex; flex-direction: column; gap: 2px; height: 90px; justify-content: flex-end; }
+.vel-day .bar { border-radius: 3px; }
+.vel-day .bar.n { background: var(--green); } .vel-day .bar.r { background: var(--red); }
+.vel-day .c { font-family: var(--font-display); font-size: 10px; font-weight: 600; color: var(--text-secondary); margin-top: 4px; }
+.vel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 14px; }
+.vel-head .vel-h3 { margin: 0; }
+.vel-meta { font-family: var(--font-display); font-size: 12px; color: var(--text-muted); margin: 4px 0 2px; }
+@media (max-width: 640px) {
+  .vel-days { gap: 4px; } .vel-day .d { font-size: 9px; } .vel-day .c { font-size: 9px; }
+}
 </style>
 </head>
 <body>
@@ -319,6 +352,7 @@ let PRICE_DROPS = {};
 let PRICE_INCREASES = {};
 let MEASURED = {};   // seria „zmierzone" (nie rekonstruowana) — tylko dla „wszystkie"
 let viewMeasured = [];
+let VELOCITY = { daily: [], new7: [], out7: [] };   // Wskaźnik Rotacji Rynku, tylko „wszystkie"
 // FIX 2026-09-10: dni, w których skaner nie domknął wszystkich zaplanowanych
 // przebiegów (`coverage.incomplete` z trend.json). Rekonstrukcja Indeksu takich
 // dni w ogóle nie emituje, a szeregi przepływu podają je jako null — bo szereg
@@ -338,6 +372,7 @@ function toggleTheme(){
   localStorage.setItem('sonar-sprzedazy-theme', next);
   if (viewPts.length) draw();
   FLOWS.forEach(f => f.redraw());
+  if (velState.view.length) drawVelocity();
 }
 (function initTheme(){
   const saved = localStorage.getItem('sonar-sprzedazy-theme');
@@ -426,6 +461,14 @@ async function loadAndRender(){
   MEASURED = {};
   for (const [key, arr] of Object.entries(trend.measured || {}))
     MEASURED[key] = (arr || []).map(p => [toTs(p.date), p.count]).sort((a,b)=>a[0]-b[0]);
+  // Wskaźnik Rotacji Rynku: TYLKO dla całego rynku, nie per kategoria (patrz
+  // trend_generator.build_velocity) — trzy równoległe serie po tej samej osi dat.
+  const vel = trend.velocity || {};
+  VELOCITY = {
+    daily: (vel.daily || []).map(p => [toTs(p.date), p.count]),
+    new7: (vel.new7 || []).map(p => [toTs(p.date), p.count]),
+    out7: (vel.out7 || []).map(p => [toTs(p.date), p.count]),
+  };
   buildUI(trend.generated);
 }
 
@@ -462,6 +505,42 @@ function buildUI(generated){
         <span id="legendMeasured" style="display:none"><span class="dot" style="border-top-color:var(--orange)"></span>Zmierzone (po dedup, od wdrożenia pomiaru)</span>
         <span id="legendGap" style="display:none"><span class="dot gap"></span>Brak pomiaru</span>
       </div>
+    </div>
+
+    <div class="chart-card velocity" id="card-velocity" style="margin-top:12px">
+      <div class="c-title">🔄 Wskaźnik Rotacji Rynku</div>
+      <div class="c-sub" id="velSub">Nowe i wracające oferty oraz zejścia z rynku z ostatnich 7 pełnych dni</div>
+      <div id="velBody">
+        <div class="vel-tiles">
+          <div class="vel-tile"><div class="l">Nowe i wróciły (7 dni)</div><div class="v" id="rotNew">—</div></div>
+          <div class="vel-tile"><div class="l">Zeszły z rynku (7 dni)</div><div class="v" id="rotOut">—</div></div>
+          <div class="vel-tile"><div class="l">Saldo</div><div class="v" id="rotNet">—</div></div>
+        </div>
+        <div class="vel-h3">Market Velocity (aktywność rynku)</div>
+        <div class="vel-bar"><div class="vel-fill" id="velFill" style="width:0"><span id="velTxt"></span></div></div>
+        <div class="vel-zones">0–30: rynek słaby · 31–60: umiarkowany · 61–80: aktywny · 81+: bardzo aktywny</div>
+        <div class="vel-h3">Rozkład dzienny (ostatnie 7 dni)</div>
+        <div class="vel-days" id="velDays"></div>
+        <div class="vel-head" style="margin-top:22px">
+          <div class="vel-h3">Market Velocity: historia</div>
+          <div class="range-tabs" id="velRangeTabs" style="margin-left:0">
+            <button class="range-tab active" data-vel-range="180">6 miesięcy</button>
+            <button class="range-tab" data-vel-range="0">Cała historia</button>
+          </div>
+        </div>
+        <div class="vel-meta" id="velMeta"></div>
+        <div class="chart-row">
+          <div class="chart-host">
+            <div class="watermark"><div class="w1">SONAR</div><div class="w2">MIESZKANIA · LUBLIN</div></div>
+            <canvas id="velCanvas"></canvas>
+            <div class="chart-tooltip" id="velTooltip"></div>
+          </div>
+        </div>
+      </div>
+      <div class="loading" id="velEmpty" style="display:none; padding:60px 20px"></div>
+      <div class="chart-hint">Market Velocity = (napływ „nowe + reaktywacje” + odpływ z 7 dni) ÷ 2 —
+        te same liczby co wykresy „Napływ ofert” i „Odpływ ofert” niżej, bez limitu 100 (rynek zwykle
+        go przekracza). Okno obejmuje tylko pełne doby: dzień w toku i dzień bez skanu to luka.</div>
     </div>
 
     ${FLOW_CONFIGS.map(flowCardHTML).join('')}
@@ -502,10 +581,12 @@ function buildUI(generated){
   window.addEventListener('mouseup', onUp);
 
   FLOWS.forEach(f => f.bind());
+  initVelocity();
 
   let rT; window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(()=>{
     if(viewPts.length) draw();
     FLOWS.forEach(f => f.redraw());
+    if (VELOCITY.daily.length >= 2) drawVelocity();
   }, 120); });
 
   renderAll();
@@ -1101,6 +1182,202 @@ function makeFlowChart(cfg){
     });
   }
   return { render, redraw: () => { if (state.view.length) draw(); }, bind };
+}
+
+// ── Wskaźnik Rotacji Rynku / Market Velocity (propagacja z SONAR-POKOJOWY,
+// manifest 2026-10-26-velocity-history-chart → issue #39). Jedna seria dla
+// całego rynku (nie per profil/kategoria) — tiles/pasek/rozkład to zawsze
+// OSTATNI pełny punkt, historia to osobny mini-wykres z własnym zakresem.
+const VEL_ZONES = [
+  { lo: 0, hi: 30, name: 'słaby', fill: '#37c26b' },
+  { lo: 30, hi: 60, name: 'umiarkowany', fill: '#a3c43a' },
+  { lo: 60, hi: 80, name: 'aktywny', fill: '#f5b942' },
+  { lo: 80, hi: Infinity, name: 'bardzo aktywny', fill: '#e8624c' },
+];
+function velZoneOf(v){ return VEL_ZONES.find(z => v <= z.hi) || VEL_ZONES[VEL_ZONES.length - 1]; }
+let velRange = 180;   // dni; 0 = cała historia
+let velState = { view: [], geom: null, hover: -1 };
+
+function initVelocity(){
+  if (VELOCITY.daily.length < 2){
+    document.getElementById('velBody').style.display = 'none';
+    const empty = document.getElementById('velEmpty');
+    empty.style.display = 'block';
+    empty.textContent = 'Brak danych o rotacji rynku — wskaźnik potrzebuje 7 w pełni ' +
+      'zmierzonych dni z rzędu, dopóki ich nie ma, wykres zostaje puste.';
+    return;
+  }
+  const canvas = document.getElementById('velCanvas');
+  canvas.addEventListener('mousemove', onVelMove);
+  canvas.addEventListener('mouseleave', onVelLeave);
+  document.querySelectorAll('#velRangeTabs .range-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#velRangeTabs .range-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      velRange = parseInt(btn.dataset.velRange, 10);
+      velState.hover = -1;
+      renderVelocity();
+    });
+  });
+  renderVelocity();
+}
+
+function renderVelocity(){
+  const daily = VELOCITY.daily, n7 = VELOCITY.new7, r7 = VELOCITY.out7;
+  const last = daily[daily.length - 1];
+  const lastN = n7[n7.length - 1][1], lastR = r7[r7.length - 1][1];
+  const net = lastN - lastR;
+  document.getElementById('rotNew').textContent = '+' + lastN;
+  document.getElementById('rotOut').textContent = '−' + lastR;
+  const netEl = document.getElementById('rotNet');
+  netEl.textContent = net > 0 ? ('+' + net) : (net < 0 ? ('−' + (-net)) : '0');
+  netEl.style.color = net > 0 ? 'var(--green)' : (net < 0 ? 'var(--red)' : 'var(--text-muted)');
+  document.getElementById('velFill').style.width = Math.min(100, last[1]) + '%';
+  document.getElementById('velTxt').textContent = last[1] > 100 ? String(last[1]) : (last[1] + '/100');
+
+  // rozkład dzienny: 7 dni okna kończącego się ostatnim pełnym dniem — te same
+  // mapy co napływ/odpływ „wszystkie", nie osobno przeliczane
+  const newAt = {}, outAt = {};
+  (INFLOW['wszystkie'] || []).forEach(p => { newAt[p[0]] = p[1]; });
+  (OUTFLOW['wszystkie'] || []).forEach(p => { outAt[p[0]] = p[1]; });
+  const week = [];
+  for (let i = 6; i >= 0; i--){
+    const ts = last[0] - i*DAY_MS;
+    week.push({ ts, n: newAt[ts] || 0, r: outAt[ts] || 0 });
+  }
+  const top = Math.max(1, ...week.map(w => Math.max(w.n, w.r)));
+  document.getElementById('velDays').innerHTML = week.map(w =>
+    `<div class="vel-day"><div class="d">${fmtDate(w.ts).slice(0,5)}</div><div class="bars">` +
+    `<div class="bar n" style="height:${w.n/top*86}px"></div>` +
+    `<div class="bar r" style="height:${w.r/top*86}px"></div></div>` +
+    `<div class="c">+${w.n} / −${w.r}</div></div>`
+  ).join('');
+  document.getElementById('velSub').textContent =
+    `Okno 7 ostatnich pełnych dni ${fmtDate(week[0].ts)}–${fmtDate(last[0])}`;
+
+  let view = daily;
+  if (velRange > 0){
+    const cutoff = last[0] - velRange*DAY_MS;
+    view = daily.filter(p => p[0] >= cutoff);
+    if (view.length < 2) view = daily;
+  }
+  velState.view = view;
+  const vals = view.map(p => p[1]);
+  const mx = Math.max(...vals), mn = Math.min(...vals);
+  const avg = Math.round(vals.reduce((a,b)=>a+b,0) / vals.length);
+  document.getElementById('velMeta').textContent =
+    `ostatni pełny dzień: ${last[1]} (${fmtDate(last[0])}) · średnio ${avg} · ` +
+    `max ${mx} · min ${mn}`;
+  drawVelocity();
+}
+
+function drawVelocity(){
+  const canvas = document.getElementById('velCanvas');
+  const host = canvas.parentElement;
+  const dpr = window.devicePixelRatio || 1;
+  const W = host.clientWidth, H = host.clientHeight || 260;
+  canvas.width = W*dpr; canvas.height = H*dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,W,H);
+  const pts = velState.view;
+  if (!pts.length) return;
+
+  const col = { muted: cssVar('--text-muted'), grid: cssVar('--border'), accent: cssVar('--accent') };
+  const padL = 44, padR = 14, padT = 16, padB = 28;
+  const plotW = W - padL - padR, plotH = H - padT - padB;
+  const vals = pts.map(p => p[1]);
+  const yMax = Math.max(100, Math.ceil(Math.max(...vals) / 50) * 50);
+  const yMin = 0;
+  const t0 = pts[0][0], t1 = pts[pts.length-1][0];
+  const tSpan = Math.max(1, t1 - t0);
+  const xOf = ts => padL + (ts - t0)/tSpan * plotW;
+  const yOf = v => padT + (1 - (v - yMin)/(yMax - yMin)) * plotH;
+
+  // strefy aktywności w tle — ta sama legenda co pasek Velocity
+  ctx.save();
+  for (const z of VEL_ZONES){
+    const hi = Math.min(z.hi, yMax);
+    if (z.lo >= yMax) continue;
+    ctx.globalAlpha = 0.09;
+    ctx.fillStyle = z.fill;
+    ctx.fillRect(padL, yOf(hi), plotW, yOf(z.lo) - yOf(hi));
+  }
+  ctx.restore();
+
+  ctx.font = '11px "JetBrains Mono", monospace';
+  ctx.textBaseline = 'middle';
+  ctx.strokeStyle = col.grid; ctx.fillStyle = col.muted; ctx.lineWidth = 1;
+  for (let v = 0; v <= yMax + 1e-6; v += 50){
+    const y = yOf(v);
+    ctx.globalAlpha = 0.5; ctx.setLineDash([4,4]);
+    ctx.beginPath(); ctx.moveTo(padL, y); ctx.lineTo(W-padR, y); ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
+    ctx.textAlign = 'right';
+    ctx.fillText(String(v), padL-8, y);
+  }
+  ctx.textAlign = 'center'; ctx.fillStyle = col.muted;
+  const d0 = new Date(t0);
+  let my = d0.getUTCFullYear(), mm = d0.getUTCMonth();
+  let curM = Date.UTC(my, mm, 1);
+  if (curM < t0){ mm++; if (mm>11){mm=0;my++;} curM = Date.UTC(my, mm, 1); }
+  let lastLabelX = -1e9; const minGap = 46;
+  while (curM <= t1){
+    const x = xOf(curM);
+    if (x - lastLabelX > minGap){
+      const dd = new Date(curM);
+      ctx.fillText(`${PL_MONTHS[dd.getUTCMonth()]} '${String(dd.getUTCFullYear()).slice(2)}`, x, H-padB+14);
+      lastLabelX = x;
+    }
+    mm++; if (mm>11){mm=0;my++;} curM = Date.UTC(my, mm, 1);
+  }
+
+  ctx.beginPath();
+  ctx.moveTo(xOf(pts[0][0]), yOf(pts[0][1]));
+  for (const p of pts) ctx.lineTo(xOf(p[0]), yOf(p[1]));
+  ctx.strokeStyle = col.accent; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.stroke();
+
+  const last = pts[pts.length-1];
+  drawDot(ctx, xOf(last[0]), yOf(last[1]), col.accent);
+  drawTag(ctx, String(last[1]), xOf(last[0]), yOf(last[1]) - 16, col.accent, '#fff', 'center', W);
+
+  if (velState.hover >= 0 && velState.hover < pts.length){
+    const p = pts[velState.hover];
+    const x = xOf(p[0]), y = yOf(p[1]);
+    ctx.strokeStyle = col.muted; ctx.globalAlpha = 0.6; ctx.setLineDash([3,3]);
+    ctx.beginPath(); ctx.moveTo(x, padT); ctx.lineTo(x, H-padB); ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha = 1;
+    drawDot(ctx, x, y, col.accent, 5, true);
+  }
+  velState.geom = { padL, padR, padT, padB, plotW, plotH, t0, t1, tSpan, xOf, yOf, W, H };
+}
+
+function onVelMove(e){
+  const g = velState.geom;
+  if (!g || !velState.view.length) return;
+  const rect = document.getElementById('velCanvas').getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  if (mx < g.padL || mx > g.W - g.padR) return;
+  const ts = g.t0 + (mx - g.padL)/g.plotW * g.tSpan;
+  let best = 0, bestD = Infinity;
+  for (let i=0;i<velState.view.length;i++){ const d = Math.abs(velState.view[i][0]-ts); if (d<bestD){bestD=d;best=i;} }
+  velState.hover = best; drawVelocity();
+  const p = velState.view[best];
+  const idx = VELOCITY.daily.findIndex(q => q[0] === p[0]);
+  const n = idx >= 0 ? VELOCITY.new7[idx][1] : null;
+  const r = idx >= 0 ? VELOCITY.out7[idx][1] : null;
+  const tt = document.getElementById('velTooltip');
+  tt.innerHTML = `<div class="tt-date">${fmtDateLong(p[0])}</div>` +
+    `<div class="tt-val">Velocity: ${p[1]}</div>` +
+    (n != null ? `<div class="tt-ma">7 dni: +${n} nowych/wróciło − ${r} zeszło</div>` : '');
+  tt.style.left = g.xOf(p[0]) + 'px';
+  tt.style.top  = g.yOf(p[1]) + 'px';
+  tt.style.opacity = '1';
+}
+function onVelLeave(){
+  velState.hover = -1;
+  const tt = document.getElementById('velTooltip'); if (tt) tt.style.opacity = '0';
+  if (velState.view.length) drawVelocity();
 }
 
 loadAndRender();
