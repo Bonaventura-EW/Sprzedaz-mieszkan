@@ -8597,7 +8597,7 @@
  },
  "urbanowicza 7": {
   "result": null,
-  "ts": 1794689270.3737185
+  "ts": 1795297390.7777002
  },
  "rva:51.2833,22.5413": {
   "result": {
@@ -14133,7 +14133,7 @@
  },
  "koncertowa 18": {
   "result": null,
-  "ts": 1794689271.9526951
+  "ts": 1795297392.1351523
  },
  "rva:51.2816,22.5850": {
   "result": {
@@ -18386,5 +18386,21 @@
    "city": "Lublin"
   },
   "ts": 1795272385.5175974
+ },
+ "rva:51.2400,22.5557": {
+  "result": {
+   "road": "Antoniego Szczerbowskiego",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1795297393.5008168
+ },
+ "rva:51.2433,22.5898": {
+  "result": {
+   "road": "Przyjaźni",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1795297395.0974486
  }
 }
