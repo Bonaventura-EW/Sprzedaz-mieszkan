@@ -18410,5 +18410,13 @@
    "city": "Świdnik"
   },
   "ts": 1795358571.5424457
+ },
+ "rva:51.2168,22.5692": {
+  "result": {
+   "road": "Zbigniewa Herberta",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1795384441.0601218
  }
 }
