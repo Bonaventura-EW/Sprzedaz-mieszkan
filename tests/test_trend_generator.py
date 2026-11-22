@@ -7,7 +7,7 @@ danego dnia), pomijanie duplikatów OLX↔Otodom oraz predykaty kategorii.
 from datetime import date
 
 import trend_generator as tg
-from trend_generator import SCANS_PER_DAY, _scan_coverage, build_trend
+from trend_generator import SCANS_PER_DAY, _scan_coverage, build_trend, build_velocity
 
 
 def _offer(id_, source, market, rooms, first_seen, active=True,
@@ -569,6 +569,104 @@ def test_empty_db_has_price_change_keys():
     payload = build_trend({'offers': []}, today=date(2026, 6, 1))
     assert payload['price_drops'] == {}
     assert payload['price_increases'] == {}
+
+
+# ── Wskaźnik Rotacji Rynku / Market Velocity (propagacja z SONAR-POKOJOWY,
+# manifest 2026-10-26-velocity-history-chart → issue #39) ──────────────────
+
+def _days(n, start=date(2026, 6, 1)):
+    from datetime import timedelta
+    return [start + timedelta(days=i) for i in range(n)]
+
+
+def test_build_velocity_needs_seven_days_before_first_point():
+    days = _days(8)
+    out = build_velocity(days, set(), {}, {})
+    # dni 0-5 (indeksy < 6) nie mają pełnego okna 7 dni → brak punktu
+    assert [p['date'] for p in out['daily']] == [days[6].isoformat(), days[7].isoformat()]
+
+
+def test_build_velocity_sums_inflow_and_outflow_over_seven_day_window():
+    days = _days(7)
+    inflow_map = {days[0]: 2, days[3]: 1, days[6]: 3}   # suma = 6
+    outflow_map = {days[1]: 1, days[5]: 1}              # suma = 2
+    out = build_velocity(days, set(), outflow_map, inflow_map)
+    assert out['daily'] == [{'date': days[6].isoformat(), 'count': 4}]  # (6+2)/2 = 4
+    assert out['new7'] == [{'date': days[6].isoformat(), 'count': 6}]
+    assert out['out7'] == [{'date': days[6].isoformat(), 'count': 2}]
+
+
+def test_build_velocity_window_with_incomplete_day_is_omitted():
+    days = _days(8)
+    inflow_map = {days[0]: 1}
+    outflow_map = {}
+    # dzień 2 niepełny — okna kończące się w dniach 6 i 7 obejmują go i wypadają
+    incomplete = {days[2]}
+    out = build_velocity(days, incomplete, outflow_map, inflow_map)
+    assert out['daily'] == []
+
+
+def test_build_velocity_does_not_cap_at_100():
+    days = _days(7)
+    inflow_map = {d: 100 for d in days}
+    outflow_map = {d: 100 for d in days}
+    out = build_velocity(days, set(), outflow_map, inflow_map)
+    # (700+700)/2 = 700, zdecydowanie powyżej dawnego limitu 100 u brata
+    assert out['daily'][0]['count'] == 700
+
+
+def test_velocity_present_only_for_whole_market_in_build_trend():
+    db = {'offers': [
+        _offer(f'olx:{i}', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00')
+        for i in range(3)
+    ]}
+    payload = build_trend(db, today=date(2026, 6, 10))
+    assert set(payload['velocity']) == {'daily', 'new7', 'out7'}
+    assert 'rynek_pierwotny' not in payload['velocity']
+
+
+def test_velocity_matches_inflow_outflow_of_whole_market():
+    """Kafelki Rotacji muszą liczyć te same zdarzenia co wykresy Napływu/Odpływu
+    — pułapka ze starej wersji u brata (inna definicja „usuniętych")."""
+    offers = [_offer('seed', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00')]
+    for i, d in enumerate(['2026-06-02', '2026-06-03', '2026-06-04']):
+        offers.append(_offer(f'new:{i}', 'otodom', 'wtorny', 2, f'{d}T10:00:00+02:00'))
+    dead = _offer('dead', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00',
+                   active=False, deactivated_at='2026-06-05T09:00:00+02:00',
+                   last_seen='2026-06-04T09:00:00+02:00')
+    offers.append(dead)
+    db = {'offers': offers}
+    payload = build_trend(db, today=date(2026, 6, 8))
+    inflow = {p['date']: p['count'] for p in payload['inflow']['wszystkie']}
+    outflow = {p['date']: p['count'] for p in payload['outflow']['wszystkie']}
+    vel = {p['date']: p['count'] for p in payload['velocity']['new7']}
+    vel_out = {p['date']: p['count'] for p in payload['velocity']['out7']}
+    last_day = max(vel)
+    assert vel[last_day] == sum(inflow.values())
+    assert vel_out[last_day] == sum(outflow.values())
+
+
+def test_velocity_empty_for_empty_db():
+    payload = build_trend({'offers': []}, today=date(2026, 6, 1))
+    assert payload['velocity'] == {'daily': [], 'new7': [], 'out7': []}
+
+
+def test_velocity_respects_scan_coverage_mask():
+    """Dzień bez pełnego pokrycia skanami musi dać lukę w historii Rotacji —
+    tak jak w Indeksie, zero NIE jest poprawnym zastępnikiem (FIX 2026-09-10)."""
+    db = {'offers': [
+        _offer('olx:1', 'olx', 'wtorny', 2, '2026-06-01T10:00:00+02:00', active=True),
+    ]}
+    scan_history = _history((date(2026, 6, 1), SCANS_PER_DAY),
+                          (date(2026, 6, 2), SCANS_PER_DAY),
+                          (date(2026, 6, 3), SCANS_PER_DAY),
+                          (date(2026, 6, 4), SCANS_PER_DAY),
+                          (date(2026, 6, 5), SCANS_PER_DAY),
+                          (date(2026, 6, 6), SCANS_PER_DAY),
+                          (date(2026, 6, 7), 1))   # niepełny — wyklucza okna 02-08..07-13
+    payload = build_trend(db, today=date(2026, 6, 10), scan_history=scan_history)
+    vel_dates = {p['date'] for p in payload['velocity']['daily']}
+    assert '2026-06-07' not in vel_dates
 
 
 def test_coverage_reasons_distinguish_gap_causes():
