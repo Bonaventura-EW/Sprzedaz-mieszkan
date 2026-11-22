@@ -5101,7 +5101,7 @@
  },
  "piłudskiego": {
   "result": null,
-  "ts": 1794751376.8496501
+  "ts": 1795358568.98181
  },
  "pozytywistów": {
   "result": {
@@ -16600,7 +16600,7 @@
  },
  "wincentego witosa": {
   "result": null,
-  "ts": 1794580924.1556783
+  "ts": 1795358572.732203
  },
  "rva:51.2363,22.5463": {
   "result": {
@@ -17420,7 +17420,7 @@
  },
  "daszyńskiego 3": {
   "result": null,
-  "ts": 1794751378.3076162
+  "ts": 1795358570.308412
  },
  "oś. paderewskiego": {
   "result": null,
@@ -18402,5 +18402,13 @@
    "city": "Lublin"
   },
   "ts": 1795297395.0974486
+ },
+ "rva:51.2196,22.7139": {
+  "result": {
+   "road": "Pionierska",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1795358571.5424457
  }
 }
