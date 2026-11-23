@@ -9349,7 +9349,7 @@
  },
  "głęboka 23": {
   "result": null,
-  "ts": 1785086489.9634602
+  "ts": 1795458139.7701795
  },
  "nadbytrzycka": {
   "result": null,
@@ -18133,7 +18133,7 @@
  },
  "urbanowicza 24": {
   "result": null,
-  "ts": 1794844739.1461468
+  "ts": 1795458138.3131108
  },
  "rva:51.2216,22.5308": {
   "result": {
@@ -18418,5 +18418,57 @@
    "city": "Lublin"
   },
   "ts": 1795384441.0601218
+ },
+ "kacza": {
+  "result": {
+   "lat": 51.2246304,
+   "lon": 22.4710455,
+   "name": "Kacza"
+  },
+  "ts": 1795458141.2038434
+ },
+ "rva:51.2258,22.5080": {
+  "result": {
+   "road": "Szafirowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1795458142.7131834
+ },
+ "rva:51.2142,22.7090": {
+  "result": {
+   "road": "Głogowa",
+   "district": "Osiedle Brzeziny II",
+   "city": "Świdnik"
+  },
+  "ts": 1795458144.3049104
+ },
+ "dbx:swidnik:wrotków": {
+  "result": null,
+  "ts": 1795458145.712974
+ },
+ "rva:51.2465,22.5230": {
+  "result": {
+   "road": "Głęboka",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1795458147.2705567
+ },
+ "rva:51.2246,22.4710": {
+  "result": {
+   "road": "Kacza",
+   "district": "Węglin Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1795458148.6789238
+ },
+ "rva:51.2737,22.5465": {
+  "result": {
+   "road": "Króla Rogera",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1795458150.1355655
  }
 }
