@@ -4585,7 +4585,7 @@
  },
  "mełgiewska 7-9": {
   "result": null,
-  "ts": 1794931838.80928
+  "ts": 1795542870.886109
  },
  "mełgiewskiej": {
   "result": {
@@ -8289,7 +8289,7 @@
  },
  "kwitnącej": {
   "result": null,
-  "ts": 1794931841.470796
+  "ts": 1795542873.7920933
  },
  "rva:51.2732,22.5050": {
   "result": {
@@ -15011,7 +15011,7 @@
  },
  "turkuso": {
   "result": null,
-  "ts": 1794931848.6054006
+  "ts": 1795542884.1923285
  },
  "rva:51.2326,22.4924": {
   "result": {
@@ -15987,7 +15987,7 @@
  },
  "cicha 4": {
   "result": null,
-  "ts": 1794931844.5019157
+  "ts": 1795542887.4404263
  },
  "mieczysławy ćwiklińskiej": {
   "result": {
@@ -16272,7 +16272,7 @@
  },
  "gospodarcza 22": {
   "result": null,
-  "ts": 1794931843.0043137
+  "ts": 1795542876.6853251
  },
  "rva:51.2161,22.6935": {
   "result": {
@@ -16832,7 +16832,7 @@
  },
  "kasztelańska 29": {
   "result": null,
-  "ts": 1794931845.8533378
+  "ts": 1795542878.244714
  },
  "brata alberta": {
   "result": {
@@ -17220,7 +17220,7 @@
  },
  "niepodległości 5": {
   "result": null,
-  "ts": 1794874728.5787451
+  "ts": 1795542881.387538
  },
  "rva:51.2759,22.5907": {
   "result": {
@@ -17424,7 +17424,7 @@
  },
  "oś. paderewskiego": {
   "result": null,
-  "ts": 1794874726.7078373
+  "ts": 1795542879.7909763
  },
  "wilenska 11": {
   "result": null,
@@ -17496,7 +17496,7 @@
  },
  "kard. stefana wyszyńskiego": {
   "result": null,
-  "ts": 1794874730.032265
+  "ts": 1795542893.3066714
  },
  "rva:51.2212,22.5743": {
   "result": {
@@ -17868,7 +17868,7 @@
  },
  "wileńskiejprzystanki": {
   "result": null,
-  "ts": 1794931847.3009534
+  "ts": 1795542882.6655695
  },
  "ogrodowej": {
   "result": {
@@ -18201,7 +18201,7 @@
  },
  "tomasz zana": {
   "result": null,
-  "ts": 1794931865.8686714
+  "ts": 1795542885.7231195
  },
  "rva:51.2065,22.5445": {
   "result": {
@@ -18470,5 +18470,85 @@
    "city": "Lublin"
   },
   "ts": 1795458150.1355655
+ },
+ "swidnik|henryka wolińskiego": {
+  "result": null,
+  "ts": 1795542875.3550043
+ },
+ "karkonoska": {
+  "result": {
+   "lat": 51.2803543,
+   "lon": 22.5461769,
+   "name": "Karkonoska"
+  },
+  "ts": 1795542888.7665367
+ },
+ "andersa": {
+  "result": {
+   "lat": 51.2603523,
+   "lon": 22.5762201,
+   "name": "Aleja Władysława Andersa"
+  },
+  "ts": 1795542890.1366398
+ },
+ "gen. l. okulickiego": {
+  "result": null,
+  "ts": 1795542891.6859152
+ },
+ "rva:51.2804,22.5462": {
+  "result": {
+   "road": "Karkonoska",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1795542894.700406
+ },
+ "rva:51.2732,22.5563": {
+  "result": {
+   "road": "Ignacego Jana Paderewskiego",
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1795542896.3087637
+ },
+ "rva:51.2656,22.5176": {
+  "result": {
+   "road": "Willowa",
+   "district": "Sławin",
+   "city": "Lublin"
+  },
+  "ts": 1795542897.9057546
+ },
+ "rva:51.2604,22.5762": {
+  "result": {
+   "road": "Aleja Władysława Andersa",
+   "district": "Ponikwoda",
+   "city": "Lublin"
+  },
+  "ts": 1795542899.553262
+ },
+ "rva:51.2622,22.5488": {
+  "result": {
+   "road": "Aleja Mieczysława Smorawińskiego",
+   "district": "Czechów Południowy",
+   "city": "Lublin"
+  },
+  "ts": 1795542901.2586758
+ },
+ "rva:51.2225,22.5139": {
+  "result": {
+   "road": "Bursztynowa",
+   "district": "Czuby Południowe",
+   "city": "Lublin"
+  },
+  "ts": 1795542902.6183722
+ },
+ "rva:51.2166,22.6959": {
+  "result": {
+   "road": "Racławicka",
+   "district": "Osiedle Lotnicze",
+   "city": "Świdnik"
+  },
+  "ts": 1795542904.2305949
  }
 }
