@@ -5449,7 +5449,7 @@
  },
  "chabrowa 2": {
   "result": null,
-  "ts": 1793916467.3209085
+  "ts": 1795627324.2704194
  },
  "ignacego daszyńskiego": {
   "result": {
@@ -15479,7 +15479,7 @@
  },
  "piłkarskiej": {
   "result": null,
-  "ts": 1795016857.7998478
+  "ts": 1795627305.517678
  },
  "muzycznej": {
   "result": {
@@ -16240,11 +16240,11 @@
  },
  "wileńska-lsm": {
   "result": null,
-  "ts": 1792416569.070986
+  "ts": 1795627313.8943572
  },
  "wileńskiej-lsm": {
   "result": null,
-  "ts": 1792416570.6913316
+  "ts": 1795627315.4681966
  },
  "radzyńskiej": {
   "result": {
@@ -16336,11 +16336,11 @@
  },
  "kwarcowa kawalerka": {
   "result": null,
-  "ts": 1795016859.2755709
+  "ts": 1795627316.9936984
  },
  "racławickiej": {
   "result": null,
-  "ts": 1795016863.419397
+  "ts": 1795627321.0609655
  },
  "juliusza słowackiego": {
   "result": {
@@ -18241,7 +18241,7 @@
  },
  "choiny 1": {
   "result": null,
-  "ts": 1795016864.862389
+  "ts": 1795627322.646773
  },
  "rva:51.2232,22.6125": {
   "result": {
@@ -18550,5 +18550,61 @@
    "city": "Świdnik"
   },
   "ts": 1795542904.2305949
+ },
+ "diamentowa 27c": {
+  "result": null,
+  "ts": 1795627325.9585457
+ },
+ "bychawskiej": {
+  "result": null,
+  "ts": 1795627330.4564173
+ },
+ "rva:51.2469,22.5487": {
+  "result": {
+   "road": "Plac Teatralny",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1795627332.164166
+ },
+ "rva:51.2079,22.5860": {
+  "result": {
+   "road": "Seweryna Sierpińskiego",
+   "district": "Dziesiąta",
+   "city": "Lublin"
+  },
+  "ts": 1795627333.8142319
+ },
+ "rva:51.2130,22.7187": {
+  "result": {
+   "road": "Krępiecka",
+   "district": "Osiedle Kusocińskiego",
+   "city": "Świdnik"
+  },
+  "ts": 1795627335.4231992
+ },
+ "rva:51.2182,22.5459": {
+  "result": {
+   "road": "Diamentowa",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1795627336.7964685
+ },
+ "rva:51.2435,22.5222": {
+  "result": {
+   "road": "Wileńska",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1795627338.5848105
+ },
+ "rva:51.2178,22.7083": {
+  "result": {
+   "road": "Niepodległości",
+   "district": "Osiedle Wschód",
+   "city": "Świdnik"
+  },
+  "ts": 1795627340.2118492
  }
 }
