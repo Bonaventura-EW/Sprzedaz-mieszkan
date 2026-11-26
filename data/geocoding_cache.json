@@ -621,7 +621,7 @@
  },
  "gabriela narutowicza": {
   "result": null,
-  "ts": 1795103580.6328537
+  "ts": 1795712499.2736282
  },
  "granata": {
   "result": {
@@ -3077,7 +3077,7 @@
  },
  "józefa piłsudskiego": {
   "result": null,
-  "ts": 1795103582.4084837
+  "ts": 1795712500.9850473
  },
  "józefa śliwińskiego": {
   "result": {
@@ -3401,7 +3401,7 @@
  },
  "marii curie-skłodowskiej": {
   "result": null,
-  "ts": 1795103588.0403843
+  "ts": 1795712506.6938367
  },
  "herbowa 8": {
   "result": null,
@@ -4441,7 +4441,7 @@
  },
  "racławickich": {
   "result": null,
-  "ts": 1795103589.396627
+  "ts": 1795712508.2770467
  },
  "noskowskiego": {
   "result": {
@@ -4469,7 +4469,7 @@
  },
  "aleksandra czekanowskiego": {
   "result": null,
-  "ts": 1795103583.8750846
+  "ts": 1795712502.590815
  },
  "krasińskiego": {
   "result": {
@@ -15631,7 +15631,7 @@
  },
  "racławicka": {
   "result": null,
-  "ts": 1795103590.7989757
+  "ts": 1795712511.985926
  },
  "rva:51.2639,22.5765": {
   "result": {
@@ -16732,7 +16732,7 @@
  },
  "aleje racławickie 10": {
   "result": null,
-  "ts": 1795103592.3398085
+  "ts": 1795712513.304871
  },
  "balladyny 2": {
   "result": null,
@@ -17692,7 +17692,7 @@
  },
  "swidnik|krasińskiego": {
   "result": null,
-  "ts": 1795042785.8504093
+  "ts": 1795712514.5028005
  },
  "rva:51.2056,22.5519": {
   "result": {
@@ -18606,5 +18606,53 @@
    "city": "Świdnik"
   },
   "ts": 1795627340.2118492
+ },
+ "dolna panny marii": {
+  "result": {
+   "lat": 51.2411313,
+   "lon": 22.5580388,
+   "name": "Dolna Panny Marii"
+  },
+  "ts": 1795712516.4183445
+ },
+ "cisowej": {
+  "result": {
+   "lat": 51.2509576,
+   "lon": 22.513075,
+   "name": "Cisowa"
+  },
+  "ts": 1795712519.3617964
+ },
+ "rva:51.2360,22.5336": {
+  "result": {
+   "road": "Emancypantek",
+   "district": "Rury",
+   "city": "Lublin"
+  },
+  "ts": 1795712521.0802045
+ },
+ "rva:51.2834,22.5416": {
+  "result": {
+   "road": null,
+   "district": "Czechów Północny",
+   "city": "Lublin"
+  },
+  "ts": 1795712522.3207486
+ },
+ "rva:51.2127,22.7181": {
+  "result": {
+   "road": "Krępiecka",
+   "district": "Osiedle Kusocińskiego",
+   "city": "Świdnik"
+  },
+  "ts": 1795712523.612261
+ },
+ "rva:51.2411,22.5580": {
+  "result": {
+   "road": "Dolna Panny Marii",
+   "district": "Śródmieście",
+   "city": "Lublin"
+  },
+  "ts": 1795712525.5284164
  }
 }
