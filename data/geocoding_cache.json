@@ -4281,7 +4281,7 @@
  },
  "migdałowa 4": {
   "result": null,
-  "ts": 1795188907.8059402
+  "ts": 1795798075.3427756
  },
  "bukowa": {
   "result": {
@@ -15695,7 +15695,7 @@
  },
  "obrońców lublin": {
   "result": null,
-  "ts": 1795188909.3677964
+  "ts": 1795798076.5269997
  },
  "strażacka": {
   "result": {
@@ -15715,7 +15715,7 @@
  },
  "racławickie 40": {
   "result": null,
-  "ts": 1795188910.589396
+  "ts": 1795798077.7704158
  },
  "hugo kołłątaja": {
   "result": null,
@@ -17948,7 +17948,7 @@
  },
  "hotelowej": {
   "result": null,
-  "ts": 1795129622.05534
+  "ts": 1795798080.5592186
  },
  "swidnik|hotelowej": {
   "result": {
@@ -18345,7 +18345,7 @@
  },
  "herberta 18": {
   "result": null,
-  "ts": 1795188915.3508885
+  "ts": 1795798082.1385236
  },
  "olimpijczyków": {
   "result": {
@@ -18654,5 +18654,93 @@
    "city": "Lublin"
   },
   "ts": 1795712525.5284164
+ },
+ "koralowa i węglinek": {
+  "result": {
+   "lat": 51.2224391,
+   "lon": 22.4857366,
+   "name": "Koralowa"
+  },
+  "ts": 1795798083.3372948
+ },
+ "chopina 31": {
+  "result": null,
+  "ts": 1795798085.0124207
+ },
+ "daszyńskiego 11": {
+  "result": null,
+  "ts": 1795798086.6386967
+ },
+ "rva:51.2463,22.6071": {
+  "result": {
+   "road": "Mełgiewska",
+   "district": "Tatary",
+   "city": "Lublin"
+  },
+  "ts": 1795798088.2448409
+ },
+ "rva:51.2524,22.5821": {
+  "result": {
+   "road": "Kalinowszczyzna",
+   "district": "Kalinowszczyzna",
+   "city": "Lublin"
+  },
+  "ts": 1795798089.5234764
+ },
+ "rva:51.2026,22.5578": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1795798091.148971
+ },
+ "rva:51.2027,22.5585": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1795798092.7723563
+ },
+ "rva:51.2026,22.5579": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1795798094.137518
+ },
+ "rva:51.2027,22.5584": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1795798095.4836643
+ },
+ "rva:51.2027,22.5581": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1795798097.0849113
+ },
+ "rva:51.2026,22.5580": {
+  "result": {
+   "road": "Zemborzycka",
+   "district": "Wrotków",
+   "city": "Lublin"
+  },
+  "ts": 1795798098.3515873
+ },
+ "rva:51.2332,22.5754": {
+  "result": {
+   "road": "Garbarska",
+   "district": "Kośminek",
+   "city": "Lublin"
+  },
+  "ts": 1795798100.0367756
  }
 }
